@@ -1,0 +1,44 @@
+/**
+ * COPY ME TO config/local.js
+ */
+
+
+/**
+ * Local environment settings
+ *
+ * Use this file to specify configuration settings for use while developing
+ * the app on your personal system.
+ *
+ * For more information, check out:
+ * https://sailsjs.com/docs/concepts/configuration/the-local-js-file
+ */
+
+module.exports = {
+
+    baseUrl: 'http://localhost:1337', // API URL
+    frontendUrl: 'http://localhost:8080', // Webpack URL
+
+    datastores: {
+        default: {
+            adapter: 'sails-mysql',
+            host: 'localhost',
+            user: 'root',
+            password: 'my@w3s0m3password',
+            database: 'myappdb',
+            charset: 'utf8mb4',
+            collation: 'utf8mb4_general_ci',
+            timezone: 'UTC'
+        }
+    },
+
+    session: {
+        name: 'myapp',
+        secret: '85de17bf23b68aa2e9fc85615ca9fd3f62406f25' // https://jsfiddle.net/fsbd3ey5/1/
+    },
+
+    logSensitiveData: false, // used in request logs hook
+
+    models: {
+        migrate: 'alter'
+    }
+};

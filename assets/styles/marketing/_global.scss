@@ -1,0 +1,17 @@
+body {
+    overscroll-behavior: none;
+    scroll-behavior: smooth;
+}
+
+form {
+    width: 100%;
+}
+
+.hr {
+    border-top: 1px solid #CCC;
+    padding: 10px;
+}
+
+span, strong {
+    white-space: nowrap;
+}
