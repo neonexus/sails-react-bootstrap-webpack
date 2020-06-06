@@ -74,7 +74,6 @@ module.exports = (sails) => {
                             body: body
                         }).meta({fetch: true}).exec(async (err, newRequest) => {
                             if (err) {
-                                //utils.createLog(req, err, 'Error creating request audit log');
                                 console.log(err);
 
                                 return next(); // don't stop the traffic if there is a problem
@@ -82,23 +81,6 @@ module.exports = (sails) => {
 
                             req.requestId = newRequest.id;
                             req._customStartTime = process.hrtime();
-
-                            // if (sails.config.requiredHosts && sails.config.requiredHosts.length) {
-                            //     let isValid = false;
-                            //
-                            //     for (let i = 0; i < sails.config.requiredHosts.length; ++i) {
-                            //         if (req.hostname === sails.config.requiredHosts[i]) {
-                            //             isValid = true;
-                            //             i = sails.config.requiredHosts.length; // no need to continue
-                            //         }
-                            //     }
-                            //
-                            //     if (!isValid) {
-                            //         res.status(404);
-                            //         res.view('404');
-                            //         await sails.helpers.finalizeRequestLog(req, res, {body: '404 from logger'});
-                            //     }
-                            // }
 
                             return next();
                         });
