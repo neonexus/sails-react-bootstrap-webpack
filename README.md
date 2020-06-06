@@ -4,22 +4,30 @@ This is an opinionated base [Sails v1](https://sailsjs.com) application, using W
 
 ## Main Features
 
-+ [Automatic (incoming) request logging, via Sails models / hooks.](#request-logging)
-+ [Setup for Webpack auto-reload dev server.](#local-dev)
++ Automatic (incoming) request logging, via Sails models / hooks.
++ Setup for Webpack auto-reload dev server.
 + Setup so Sails will serve Webpack-built bundles as separate apps (so, a marketing site, and an admin site can live side-by-side).
 + Includes [react-bootstrap](https://www.npmjs.com/package/react-bootstrap) to make using Bootstrap styles / features with React easier.
 
-### Request Logging
+## Request Logging
 Automatic incoming request logging, is a 2 part process. First, the [`request-logger` hook](api/hooks/request-logger.js) gathers info from the quest, and creates a new [`RequestLog` record](api/models/RequestLog.js), making sure to mask anything that may be sensitive, such as passwords. Then, a custom response gathers information from the response, again, scrubbing sensitive data (using the [customToJSON](https://sailsjs.com/documentation/concepts/models-and-orm/model-settings?identity=#customtojson) feature of Sails models) to prevent leaking of password hashes, or anything else that should never be publicly accessible. The [`keepModelsSafe` helper](api/helpers/keep-models-safe.js) and the custom responses (such as [ok](api/responses/ok.js) or [serverError](api/responses/serverError.js)) are responsible for the final leg of request logs.
 
-### Using Webpack
+## Using Webpack
 #### Local Dev
 The script `npm run open:client` will start the auto-reloading Webpack development server, and open a browser window.
 
 #### Remote Builds
-The script `npm run build` will make Webpack build all the proper assets into the `.tmp` folder. Sails will serve assets from this folder.
+The script `npm run build` will make Webpack build all the proper assets into the `.tmp/public` folder. Sails will serve assets from this folder.
 
 If you want to build assets, but retain spaces / tabs for debugging, you can use `npm run build:dev`.
+
+#### Configuration
+The webpack configuration can be found in the `config/webpack` folder. The majority of the configuration can be found in [`common.config.js`](config/webpack/common.config.js). Then, the other 3 files, such as [`dev.config.js`](config/webpack/dev.config.js) extend the `common.config.js` file.
+
+## Building with React
+React source files live in the `assets/src` folder. It is structured in such a way, where the `index.jsx` is really only used for local development (to help Webpack serve up the correct "app"). Then, there are the individual "apps", [main](assets/src/main.jsx) and [admin](assets/src/admin.jsx). These files are used as Webpack "[entry points](https://webpack.js.org/concepts/entry-points/)", to create 2 separate application bundles.
+
+In a remote environment, Sails will look at the first subdirectory requested, and use that to determine which `index.html` file it needs to actually return. So, in this case, the "main" application will get built in `.tmp/public/main`, where the CSS is `.tmp/public/main/bundle.css`, the JavaScript is `.tmp/public/main/bundle.js`, and the HTML is `.tmp/public/main/index.html`. To view the main application, one would just go to `http://mydomain/` which gets redirected to `/main` (because need to know what application we are using), and now Sails will serve the `main` application. Where as, if one were to go to `http://mydomain/admin`, Sails would now serve the `admin` application bundle.
 
 ### Links
 
