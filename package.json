@@ -65,7 +65,7 @@
         "build:dev:webpack": "webpack --mode development --config config/webpack/dev-build.config.js",
         "build:prod": "NODE_ENV=production webpack --mode production --config config/webpack/prod.config.js",
         "clean": "rimraf .tmp && mkdirp .tmp/public",
-        "lift": "sails lift",
+        "lift": "node app.js",
         "debug": "node --inspect app.js",
         "lines": "git ls-files --exclude-standard -- ':!:**/*.[pjs][npv]g' ':!:**/*.ai' ':!:.idea' ':!:**/*.eslintrc' ':!:package-lock.json' | xargs wc -l"
     },

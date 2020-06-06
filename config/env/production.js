@@ -24,6 +24,7 @@ module.exports = {
     logSensitiveData: false, // never log sensitive data in production database
 
     baseUrl: 'https://myapi.app',
+    assetsUrl: 'https://my-cdn.app/', // must end with /
 
     /**************************************************************************
      *                                                                         *

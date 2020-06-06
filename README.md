@@ -9,6 +9,22 @@ This is an opinionated base [Sails v1](https://sailsjs.com) application, using W
 + Setup so Sails will serve Webpack-built bundles as separate apps (so, a marketing site, and an admin site can live side-by-side).
 + Includes [react-bootstrap](https://www.npmjs.com/package/react-bootstrap) to make using Bootstrap styles / features with React easier.
 
+## How to Use
+This repo is not installable via `npm`. It should be forked to help kick-start projects.
+
+Scripts built into [`package.json`](package.json):
+
+| Command       | Description
+|---------------|-------------------
+|`npm run start`| Will run both `npm run lift` and `npm run open:client` in parallel.
+|`npm run open:client` | Will run the [Webpack Dev Server](https://webpack.js.org/configuration/dev-server/) and open a browser tab / window.
+|`npm run lift` | The same thing as `sails lift` or `node app.js`; will "[lift our Sails](https://sailsjs.com/documentation/reference/command-line-interface/sails-lift)" instance.
+|`npm run debug` | Alias for `node --inspect app.js`.
+|`npm run build` | Will run `npm run clean`, then will build production-ready files with Webpack in the `.tmp/public` folder.
+|`npm run build:dev` | Same thing as `npm run build`, except that it will not optimize the files, retaining newlines and empty spaces.
+|`npm run clean` | Will basically delete everything in the `.tmp` folder.
+|`npm run lines` | Will count the lines of code in the project, minus `.gitignore`'d files, for funzies.
+
 ## Request Logging
 Automatic incoming request logging, is a 2 part process. First, the [`request-logger` hook](api/hooks/request-logger.js) gathers info from the quest, and creates a new [`RequestLog` record](api/models/RequestLog.js), making sure to mask anything that may be sensitive, such as passwords. Then, a custom response gathers information from the response, again, scrubbing sensitive data (using the [customToJSON](https://sailsjs.com/documentation/concepts/models-and-orm/model-settings?identity=#customtojson) feature of Sails models) to prevent leaking of password hashes, or anything else that should never be publicly accessible. The [`keepModelsSafe` helper](api/helpers/keep-models-safe.js) and the custom responses (such as [ok](api/responses/ok.js) or [serverError](api/responses/serverError.js)) are responsible for the final leg of request logs.
 
