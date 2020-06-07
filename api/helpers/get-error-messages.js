@@ -20,20 +20,20 @@ module.exports = {
             if (err.invalidAttributes && err.Errors) {
                 err = _.merge({}, err.invalidAttributes, err.Errors);
 
-                sails.helpers.objForEach(err, function(error){
-                    error.forEach(function(errMessage){
+                _.forEach(err, (error) => {
+                    error.forEach((errMessage) => {
                         errors.push(errMessage.message);
                     });
                 });
             } else if (err.invalidAttributes) {
-                sails.helpers.objForEach(err.invalidAttributes, function(error){
-                    error.forEach(function(errMessage){
+                _.forEach(err.invalidAttributes, (error) => {
+                    error.forEach((errMessage) => {
                         errors.push(errMessage.message);
                     });
                 });
             } else if (err.Errors) {
-                sails.helpers.objForEach(err.Errors, function(error){
-                    error.forEach(function(errMessage){
+                _.forEach(err.Errors, (error) => {
+                    error.forEach((errMessage) => {
                         errors.push(errMessage.message);
                     });
                 });

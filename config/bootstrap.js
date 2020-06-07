@@ -9,17 +9,15 @@
  * https://sailsjs.com/config/bootstrap
  */
 
-// Use this for headers: http://patorjk.com/software/taag/#p=display&c=c&f=ANSI%20Shadow&t=ZeroHour
-// Use this for subheaders: http://patorjk.com/software/taag/#p=display&c=c&f=Calvin%20S&t=ZeroHour
-
-const fs = require('fs');
+// Use this for headers: http://patorjk.com/software/taag/#p=display&c=c&f=ANSI%20Shadow&t=Sails
+// Use this for subheaders: http://patorjk.com/software/taag/#p=display&c=c&f=Calvin%20S&t=Woot
 
 module.exports.bootstrap = function(next) {
     // Check if we need to validate our schema
-    if (sails.config.models.migrate === 'safe') { // aka PROD
+    if (sails.config.models.migrate === 'safe') { // aka PRODUCTION
         let waitingToFinish = 0;
 
-        sails.helpers.objForEach(sails.models, (model, modelName) => {
+        _.forEach(sails.models, (model, modelName) => {
             if (model.tableName !== 'archive') {
                 waitingToFinish++;
 
@@ -262,7 +260,7 @@ module.exports.bootstrap = function(next) {
             }, 20);
         })();
 
-        // something is taking WAY too long... assume the worst
+        // something is taking WAY too long... assume the worst... BAIL!
         setTimeout(() => {
             if (waitingToFinish > 0) {
                 console.error('The database schema does not appear to match the model definitions.');
@@ -270,6 +268,12 @@ module.exports.bootstrap = function(next) {
             }
         }, 5000);
     } else {
+        /***
+         *    ┌┐┌┌─┐┌┬┐  ┌─┐┬─┐┌─┐┌┬┐┬ ┬┌─┐┌┬┐┬┌─┐┌┐┌
+         *    ││││ │ │   ├─┘├┬┘│ │ │││ ││   │ ││ ││││
+         *    ┘└┘└─┘ ┴   ┴  ┴└─└─┘─┴┘└─┘└─┘ ┴ ┴└─┘┘└┘
+         */
+
         // no safety requirement for database modifications, bypass safeties
         return next();
     }
@@ -277,13 +281,18 @@ module.exports.bootstrap = function(next) {
     function validateIndexes() {
         let waitingToFinish = 0;
 
-        sails.helpers.objForEach(sails.models, (model, modelName) => {
+        _.forEach(sails.models, (model, modelName) => {
             if (model.tableName !== 'archive' && model.associations && model.associations.length) {
                 model.associations.map((association) => {
                     waitingToFinish++;
 
-                    // check this isn't a collection
+                    // make sure this isn't a collection
                     if (!association.collection) {
+                        /***
+                         *    ┌─┐┌─┐┌┬┐  ┌─┐┌─┐┬─┐┌─┐┬┌─┐┌┐┌  ┬┌─┌─┐┬ ┬┌─┐
+                         *    │ ┬├┤  │   ├┤ │ │├┬┘├┤ ││ ┬│││  ├┴┐├┤ └┬┘└─┐
+                         *    └─┘└─┘ ┴   └  └─┘┴└─└─┘┴└─┘┘└┘  ┴ ┴└─┘ ┴ └─┘
+                         */
                         sails.sendNativeQuery(
                             'SELECT * FROM `information_schema`.`KEY_COLUMN_USAGE` WHERE `TABLE_NAME` = \'' + model.tableName
                             + '\' AND `COLUMN_NAME` = \'' + association.alias
@@ -293,17 +302,34 @@ module.exports.bootstrap = function(next) {
                                 if (err) {
                                     console.error(err);
 
-                                    return console.error('I can\'t seem to read the required relationship data. HALTING!');
+                                    console.error('I can\'t seem to read the required relationship data. HALTING!');
+
+                                    return process.exit(1);
                                 }
 
                                 if (!foundKeys.rows[0] || !foundKeys.rows[0]['REFERENCED_COLUMN_NAME'] || foundKeys.rows[0]['REFERENCED_COLUMN_NAME'] !== sails.models[association.model].primaryKey) {
+                                    /***
+                                     *    ┌┐┌┌─┐  ┬─┐┌─┐┬  ┌─┐┌┬┐┬┌─┐┌┐┌┌─┐┬ ┬┬┌─┐  ┌─┐┌─┐┬ ┬┌┐┌┌┬┐
+                                     *    ││││ │  ├┬┘├┤ │  ├─┤ │ ││ ││││└─┐├─┤│├─┘  ├┤ │ ││ ││││ ││
+                                     *    ┘└┘└─┘  ┴└─└─┘┴─┘┴ ┴ ┴ ┴└─┘┘└┘└─┘┴ ┴┴┴    └  └─┘└─┘┘└┘─┴┘
+                                     */
                                     console.error('Column "' + association.alias + '" for "' + modelName + '" does not have a relationship setup');
                                 } else {
+                                    /***
+                                     *    ┬─┐┌─┐┬  ┌─┐┌┬┐┬┌─┐┌┐┌┌─┐┬ ┬┬┌─┐  ┌─┐┌─┐┬ ┬┌┐┌┌┬┐
+                                     *    ├┬┘├┤ │  ├─┤ │ ││ ││││└─┐├─┤│├─┘  ├┤ │ ││ ││││ ││
+                                     *    ┴└─└─┘┴─┘┴ ┴ ┴ ┴└─┘┘└┘└─┘┴ ┴┴┴    └  └─┘└─┘┘└┘─┴┘
+                                     */
                                     waitingToFinish--;
                                 }
                             }
                         );
                     } else {
+                        /***
+                         *    ┬ ┬┌─┐┌─┐  ┌─┐┌─┐┬  ┬  ┌─┐┌─┐┌┬┐┬┌─┐┌┐┌
+                         *    │││├─┤└─┐  │  │ ││  │  ├┤ │   │ ││ ││││
+                         *    └┴┘┴ ┴└─┘  └─┘└─┘┴─┘┴─┘└─┘└─┘ ┴ ┴└─┘┘└┘
+                         */
                         waitingToFinish--;
                     }
                 });
@@ -322,7 +348,7 @@ module.exports.bootstrap = function(next) {
 
         setTimeout(() => {
             if (waitingToFinish > 0) {
-                console.error('The database schema is missing indexes.');
+                console.error('The database schema is missing foreign key indexes.');
                 process.exit(1);
             }
         }, 3000);
