@@ -1,5 +1,7 @@
 # sails-react-bootstrap-webpack
 
+[![Join the chat at https://gitter.im/sails-react-bootstrap-webpack/community](https://badges.gitter.im/sails-react-bootstrap-webpack/community.svg)](https://gitter.im/sails-react-bootstrap-webpack/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 This is an opinionated base [Sails v1](https://sailsjs.com) application, using Webpack to handle Bootstrap (SASS) and React.
 
 ## Main Features
