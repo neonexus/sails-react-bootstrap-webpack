@@ -11,7 +11,7 @@ This is an opinionated base [Sails v1](https://sailsjs.com) application, using W
 + Schema validation and enforcement for `PRODUCTION`. This repo is setup for `MySQL`. If you plan to use a different datastore, you will want to modify [`config/bootstrap.js`](config/bootstrap.js) (not to be confused with the CSS framework, this config file is what Sails runs just before finally "lifting". See [Sails documentation](https://sailsjs.com/config/bootstrap) about the `config/bootstrap.js` file.)
 
 ## How to Use
-This repo is not installable via `npm`. It should be forked to help kick-start projects.
+This repo is not installable via `npm`. Instead, Github provides a handy "Use this template" (green) button at the top of this page. That will create a special fork of this repo (so there is a single, init commit, instead of the commit history from this repo).
 
 Scripts built into [`package.json`](package.json):
 
