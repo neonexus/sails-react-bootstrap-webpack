@@ -41,7 +41,7 @@ The script `npm run build` will make Webpack build all the proper assets into th
 If you want to build assets, but retain spaces / tabs for debugging, you can use `npm run build:dev`.
 
 #### Configuration
-The webpack configuration can be found in the `config/webpack` folder. The majority of the configuration can be found in [`common.config.js`](config/webpack/common.config.js). Then, the other 3 files, such as [`dev.config.js`](config/webpack/dev.config.js) extend the `common.config.js` file.
+The webpack configuration can be found in the `webpack` folder. The majority of the configuration can be found in [`common.config.js`](webpack/common.config.js). Then, the other 3 files, such as [`dev.config.js`](webpack/dev.config.js) extend the `common.config.js` file.
 
 ## Building with React
 React source files live in the `assets/src` folder. It is structured in such a way, where the `index.jsx` is really only used for local development (to help Webpack serve up the correct "app"). Then, there are the individual "apps", [main](assets/src/main.jsx) and [admin](assets/src/admin.jsx). These files are used as Webpack "[entry points](https://webpack.js.org/concepts/entry-points/)", to create 2 separate application bundles.

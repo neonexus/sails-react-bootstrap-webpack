@@ -1,6 +1,6 @@
 {
     "name": "sails-react-bootstrap-webpack",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "description": "An opinionated base configuration of Sails, with Webpack for React support, and Bootstrap for styling.",
     "keywords": [
         "sails",
@@ -59,11 +59,11 @@
         "custom-tests": "echo \"(No other custom tests yet.)\" && echo",
         "start": "run-p open:client lift",
         "start:debug": "npm-run-all --parallel open:client debug",
-        "open:client": "webpack-dev-server --mode development --open --config config/webpack/dev.config.js",
+        "open:client": "webpack-dev-server --mode development --open --config webpack/dev.config.js",
         "build": "run-s clean build:prod",
         "build:dev": "run-s clean build:dev:webpack",
-        "build:dev:webpack": "webpack --mode development --config config/webpack/dev-build.config.js",
-        "build:prod": "NODE_ENV=production webpack --mode production --config config/webpack/prod.config.js",
+        "build:dev:webpack": "webpack --mode development --config webpack/dev-build.config.js",
+        "build:prod": "NODE_ENV=production webpack --mode production --config webpack/prod.config.js",
         "clean": "rimraf .tmp && mkdirp .tmp/public",
         "lift": "node app.js",
         "debug": "node --inspect app.js",
