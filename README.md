@@ -20,7 +20,7 @@ Scripts built into [`package.json`](package.json):
 | Command       | Description
 |---------------|-------------------
 |`npm run start`| Will run both `npm run lift` and `npm run open:client` in parallel.
-|<pre>`npm run open:client`</pre> | Will run the [Webpack Dev Server](https://webpack.js.org/configuration/dev-server/) and open a browser tab / window.
+|`npm run open:client` | Will run the [Webpack Dev Server](https://webpack.js.org/configuration/dev-server/) and open a browser tab / window.
 |`npm run lift` | The same thing as `sails lift` or `node app.js`; will "[lift our Sails](https://sailsjs.com/documentation/reference/command-line-interface/sails-lift)" instance.
 |`npm run debug` | Alias for `node --inspect app.js`.
 |`npm run build` | Will run `npm run clean`, then will build production-ready files with Webpack in the `.tmp/public` folder.
