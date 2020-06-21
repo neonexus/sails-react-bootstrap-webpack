@@ -1,0 +1,6 @@
+bail: false #stop on first error
+async-only: true
+require:
+    - 'test/hooks.js'
+spec:  'test/**/*.test.js'
+timeout: 5000

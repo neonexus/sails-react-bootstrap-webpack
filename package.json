@@ -36,13 +36,16 @@
         "@babel/preset-react": "^7.9.4",
         "babel-eslint": "^10.1.0",
         "babel-loader": "^8.1.0",
+        "chai": "^4.2.0",
         "css-loader": "^3.5.3",
         "eslint": "7.0.0",
         "eslint-plugin-react": "^7.20.0",
         "favicons-webpack-plugin": "^3.0.1",
         "file-loader": "^6.0.0",
+        "fixted": "^3.0.1",
         "html-webpack-plugin": "^4.3.0",
         "mini-css-extract-plugin": "^0.9.0",
+        "mocha": "^8.0.1",
         "node-sass": "^4.14.1",
         "npm-run-all": "^4.1.5",
         "rimraf": "^3.0.2",
@@ -56,7 +59,7 @@
     "scripts": {
         "test": "npm run lint && npm run custom-tests && echo 'Done.'",
         "lint": "./node_modules/eslint/bin/eslint.js . --max-warnings=0 --report-unused-disable-directives && echo '✔  Your .js files look good.'",
-        "custom-tests": "echo \"(No other custom tests yet.)\" && echo",
+        "custom-tests": "NODE_ENV=testing mocha",
         "start": "run-p open:client lift",
         "start:debug": "npm-run-all --parallel open:client debug",
         "open:client": "webpack-dev-server --mode development --open --config webpack/dev.config.js",
@@ -75,7 +78,7 @@
         "url": "git://github.com/neonexus/sails-react-bootstrap-webpack.git"
     },
     "author": "NeoNexus DeMortis",
-    "license": "none",
+    "license": "Unlicense",
     "engines": {
         "node": "^10.15"
     }

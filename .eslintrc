@@ -22,6 +22,11 @@
     // or could use some advice, come by https://sailsjs.com/support.
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    },
     "env": {
         "node": true,
         "es6": true

@@ -13,7 +13,9 @@ module.exports = {
             required: true
         },
 
-
+        data: {
+            type: 'json'
+        },
 
         createdAt: {
             type: 'ref',

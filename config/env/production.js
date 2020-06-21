@@ -50,7 +50,6 @@ module.exports = {
          *                                                                          *
          ***************************************************************************/
         default: {
-            adapter: 'sails-mysql',
             host: process.env.RDS_HOSTNAME || 'localhost',
             user: process.env.RDS_USERNAME || 'produser',
             password: process.env.RDS_PASSWORD || 'myprodpassword',

@@ -7,18 +7,14 @@ async function hashPassword(pass) {
     return hash.toString('base64');
 }
 
-function updatePassword(user, next) {
+async function updatePassword(password) {
     // "binary to ASCII" aka base64
     // btoa('scrypt') = c2NyeXB0
-    if (user.password && user.password.length > 1 && user.password.substr(0, 8) !== 'c2NyeXB0') {
-        return hashPassword(user.password).then((hash) => {
-            user.password = hash;
-
-            return next();
-        });
+    if (password && password.length > 1 && password.substr(0, 8) !== 'c2NyeXB0') {
+        password = await hashPassword(password);
     }
 
-    return next();
+    return password;
 }
 
 module.exports = {
@@ -68,7 +64,7 @@ module.exports = {
             columnType: 'varchar(191)',
             // see: https://sailsjs.com/documentation/reference/waterline-orm/queries/decrypt
             // You will need to "decrypt" the user object before you can check if the password is valid.
-            encrypt: true
+            // encrypt: true // currently, does not work as intended, as password is encrypted before we can hash it
         },
 
         verificationKey: {
@@ -118,7 +114,6 @@ module.exports = {
         return _.omit(this, [
             'password',
             'verificationKey',
-            'email',
             'deletedAt',
             'deletedBy'
         ]);
@@ -134,26 +129,34 @@ module.exports = {
         return scrypt.verify(hashBuffer, raw).then((isAMatch) => isAMatch);
     },
 
-    beforeCreate: (user, next) => {
+    beforeCreate: async function(user, next) {
         const email = user.email.toLowerCase().trim();
+
+        console.log(user.password);
 
         user.email = email;
         user.avatar = 'https://www.gravatar.com/avatar/' + md5(email);
-        user.firstName = user.firstName.charAt(0).toUpperCase() + user.firstName.slice(1).trim();
-        user.lastName = user.lastName.charAt(0).toUpperCase() + user.lastName.slice(1).trim();
+        user.firstName = user.firstName.trim().charAt(0).toUpperCase() + user.firstName.slice(1).trim();
+        user.lastName = user.lastName.trim().charAt(0).toUpperCase() + user.lastName.slice(1).trim();
         user.id = sails.helpers.generateUuid();
 
-        return updatePassword(user, next);
+        user.password = await updatePassword(user.password);
+
+        return next();
     },
 
-    beforeUpdate: (user, next) => {
+    beforeUpdate: async function(user, next) {
         const email = user.email.toLowerCase().trim();
 
         user.email = email;
         user.avatar = 'https://www.gravatar.com/avatar/' + md5(email);
-        user.firstName = user.firstName.charAt(0).toUpperCase() + user.firstName.slice(1).trim();
-        user.lastName = user.lastName.charAt(0).toUpperCase() + user.lastName.slice(1).trim();
+        user.firstName = user.firstName.trim().charAt(0).toUpperCase() + user.firstName.slice(1).trim();
+        user.lastName = user.lastName.trim().charAt(0).toUpperCase() + user.lastName.slice(1).trim();
 
-        return updatePassword(user, next);
+        if (user.password) {
+            user.password = await updatePassword(user.password);
+        }
+
+        return next();
     }
 };

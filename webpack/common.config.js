@@ -96,6 +96,7 @@ plugins.push(new FaviconsWebpackPlugin({
         developerURL: null, // prevent retrieving from the nearest package.json
         display: 'standalone', // Preferred display mode: "fullscreen", "standalone", "minimal-ui" or "browser".
         background: '#fff',
+        // eslint-disable-next-line camelcase
         theme_color: '#fff',
         icons: {
             coast: false,

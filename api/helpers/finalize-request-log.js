@@ -46,10 +46,12 @@ module.exports = {
                 }
 
                 if (out.access_token) {
+                    // eslint-disable-next-line camelcase
                     out.access_token = bleep;
                 }
 
                 if (out.refresh_token) {
+                    // eslint-disable-next-line camelcase
                     out.refresh_token = bleep;
                 }
             }
