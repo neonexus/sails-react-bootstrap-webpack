@@ -132,8 +132,6 @@ module.exports = {
     beforeCreate: async function(user, next) {
         const email = user.email.toLowerCase().trim();
 
-        console.log(user.password);
-
         user.email = email;
         user.avatar = 'https://www.gravatar.com/avatar/' + md5(email);
         user.firstName = user.firstName.trim().charAt(0).toUpperCase() + user.firstName.slice(1).trim();

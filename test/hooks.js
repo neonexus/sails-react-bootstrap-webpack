@@ -4,7 +4,8 @@
  */
 
 const _ = require('lodash');
-global.should = require('chai').should();
+const chai = require('chai');
+global.should = chai.should();
 
 const Sails = require('sails');
 const Fixted = require('fixted');
@@ -53,7 +54,7 @@ exports.mochaHooks = {
             // Load fixtures
             const fixted = new Fixted();
 
-            // Populate the DB, forcing creation of accounts and users first
+            // Populate the DB, forcing creation of users first
             fixted.populate([
                 'user'
             ], done);
@@ -64,6 +65,5 @@ exports.mochaHooks = {
         // here you can clear fixtures, etc.
         console.log(); // skip a line before lowering logs
         sails.lower(done);
-        // done();
     }
 };
