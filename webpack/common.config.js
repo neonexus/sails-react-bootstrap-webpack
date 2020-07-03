@@ -6,7 +6,7 @@ const _ = require('lodash');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
-let configPath = path.resolve(__dirname, '../local.js'),
+let configPath = path.resolve(__dirname, '../config/local.js'),
     baseUrl = 'http://localhost:1337',
     frontendUrl = 'http://localhost:8080',
     assetUrl = '';
@@ -42,7 +42,7 @@ const baseHtmlConfig = {
 const entryPoints = [
     {
         name: 'admin',
-        entry: path.join(__dirname, '/../../assets/src/admin.jsx'),
+        entry: path.join(__dirname, '/../assets/src/admin.jsx'),
         outfile: 'admin/index.html',
         title: 'My Admin',
         template: 'assets/webapp_entry_template.html'
@@ -50,13 +50,13 @@ const entryPoints = [
     {
         // this entry is mainly for local development, and won't be served by Sails
         name: 'index',
-        entry: path.join(__dirname, '/../../assets/src/index.jsx'),
+        entry: path.join(__dirname, '/../assets/src/index.jsx'),
         outfile: 'index.html',
         title: 'My Application'
     },
     {
         name: 'main',
-        entry: path.join(__dirname, '/../../assets/src/main.jsx'),
+        entry: path.join(__dirname, '/../assets/src/main.jsx'),
         outfile: 'main/index.html',
         title: 'My Application'
     }
@@ -86,7 +86,7 @@ plugins.push(
 );
 
 plugins.push(new FaviconsWebpackPlugin({
-    logo: path.join(__dirname, '/../../assets/images/favicon.png'), // svg works too!
+    logo: path.join(__dirname, '/../assets/images/favicon.png'), // svg works too!
     mode: 'webapp', // 'webapp' or 'light' - 'webapp' by default
     devMode: 'light', // 'webapp' or 'light' - 'light' by default
     favicons: {
@@ -108,7 +108,7 @@ plugins.push(new FaviconsWebpackPlugin({
 plugins.push(
     new CopyPlugin({
         patterns: [
-            {from: path.join(__dirname, '/../../assets/fonts'), to: path.join(__dirname, '/../../.tmp/public/assets/fonts')}
+            {from: path.join(__dirname, '/../assets/fonts'), to: path.join(__dirname, '/../.tmp/public/assets/fonts')}
         ]
     })
 );
@@ -117,7 +117,7 @@ module.exports = {
     entry,
     plugins,
     output: {
-        path: path.join(__dirname, '/../../.tmp/public'),
+        path: path.join(__dirname, '/../.tmp/public'),
         filename: '[name]/bundle.js',
         publicPath: baseHtmlConfig.publicPath
     },
@@ -143,7 +143,7 @@ module.exports = {
     },
     resolve: {
         extensions: ['.js', '.jsx'],
-        modules: ['node_modules', path.join(__dirname, '/../../assets')]
+        modules: ['node_modules', path.join(__dirname, '/../assets')]
     },
     optimization: {
         splitChunks: {

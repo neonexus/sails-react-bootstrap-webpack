@@ -1,0 +1,7 @@
+{
+    "include": [
+        "api/**"
+    ],
+    "temp-dir": ".tmp/nyc",
+    "report-dir": "test/coverage"
+}

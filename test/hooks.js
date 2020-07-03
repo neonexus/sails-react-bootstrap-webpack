@@ -4,13 +4,23 @@
  */
 
 const _ = require('lodash');
-const chai = require('chai');
-global.should = chai.should();
+const fs = require('fs');
+const path = require('path');
+global.chai = require('chai');
 
+chai.use(require('chai-spies'));
+
+// setup global should object, for things like "should.not.exist(someNullVariable)", which requires calling .should() on chai, to also setup "obj.should" syntax
+global.should = chai.should(); // WebStorm doesn't like this, but it works...
+
+// not the global "sails" variable, this is internal uppercase "Sails"
 const Sails = require('sails');
+
+// simple database fixture handler
 const Fixted = require('fixted');
 
 exports.mochaHooks = {
+    // run once
     beforeAll: function(done) {
         this.timeout(5000);
 
@@ -46,10 +56,21 @@ exports.mochaHooks = {
                 async: false,
                 models: true
             }
-        }), function(err){
+        }), function(err, sailsApp){
             if (err) {
                 return done(err);
             }
+
+            // sanity checks
+            should.exist(sails);
+            sails.should.have.property('models');
+            sails.models.should.have.property('requestlog');
+
+            fs.readdir( path.join(__dirname, '../api/models'), (error, files) => {
+                should.not.exist(error);
+
+                Object.keys(sails.models).should.have.lengthOf(files.length + 1); // add 1 for the built-in archive model
+            });
 
             // Load fixtures
             const fixted = new Fixted();
@@ -61,6 +82,7 @@ exports.mochaHooks = {
         });
     },
 
+    // run once
     afterAll: function(done){
         // here you can clear fixtures, etc.
         console.log(); // skip a line before lowering logs
