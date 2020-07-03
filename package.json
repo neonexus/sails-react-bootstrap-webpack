@@ -1,6 +1,6 @@
 {
     "name": "sails-react-bootstrap-webpack",
-    "version": "1.2.1",
+    "version": "1.2.2",
     "description": "An opinionated base configuration of Sails, with Webpack for React support, and Bootstrap for styling.",
     "keywords": [
         "sails",
@@ -75,7 +75,7 @@
         "clean": "rimraf .tmp && mkdirp .tmp/public",
         "lift": "node app.js",
         "debug": "node --inspect app.js",
-        "lines": "git ls-files --exclude-standard -- ':!:**/*.[pjs][npv]g' ':!:**/*.ai' ':!:.idea' ':!:**/*.eslintrc' ':!:package-lock.json' | xargs wc -l"
+        "lines": "git ls-files --exclude-standard -- ':!:**/*.[pjs][npv]g' ':!:**/*.ai' ':!:.idea' ':!:test/coverage/*' ':!:config/*' ':!:.babelrc' ':!:.editorconfig' ':!:.eslintrc' ':!:.eslintignore' ':!:.gitignore' ':!:.mocharc.yaml' ':!:.npmrc' ':!:.nycrc' ':!:.sailsrc' ':!:LICENSE' ':!:package-lock.json' | xargs wc -l"
     },
     "main": "app.js",
     "repository": {
