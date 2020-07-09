@@ -104,6 +104,20 @@ module.exports.models = {
      *                                                                          *
      ***************************************************************************/
 
-    cascadeOnDestroy: true
+    cascadeOnDestroy: true,
+
+
+    /********************************************************************************
+     *                                                                              *
+     * This is a custom property, that is used inside of config/bootstrap.js.       *
+     * If set to true AND sails.config.models.migrate === 'safe', then the          *
+     * database schema validation and enforcement goes to work. If the database     *
+     * is not configured according to the model specifications, the problem areas   *
+     * will be console.error()'d, and Sails will fail to lift. This is intended for *
+     * remote environments, to help prevent accidental deployment of an             *
+     * incompatible version for the given datastore.                                *
+     *                                                                              *
+     ********************************************************************************/
+    validateOnBootstrap: true
 
 };

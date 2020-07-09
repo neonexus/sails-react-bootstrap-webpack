@@ -14,7 +14,7 @@
 
 module.exports.bootstrap = function(next) {
     // Check if we need to validate our schema
-    if (sails.config.models.migrate === 'safe') { // aka PRODUCTION
+    if (sails.config.models.validateOnBootstrap && sails.config.models.migrate === 'safe') { // aka PRODUCTION
         let waitingToFinish = 0;
 
         _.forEach(sails.models, (model, modelName) => {

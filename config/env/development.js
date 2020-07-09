@@ -21,14 +21,14 @@ module.exports = {
      * environment (see config/datastores.js and config/models.js )           *
      ***************************************************************************/
 
-    datastores: {
-        host: process.env.DB_HOST || 'localhost',
-        user: process.env.DB_USER || 'root',
-        password: process.env.DB_PASS || 'mypass',
-        database: process.env.DB_NAME || 'myapp',
-        port: process.env.DB_PORT || 3306,
-        ssl: (process.env.DB_SSL === 'true')
-    },
+    // datastores: {
+    //     host: process.env.DB_HOST || 'localhost',
+    //     user: process.env.DB_USER || 'root',
+    //     password: process.env.DB_PASS || 'mypass',
+    //     database: process.env.DB_NAME || 'myapp',
+    //     port: process.env.DB_PORT || 3306,
+    //     ssl: (process.env.DB_SSL === 'true')
+    // },
 
     models: {
         migrate: 'safe' // This is set as safe, so remote development machines are behaving like remote production machines. Use local.js to override.
