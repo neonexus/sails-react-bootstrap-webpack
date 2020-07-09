@@ -30,7 +30,7 @@ class SidebarNav extends React.Component {
                 <div id="sidebar-nav" className="hidden-sm">
                     <div className="logo">
                         <Link to="/admin/dashboard">
-                            <img src={logo} />
+                            <img src={logo} alt="Logo" />
                         </Link>
                     </div>
                     <div className="sidebar-wrapper">

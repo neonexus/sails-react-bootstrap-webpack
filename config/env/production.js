@@ -23,8 +23,8 @@ module.exports = {
 
     logSensitiveData: false, // never log sensitive data in production database
 
-    baseUrl: 'https://myapi.app',
-    assetsUrl: 'https://my-cdn.app/', // must end with /
+    baseUrl: process.env.BASE_URL || 'https://my-api.app',
+    assetsUrl: process.env.ASSETS_URL || '', // Something like: https://my-cdn.app/ must end with /
 
     /**************************************************************************
      *                                                                         *
@@ -50,15 +50,12 @@ module.exports = {
          *                                                                          *
          ***************************************************************************/
         default: {
-            host: process.env.RDS_HOSTNAME || 'localhost',
-            user: process.env.RDS_USERNAME || 'produser',
-            password: process.env.RDS_PASSWORD || 'myprodpassword',
-            database: process.env.RDS_DB_NAME || 'proddatabase',
-            port: process.env.RDS_PORT || 3306,
-            charset: 'utf8mb4',
-            collation: 'utf8mb4_general_ci',
-            timezone: 'UTC',
-            ssl: (process.env.RDS_SSL === 'true')
+            host: process.env.DB_HOSTNAME || 'localhost',
+            user: process.env.DB_USERNAME || 'produser',
+            password: process.env.DB_PASSWORD || 'myprodpassword',
+            database: process.env.DB_NAME || 'proddatabase',
+            port: process.env.DB_PORT || 3306,
+            ssl: (process.env.DB_SSL === 'true')
         }
     },
 
@@ -214,11 +211,12 @@ module.exports = {
         // https://jsfiddle.net/fsbd3ey5/1/
         secret: process.env.SESSION_SECRET, // DO NOT STORE THIS IN SOURCE CONTROL!!!
 
-        host: process.env.RDS_HOSTNAME,
-        port: process.env.RDS_PORT,
-        user: process.env.RDS_USERNAME,
-        password: process.env.RDS_PASSWORD,
-        database: process.env.RDS_DB_NAME,
+        host: process.env.DB_HOSTNAME || 'localhost',
+        user: process.env.DB_USERNAME || 'produser',
+        password: process.env.DB_PASSWORD || 'myprodpassword',
+        database: process.env.DB_NAME || 'proddatabase',
+        port: process.env.DB_PORT || 3306,
+        ssl: (process.env.DB_SSL === 'true')
     },
 
 

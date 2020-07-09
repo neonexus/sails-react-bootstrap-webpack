@@ -1,7 +1,7 @@
 module.exports = {
-    friendlyName: 'Create Account',
+    friendlyName: 'Create User',
 
-    description: 'Create a new account.',
+    description: 'Create a new user.',
 
     inputs: {
         firstName: {
@@ -51,7 +51,7 @@ module.exports = {
             return exits.badRequest(isPasswordValid);
         }
 
-        User.create({
+        sails.models.user.create({
             id: 'c', // required, but auto-generated
             firstName: inputs.firstName,
             lastName: inputs.lastName,

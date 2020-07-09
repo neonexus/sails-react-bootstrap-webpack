@@ -4,7 +4,6 @@ class api {
     constructor(baseUrl) {
         this.baseUrl = baseUrl || process.env.baseUrl;
         this.request = request.agent(); // cookie handler
-        this.isActive = false;
         this.queue = [];
     }
 

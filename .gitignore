@@ -135,6 +135,7 @@ lib-cov
 .idea/*
 !.idea/runConfigurations/
 !.idea/codeStyles/
+!.idea/dictionaries/
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*

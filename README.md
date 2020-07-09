@@ -15,7 +15,7 @@ This is an opinionated base [Sails v1](https://sailsjs.com) application, using W
 ## How to Use
 This repo is not installable via `npm`. Instead, Github provides a handy "Use this template" (green) button at the top of this page. That will create a special fork of this repo (so there is a single, init commit, instead of the commit history from this repo).
 
-Scripts built into [`package.json`](package.json):
+### Scripts built into [`package.json`](package.json):
 
 | Command       | Description
 |---------------|-------------------
@@ -26,9 +26,21 @@ Scripts built into [`package.json`](package.json):
 |npm run build  | Will run `npm run clean`, then will build production-ready files with Webpack in the `.tmp/public` folder.
 |npm run build:dev | Same thing as `npm run build`, except that it will not optimize the files, retaining newlines and empty spaces.
 |npm run clean  | Will basically delete everything in the `.tmp` folder.
-|npm run lines  | Will count the lines of code in the project, minus `.gitignore`'d files, for funzies. There are currently about **6k** custom lines in this repo (views, controllers, helpers, hooks, etc).
+|npm run lines  | Will count the lines of code in the project, minus `.gitignore`'d files, for funzies. There are currently about 6k custom lines in this repo (views, controllers, helpers, hooks, etc).
 |npm run test   | Run [Mocha](https://mochajs.org/) tests. Everything starts in the [`test/hooks.js`](test/hooks.js) file.
 |npm run coverage | Runs [NYC](https://www.npmjs.com/package/nyc) coverage reporting of the Mocha tests, which generates HTML in `test/coverage`.
+
+### Environment Variables used for remote servers:
+| Variable      | Description
+|---------------|----------------------
+| ASSETS_URL    | Webpack is configured to modify static asset URLs to point to a CDN, like CloudFront. MUST end with a slash " / ".
+| BASE_URL      | The address of the Sails instance.
+| DB_HOST       | The hostname of the datastore.
+| DB_USER       | Username for the datastore.
+| DB_PASS       | Password for the datastore.
+| DB_NAME       | The name of the database inside the datastore.
+| DB_PORT       | The port number for datastore.
+| DB_SSL        | If the datastore requires SSL, set this to "true".
 
 ## Request Logging
 Automatic incoming request logging, is a 2 part process. First, the [`request-logger` hook](api/hooks/request-logger.js) gathers info from the request, and creates a new [`RequestLog` record](api/models/RequestLog.js), making sure to mask anything that may be sensitive, such as passwords. Then, a custom response gathers information from the response, again, scrubbing sensitive data (using the [customToJSON](https://sailsjs.com/documentation/concepts/models-and-orm/model-settings?identity=#customtojson) feature of Sails models) to prevent leaking of password hashes, or anything else that should never be publicly accessible. The [`keepModelsSafe` helper](api/helpers/keep-models-safe.js) and the custom responses (such as [ok](api/responses/ok.js) or [serverError](api/responses/serverError.js)) are responsible for the final leg of request logs.
@@ -71,6 +83,7 @@ module.exports.bootstrap = function(next) {
 + [Sails Professional / Enterprise Options](https://sailsjs.com/enterprise)
 + [`react-bootstrap` Documentation](https://react-bootstrap.netlify.app/)
 + [Webpack Documentation](https://webpack.js.org/)
++ [Simple data fixtures for testing Sails.js](https://www.npmjs.com/package/fixted)
 
 
 ### Version info

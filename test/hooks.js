@@ -54,7 +54,7 @@ exports.mochaHooks = {
                 sails: true,
                 _,
                 async: false,
-                models: true
+                models: false
             }
         }), function(err, sailsApp){
             if (err) {
@@ -64,7 +64,6 @@ exports.mochaHooks = {
             // sanity checks
             should.exist(sails);
             sails.should.have.property('models');
-            sails.models.should.have.property('requestlog');
 
             fs.readdir( path.join(__dirname, '../api/models'), (error, files) => {
                 should.not.exist(error);

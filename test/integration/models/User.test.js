@@ -1,9 +1,15 @@
 const userFixtures = require('../../fixtures/User.js');
 
-describe('User', function() {
+describe('User Model', function() {
+    before(function() {
+        // sanity checks
+        should.exist(sails);
+        sails.models.should.have.property('user');
+    });
+
     describe('.find()', function() {
         it('should return all user fixtures', async function() {
-            const foundUsers = await User.find({});
+            const foundUsers = await sails.models.user.find({});
             foundUsers.should.be.an('array');
             foundUsers.should.have.lengthOf(userFixtures.length);
 
@@ -17,7 +23,7 @@ describe('User', function() {
 
     describe('.toJSON()', function() {
         it('should not expose sensitive information to the outside world', async function() {
-            const foundUsers = await User.find();
+            const foundUsers = await sails.models.user.find({});
             foundUsers.should.be.an('array');
 
             // make sure password is never exposed to the outside world
