@@ -10,7 +10,7 @@ This is an opinionated base [Sails v1](https://sailsjs.com) application, using W
 + Setup for Webpack auto-reload dev server.
 + Setup so Sails will serve Webpack-built bundles as separate apps (so, a marketing site, and an admin site can live side-by-side).
 + Includes [react-bootstrap](https://www.npmjs.com/package/react-bootstrap) to make using Bootstrap styles / features with React easier.
-+ Schema validation and enforcement for `PRODUCTION`. This repo is setup for `MySQL`. If you plan to use a different datastore, you will want to modify [`config/bootstrap.js`](config/bootstrap.js) (not to be confused with the CSS framework, this config file is what Sails runs just before finally "lifting". See [Sails documentation](https://sailsjs.com/config/bootstrap) about the `config/bootstrap.js` file.)
++ Schema validation and enforcement for `PRODUCTION`. This repo is setup for `MySQL`. If you plan to use a different datastore, you will likely want to disable the schema validation and enforcement feature inside [`config/bootstrap.js`](config/bootstrap.js). See [schema validation and enforcement](#schema-validation-and-enforcement) for more info.
 
 ## How to Use
 This repo is not installable via `npm`. Instead, Github provides a handy "Use this template" (green) button at the top of this page. That will create a special fork of this repo (so there is a single, init commit, instead of the commit history from this repo).
@@ -66,7 +66,9 @@ In a remote environment, Sails will look at the first subdirectory requested, an
 Inside [`config/bootstrap.js`](config/bootstrap.js) is a bit of logic (**HEAVILY ROOTED IN NATIVE `MySQL` QUERIES**), which validates column types in the `PRODUCTION` database (aka `sails.config.models.migrate === 'safe'`), then will validate foreign key indexes. If there are too many columns, or there is a missing index, or incorrect column type, the logic will `console.error` any issues, then `process.exit(1)` (kill) the Sails server. The idea here, is that if anything is out of alignment, Sails will fail to lift, which will mean failure to deploy on AWS.
 
 ### If you do not want schema validation
-... then replace the contents of `config/bootstrap.js` with the following:
+... then you have 2 options:
+ * Set `sails.config.models.validateOnBootstrap = false` at the bottom of [`config/models.js`](config/models.js).
+ * OR replace the contents of `config/bootstrap.js` with the following:
 
 ```javascript
 module.exports.bootstrap = function(next) {
