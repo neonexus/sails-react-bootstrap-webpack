@@ -7,6 +7,9 @@ describe('Request Logger', function() {
     before( function() {
         logger = requestLogger(sails);
 
+        // sanity check
+        sails.models.should.have.property('requestlog');
+
         hook = logger.routes.before['*'];
         hook.should.be.a('function');
     });
@@ -73,11 +76,40 @@ describe('Request Logger', function() {
         const defaultReq = {
             method: 'GET',
             path: '/',
-            body: {},
-            query: {},
-            headers: {}
+            hostname: 'localtest',
+            body: {
+                password: 'password1',
+                password2: 'password2',
+                currentPassword: 'currentPassword',
+                newPassword: 'newPassword',
+                newPassword2: 'newPassword2',
+                pass: 'lamepassword'
+            },
+            query: {
+                securityToken: 'somelongsecuritytoken'
+            },
+            headers: {
+                securityToken: 'somelongsecuritytokenintheheaders'
+            }
         };
+        const defaultRes = {};
+        const defaultCb = chai.spy();
 
+        before(function() {
+            // force this, just in-case
+            sails.config.logSensitiveData = false;
+        });
 
+        it('Not log sensitive information', function() {
+            let thisReq = _.merge({}, defaultReq);
+
+            hook = hook.bind(this);
+            hook(thisReq, defaultRes, defaultCb);
+
+            defaultCb.should.have.been.called();
+
+            thisReq.should.have.property('requestId');
+            thisReq.should.have.property('_customStartTime');
+        });
     });
 });
