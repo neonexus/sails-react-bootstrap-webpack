@@ -34,13 +34,13 @@ This repo is not installable via `npm`. Instead, Github provides a handy "Use th
 | Variable   | DEV default          | PROD default            | Description
 |------------|----------------------|-------------------------|----------------------
 | ASSETS_URL | "" (empty string)    | "" (empty string)       | Webpack is configured to modify static asset URLs to point to a CDN, like CloudFront. MUST end with a slash " / ".
-| BASE_URL   | raw:https://my&#8209;api.app   | raw:https://my&#8209;api.app      | The address of the Sails instance.
-| DB_HOST    | localhost            | localhost              | The hostname of the datastore.
-| DB_USER    | root                 | produser               | Username for the datastore.
-| DB_PASS    | mypass               | myprodpassword         | Password for the datastore.
-| DB_NAME    | myapp                | proddatabase           | The name of the database inside the datastore.
-| DB_PORT    | 3306                 | 3306                   | The port number for datastore.
-| DB_SSL     | false                | false                  | If the datastore requires SSL, set this to "true".
+| BASE_URL   | https://myapi.app    | https://myapi.app       | The address of the Sails instance.
+| DB_HOST    | localhost            | localhost               | The hostname of the datastore.
+| DB_USER    | root                 | produser                | Username for the datastore.
+| DB_PASS    | mypass               | myprodpassword          | Password for the datastore.
+| DB_NAME    | myapp                | proddatabase            | The name of the database inside the datastore.
+| DB_PORT    | 3306                 | 3306                    | The port number for datastore.
+| DB_SSL     | false                | false                   | If the datastore requires SSL, set this to "true".
 
 ## Request Logging
 Automatic incoming request logging, is a 2 part process. First, the [`request-logger` hook](api/hooks/request-logger.js) gathers info from the request, and creates a new [`RequestLog` record](api/models/RequestLog.js), making sure to mask anything that may be sensitive, such as passwords. Then, a custom response gathers information from the response, again, scrubbing sensitive data (using the [customToJSON](https://sailsjs.com/documentation/concepts/models-and-orm/model-settings?identity=#customtojson) feature of Sails models) to prevent leaking of password hashes, or anything else that should never be publicly accessible. The [`keepModelsSafe` helper](api/helpers/keep-models-safe.js) and the custom responses (such as [ok](api/responses/ok.js) or [serverError](api/responses/serverError.js)) are responsible for the final leg of request logs.

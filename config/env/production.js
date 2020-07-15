@@ -23,8 +23,8 @@ module.exports = {
 
     logSensitiveData: false, // never log sensitive data in production database
 
-    baseUrl: process.env.BASE_URL || 'https://my-api.app',
-    assetsUrl: process.env.ASSETS_URL || '', // Something like: https://my-cdn.app/ must end with /
+    baseUrl: process.env.BASE_URL || 'https://myapi.app',
+    assetsUrl: process.env.ASSETS_URL || '', // Something like: https://my-cdn.app/ must end with / or be blank.
 
     /**************************************************************************
      *                                                                         *
