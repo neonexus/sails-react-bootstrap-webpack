@@ -33,7 +33,7 @@ This repo is not installable via `npm`. Instead, Github provides a handy "Use th
 ### Environment Variables used for remote servers:
 | Variable   | DEV default          | PROD default            | Description
 |------------|----------------------|-------------------------|----------------------
-| ASSETS_URL | "" (empty string)    | "" (empty string)       | Webpack is configured to modify static asset URLs to point to a CDN, like CloudFront. MUST end with a slash " / ".
+| ASSETS_URL | "" (empty string)    | "" (empty string)       | Webpack is configured to modify static asset URLs to point to a CDN, like CloudFront. MUST end with a slash " / ", or be empty.
 | BASE_URL   | https://myapi.app    | https://myapi.app       | The address of the Sails instance.
 | DB_HOST    | localhost            | localhost               | The hostname of the datastore.
 | DB_USER    | root                 | produser                | Username for the datastore.
