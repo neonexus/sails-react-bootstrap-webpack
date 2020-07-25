@@ -4,6 +4,11 @@
 
 This is an opinionated base [Sails v1](https://sailsjs.com) application, using Webpack to handle Bootstrap (SASS) and React.
 
+# Preface
+The `master` branch is experimental, and the [`releases section`](https://github.com/neonexus/sails-react-bootstrap-webpack/releases) is where one should base their use of the template (or simply change the tag to the most recent, stable release in the top left). `master` is **volatile**, likely to change at any time, for any reason; this includes `git push --force`.
+
+**FINAL WARNING: DO NOT RELY ON THE MASTER BRANCH!**
+
 ## Main Features
 
 + Automatic (incoming) request logging, via Sails models / hooks.
