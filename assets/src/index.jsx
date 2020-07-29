@@ -9,30 +9,15 @@ import {
 import AdminRouter from './Admin/AdminRouter';
 import MainRouter from './Main/MainRouter';
 
-import {
-    RecoilRoot
-} from 'recoil';
-
 function IndexApp() {
-    const adminInit = {
-        isAuthenticated: false,
-        user: null
-    };
-
-    const mainInit = {};
-
     return (
         <Router>
             <Switch>
                 <Route path="/admin">
-                    <RecoilRoot initializeState={adminInit}>
-                        <AdminRouter />
-                    </RecoilRoot>
+                    <AdminRouter />
                 </Route>
                 <Route path="/main">
-                    <RecoilRoot initializeState={mainInit}>
-                        <MainRouter />
-                    </RecoilRoot>
+                    <MainRouter />
                 </Route>
                 <Route>
                     <Redirect to={{pathname: '/main/'}} />
