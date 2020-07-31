@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {APIConsumer} from '../data/api';
+
 class Login extends React.Component {
     constructor(props) {
         super(props);
@@ -25,10 +27,12 @@ class Login extends React.Component {
         // this.props.location.history.push(dest);
     }
 
-    handleLogin(e) {
+    handleLogin(e, api) {
         e.preventDefault();
 
         localStorage.setItem('email', this.state.email);
+
+        console.log(api);
 
         // TODO: actually hit API to login, then call this function
         this.props.userLogin({email: this.state.email});
@@ -44,8 +48,8 @@ class Login extends React.Component {
         this.setState({password: e.target.value});
     }
 
-    handleRememberMe(val) {
-        this.setState({rememberMe: val});
+    handleRememberMe() {
+        this.setState((current) => ({rememberMe: !current.rememberMe}));
     }
 
     render() {
@@ -59,22 +63,28 @@ class Login extends React.Component {
                 {
                     !this.state.isLoggedIn &&
                     <div className="row justify-content-center">
-                        <form onSubmit={this.handleLogin} className="col-3">
-                            <h3 className="row">Login</h3>
-                            <div className="row pb-2">
-                                <input type="email" className="form-control" placeholder="Email" value={this.state.email} onChange={this.handleEmail} />
-                            </div>
-                            <div className="row pb-4">
-                                <input type="password" className="form-control" placeholder="Password" value={this.state.password} onChange={this.handlePassword} />
-                            </div>
-                            <div className="row pb-4 form-check">
-                                <input type="checkbox" className="form-check-input" id="rememberMe" value={this.state.rememberMe} onChange={() => this.handleRememberMe(!this.state.rememberMe)} />
-                                <label htmlFor="rememberMe">Remember Me</label>
-                            </div>
-                            <div className="row">
-                                <button type="submit" className="btn btn-primary">Login</button>
-                            </div>
-                        </form>
+                        <APIConsumer>
+                            {
+                                (api) => (
+                                    <form onSubmit={(e) => this.handleLogin(e, api)} className="col-3">
+                                        <h3 className="row">Login</h3>
+                                        <div className="row pb-2">
+                                            <input type="email" className="form-control" placeholder="Email" value={this.state.email} onChange={this.handleEmail} />
+                                        </div>
+                                        <div className="row pb-4">
+                                            <input type="password" className="form-control" placeholder="Password" value={this.state.password} onChange={this.handlePassword} />
+                                        </div>
+                                        <div className="row pb-4 form-check">
+                                            <input type="checkbox" className="form-check-input" id="rememberMe" value={this.state.rememberMe} onChange={this.handleRememberMe} />
+                                            <label htmlFor="rememberMe">Remember Me</label>
+                                        </div>
+                                        <div className="row">
+                                            <button type="submit" className="btn btn-primary">Login</button>
+                                        </div>
+                                    </form>
+                                )
+                            }
+                        </APIConsumer>
                     </div>
                 }
             </div>
@@ -83,7 +93,6 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-    api: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     userLogin: PropTypes.func.isRequired
 };

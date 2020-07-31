@@ -1,10 +1,17 @@
 import request from 'superagent';
 
+let requester = null;
+
 class api {
     constructor(baseUrl) {
-        this.baseUrl = baseUrl || process.env.baseUrl;
-        this.request = request.agent(); // cookie handler
-        this.queue = [];
+        this.baseUrl = baseUrl || process.env.baseUrl; // process.env is coming from webpack
+
+        this.get = this.get.bind(this);
+        this.post = this.post.bind(this);
+        this.put = this.put.bind(this);
+        this.del = this.del.bind(this);
+
+        requester = request.agent(); // cookie handler
     }
 
     static __buildRequestObj(thisReq, req) {
@@ -43,7 +50,7 @@ class api {
             req = {url: req};
         }
 
-        const thisReq = api.__buildRequestObj(this.request.get(this.baseUrl + req.url), req);
+        const thisReq = api.__buildRequestObj(requester.get(this.baseUrl + req.url), req);
 
         thisReq.then((res) => api.__buildResponseWrapper(res, good), bad);
     }
@@ -53,7 +60,7 @@ class api {
             req = {url: req};
         }
 
-        const thisReq = api.__buildRequestObj(this.request.post(this.baseUrl + req.url), req);
+        const thisReq = api.__buildRequestObj(requester.post(this.baseUrl + req.url), req);
 
         thisReq.then((res) => api.__buildResponseWrapper(res, good), bad);
     }
@@ -63,7 +70,7 @@ class api {
             req = {url: req};
         }
 
-        const thisReq = api.__buildRequestObj(this.request.put(this.baseUrl + req.url), req);
+        const thisReq = api.__buildRequestObj(requester.put(this.baseUrl + req.url), req);
 
         thisReq.then((res) => api.__buildResponseWrapper(res, good), bad);
     }
@@ -73,7 +80,7 @@ class api {
             req = {url: req};
         }
 
-        const thisReq = api.__buildRequestObj(this.request.del(this.baseUrl + req.url), req);
+        const thisReq = api.__buildRequestObj(requester.del(this.baseUrl + req.url), req);
 
         thisReq.then((res) => api.__buildResponseWrapper(res, good), bad);
     }

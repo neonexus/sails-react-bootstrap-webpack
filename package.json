@@ -75,7 +75,6 @@
         "clean": "rimraf .tmp && mkdirp .tmp/public",
         "lift": "node app.js",
         "debug": "node --inspect app.js",
-        "blah": "node app.js",
         "lines": "git ls-files --exclude-standard -- ':!:**/*.[pjs][npv]g' ':!:**/*.ai' ':!:.idea' ':!:test/coverage/*' ':!:config/*' ':!:.babelrc' ':!:.editorconfig' ':!:.eslintrc' ':!:.eslintignore' ':!:.gitignore' ':!:.mocharc.yaml' ':!:.npmrc' ':!:.nycrc' ':!:.sailsrc' ':!:LICENSE' ':!:package-lock.json' | xargs wc -l"
     },
     "main": "app.js",

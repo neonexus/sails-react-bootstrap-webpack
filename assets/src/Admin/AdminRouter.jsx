@@ -7,18 +7,18 @@ import {
     Route,
     Redirect
 } from 'react-router-dom';
-import api from '../common/api';
 
 import Login from '../Admin/Login';
 import SidebarNav from './SidebarNav';
 import Upgrade from './Upgrade';
+
+import {APIProvider} from '../data/api';
 
 class AdminRouter extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            api: new api(),
             isAuthenticated: false,
             user: sessionStorage.getItem('user')
         };
@@ -53,28 +53,30 @@ class AdminRouter extends React.Component {
             //         }}
             //     />
             // );
-            return (<Login location={props.location} api={that.state.api} userLogin={that.userLogin} />);
+            return (<Login location={props.location} userLogin={that.userLogin} />);
         }
 
         return (
             <Router>
                 <Route
                     render={({location}) => (
-                        <RenderOrLogin location={location}>
-                            <SidebarNav>
-                                <Switch>
-                                    <Route path="/admin/dashboard">
-                                        <Dashboard api={this.state.api} user={this.state.user} />
-                                    </Route>
-                                    <Route path="/admin/upgrade">
-                                        <Upgrade />
-                                    </Route>
-                                    <Route>
-                                        <Redirect to="/admin/dashboard" />
-                                    </Route>
-                                </Switch>
-                            </SidebarNav>
-                        </RenderOrLogin>
+                        <APIProvider>
+                            <RenderOrLogin location={location}>
+                                <SidebarNav>
+                                    <Switch>
+                                        <Route path="/admin/dashboard">
+                                            <Dashboard api={this.state.api} user={this.state.user} />
+                                        </Route>
+                                        <Route path="/admin/upgrade">
+                                            <Upgrade />
+                                        </Route>
+                                        <Route>
+                                            <Redirect to="/admin/dashboard" />
+                                        </Route>
+                                    </Switch>
+                                </SidebarNav>
+                            </RenderOrLogin>
+                        </APIProvider>
                     )}
                 />
             </Router>

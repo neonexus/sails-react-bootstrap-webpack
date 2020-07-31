@@ -17,6 +17,14 @@ async function updatePassword(password) {
     return password;
 }
 
+function getGravatarUrl(email) {
+    return 'https://www.gravatar.com/avatar/' + md5(email);
+}
+
+function forceUppercaseOnFirst(name) {
+    return name.trim().charAt(0).toUpperCase() + name.slice(1).trim();
+}
+
 module.exports = {
     primaryKey: 'id',
 
@@ -133,9 +141,9 @@ module.exports = {
         const email = user.email.toLowerCase().trim();
 
         user.email = email;
-        user.avatar = 'https://www.gravatar.com/avatar/' + md5(email);
-        user.firstName = user.firstName.trim().charAt(0).toUpperCase() + user.firstName.slice(1).trim();
-        user.lastName = user.lastName.trim().charAt(0).toUpperCase() + user.lastName.slice(1).trim();
+        user.avatar = getGravatarUrl(email);
+        user.firstName = forceUppercaseOnFirst(user.firstName);
+        user.lastName = forceUppercaseOnFirst(user.lastName);
         user.id = sails.helpers.generateUuid();
 
         user.password = await updatePassword(user.password);
@@ -147,9 +155,9 @@ module.exports = {
         const email = user.email.toLowerCase().trim();
 
         user.email = email;
-        user.avatar = 'https://www.gravatar.com/avatar/' + md5(email);
-        user.firstName = user.firstName.trim().charAt(0).toUpperCase() + user.firstName.slice(1).trim();
-        user.lastName = user.lastName.trim().charAt(0).toUpperCase() + user.lastName.slice(1).trim();
+        user.avatar = getGravatarUrl(email);
+        user.firstName = forceUppercaseOnFirst(user.firstName);
+        user.lastName = forceUppercaseOnFirst(user.lastName);
 
         if (user.password) {
             user.password = await updatePassword(user.password);

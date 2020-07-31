@@ -1,8 +1,8 @@
-const mergeThem = require('webpack-merge');
+const {merge} = require('webpack-merge');
 const baseConfig = require('./common.config.js');
 const path = require('path');
 
-module.exports = mergeThem(baseConfig, {
+module.exports = merge(baseConfig, {
     devServer: {
         historyApiFallback: true,
         contentBase: path.join(__dirname, '../../assets')
