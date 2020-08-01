@@ -50,7 +50,7 @@ module.exports = {
             type: 'string',
             isEmail: true,
             required: true,
-            unique: true,
+            // unique: true,
             columnType: 'varchar(191)'
         },
 

@@ -75,6 +75,7 @@ module.exports.routes = {
     'POST /api/v1/login': {action: 'admin/login', skipAssets: true},
     'GET /api/v1/logout': {action: 'admin/logout', skipAssets: true},
     'GET /api/v1/me': {action: 'admin/get-me', skipAssets: true},
+    'DELETE /api/v1/user': {action: 'admin/delete-user', skipAssets: true},
 
     'GET /_ping': (req, res) => {
         return res.ok('pong');

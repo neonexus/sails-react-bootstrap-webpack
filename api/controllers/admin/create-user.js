@@ -52,7 +52,7 @@ module.exports = {
             return exits.badRequest(isPasswordValid);
         }
 
-        const foundUser = await User.findOne({email: inputs.email});
+        const foundUser = await User.findOne({email: inputs.email, deletedAt: null});
 
         if (foundUser) {
             return exits.badRequest('Email is already in-use.');

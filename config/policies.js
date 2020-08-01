@@ -14,6 +14,7 @@ module.exports.policies = {
     AdminController: {
         '*': 'isLoggedIn',
         'login': true,
-        'create-user': ['isLoggedIn', 'isAdmin']
+        'create-user': ['isLoggedIn', 'isAdmin'],
+        'delete-user': ['isLoggedIn', 'isAdmin']
     }
 };

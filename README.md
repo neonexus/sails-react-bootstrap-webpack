@@ -5,7 +5,9 @@
 This is an opinionated base [Sails v1](https://sailsjs.com) application, using Webpack to handle Bootstrap (SASS) and React.
 
 # Branch Warning
-The `master` branch is experimental, and the [release branch](https://github.com/neonexus/sails-react-bootstrap-webpack/tree/release) (or the [`releases section`](https://github.com/neonexus/sails-react-bootstrap-webpack/releases)) is where one should base their use of this template. `master` is **volatile**, likely to change at any time, for any reason; this includes `git push --force` updates.
+The `master` branch is experimental, and the [release branch](https://github.com/neonexus/sails-react-bootstrap-webpack/tree/release) (or the [`releases section`](https://github.com/neonexus/sails-react-bootstrap-webpack/releases)) is where one should base their use of this template.
+
+`master` is **volatile**, likely to change at any time, for any reason; this includes `git push --force` updates.
 
 **FINAL WARNING: DO NOT RELY ON THE MASTER BRANCH!**
 

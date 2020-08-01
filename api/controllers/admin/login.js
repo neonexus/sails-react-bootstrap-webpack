@@ -36,7 +36,7 @@ module.exports = {
         }
 
         const badEmailPass = 'Bad email / password combination.';
-        const foundUser = await User.findOne({email: inputs.email});
+        const foundUser = await User.findOne({email: inputs.email, deletedAt: null});
 
         if (!foundUser) {
             return exits.badRequest(badEmailPass);
@@ -70,6 +70,7 @@ module.exports = {
                     isSession: true
                 }
             ],
+            user: foundUser,
             _csrf: csrf.token
         });
     }
