@@ -11,6 +11,7 @@
     "dependencies": {
         "bootstrap": "^4.5.0",
         "copy-webpack-plugin": "^6.0.3",
+        "csrf": "^3.1.0",
         "json-stringify-safe": "^5.0.1",
         "lodash": "^4.17.19",
         "md5": "^2.2.1",
@@ -75,7 +76,7 @@
         "clean": "rimraf .tmp && mkdirp .tmp/public",
         "lift": "node app.js",
         "debug": "node --inspect app.js",
-        "lines": "git ls-files --exclude-standard -- ':!:**/*.[pjs][npv]g' ':!:**/*.ai' ':!:.idea' ':!:test/coverage/*' ':!:config/*' ':!:.babelrc' ':!:.editorconfig' ':!:.eslintrc' ':!:.eslintignore' ':!:.gitignore' ':!:.mocharc.yaml' ':!:.npmrc' ':!:.nycrc' ':!:.sailsrc' ':!:LICENSE' ':!:package-lock.json' | xargs wc -l"
+        "lines": "git ls-files --exclude-standard -- ':!:**/*.[pjs][npv]g' ':!:**/*.ai' ':!:.idea' ':!:test/coverage/*' ':!:config/*' ':!:.babelrc' ':!:.editorconfig' ':!:*.eslintrc' ':!:.eslintignore' ':!:.gitignore' ':!:.mocharc.yaml' ':!:.npmrc' ':!:.nycrc' ':!:.sailsrc' ':!:LICENSE' ':!:package-lock.json' | xargs wc -l"
     },
     "main": "app.js",
     "repository": {

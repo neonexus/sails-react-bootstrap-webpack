@@ -57,13 +57,13 @@ module.exports = {
         firstName: {
             type: 'string',
             allowNull: true,
-            columnType: 'varchar(191)'
+            columnType: 'varchar(70)'
         },
 
         lastName: {
             type: 'string',
             allowNull: true,
-            columnType: 'varchar(191)'
+            columnType: 'varchar(70)'
         },
 
         password: {

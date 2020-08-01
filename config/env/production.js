@@ -71,7 +71,7 @@ module.exports = {
          * https://sailsjs.com/docs/concepts/models-and-orm/model-settings#?migrate *
          *                                                                          *
          ***************************************************************************/
-        migrate: 'safe'
+        migrate: 'safe',
 
         /***************************************************************************
          *                                                                          *
@@ -84,6 +84,9 @@ module.exports = {
          ***************************************************************************/
         // cascadeOnDestroy: false,
 
+        /*dataEncryptionKeys: {
+            default: process.env.DATA_ENCRYPTION_KEY
+        }*/
     },
 
 

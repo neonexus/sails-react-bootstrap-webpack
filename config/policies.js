@@ -9,5 +9,11 @@
  */
 
 module.exports.policies = {
-    '*': true
+    '*': true,
+
+    AdminController: {
+        '*': 'isLoggedIn',
+        'login': true,
+        'create-user': ['isLoggedIn', 'isAdmin']
+    }
 };
