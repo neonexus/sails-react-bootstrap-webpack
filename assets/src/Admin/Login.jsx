@@ -2,23 +2,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {APIConsumer} from '../data/api';
+import {UserConsumer} from '../data/user';
 
 class Login extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            isLoggedIn: false,
             email: localStorage.getItem('email') || '',
             password: '',
-            rememberMe: false
+            autoFocusPassword: false
         };
+
+        if (this.state.email !== '') {
+            this.state.autoFocusPassword = true;
+        }
 
         this.goBack = this.goBack.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
         this.handleEmail = this.handleEmail.bind(this);
         this.handlePassword = this.handlePassword.bind(this);
-        this.handleRememberMe = this.handleRememberMe.bind(this);
     }
 
     goBack() {
@@ -27,15 +30,26 @@ class Login extends React.Component {
         // this.props.location.history.push(dest);
     }
 
-    handleLogin(e, api) {
+    handleLogin(e, api, done) {
         e.preventDefault();
 
         localStorage.setItem('email', this.state.email);
 
-        console.log(api);
+        api.post({
+            url: '/login',
+            body: {
+                email: this.state.email,
+                password: this.state.password
+            }
+        }, (body) => {
+            if (body.success) {
+                return done({email: this.state.email});
+            }
 
-        // TODO: actually hit API to login, then call this function
-        this.props.userLogin({email: this.state.email});
+            alert('Bad email / password.');
+        }, (err) => {
+            alert(err.errorMessages);
+        });
 
         return false;
     }
@@ -48,53 +62,77 @@ class Login extends React.Component {
         this.setState({password: e.target.value});
     }
 
-    handleRememberMe() {
-        this.setState((current) => ({rememberMe: !current.rememberMe}));
-    }
-
     render() {
         return (
-            <div id="main-wrapper" className="container">
-                <h2>Admin</h2>
+            <UserConsumer>
                 {
-                    this.state.isLoggedIn &&
-                    <div>You are logged in</div>
-                }
-                {
-                    !this.state.isLoggedIn &&
-                    <div className="row justify-content-center">
-                        <APIConsumer>
+                    (userContext) => (
+                        <div id="main-wrapper" className="container">
+                            <h2>Admin</h2>
                             {
-                                (api) => (
-                                    <form onSubmit={(e) => this.handleLogin(e, api)} className="col-3">
-                                        <h3 className="row">Login</h3>
-                                        <div className="row pb-2">
-                                            <input type="email" className="form-control" placeholder="Email" value={this.state.email} onChange={this.handleEmail} />
-                                        </div>
-                                        <div className="row pb-4">
-                                            <input type="password" className="form-control" placeholder="Password" value={this.state.password} onChange={this.handlePassword} />
-                                        </div>
-                                        <div className="row pb-4 form-check">
-                                            <input type="checkbox" className="form-check-input" id="rememberMe" value={this.state.rememberMe} onChange={this.handleRememberMe} />
-                                            <label htmlFor="rememberMe">Remember Me</label>
-                                        </div>
-                                        <div className="row">
-                                            <button type="submit" className="btn btn-primary">Login</button>
-                                        </div>
-                                    </form>
-                                )
+                                userContext.isLoggedIn &&
+                                <div>You are logged in</div>
                             }
-                        </APIConsumer>
-                    </div>
+                            {
+                                !userContext.isLoggedIn &&
+                                <div className="row justify-content-center">
+                                    <APIConsumer>
+                                        {
+                                            (api) => (
+
+                                                <form onSubmit={(e) => this.handleLogin(e, api, userContext.login)} className="col-3">
+                                                    <h3 className="row">Login</h3>
+                                                    <div className="row pb-2">
+                                                        <input
+                                                            type="email"
+                                                            className="form-control"
+                                                            placeholder="Email"
+                                                            value={this.state.email}
+                                                            name="email"
+                                                            onChange={this.handleEmail}
+                                                            autoFocus={!this.state.autoFocusPassword}
+                                                        />
+                                                    </div>
+                                                    <div className="row pb-4">
+                                                        <input
+                                                            type="password"
+                                                            className="form-control"
+                                                            placeholder="Password"
+                                                            name="password"
+                                                            value={this.state.password}
+                                                            onChange={this.handlePassword}
+                                                            autoFocus={this.state.autoFocusPassword}
+                                                        />
+                                                    </div>
+                                                    <div className="row pb-4 form-check">
+                                                        <input
+                                                            type="checkbox"
+                                                            className="form-check-input"
+                                                            id="rememberMe"
+                                                            defaultChecked={userContext.isRememberMeOn}
+                                                            onChange={() => userContext.setRememberMe(!userContext.isRememberMeOn)}
+                                                        />
+                                                        <label htmlFor="rememberMe">Remember Me</label>
+                                                    </div>
+                                                    <div className="row">
+                                                        <button type="submit" className="btn btn-primary">Login</button>
+                                                    </div>
+                                                </form>
+                                            )
+                                        }
+                                    </APIConsumer>
+                                </div>
+                            }
+                        </div>
+                    )
                 }
-            </div>
+            </UserConsumer>
         );
     }
 }
 
 Login.propTypes = {
-    location: PropTypes.object.isRequired,
-    userLogin: PropTypes.func.isRequired
+    // userLogin: PropTypes.func.isRequired
 };
 
 Login.defaultProps = {};

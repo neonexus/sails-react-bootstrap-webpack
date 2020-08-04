@@ -6,6 +6,8 @@ class api {
     constructor(baseUrl) {
         this.baseUrl = baseUrl || process.env.baseUrl; // process.env is coming from webpack
 
+        this.baseUrl += '/api/v1';
+
         this.get = this.get.bind(this);
         this.post = this.post.bind(this);
         this.put = this.put.bind(this);
