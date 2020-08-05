@@ -91,7 +91,7 @@ class Login extends React.Component {
                                                 <Form onSubmit={(e) => this.handleLogin(e, api, userContext.login)} className="col-3">
                                                     <h3 className="row">Login</h3>
                                                     <Row className="pb-2">
-                                                        <input
+                                                        <Form.Control
                                                             type="email"
                                                             className="form-control"
                                                             placeholder="Email"
@@ -102,7 +102,7 @@ class Login extends React.Component {
                                                         />
                                                     </Row>
                                                     <Row className="pb-4">
-                                                        <input
+                                                        <Form.Control
                                                             type="password"
                                                             className="form-control"
                                                             placeholder="Password"
@@ -113,17 +113,24 @@ class Login extends React.Component {
                                                         />
                                                     </Row>
                                                     <Row className="pb-4 form-check">
-                                                        <input
+                                                        <Form.Check.Input
                                                             type="checkbox"
                                                             className="form-check-input"
                                                             id="rememberMe"
                                                             defaultChecked={userContext.isRememberMeOn}
                                                             onChange={() => userContext.setRememberMe(!userContext.isRememberMeOn)}
                                                         />
-                                                        <label htmlFor="rememberMe">Remember Me</label>
+                                                        <Form.Check.Label htmlFor="rememberMe">Remember Me</Form.Check.Label>
                                                     </Row>
                                                     <Row>
                                                         <Button type="submit" variant="primary">Login</Button>
+                                                    </Row>
+                                                    <br />
+                                                    <br />
+                                                    <Row>
+                                                        <Form.Text id="adminHelpBlock" muted>
+                                                            If you need to create your first admin user, use: "sails run create-admin".
+                                                        </Form.Text>
                                                     </Row>
                                                 </Form>
                                             )
