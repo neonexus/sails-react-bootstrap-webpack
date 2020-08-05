@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import {APIConsumer} from '../data/api';
 import {UserConsumer} from '../data/user';
 
+import {Row, Button, Form} from 'react-bootstrap';
+
 class Login extends React.Component {
     constructor(props) {
         super(props);
@@ -46,9 +48,16 @@ class Login extends React.Component {
                 return done({email: this.state.email});
             }
 
+            // should not happen
             alert('Bad email / password.');
-        }, (err) => {
-            alert(err.errorMessages);
+        }, (err, resp) => {
+            console.error(err.response);
+
+            const errMessage = (resp.errors && resp.errors.problems)
+                               ? resp.errors.problems.join('\n')
+                               : resp.errorMessages.join('\n');
+
+            alert(errMessage);
         });
 
         return false;
@@ -79,10 +88,9 @@ class Login extends React.Component {
                                     <APIConsumer>
                                         {
                                             (api) => (
-
-                                                <form onSubmit={(e) => this.handleLogin(e, api, userContext.login)} className="col-3">
+                                                <Form onSubmit={(e) => this.handleLogin(e, api, userContext.login)} className="col-3">
                                                     <h3 className="row">Login</h3>
-                                                    <div className="row pb-2">
+                                                    <Row className="pb-2">
                                                         <input
                                                             type="email"
                                                             className="form-control"
@@ -92,8 +100,8 @@ class Login extends React.Component {
                                                             onChange={this.handleEmail}
                                                             autoFocus={!this.state.autoFocusPassword}
                                                         />
-                                                    </div>
-                                                    <div className="row pb-4">
+                                                    </Row>
+                                                    <Row className="pb-4">
                                                         <input
                                                             type="password"
                                                             className="form-control"
@@ -103,8 +111,8 @@ class Login extends React.Component {
                                                             onChange={this.handlePassword}
                                                             autoFocus={this.state.autoFocusPassword}
                                                         />
-                                                    </div>
-                                                    <div className="row pb-4 form-check">
+                                                    </Row>
+                                                    <Row className="pb-4 form-check">
                                                         <input
                                                             type="checkbox"
                                                             className="form-check-input"
@@ -113,11 +121,11 @@ class Login extends React.Component {
                                                             onChange={() => userContext.setRememberMe(!userContext.isRememberMeOn)}
                                                         />
                                                         <label htmlFor="rememberMe">Remember Me</label>
-                                                    </div>
-                                                    <div className="row">
-                                                        <button type="submit" className="btn btn-primary">Login</button>
-                                                    </div>
-                                                </form>
+                                                    </Row>
+                                                    <Row>
+                                                        <Button type="submit" variant="primary">Login</Button>
+                                                    </Row>
+                                                </Form>
                                             )
                                         }
                                     </APIConsumer>
@@ -131,9 +139,7 @@ class Login extends React.Component {
     }
 }
 
-Login.propTypes = {
-    // userLogin: PropTypes.func.isRequired
-};
+Login.propTypes = {};
 
 Login.defaultProps = {};
 
