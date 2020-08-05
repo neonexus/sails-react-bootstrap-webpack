@@ -22,8 +22,6 @@ module.exports.session = {
 
     name: 'myapp-session',
 
-    saveUninitialized: true,
-
     /***************************************************************************
      *                                                                          *
      * Customize when built-in session support will be skipped.                 *
@@ -37,6 +35,11 @@ module.exports.session = {
      ***************************************************************************/
     isSessionDisabled: function(req) {
         return !!req.path.match(req._sails.LOOKS_LIKE_ASSET_RX);
+    },
+
+    cookie: {
+        secure: false,
+        maxAge: 24 * 60 * 60 * 1000 * 7  // 1 week
     }
 
 };

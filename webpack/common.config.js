@@ -26,7 +26,7 @@ try {
 
     baseUrl = config.baseUrl;
     frontendUrl = config.frontendUrl;
-    assetUrl = config.assetsUrl ? config.assetsUrl : '/';
+    assetUrl = config.assetsUrl ? config.assetsUrl : '/'; // used for CDN rewrites on asset URLs
 } catch (err) {
     return console.error(err);
 }
@@ -68,7 +68,7 @@ let entry = {},
 for (let i = 0; i < entryPoints.length; ++i) {
     const template = (entryPoints[i].template) ? entryPoints[i].template : baseHtmlConfig.template;
 
-    if (!entryPoints[i].include || !_.isArray(entryPoints[i])) {
+    if (!entryPoints[i].include) {
         entryPoints[i].include = [entryPoints[i].name];
     }
 

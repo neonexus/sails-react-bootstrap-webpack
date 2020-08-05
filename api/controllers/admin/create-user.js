@@ -18,7 +18,8 @@ module.exports = {
 
         password: {
             type: 'string',
-            required: true
+            required: true,
+            maxLength: 70
         },
 
         email: {
@@ -31,7 +32,7 @@ module.exports = {
 
     exits: {
         ok: {
-            responseType: 'ok'
+            responseType: 'created'
         },
         badRequest: {
             responseType: 'badRequest'
@@ -51,7 +52,13 @@ module.exports = {
             return exits.badRequest(isPasswordValid);
         }
 
-        sails.models.user.create({
+        const foundUser = await User.findOne({email: inputs.email, deletedAt: null});
+
+        if (foundUser) {
+            return exits.badRequest('Email is already in-use.');
+        }
+
+        User.create({
             id: 'c', // required, but auto-generated
             firstName: inputs.firstName,
             lastName: inputs.lastName,

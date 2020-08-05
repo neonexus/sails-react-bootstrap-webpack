@@ -11,6 +11,8 @@ module.exports = async function sendOK(data) {
     }
 
     data = sails.helpers.keepModelsSafe(data);
+    data = sails.helpers.setCookies(data, res);
+    data = await sails.helpers.updateCsrf(data, req);
 
     const out = _.merge({success: true}, data);
 

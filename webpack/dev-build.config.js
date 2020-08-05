@@ -1,8 +1,8 @@
-const mergeThem = require('webpack-merge');
+const {merge} = require('webpack-merge');
 const baseConfig = require('./dev.config.js');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-module.exports = mergeThem(baseConfig, {
+module.exports = merge(baseConfig, {
     module: {
         rules: [
             {

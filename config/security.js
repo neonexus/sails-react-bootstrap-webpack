@@ -31,6 +31,7 @@ module.exports.security = {
     cors: {
         allRoutes: true,
         allowOrigins: '*',
+        allowRequestHeaders: 'content-type,x-csrf-token'
         // allowOrigins: [
         //     'http://localhost:8080',
         // ],
@@ -52,6 +53,6 @@ module.exports.security = {
      *                                                                           *
      ****************************************************************************/
 
-    csrf: false
+    csrf: false // this disables Sails's CSRF; this repo has custom CSRF behavior.
 
 };
