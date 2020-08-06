@@ -13,7 +13,7 @@ To run scripts in Sails >v1, one just needs to `sails run SCRIPT_NAME`, where `S
     </thead>
     <tbody>
         <td nowrap>Create Admin</td>
-        <td nowrap>`sails run create-admin`</td>
+        <td nowrap><code>sails run create-admin</code></td>
         <td nowrap>
             <ul>
                 <li><code>--email='user@domain.com'</code></li>
