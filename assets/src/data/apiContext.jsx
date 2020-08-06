@@ -1,5 +1,5 @@
 import React from 'react';
-import api from '../common/api';
+import api from './api';
 
 const apiContext = React.createContext();
 

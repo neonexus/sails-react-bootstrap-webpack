@@ -12,8 +12,8 @@ import Login from '../Admin/Login';
 import SidebarNav from './SidebarNav';
 import Upgrade from './Upgrade';
 
-import {APIProvider} from '../data/api';
-import {UserProvider, UserConsumer} from '../data/user';
+import {APIProvider} from '../data/apiContext';
+import {UserProvider, UserConsumer} from '../data/userContext';
 
 class AdminRouter extends React.Component {
     constructor(props) {
