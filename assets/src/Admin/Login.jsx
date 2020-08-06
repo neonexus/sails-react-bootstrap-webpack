@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {APIConsumer} from '../data/api';
-import {UserConsumer} from '../data/user';
+import {APIConsumer} from '../data/apiContext';
+import {UserConsumer} from '../data/userContext';
 
 import {Row, Button, Form} from 'react-bootstrap';
 
