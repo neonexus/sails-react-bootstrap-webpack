@@ -52,9 +52,9 @@ class api {
             req = {url: req};
         }
 
-        const thisReq = api.__buildRequestObj(requester.get(this.baseUrl + req.url), req);
+        const thisReq = api.__buildRequestObj(requester.get(this.baseUrl + req.url).withCredentials(), req);
 
-        thisReq.then((res) => api.__buildResponseWrapper(res, good), (err) => bad(err, err.response.body));
+        return thisReq.then((res) => api.__buildResponseWrapper(res, good), (err) => bad(err, err.response.body));
     }
 
     post(req, good, bad) {
@@ -62,9 +62,9 @@ class api {
             req = {url: req};
         }
 
-        const thisReq = api.__buildRequestObj(requester.post(this.baseUrl + req.url), req);
+        const thisReq = api.__buildRequestObj(requester.post(this.baseUrl + req.url).withCredentials(), req);
 
-        thisReq.then((res) => api.__buildResponseWrapper(res, good), (err) => bad(err, err.response.body));
+        return thisReq.then((res) => api.__buildResponseWrapper(res, good), (err) => bad(err, err.response.body));
     }
 
     put(req, good, bad) {
@@ -72,9 +72,9 @@ class api {
             req = {url: req};
         }
 
-        const thisReq = api.__buildRequestObj(requester.put(this.baseUrl + req.url), req);
+        const thisReq = api.__buildRequestObj(requester.put(this.baseUrl + req.url).withCredentials(), req);
 
-        thisReq.then((res) => api.__buildResponseWrapper(res, good), (err) => bad(err, err.response.body));
+        return thisReq.then((res) => api.__buildResponseWrapper(res, good), (err) => bad(err, err.response.body));
     }
 
     del(req, good, bad) {
@@ -82,9 +82,9 @@ class api {
             req = {url: req};
         }
 
-        const thisReq = api.__buildRequestObj(requester.del(this.baseUrl + req.url), req);
+        const thisReq = api.__buildRequestObj(requester.del(this.baseUrl + req.url).withCredentials(), req);
 
-        thisReq.then((res) => api.__buildResponseWrapper(res, good), (err) => bad(err, err.response.body));
+        return thisReq.then((res) => api.__buildResponseWrapper(res, good), (err) => bad(err, err.response.body));
     }
 }
 

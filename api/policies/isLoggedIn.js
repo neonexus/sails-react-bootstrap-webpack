@@ -17,6 +17,8 @@ module.exports = async function(req, res, next) {
                 return next();
             }
         }
+
+        res.clearCookie(sails.config.session.name, {signed: true, httpOnly: true, secure: sails.config.session.cookie.secure});
     }
 
     return res.forbidden('You are not logged in');

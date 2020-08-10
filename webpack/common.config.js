@@ -18,8 +18,8 @@ try {
         config = require(configPath);
     } else {
         configPath = (process.env.NODE_ENV !== 'production')
-                     ? path.resolve(__dirname, '../env/development.js')
-                     : path.resolve(__dirname, '../env/production.js');
+                     ? path.resolve(__dirname, '../config/env/development.js')
+                     : path.resolve(__dirname, '../config/env/production.js');
 
         config = require(configPath);
     }
