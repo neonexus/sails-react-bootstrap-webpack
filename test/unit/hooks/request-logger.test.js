@@ -1,17 +1,26 @@
-const requestLogger = require('../../../api/hooks/request-logger');
-
 describe('Request Logger', function() {
+    const bleep = '*******';
+
     let logger;
     let hook;
+    let expectedRequestLogCount = 0;
 
-    before( function() {
-        logger = requestLogger(sails);
+    async function getRequestLogCount() {
+        return await sails.models.requestlog.count();
+    }
 
-        // sanity check
+    before(async function() {
+        // sanity checks
+        sails.hooks.should.have.property('request-logger');
         sails.models.should.have.property('requestlog');
+
+        logger = sails.hooks['request-logger'];
 
         hook = logger.routes.before['*'];
         hook.should.be.a('function');
+
+        const requestLogCount = await getRequestLogCount();
+        requestLogCount.should.eq(expectedRequestLogCount);
     });
 
     describe('Initializer', function() {
@@ -25,57 +34,58 @@ describe('Request Logger', function() {
     });
 
     describe('Request logging should ignore...', function() {
-        let requestCreate;
-
-        before(function() {
-            sails.models.requestlog.create.should.be.a('function');
-            requestCreate = chai.spy(sails.models.requestlog.create);
+        before(async function() {
+            const requestLogCount = await getRequestLogCount();
+            requestLogCount.should.eq(expectedRequestLogCount);
         });
 
-        it('HEAD requests', async function() {
+        it('HEAD requests', function(done) {
             const req = {
                 method: 'HEAD',
                 path: '/awesome'
             };
-            const cb = chai.spy();
 
-            hook(req, {}, cb);
+            hook(req, {}, async function() {
+                const requestLogCount = await getRequestLogCount();
+                requestLogCount.should.eq(0);
 
-            requestCreate.should.not.have.been.called();
-            cb.should.have.been.called();
+                done();
+            });
         });
 
-        it('/__getcookie requests', async function() {
+        it('/__getcookie requests', function(done) {
             const req = {
                 method: 'GET',
                 path: '/__getcookie'
             };
-            const cb = chai.spy();
 
-            hook(req, {}, cb);
+            hook(req, {}, async function() {
+                const requestLogCount = await getRequestLogCount();
+                requestLogCount.should.eq(expectedRequestLogCount);
 
-            requestCreate.should.not.have.been.called();
-            cb.should.have.been.called();
+                done();
+            });
         });
 
-        it('/ requests', async function() {
+        it('/ requests', function(done) {
             const req = {
                 method: 'GET',
                 path: '/'
             };
-            const cb = chai.spy();
 
-            hook(req, {}, cb);
+            hook(req, {}, async function() {
+                const requestLogCount = await getRequestLogCount();
+                requestLogCount.should.eq(expectedRequestLogCount);
 
-            requestCreate.should.not.have.been.called();
-            cb.should.have.been.called();
+                done();
+            });
         });
     });
 
     describe('Request logging should...', function() {
         const defaultReq = {
             method: 'GET',
-            path: '/',
+            path: '/testpath',
             hostname: 'localtest',
             body: {
                 password: 'password1',
@@ -83,7 +93,9 @@ describe('Request Logger', function() {
                 currentPassword: 'currentPassword',
                 newPassword: 'newPassword',
                 newPassword2: 'newPassword2',
-                pass: 'lamepassword'
+                pass: 'lamepassword',
+                username: 'blah@doom.boom',
+                mySpecialText: 'This is just a test comment.'
             },
             query: {
                 securityToken: 'somelongsecuritytoken'
@@ -93,23 +105,96 @@ describe('Request Logger', function() {
             }
         };
         const defaultRes = {};
-        const defaultCb = chai.spy();
 
         before(function() {
             // force this, just in-case
             sails.config.logSensitiveData = false;
         });
 
-        it.skip('Not log sensitive information', function() {
+        it('Not log sensitive information', function(done) {
             let thisReq = _.merge({}, defaultReq);
 
-            hook = hook.bind(this);
-            hook(thisReq, defaultRes, defaultCb);
+            hook(thisReq, defaultRes, async function() {
+                ++expectedRequestLogCount;
+                const requestLogCount = await getRequestLogCount();
+                requestLogCount.should.eq(expectedRequestLogCount);
 
-            defaultCb.should.have.been.called();
+                // validate the hook modified the request object
+                thisReq.should.have.property('requestId');
+                thisReq.should.have.property('_customStartTime');
 
-            thisReq.should.have.property('requestId');
-            thisReq.should.have.property('_customStartTime');
+                thisReq.should.have.property('body');
+
+                // verify the request wasn't modified, controllers still need those values
+                thisReq.body.password.should.eq(defaultReq.body.password);
+                thisReq.body.password2.should.eq(defaultReq.body.password2);
+                thisReq.body.currentPassword.should.eq(defaultReq.body.currentPassword);
+                thisReq.body.newPassword.should.eq(defaultReq.body.newPassword);
+                thisReq.body.newPassword2.should.eq(defaultReq.body.newPassword2);
+                thisReq.body.pass.should.eq(defaultReq.body.pass);
+
+                const foundLog = await sails.models.requestlog.findOne({id: thisReq.requestId});
+
+                should.exist(foundLog);
+
+                foundLog.should.have.property('body');
+                foundLog.should.have.property('getParams');
+                foundLog.should.have.property('headers');
+
+                foundLog.body.should.be.a('string');
+                foundLog.getParams.should.be.an('object');
+                foundLog.headers.should.be.an('object');
+
+                const parsedLogBody = JSON.parse(foundLog.body);
+
+                // verify nothing sensitive was logged to the database
+                parsedLogBody.should.have.property('password');
+                parsedLogBody.password.should.eq(bleep);
+                parsedLogBody.password2.should.eq(bleep);
+                parsedLogBody.currentPassword.should.eq(bleep);
+                parsedLogBody.newPassword.should.eq(bleep);
+                parsedLogBody.newPassword2.should.eq(bleep);
+                parsedLogBody.pass.should.eq(bleep);
+
+                foundLog.getParams.securityToken.should.eq(bleep);
+
+                foundLog.headers.securityToken.should.eq(bleep);
+
+                done();
+            });
+        });
+
+        it('Not "bleep" out other data points', function(done) {
+            let thisReq = _.merge({}, defaultReq);
+
+            hook(thisReq, defaultRes, async function() {
+                ++expectedRequestLogCount;
+                const requestLogCount = await getRequestLogCount();
+                requestLogCount.should.eq(expectedRequestLogCount);
+
+                thisReq.should.have.property('requestId');
+                thisReq.should.have.property('_customStartTime');
+
+                thisReq.should.have.property('body');
+
+                // verify the request wasn't modified
+                thisReq.body.username.should.eq(defaultReq.body.username);
+                thisReq.body.mySpecialText.should.eq(defaultReq.body.mySpecialText);
+
+                const foundLog = await sails.models.requestlog.findOne({id: thisReq.requestId});
+
+                should.exist(foundLog);
+
+                foundLog.should.have.property('body');
+                foundLog.body.should.be.a('string');
+
+                const parsedLogBody = JSON.parse(foundLog.body);
+
+                parsedLogBody.username.should.eq(defaultReq.body.username);
+                parsedLogBody.mySpecialText.should.eq(defaultReq.body.mySpecialText);
+
+                done();
+            });
         });
     });
 });

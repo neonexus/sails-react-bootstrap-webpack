@@ -1,6 +1,6 @@
 # Scripts
 
-To run scripts in Sails >v1, one just needs to `sails run SCRIPT_NAME`, where `SCRIPT_NAME` is the file name in the `scripts` folder.
+To run scripts in Sails >= v1, one just needs to `sails run SCRIPT_NAME`, where `SCRIPT_NAME` is the file name (minus extension) in the `scripts` folder.
 
 ## Current Scripts
 
@@ -27,3 +27,7 @@ To run scripts in Sails >v1, one just needs to `sails run SCRIPT_NAME`, where `S
         </td>
     </tbody>
 </table>
+
+### Useful Links
+
+[Sails documentation for shell scripts](https://sailsjs.com/documentation/concepts/shell-scripts)

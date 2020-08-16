@@ -10,8 +10,13 @@ module.exports = async function sendOK(data) {
         data = {message: data};
     }
 
+    // ensure our models stay safe out there
     data = sails.helpers.keepModelsSafe(data);
-    data = sails.helpers.setCookies(data, res);
+
+    // set or remove cookies
+    data = sails.helpers.setOrRemoveCookies(data, res);
+
+    // handle CSRF tokens
     data = await sails.helpers.updateCsrf(data, req);
 
     const out = _.merge({success: true}, data);

@@ -61,16 +61,6 @@ module.exports.routes = {
         }
     },
 
-    'GET /assets/*': {
-        skipAssets: false,
-        fn: [
-            serveStatic(path.resolve(__dirname, '../.tmp/public/assets'), {
-                dotfiles: 'ignore',
-                maxAge: defaultStaticOptions.maxAge
-            })
-        ]
-    },
-
     'POST /api/v1/user': {action: 'admin/create-user', skipAssets: true},
     'POST /api/v1/login': {action: 'admin/login', skipAssets: true},
     'GET /api/v1/logout': {action: 'admin/logout', skipAssets: true},

@@ -170,7 +170,10 @@ module.exports = {
          * > (For a full list, see https://sailsjs.com/plugins/sessions)            *
          *                                                                          *
          ***************************************************************************/
-        adapter: 'express-mysql-session',
+
+        // We are handling sessions without Sails' middleware, and using Models directly.
+
+        //adapter: 'express-mysql-session',
         // adapter: '@sailshq/connect-redis',
         // url: 'redis://user:password@localhost:6379/databasenumber',
         //--------------------------------------------------------------------------
@@ -208,18 +211,12 @@ module.exports = {
          ***************************************************************************/
         cookie: {
             secure: true,
+            // this age is when we choose not to use "session" cookies, and want max-age instead.
             maxAge: 24 * 60 * 60 * 1000  // 24 hours
         },
 
         // https://jsfiddle.net/fsbd3ey5/1/
         secret: process.env.SESSION_SECRET, // DO NOT STORE THIS IN SOURCE CONTROL!!!
-
-        host: process.env.DB_HOSTNAME || 'localhost',
-        user: process.env.DB_USERNAME || 'produser',
-        password: process.env.DB_PASSWORD || 'myprodpassword',
-        database: process.env.DB_NAME || 'proddatabase',
-        port: process.env.DB_PORT || 3306,
-        ssl: (process.env.DB_SSL === 'true')
     },
 
 

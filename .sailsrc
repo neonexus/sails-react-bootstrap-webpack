@@ -9,6 +9,7 @@
     "hooks": {
         "grunt": false,
         "session": false,
-        "csrf": false
+        "csrf": false,
+        "blueprints": false
     }
 }

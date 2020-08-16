@@ -63,6 +63,7 @@ module.exports = {
         }).fetch();
 
         return exits.ok({
+            // Cookies are automatically handled in our custom response `ok`.
             cookies: [
                 {
                     name: sails.config.session.name,

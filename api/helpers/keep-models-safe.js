@@ -1,7 +1,7 @@
 module.exports = {
-    friendlyName: 'Keep Model Safe',
+    friendlyName: 'Keep Models Safe',
 
-    description: 'Enforce custom .toJSON() is called recursively.',
+    description: 'Enforce custom .toJSON(), called recursively on the input data object to prevent data leaking to outside world.',
 
     sync: true, // function is not async
 
@@ -17,10 +17,10 @@ module.exports = {
     },
 
     fn: (inputs, exits) => {
-        const dataCopy = _.merge({}, inputs.data);
+        const dataCopy = _.merge({}, inputs.data); // don't modify the object given
 
-        // force all objects to their JSON formats, if it has said function
-        // this prevents accidental leaking of sensitive data, by utilizing customToJSON on models
+        // Force all objects to their JSON formats, if it has .toJSON() function.
+        // This prevents accidental leaking of sensitive data, by utilizing .customToJSON() in model definitions.
         (function findTheJson(data) {
             _.forEach(data, (val, key) => {
                 if (_.isObject(val)) {
@@ -28,6 +28,7 @@ module.exports = {
                 }
 
                 if (val && val.toJSON && typeof val.toJSON === 'function') {
+                    // If this is a moment.js object, force it to .format() instead of .toJSON().
                     if (val.toDate && typeof val.toDate === 'function' && typeof val.format === 'function') {
                         data[key] = val.format();
                     } else {

@@ -22,7 +22,7 @@ const Fixted = require('fixted');
 exports.mochaHooks = {
     // run once
     beforeAll: function(done) {
-        this.timeout(5000);
+        // this.timeout(5000); //  this is set in our .mocharc.yaml
 
         // Try to get `rc` dependency
         let rc;
@@ -39,6 +39,16 @@ exports.mochaHooks = {
                 rc = function(){ return {}; };
             }
         }
+
+        // sanity check
+        let err;
+        try {
+            // This should throw an error, since "sails" is undefined.
+            should.not.exist(sails);
+        } catch(e) {
+            err = e;
+        }
+        should.exist(err);
 
         Sails.lift(_.merge(rc('sails'), {
             log: { level: 'warn' },
