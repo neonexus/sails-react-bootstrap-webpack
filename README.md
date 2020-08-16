@@ -1,8 +1,8 @@
 # sails-react-bootstrap-webpack
 
-[![Join the chat at https://gitter.im/sails-react-bootstrap-webpack/community](https://badges.gitter.im/sails-react-bootstrap-webpack/community.svg)](https://gitter.im/sails-react-bootstrap-webpack/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+This is an opinionated base [Sails v1](https://sailsjs.com) application, using Webpack to handle Bootstrap (SASS) and React builds. It is designed such that, one can build multiple React frontends (an admin panel, and a customer site maybe), that use the same API backend. This allows developers to easily share React components across different frontends / applications. Also, because the backend and frontend are in the same repo (and the frontend is compiled before it is handed to the end user), they can share NPM libraries, like [Moment.js](https://momentjs.com)
 
-This is an opinionated base [Sails v1](https://sailsjs.com) application, using Webpack to handle Bootstrap (SASS) and React.
+Need help? Want to hire me to build your next app or prototype? You can contact me any time via Gitter: [![Join the chat at https://gitter.im/sails-react-bootstrap-webpack/community](https://badges.gitter.im/sails-react-bootstrap-webpack/community.svg)](https://gitter.im/sails-react-bootstrap-webpack/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 # Branch Warning
 The `master` branch is experimental, and the [release branch](https://github.com/neonexus/sails-react-bootstrap-webpack/tree/release) (or the [`releases section`](https://github.com/neonexus/sails-react-bootstrap-webpack/releases)) is where one should base their use of this template.
@@ -21,6 +21,9 @@ The `master` branch is experimental, and the [release branch](https://github.com
 
 ## How to Use
 This repo is not installable via `npm`. Instead, Github provides a handy "Use this template" (green) button at the top of this page. That will create a special fork of this repo (so there is a single, init commit, instead of the commit history from this repo).
+
+### Configuration
+In the `config` folder, there is `local.js.sample` file, which is meant to be copied to `local.js`. This file is ignored by Git, and intended for use in local development, not remote servers.
 
 ### Scripts built into [`package.json`](package.json):
 

@@ -15,16 +15,27 @@ module.exports = {
         }
     },
 
-    exits: {},
+    exits: {
+        success: {},
+
+        serverError: {}
+    },
 
     fn: async (inputs, exits) => {
+        // Do nothing if we don't have a session, or this is a GET request.
         if (inputs.req.method === 'GET' || !inputs.req.session || !inputs.req.session.user || !inputs.req.session.id) {
             return exits.success(inputs.data);
         }
 
         const foundSession = await Session.findOne({id: inputs.req.session.id});
 
-        const csrf = sails.helpers.generateCsrfToken();
+        if (!foundSession) {
+            throw new exits.serverError('Session could not be found in Update CSRF helper.');
+        }
+
+        const csrf = sails.helpers.generateCsrfTokenAndSecret();
+
+        // Update stored session data, so we can compare our token to the secret on the next request (handled in the isLoggedIn policy).
         const newData = _.merge({}, foundSession.data, {_csrfSecret: csrf.secret});
 
         Session.update({id: inputs.req.session.id}).set({

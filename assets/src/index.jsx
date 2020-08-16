@@ -10,6 +10,9 @@ import AdminRouter from './Admin/AdminRouter';
 import MainRouter from './Main/MainRouter';
 
 function IndexApp() {
+    // This file is here mainly for Webpack's dev server; not used in remote settings.
+    // Webpack is configured to build the individual apps in their own folders in `.tmp/public` via `npm run build`.
+    // Sails will handle the webapp redirects in remote configurations.
     return (
         <Router>
             <Switch>

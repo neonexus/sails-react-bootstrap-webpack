@@ -11,6 +11,7 @@ module.exports = {
     inputs: {
         extra: {
             type: 'string',
+            description: 'A bit of random, extra bits to change up the hash.',
             defaultsTo: 'Evil will always triumph, because good is dumb. -Lord Helmet'
         }
     },
@@ -23,7 +24,7 @@ module.exports = {
             .update(
                 crypto.randomBytes(21)
                 + moment(new Date()).format()
-                + 'I am a little tea pot'
+                + 'I am a tea pot' // The best HTTP status code
                 + inputs.extra
                 + crypto.randomBytes(21)
             )

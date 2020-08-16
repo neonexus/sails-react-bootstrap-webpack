@@ -3,7 +3,7 @@ async-only: true # require use of "done" cb or an async function (a Promise)
 require:
     - 'test/hooks.js'
 spec:  'test/**/*.test.js'
-timeout: 5000 # Give Sails some breathing room... We are building schemas / data fixtures.
+timeout: 10000 # Give Sails some breathing room... We are building schemas / data fixtures.
 checkLeaks: true
 global:
     - '_'

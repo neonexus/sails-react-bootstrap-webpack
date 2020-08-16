@@ -73,31 +73,25 @@ class AdminRouter extends React.Component {
         }
 
         return (
-            <Router>
-                <Route
-                    render={({location}) => (
-                        <APIProvider>
-                            <UserProvider>
-                                <RenderOrLogin location={location}>
-                                    <SidebarNav>
-                                        <Switch>
-                                            <Route path="/admin/dashboard">
-                                                <Dashboard />
-                                            </Route>
-                                            <Route path="/admin/upgrade">
-                                                <Upgrade />
-                                            </Route>
-                                            <Route>
-                                                <Redirect to="/admin/dashboard" />
-                                            </Route>
-                                        </Switch>
-                                    </SidebarNav>
-                                </RenderOrLogin>
-                            </UserProvider>
-                        </APIProvider>
-                    )}
-                />
-            </Router>
+            <APIProvider>
+                <UserProvider>
+                    <RenderOrLogin>
+                        <SidebarNav>
+                            <Switch>
+                                <Route path="/admin/dashboard">
+                                    <Dashboard />
+                                </Route>
+                                <Route path="/admin/upgrade">
+                                    <Upgrade />
+                                </Route>
+                                <Route>
+                                    <Redirect to="/admin/dashboard" />
+                                </Route>
+                            </Switch>
+                        </SidebarNav>
+                    </RenderOrLogin>
+                </UserProvider>
+            </APIProvider>
         );
     }
 }

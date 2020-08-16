@@ -18,7 +18,17 @@ module.exports = {
     },
 
     exits: {
-        success: {}
+        success: {
+            description: 'Returns `data` input, minus the cookies object.'
+        },
+
+        missingName: {
+            description: 'Cookie name is missing.'
+        },
+
+        missingValue: {
+            description: 'Cookie value is not defined.'
+        }
     },
 
     fn: function(inputs, exits) {
@@ -31,10 +41,18 @@ module.exports = {
                         : [inputs.data.cookies];
 
         cookies.map((cookie) => {
+            if (!_.isDefined(cookie.name) || !_.isString(cookie.name) || _.isEmpty(cookie.name)) {
+                throw 'missingName';
+            }
+
+            if (!_.isDefined(cookie.value)) {
+                throw 'missingValue';
+            }
+
             const defaultCookie = {
-                signed: true,
-                httpOnly: true,
-                secure: sails.config.session.cookie.secure
+                signed: true, // Sign the cookie to prevent tampering.
+                httpOnly: true, // Prevent JS from being able to read / write to this cookie in most browsers.
+                secure: sails.config.session.cookie.secure // Only allow over HTTPS.
             };
 
             if (cookie.value === null) {

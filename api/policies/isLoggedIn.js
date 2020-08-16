@@ -2,7 +2,7 @@ module.exports = async function(req, res, next) {
     const sessionId = req.signedCookies[sails.config.session.name] || null;
 
     if (sessionId) {
-        const foundSession = await Session.findOne({id: sessionId});
+        const foundSession = await sails.models.session.findOne({id: sessionId});
 
         if (foundSession && foundSession.data.user) {
             req.session = {id: sessionId, user: foundSession.data.user};
@@ -18,6 +18,7 @@ module.exports = async function(req, res, next) {
             }
         }
 
+        // Doesn't look like this session is valid, remove the cookie.
         res.clearCookie(sails.config.session.name, {signed: true, httpOnly: true, secure: sails.config.session.cookie.secure});
     }
 
