@@ -25,6 +25,9 @@ This repo is not installable via `npm`. Instead, Github provides a handy "Use th
 ### Configuration
 In the `config` folder, there is `local.js.sample` file, which is meant to be copied to `local.js`. This file is ignored by Git, and intended for use in local development, not remote servers.
 
+#### Want to configure the "X-Powered-By" header?
+Sails, by default, has middleware (akin to [Express.js Middleware](https://expressjs.com/en/guide/using-middleware.html), Sails is built on Express.js after all...). Inside of [`config/http.js`](config/http.js) we disable the default middleware, and create our own `X-Powered-By` header, using Express.js Middleware.
+
 ### Scripts built into [`package.json`](package.json):
 
 | Command       | Description
@@ -87,6 +90,29 @@ module.exports.bootstrap = function(next) {
     // You must call the callback function, or Sails will fail to lift!
     next();
 };
+```
+
+## What about SEO?
+I recommend looking at [prerender.io](https://prerender.io). They offer a service (free up to 250 pages) that caches the end result of a JavaScript-rendered view (React, Vue, Angular), allowing search engines to crawl otherwise un-crawlable web views. You can use the service in a number of ways. One way, is to use the [prerender-node](https://www.npmjs.com/package/prerender-node) package. To use it with Sails, you'll have to add it to the [HTTP Middleware](https://sailsjs.com/documentation/concepts/middleware#?http-middleware). Here's a quick example:
+
+```javascript
+middleware: {
+
+    order: [
+        'cookieParser',
+        'session',
+        'bodyParser',
+        'prerender', // reference our custom middleware found below
+        'compress',
+        'router',
+        'assetLog',
+        'www',
+        'favicon'
+    ],
+
+    prerender: require('prerender-node').set('prerenderToken', 'YOUR_TOKEN')
+
+}
 ```
 
 ### Useful Links

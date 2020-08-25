@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">54.84% </span>
+                <span class="strong">57.58% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>17/31</span>
+                <span class='fraction'>19/33</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">60% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/8</span>
+                <span class='fraction'>6/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">56.67% </span>
+                <span class="strong">59.38% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>17/30</span>
+                <span class='fraction'>19/32</span>
             </div>
         
             
@@ -217,7 +217,15 @@
 <a name='L158'></a><a href='#L158'>158</a>
 <a name='L159'></a><a href='#L159'>159</a>
 <a name='L160'></a><a href='#L160'>160</a>
-<a name='L161'></a><a href='#L161'>161</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L161'></a><a href='#L161'>161</a>
+<a name='L162'></a><a href='#L162'>162</a>
+<a name='L163'></a><a href='#L163'>163</a>
+<a name='L164'></a><a href='#L164'>164</a>
+<a name='L165'></a><a href='#L165'>165</a>
+<a name='L166'></a><a href='#L166'>166</a>
+<a name='L167'></a><a href='#L167'>167</a>
+<a name='L168'></a><a href='#L168'>168</a>
+<a name='L169'></a><a href='#L169'>169</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -234,6 +242,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -396,6 +412,14 @@ async function updatePassword(password) {
     return password;
 }
 &nbsp;
+function getGravatarUrl(email) {
+    return 'https://www.gravatar.com/avatar/' + md5(email);
+}
+&nbsp;
+function forceUppercaseOnFirst(name) {
+    return name.trim().charAt(0).toUpperCase() + name.slice(1).trim();
+}
+&nbsp;
 module.exports = {
     primaryKey: 'id',
 &nbsp;
@@ -421,20 +445,20 @@ module.exports = {
             type: 'string',
             isEmail: true,
             required: true,
-            unique: true,
+            // unique: true,
             columnType: 'varchar(191)'
         },
 &nbsp;
         firstName: {
             type: 'string',
             allowNull: true,
-            columnType: 'varchar(191)'
+            columnType: 'varchar(70)'
         },
 &nbsp;
         lastName: {
             type: 'string',
             allowNull: true,
-            columnType: 'varchar(191)'
+            columnType: 'varchar(70)'
         },
 &nbsp;
         password: {
@@ -512,9 +536,9 @@ module.exports = {
         const email = user.email.toLowerCase().trim();
 &nbsp;
         user.email = email;
-        user.avatar = 'https://www.gravatar.com/avatar/' + md5(email);
-        user.firstName = user.firstName.trim().charAt(0).toUpperCase() + user.firstName.slice(1).trim();
-        user.lastName = user.lastName.trim().charAt(0).toUpperCase() + user.lastName.slice(1).trim();
+        user.avatar = getGravatarUrl(email);
+        user.firstName = forceUppercaseOnFirst(user.firstName);
+        user.lastName = forceUppercaseOnFirst(user.lastName);
         user.id = sails.helpers.generateUuid();
 &nbsp;
         user.password = await updatePassword(user.password);
@@ -526,9 +550,9 @@ module.exports = {
         const email = <span class="cstat-no" title="statement not covered" >user.email.toLowerCase().trim();</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >        user.email = email;</span>
-<span class="cstat-no" title="statement not covered" >        user.avatar = 'https://www.gravatar.com/avatar/' + md5(email);</span>
-<span class="cstat-no" title="statement not covered" >        user.firstName = user.firstName.trim().charAt(0).toUpperCase() + user.firstName.slice(1).trim();</span>
-<span class="cstat-no" title="statement not covered" >        user.lastName = user.lastName.trim().charAt(0).toUpperCase() + user.lastName.slice(1).trim();</span>
+<span class="cstat-no" title="statement not covered" >        user.avatar = getGravatarUrl(email);</span>
+<span class="cstat-no" title="statement not covered" >        user.firstName = forceUppercaseOnFirst(user.firstName);</span>
+<span class="cstat-no" title="statement not covered" >        user.lastName = forceUppercaseOnFirst(user.lastName);</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >        if (user.password) {</span>
 <span class="cstat-no" title="statement not covered" >            user.password = await updatePassword(user.password);</span>
@@ -544,7 +568,7 @@ module.exports = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Fri Jul 03 2020 05:29:30 GMT-0500 (Central Daylight Time)
+                at Mon Aug 24 2020 14:11:47 GMT-0500 (Central Daylight Time)
             </div>
         </div>
         <script src="../prettify.js"></script>

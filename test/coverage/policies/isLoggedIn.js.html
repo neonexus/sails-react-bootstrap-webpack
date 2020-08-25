@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for responses/requiresUpdate.js</title>
+    <title>Code coverage report for policies/isLoggedIn.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -19,20 +19,20 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../index.html">All files</a> / <a href="index.html">responses</a> requiresUpdate.js</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">policies</a> isLoggedIn.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">16.67% </span>
+                <span class="strong">7.69% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/6</span>
+                <span class='fraction'>1/13</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>0/14</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">16.67% </span>
+                <span class="strong">7.69% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/6</span>
+                <span class='fraction'>1/13</span>
             </div>
         
             
@@ -72,35 +72,68 @@
 <a name='L13'></a><a href='#L13'>13</a>
 <a name='L14'></a><a href='#L14'>14</a>
 <a name='L15'></a><a href='#L15'>15</a>
-<a name='L16'></a><a href='#L16'>16</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">module.exports = async function <span class="fstat-no" title="function not covered" >iAmATeaPot(</span>) {
-    // Used as a trigger to an iPhone / Android app to update.
-    const res = <span class="cstat-no" title="statement not covered" >this.res;</span>
-    const req = <span class="cstat-no" title="statement not covered" >this.req;</span>
-    const out = <span class="cstat-no" title="statement not covered" >{</span>
-        success: false,
-        errorMessages: [
-            'The app requires an update to be compatible with this API.'
-        ]
-    };
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">module.exports = <span class="fstat-no" title="function not covered" >as</span>ync function(req, res, next) {
+    const sessionId = <span class="cstat-no" title="statement not covered" >req.signedCookies[sails.config.session.name] || null;</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    res.status(418).json(out);</span>
+<span class="cstat-no" title="statement not covered" >    if (sessionId) {</span>
+        const foundSession = <span class="cstat-no" title="statement not covered" >await sails.models.session.findOne({id: sessionId});</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    await sails.helpers.finalizeRequestLog(req, res, out);</span>
+<span class="cstat-no" title="statement not covered" >        if (foundSession &amp;&amp; foundSession.data.user) {</span>
+<span class="cstat-no" title="statement not covered" >            req.session = {id: sessionId, user: foundSession.data.user};</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if (req.method !== 'GET') {</span>
+                const csrf = <span class="cstat-no" title="statement not covered" >req.headers['x-csrf-token'];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                if (csrf &amp;&amp; sails.helpers.verifyCsrfToken.with({token: csrf, secret: foundSession.data._csrfSecret})) {</span>
+<span class="cstat-no" title="statement not covered" >                    return next();</span>
+                }
+            } else {
+<span class="cstat-no" title="statement not covered" >                return next();</span>
+            }
+        }
+&nbsp;
+        // Doesn't look like this session is valid, remove the cookie.
+<span class="cstat-no" title="statement not covered" >        res.clearCookie(sails.config.session.name, {signed: true, httpOnly: true, secure: sails.config.session.cookie.secure});</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return res.forbidden('You are not logged in');</span>
 };
 &nbsp;</pre></td></tr></table></pre>
 

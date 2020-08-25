@@ -30,12 +30,12 @@ module.exports.security = {
 
     cors: {
         allRoutes: true,
-        allowOrigins: '*',
-        allowRequestHeaders: 'content-type,x-csrf-token'
-        // allowOrigins: [
-        //     'http://localhost:8080',
-        // ],
-        // allowCredentials: true
+        // allowOrigins: '*', // no longer allowed cross-origin with websockets
+        allowRequestHeaders: 'content-type,x-csrf-token',
+        allowOrigins: [
+            'http://localhost:8080',
+        ],
+        allowCredentials: true
     },
 
 

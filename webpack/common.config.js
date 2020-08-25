@@ -6,24 +6,40 @@ const _ = require('lodash');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
-let configPath = path.resolve(__dirname, '../config/local.js'),
-    baseUrl = 'http://localhost:1337',
-    frontendUrl = 'http://localhost:8080',
-    assetUrl = '';
+let configPath = path.resolve(__dirname, '../config/local.js'), // try to get local config if it exists
+    baseUrl = 'http://localhost:1337', // default baseUrl (should point to Sails)
+    frontendUrl = 'http://localhost:8080', // default frontendUrl, points to Webpack dev server (external customer domain, https://example.com)
+    assetUrl = ''; // used for CDN prefixing on assets (https://cdn.example.com/)
 
 try {
-    let config = {};
+    let config;
 
+    // if local.js exists, use it
     if (fs.existsSync(configPath)) {
         config = require(configPath);
     } else {
-        configPath = (process.env.NODE_ENV !== 'production')
-                     ? path.resolve(__dirname, '../config/env/development.js')
-                     : path.resolve(__dirname, '../config/env/production.js');
+        // no local.js, find our environmental configuration
+        const environment = process.env.NODE_ENV || 'development';
 
+        switch (environment.toLowerCase()) {
+            case 'dev':
+            case 'development':
+                configPath = path.resolve(__dirname, '../config/env/development.js');
+                break;
+            case 'prod':
+            case 'production':
+                configPath = path.resolve(__dirname, '../config/env/production.js');
+                break;
+            default:
+                configPath = path.resolve(__dirname, '../config/env/' + environment + '.js');
+                break;
+        }
+
+        // now we can read our configuration
         config = require(configPath);
     }
 
+    // Setup variables to inject into compiled apps, like which URL to use as a base for API / websocket connections, or CRN URLs.
     baseUrl = config.baseUrl;
     frontendUrl = config.frontendUrl;
     assetUrl = config.assetsUrl ? config.assetsUrl : '/'; // used for CDN rewrites on asset URLs
@@ -34,7 +50,7 @@ try {
 const baseHtmlConfig = {
     template: 'assets/entry_template.html',
     inject: true,
-    hash: true,
+    hash: true, // add hashes to the end of compiled assets, to help bust cache
     minify: process.env.NODE_ENV === 'production',
     publicPath: assetUrl
 };
@@ -65,17 +81,25 @@ const entryPoints = [
 let entry = {},
     plugins = [];
 
+// loop through all of our entry points
 for (let i = 0; i < entryPoints.length; ++i) {
+    // which template are we using?
     const template = (entryPoints[i].template) ? entryPoints[i].template : baseHtmlConfig.template;
 
+    // Does this entrypoint not include other entry points? (for code splitting) If not, we need to make sure it includes itself for things to work down the line.
     if (!entryPoints[i].include) {
         entryPoints[i].include = [entryPoints[i].name];
     }
 
+    // setup Webpack entry points
     entry[entryPoints[i].name] = entryPoints[i].entry;
+
+    // add our HTML Webpack plugin to render the entry point
     plugins.push(new HtmlWebpackPlugin(_.merge({}, baseHtmlConfig, {filename: entryPoints[i].outfile, chunks: entryPoints[i].include, template})));
 }
 
+// Inject "environment" variables into our JavaScript bundle.
+// For example, in our React code, we can use `process.env.baseUrl` to get our base API URL (see the top of: ../assets/src/index.jsx)
 plugins.push(
     new webpack.DefinePlugin({
         'process.env': JSON.stringify({
@@ -85,6 +109,8 @@ plugins.push(
     })
 );
 
+// Add in the Favicons plugin, which handles a lot more meta data than just Favicons...
+// See: https://www.npmjs.com/package/favicons-webpack-plugin
 plugins.push(new FaviconsWebpackPlugin({
     logo: path.join(__dirname, '/../assets/images/favicon.png'), // svg works too!
     mode: 'webapp', // 'webapp' or 'light' - 'webapp' by default
@@ -105,6 +131,7 @@ plugins.push(new FaviconsWebpackPlugin({
     }
 }));
 
+// Copy our fonts to the .tmp/public folder.
 plugins.push(
     new CopyPlugin({
         patterns: [
@@ -113,6 +140,16 @@ plugins.push(
     })
 );
 
+// Copy any asset dependencies we might have, like sails.io to the .tmp/public folder.
+plugins.push(
+    new CopyPlugin({
+        patterns: [
+            {from: path.join(__dirname, '/../assets/dependencies'), to: path.join(__dirname, '/../.tmp/public/assets/dependencies')}
+        ]
+    })
+);
+
+// Finally, export our Webpack configuration.
 module.exports = {
     entry,
     plugins,
