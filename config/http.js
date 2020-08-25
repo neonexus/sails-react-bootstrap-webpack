@@ -31,20 +31,22 @@ module.exports.http = {
 
         order: [
             'cookieParser',
-            // 'session',
+            // 'session', // we are using our own custom handling of sessions
             'bodyParser',
             'compress',
             'customPoweredBy',
-            'router',
-            'assetLog',
-            'www',
-            'favicon'
+            'router', // custom Sails middleware handler (config/routes.js)
+            'assetLog', // the request wasn't caught by any of the above middleware, must be assets
+            'www', // default hook to serve static files
+            'favicon' // default hook to serve favicon
         ],
 
         customPoweredBy: (req, res, next) => {
+            // disable the default "X-Powered-By" middleware
             sails.hooks.http.app.disable('x-powered-by');
+
+            // set our own custom "X-Powered-By" header
             res.set('X-Powered-By', 'Awesome Sauce');
-            res.set('Access-Control-Allow-Origin', '*');
 
             return next();
         },

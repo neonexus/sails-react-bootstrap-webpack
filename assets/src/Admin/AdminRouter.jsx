@@ -18,43 +18,10 @@ import {UserProvider, UserConsumer} from '../data/userContext';
 class AdminRouter extends React.Component {
     constructor(props) {
         super(props);
-
-        // this.state = {
-        //     isAuthenticated: false,
-        //     user: sessionStorage.getItem('user')
-        // };
-
-        // this.userLogin = this.userLogin.bind(this);
-        // this.userLogout = this.userLogout.bind(this);
     }
 
-    // userLogin(user) {
-    //     this.setState({user, isAuthenticated: true});
-    //     sessionStorage.setItem('user', user);
-    // }
-    //
-    // userLogout() {
-    //     this.setState({user: {}, isAuthenticated: false});
-    //     sessionStorage.removeItem('user');
-    // }
-
     render() {
-        const that = this;
-
         function RenderOrLogin(props) {
-            // if (that.state.isAuthenticated) {
-            //     return props.children;
-            // }
-
-            // return (
-            //     <Redirect
-            //         to={{
-            //             pathname: '/admin/login',
-            //             state: {from: props.location}
-            //         }}
-            //     />
-            // );
-
             return (
                 <UserConsumer>
                     {

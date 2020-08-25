@@ -1,12 +1,12 @@
 bail: false #stop on first error
 async-only: true # require use of "done" cb or an async function (a Promise)
 require:
-    - 'test/hooks.js'
+    - 'test/hooks.js' # starting point for tests
 spec:  'test/**/*.test.js'
 timeout: 10000 # Give Sails some breathing room... We are building schemas / data fixtures.
 checkLeaks: true
 global:
-    - '_'
+    - '_' # Lodash global
     - 'sails'
     - '__core-js_shared__'
     - 'Archive' # Sails' built-in archive
@@ -14,3 +14,4 @@ global:
     - 'Session'
     - 'RequestLog'
     - 'Log'
+    - '__coverage__' # NYC coverage global

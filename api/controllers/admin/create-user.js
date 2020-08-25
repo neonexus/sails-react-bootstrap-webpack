@@ -27,6 +27,11 @@ module.exports = {
             isEmail: true,
             required: true,
             maxLength: 191
+        },
+
+        role: {
+            type: 'string',
+            defaultsTo: 'user'
         }
     },
 
@@ -63,7 +68,7 @@ module.exports = {
             firstName: inputs.firstName,
             lastName: inputs.lastName,
             password: inputs.password,
-            role: 'user',
+            role: inputs.role,
             email: inputs.email
         }).meta({fetch: true}).exec((err, newUser) => {
             if (err) {
