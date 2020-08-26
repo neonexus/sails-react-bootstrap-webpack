@@ -38,7 +38,7 @@ module.exports.routes = {
                 if (fs.existsSync(pathToCheck)) {
                     await sails.helpers.finalizeRequestLog(req, res, {body: 'view'});
 
-                    return res.view('pages/homepage', {appToLoad: parts[1]});
+                    return res.type('html').send(fs.readFileSync(pathToCheck));
                 }
 
                 res.status(404);
