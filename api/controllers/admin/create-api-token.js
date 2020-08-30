@@ -1,7 +1,7 @@
 module.exports = {
     friendlyName: 'Create API Token',
 
-    description: 'Get an API token, which replaces CSRF token usage.',
+    description: 'Get an API token, which replaces CSRF token / session cookie usage.',
 
     inputs: {},
 
@@ -17,8 +17,15 @@ module.exports = {
         }
     },
 
-    fn: (inputs, exits) => {
+    fn: async (inputs, exits, env) => {
+        const newToken = await ApiToken.create({
+            id: 'c', // required, auto-generated
+            user: env.req.session.user.id
+        }).fetch();
 
-        return exits.ok();
+        return exits.ok({
+            token: newToken.token,
+            __skipCSRF: true
+        });
     }
 };

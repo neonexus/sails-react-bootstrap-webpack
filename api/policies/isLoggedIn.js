@@ -20,6 +20,26 @@ module.exports = async function(req, res, next) {
 
         // Doesn't look like this session is valid, remove the cookie.
         res.clearCookie(sails.config.session.name, {signed: true, httpOnly: true, secure: sails.config.session.cookie.secure});
+    } else {
+        let token = req.headers['authorization'];
+
+        if (token.includes('Bearer ')) {
+            token = token.substring(7);
+        }
+
+        const foundToken = await sails.models.apitoken.findOne({
+            token
+        }).populate('user');
+
+        if (foundToken) {
+            await sails.models.apitoken.updateOne({
+                token
+            }).set({updatedAt: new Date()});
+
+            req.session = {user: foundToken.user};
+
+            return next();
+        }
     }
 
     return res.forbidden('You are not logged in');

@@ -9,9 +9,13 @@ const path = require('path');
 global.chai = require('chai');
 
 chai.use(require('chai-spies'));
+chai.use(require('chai-uuid'));
 
 // setup global should object, for things like "should.not.exist(someNullVariable)", which requires calling .should() on chai, to also setup "obj.should" syntax
-global.should = chai.should(); // WebStorm doesn't like this, but it works...
+global.should = chai.should();
+
+// setup global testUtils object
+global.testUtils = require('utilities');
 
 // not the global "sails" variable, this is internal uppercase "Sails"
 const Sails = require('sails');
@@ -36,7 +40,9 @@ exports.mochaHooks = {
                 console.error('Your `.sailsrc` file(s) will be ignored.');
                 console.error('To resolve this, run:');
                 console.error('npm install rc --save');
-                rc = function(){ return {}; };
+                rc = function() {
+                    return {};
+                };
             }
         }
 
@@ -45,13 +51,13 @@ exports.mochaHooks = {
         try {
             // This should throw an error, since "sails" is undefined.
             should.not.exist(sails);
-        } catch(e) {
+        } catch (e) {
             err = e;
         }
         should.exist(err);
 
         Sails.lift(_.merge(rc('sails'), {
-            log: { level: 'warn' },
+            log: {level: 'warn'},
             datastores: {
                 default: {
                     database: 'testing'
@@ -65,8 +71,9 @@ exports.mochaHooks = {
                 _,
                 async: false,
                 models: false
-            }
-        }), function(err, sailsApp){
+            },
+            port: 1338 // to allow us to keep local instance running while we run tests
+        }), function(err, sailsApp) {
             if (err) {
                 return done(err);
             }
@@ -75,7 +82,7 @@ exports.mochaHooks = {
             should.exist(sails);
             sails.should.have.property('models');
 
-            fs.readdir( path.join(__dirname, '../api/models'), (error, files) => {
+            fs.readdir(path.join(__dirname, '../api/models'), (error, files) => {
                 should.not.exist(error);
 
                 Object.keys(sails.models).should.have.lengthOf(files.length + 1); // add 1 for the built-in archive model
@@ -86,13 +93,14 @@ exports.mochaHooks = {
 
             // Populate the DB, forcing creation of users first
             fixted.populate([
-                'user'
+                'user',
+                'session'
             ], done);
         });
     },
 
     // run once
-    afterAll: function(done){
+    afterAll: function(done) {
         // here you can clear fixtures, etc.
         console.log(); // skip a line before lowering logs
         sails.lower(done);

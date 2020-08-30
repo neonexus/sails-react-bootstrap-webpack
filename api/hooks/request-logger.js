@@ -3,7 +3,7 @@ const stringify = require('json-stringify-safe');
 module.exports = (sails) => {
     return {
 
-        initialize: function (cb) {
+        initialize: function(cb) {
             // Assign this hook object to the `hook` var.
             // This allows us to add/modify values that users of the hook can retrieve.
             //hook = this;
@@ -17,7 +17,7 @@ module.exports = (sails) => {
 
         routes: {
             before: {
-                '*': function (req, res, next) {
+                '*': function(req, res, next) {
                     if (req.method !== 'HEAD' && req.path !== '/__getcookie' && req.path !== '/') {
                         const bleep = '*******';
 
