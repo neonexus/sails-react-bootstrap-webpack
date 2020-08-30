@@ -112,7 +112,7 @@ describe('Request Logger', function() {
         });
 
         it('Not log sensitive information', function(done) {
-            let thisReq = _.merge({}, defaultReq);
+            const thisReq = _.merge({}, defaultReq);
 
             hook(thisReq, defaultRes, async function() {
                 ++expectedRequestLogCount;
@@ -165,7 +165,7 @@ describe('Request Logger', function() {
         });
 
         it('Not "bleep" out other data points', function(done) {
-            let thisReq = _.merge({}, defaultReq);
+            const thisReq = _.merge({}, defaultReq);
 
             hook(thisReq, defaultRes, async function() {
                 ++expectedRequestLogCount;
@@ -193,6 +193,17 @@ describe('Request Logger', function() {
                 parsedLogBody.username.should.eq(defaultReq.body.username);
                 parsedLogBody.mySpecialText.should.eq(defaultReq.body.mySpecialText);
 
+                done();
+            });
+        });
+
+        it('Not block a request on database error', function(done) {
+            const thisReq = _.merge({}, defaultReq, {
+                method: 'FAIL'
+            });
+
+            hook(thisReq, defaultRes, () => {
+                // this function getting called is a test in it self, because we should have gotten an error
                 done();
             });
         });

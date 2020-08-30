@@ -23,8 +23,8 @@ module.exports = {
 
     fn: async (inputs, exits) => {
         // Do nothing if we don't have a session, or this is a GET request.
-        if (inputs.req.method === 'GET' || !inputs.req.session || !inputs.req.session.user || !inputs.req.session.id) {
-            return exits.success(inputs.data);
+        if (inputs.req.method === 'GET' || !inputs.req.session || !inputs.req.session.user || !inputs.req.session.id || inputs.data.__skipCSRF) {
+            return exits.success(_.omit(inputs.data, ['__skipCSRF']));
         }
 
         const foundSession = await Session.findOne({id: inputs.req.session.id});

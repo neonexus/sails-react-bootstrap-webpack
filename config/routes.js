@@ -55,17 +55,17 @@ module.exports.routes = {
     },
 
     'GET /admin': {
-        skipAssets: true,
         fn: (req, res) => {
             return res.redirect('/admin/dashboard');
         }
     },
 
-    'POST /api/v1/user': {action: 'admin/create-user', skipAssets: true},
-    'POST /api/v1/login': {action: 'admin/login', skipAssets: true},
-    'GET /api/v1/logout': {action: 'admin/logout', skipAssets: true},
-    'GET /api/v1/me': {action: 'admin/get-me', skipAssets: true},
-    'DELETE /api/v1/user': {action: 'admin/delete-user', skipAssets: true},
+    'POST /api/v1/user': 'admin/create-user',
+    'POST /api/v1/login': 'admin/login',
+    'GET /api/v1/logout': 'admin/logout',
+    'GET /api/v1/me': 'admin/get-me',
+    'DELETE /api/v1/user': 'admin/delete-user',
+    'POST /api/v1/token': 'admin/create-api-token',
 
     'GET /_ping': (req, res) => {
         return res.ok('pong');

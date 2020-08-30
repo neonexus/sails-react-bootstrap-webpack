@@ -16,16 +16,12 @@ module.exports = {
 
     sync: true,
 
-    fn: function(inputs, exits){
+    fn: function(inputs, exits) {
         let errors = [],
             isPassPhrase = false;
 
-        if (!inputs.password) {
-            return ['Password can not be empty'];
-        }
-
         if (inputs.password.length < 7) {
-            errors.push('Password must be at least 8 characters');
+            errors.push('Password must be at least 7 characters');
         }
 
         if (inputs.password.length > 70) {

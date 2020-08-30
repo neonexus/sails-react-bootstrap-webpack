@@ -41,11 +41,11 @@ module.exports = {
                         : [inputs.data.cookies];
 
         cookies.map((cookie) => {
-            if (!_.isDefined(cookie.name) || !_.isString(cookie.name) || _.isEmpty(cookie.name)) {
+            if (_.isUndefined(cookie.name) || !_.isString(cookie.name) || _.isEmpty(cookie.name)) {
                 throw 'missingName';
             }
 
-            if (!_.isDefined(cookie.value)) {
+            if (_.isUndefined(cookie.value)) {
                 throw 'missingValue';
             }
 

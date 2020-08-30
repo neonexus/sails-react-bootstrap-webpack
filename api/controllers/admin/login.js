@@ -46,7 +46,7 @@ module.exports = {
             return exits.badRequest(badEmailPass);
         }
 
-        const csrf = sails.helpers.generateCsrfToken();
+        const csrf = sails.helpers.generateCsrfTokenAndSecret();
         const newSession = await Session.create({
             id: 'c', // required, auto-generated
             user: foundUser.id,
