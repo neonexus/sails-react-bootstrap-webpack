@@ -1,5 +1,6 @@
 import React from 'react';
 import {isObject} from 'lodash';
+import PropTypes from 'prop-types';
 
 const userContext = React.createContext();
 
@@ -8,8 +9,8 @@ export class UserProvider extends React.Component {
         super(props);
 
         this.state = {
-            user: {},
-            isLoggedIn: false,
+            user: props.user || {},
+            isLoggedIn: !!(props.user), // if the user prop was given, assume we are logged in
             isRememberMeOn: localStorage.getItem('user_remember_me') === 'true'
         };
 
@@ -60,5 +61,13 @@ export class UserProvider extends React.Component {
         );
     }
 }
+
+UserProvider.propTypes = {
+    user: PropTypes.object
+};
+
+UserProvider.defaultProps = {
+    user: null
+};
 
 export const UserConsumer = userContext.Consumer;

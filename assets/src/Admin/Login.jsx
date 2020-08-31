@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {APIConsumer} from '../data/apiContext';
 import {UserConsumer} from '../data/userContext';
 
 import {Row, Button, Form} from 'react-bootstrap';
@@ -32,12 +31,12 @@ class Login extends React.Component {
         // this.props.location.history.push(dest);
     }
 
-    handleLogin(e, api, done) {
+    handleLogin(e, done) {
         e.preventDefault();
 
         localStorage.setItem('email', this.state.email);
 
-        api.post({
+        this.props.api.post({
             url: '/login',
             body: {
                 email: this.state.email,
@@ -85,57 +84,51 @@ class Login extends React.Component {
                             {
                                 !userContext.isLoggedIn &&
                                 <div className="row justify-content-center">
-                                    <APIConsumer>
-                                        {
-                                            (api) => (
-                                                <Form onSubmit={(e) => this.handleLogin(e, api, userContext.login)} className="col-3">
-                                                    <h3 className="row">Login</h3>
-                                                    <Row className="pb-2">
-                                                        <Form.Control
-                                                            type="email"
-                                                            className="form-control"
-                                                            placeholder="Email"
-                                                            value={this.state.email}
-                                                            name="email"
-                                                            onChange={this.handleEmail}
-                                                            autoFocus={!this.state.autoFocusPassword}
-                                                        />
-                                                    </Row>
-                                                    <Row className="pb-4">
-                                                        <Form.Control
-                                                            type="password"
-                                                            className="form-control"
-                                                            placeholder="Password"
-                                                            name="password"
-                                                            value={this.state.password}
-                                                            onChange={this.handlePassword}
-                                                            autoFocus={this.state.autoFocusPassword}
-                                                        />
-                                                    </Row>
-                                                    <Row className="pb-4 form-check">
-                                                        <Form.Check.Input
-                                                            type="checkbox"
-                                                            className="form-check-input"
-                                                            id="rememberMe"
-                                                            defaultChecked={userContext.isRememberMeOn}
-                                                            onChange={() => userContext.setRememberMe(!userContext.isRememberMeOn)}
-                                                        />
-                                                        <Form.Check.Label htmlFor="rememberMe">Remember Me</Form.Check.Label>
-                                                    </Row>
-                                                    <Row>
-                                                        <Button type="submit" variant="primary">Login</Button>
-                                                    </Row>
-                                                    <br />
-                                                    <br />
-                                                    <Row>
-                                                        <Form.Text id="adminHelpBlock" muted>
-                                                            If you need to create your first admin user, use: "sails run create-admin".
-                                                        </Form.Text>
-                                                    </Row>
-                                                </Form>
-                                            )
-                                        }
-                                    </APIConsumer>
+                                    <Form onSubmit={(e) => this.handleLogin(e, userContext.login)} className="col-sm-5">
+                                        <h3 className="row">Login</h3>
+                                        <Row className="pb-2">
+                                            <Form.Control
+                                                type="email"
+                                                className="form-control"
+                                                placeholder="Email"
+                                                value={this.state.email}
+                                                name="email"
+                                                onChange={this.handleEmail}
+                                                autoFocus={!this.state.autoFocusPassword}
+                                            />
+                                        </Row>
+                                        <Row className="pb-4">
+                                            <Form.Control
+                                                type="password"
+                                                className="form-control"
+                                                placeholder="Password"
+                                                name="password"
+                                                value={this.state.password}
+                                                onChange={this.handlePassword}
+                                                autoFocus={this.state.autoFocusPassword}
+                                            />
+                                        </Row>
+                                        <Row className="pb-4 form-check">
+                                            <Form.Check.Input
+                                                type="checkbox"
+                                                className="form-check-input"
+                                                id="rememberMe"
+                                                defaultChecked={userContext.isRememberMeOn}
+                                                onChange={() => userContext.setRememberMe(!userContext.isRememberMeOn)}
+                                            />
+                                            <Form.Check.Label htmlFor="rememberMe">Remember Me</Form.Check.Label>
+                                        </Row>
+                                        <Row>
+                                            <Button type="submit" variant="primary">Login</Button>
+                                        </Row>
+                                        <br />
+                                        <br />
+                                        <Row>
+                                            <Form.Text id="adminHelpBlock" muted>
+                                                If you need to create your first admin user, use: "sails run create-admin".
+                                            </Form.Text>
+                                        </Row>
+                                    </Form>
                                 </div>
                             }
                         </div>
@@ -146,8 +139,8 @@ class Login extends React.Component {
     }
 }
 
-Login.propTypes = {};
-
-Login.defaultProps = {};
+Login.propTypes = {
+    api: PropTypes.object.isRequired
+};
 
 export default Login;

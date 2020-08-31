@@ -52,6 +52,12 @@ class api {
             req = {url: req};
         }
 
+        if (!bad) {
+            bad = (err, body) => {
+                console.error('API Error', req, body, err);
+            };
+        }
+
         const thisReq = api.__buildRequestObj(requester.get(this.baseUrl + req.url).withCredentials(), req);
 
         return thisReq.then((res) => api.__buildResponseWrapper(res, good), (err) => bad(err, err.response.body));
@@ -60,6 +66,12 @@ class api {
     post(req, good, bad) {
         if (typeof req === 'string') {
             req = {url: req};
+        }
+
+        if (!bad) {
+            bad = (err, body) => {
+                console.error('API Error', req, body, err);
+            };
         }
 
         const thisReq = api.__buildRequestObj(requester.post(this.baseUrl + req.url).withCredentials(), req);
@@ -72,6 +84,12 @@ class api {
             req = {url: req};
         }
 
+        if (!bad) {
+            bad = (err, body) => {
+                console.error('API Error', req, body, err);
+            };
+        }
+
         const thisReq = api.__buildRequestObj(requester.put(this.baseUrl + req.url).withCredentials(), req);
 
         return thisReq.then((res) => api.__buildResponseWrapper(res, good), (err) => bad(err, err.response.body));
@@ -80,6 +98,12 @@ class api {
     del(req, good, bad) {
         if (typeof req === 'string') {
             req = {url: req};
+        }
+
+        if (!bad) {
+            bad = (err, body) => {
+                console.error('API Error', req, body, err);
+            };
         }
 
         const thisReq = api.__buildRequestObj(requester.del(this.baseUrl + req.url).withCredentials(), req);
