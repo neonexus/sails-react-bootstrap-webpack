@@ -23,22 +23,24 @@ module.exports = async function(req, res, next) {
     } else {
         let token = req.headers['authorization'];
 
-        if (token.includes('Bearer ')) {
-            token = token.substring(7);
-        }
+        if (token) {
+            if (token.includes('Bearer ')) {
+                token = token.substring(7);
+            }
 
-        const foundToken = await sails.models.apitoken.findOne({
-            token
-        }).populate('user');
-
-        if (foundToken) {
-            await sails.models.apitoken.updateOne({
+            const foundToken = await sails.models.apitoken.findOne({
                 token
-            }).set({updatedAt: new Date()});
+            }).populate('user');
 
-            req.session = {user: foundToken.user};
+            if (foundToken) {
+                await sails.models.apitoken.updateOne({
+                    token
+                }).set({updatedAt: new Date()});
 
-            return next();
+                req.session = {user: foundToken.user};
+
+                return next();
+            }
         }
     }
 

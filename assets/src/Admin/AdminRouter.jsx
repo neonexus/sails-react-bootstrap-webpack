@@ -9,15 +9,35 @@ import {
 } from 'react-router-dom';
 
 import Login from '../Admin/Login';
-import SidebarNav from './SidebarNav';
 import Upgrade from './Upgrade';
+import PropTypes from 'prop-types';
 
-import {APIProvider} from '../data/apiContext';
 import {UserProvider, UserConsumer} from '../data/userContext';
+import api from '../data/api';
+
+import NavBar from './NavBar';
+import {Container} from 'react-bootstrap';
 
 class AdminRouter extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            api: new api(),
+            user: null,
+            hasRun: false
+        };
+
+        this.state.api.get('/me', (res) => {
+            if (res.success) {
+                return this.setState({user: res.user, hasRun: true});
+            }
+
+            console.error('Something went wrong', res);
+        }, () => {
+            // we are likely not logged in
+            this.setState({hasRun: true});
+        });
     }
 
     render() {
@@ -30,20 +50,33 @@ class AdminRouter extends React.Component {
                                 return props.children;
                             }
 
-                            return (
-                                <Login />
-                            );
+                            if (props.api) {
+                                return (
+                                    <Login api={props.api} />
+                                );
+                            }
+
+                            return null; // not ready yet
                         }
                     }
                 </UserConsumer>
             );
         }
 
+        RenderOrLogin.propTypes = {
+            api: PropTypes.object.isRequired
+        };
+
+        if (!this.state.hasRun) {
+            return null;
+        }
+
         return (
-            <APIProvider>
-                <UserProvider>
-                    <RenderOrLogin>
-                        <SidebarNav>
+            <Router>
+                <UserProvider user={this.state.user}>
+                    <RenderOrLogin api={this.state.api}>
+                        <NavBar api={this.state.api} />
+                        <Container>
                             <Switch>
                                 <Route path="/admin/dashboard">
                                     <Dashboard />
@@ -55,10 +88,10 @@ class AdminRouter extends React.Component {
                                     <Redirect to="/admin/dashboard" />
                                 </Route>
                             </Switch>
-                        </SidebarNav>
+                        </Container>
                     </RenderOrLogin>
                 </UserProvider>
-            </APIProvider>
+            </Router>
         );
     }
 }
