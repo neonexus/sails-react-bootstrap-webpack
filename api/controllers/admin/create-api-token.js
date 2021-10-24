@@ -18,14 +18,14 @@ module.exports = {
     },
 
     fn: async (inputs, exits, env) => {
-        const newToken = await ApiToken.create({
+        const newToken = await sails.models.apitoken.create({
             id: 'c', // required, auto-generated
             user: env.req.session.user.id
         }).fetch();
 
         return exits.ok({
             token: newToken.token,
-            __skipCSRF: true
+            __skipCSRF: true // this tells our "ok" response to ignore the CSRF token update
         });
     }
 };

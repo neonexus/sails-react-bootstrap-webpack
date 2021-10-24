@@ -36,7 +36,7 @@ module.exports = {
                 headers = _.merge({}, inputs.res._headers), // copy the object
                 bleep = '*******';
 
-            if (!sails.config.logSensitiveData) {
+            if (!sails.config.logSensitiveData) { // a custom configuration option, for the request logger hook
                 if (out._csrf) {
                     out._csrf = bleep;
                 }
@@ -60,8 +60,7 @@ module.exports = {
                 out = stringify(out);
             }
 
-            const diff = process.hrtime(inputs.req._customStartTime),
-                time = diff[0] * 1e3 + diff[1] * 1e-6,
+            const time = Number(process.hrtime.bigint() - inputs.req._requestStartTime) / 1000000, // convert the bigint nanoseconds into milliseconds
                 totalTime = time.toFixed(4) + 'ms';
 
             let log = {
@@ -71,13 +70,8 @@ module.exports = {
                 responseTime: totalTime
             };
 
-            if (inputs.req.viewer) {
-                log.viewer = inputs.req.viewer.id;
-            }
-
             sails.models.requestlog.update(inputs.req.requestId, log, (err) => {
                 if (err) {
-                    //utils.createLog(req, err, 'Error updating request audit log');
                     console.log(err);
                 }
             });

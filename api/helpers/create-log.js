@@ -36,7 +36,7 @@ module.exports = {
             description: inputs.description
         };
 
-        Log.create(newLog).meta({fetch: true}).exec((err, newLog) => {
+        sails.models.log.create(newLog).meta({fetch: true}).exec((err, newLog) => {
             if (err) {
                 console.error(err);
 

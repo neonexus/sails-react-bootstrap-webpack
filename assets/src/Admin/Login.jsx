@@ -76,7 +76,7 @@ class Login extends React.Component {
                 {
                     (userContext) => (
                         <div id="main-wrapper" className="container">
-                            <h2>Admin</h2>
+                            <h2 className="text-center">Admin</h2>
                             {
                                 userContext.isLoggedIn &&
                                 <div>You are logged in</div>
@@ -85,8 +85,8 @@ class Login extends React.Component {
                                 !userContext.isLoggedIn &&
                                 <div className="row justify-content-center">
                                     <Form onSubmit={(e) => this.handleLogin(e, userContext.login)} className="col-sm-5">
-                                        <h3 className="row">Login</h3>
-                                        <Row className="pb-2">
+                                        <h3>Login</h3>
+                                        <div className="pb-2">
                                             <Form.Control
                                                 type="email"
                                                 className="form-control"
@@ -96,8 +96,8 @@ class Login extends React.Component {
                                                 onChange={this.handleEmail}
                                                 autoFocus={!this.state.autoFocusPassword}
                                             />
-                                        </Row>
-                                        <Row className="pb-4">
+                                        </div>
+                                        <div className="pb-4">
                                             <Form.Control
                                                 type="password"
                                                 className="form-control"
@@ -107,25 +107,24 @@ class Login extends React.Component {
                                                 onChange={this.handlePassword}
                                                 autoFocus={this.state.autoFocusPassword}
                                             />
-                                        </Row>
-                                        <Row className="pb-4 form-check">
-                                            <Form.Check.Input
+                                        </div>
+                                        <div className="pb-4">
+                                            <Form.Check
                                                 type="checkbox"
-                                                className="form-check-input"
                                                 id="rememberMe"
                                                 defaultChecked={userContext.isRememberMeOn}
                                                 onChange={() => userContext.setRememberMe(!userContext.isRememberMeOn)}
+                                                label="Remember Me"
                                             />
-                                            <Form.Check.Label htmlFor="rememberMe">Remember Me</Form.Check.Label>
-                                        </Row>
-                                        <Row>
+                                        </div>
+                                        <div>
                                             <Button type="submit" variant="primary">Login</Button>
-                                        </Row>
+                                        </div>
                                         <br />
                                         <br />
                                         <Row>
                                             <Form.Text id="adminHelpBlock" muted>
-                                                If you need to create your first admin user, use: "sails run create-admin".
+                                                If you need to create your first admin user, run this in your terminal: <div style="">sails run create-admin</div>
                                             </Form.Text>
                                         </Row>
                                     </Form>

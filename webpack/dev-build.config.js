@@ -1,3 +1,5 @@
+// This file is used to configure Webpack for dev builds, similar to production builds, without code minimization.
+
 const {merge} = require('webpack-merge');
 const baseConfig = require('./dev.config.js');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');

@@ -22,7 +22,7 @@ module.exports = {
     },
 
     fn: async (inputs, exits) => {
-        // Do nothing if we don't have a session, or this is a GET request.
+        // Do nothing if we don't have a session, this is a GET request, or we manually specified to skip (for API tokens for example).
         if (inputs.req.method === 'GET' || !inputs.req.session || !inputs.req.session.user || !inputs.req.session.id || inputs.data.__skipCSRF) {
             return exits.success(_.omit(inputs.data, ['__skipCSRF']));
         }

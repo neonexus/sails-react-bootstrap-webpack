@@ -17,7 +17,7 @@ function Main() {
                 A React Router Link will just route back here.
             */}
             <a href="/admin">
-                <Button variant="info">
+                <Button variant="primary">
                     Admin
                 </Button>
             </a>

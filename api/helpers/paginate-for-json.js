@@ -1,11 +1,11 @@
 module.exports = {
     friendlyName: 'Paginate for JSON',
 
-    description: 'Expects the query from sails.helpers.paginateForQuery().',
+    description: 'A pagination helper to modify output with pagination data.',
 
     inputs: {
         query: {
-            description: 'This should be the value returned from sails.helpers.paginateForQuery()',
+            description: 'This should be the value returned from sails.helpers.paginateForQuery().',
             type: 'json',
             required: true,
             // this is a custom validator, which returns true or false
@@ -16,12 +16,14 @@ module.exports = {
             )
         },
 
-        model: { // must be a reference to a Sails model, like User or sails.models.user
+        model: {
+            description: 'A reference to the Sails model that was paginated, like User or sails.model.user.',
             type: 'ref',
             required: true
         },
 
-        objToWrap: { // the response to be given to the end-user
+        objToWrap: {
+            description: 'The response to be given to the end-user.',
             type: 'json',
             required: true
         }

@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unused-state */
+
 import React from 'react';
 import {isObject} from 'lodash';
 import PropTypes from 'prop-types';
@@ -8,12 +10,6 @@ export class UserProvider extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            user: props.user || {},
-            isLoggedIn: !!(props.user), // if the user prop was given, assume we are logged in
-            isRememberMeOn: localStorage.getItem('user_remember_me') === 'true'
-        };
-
         // if (this.state.isRememberMeOn) {
         //     this.state.user.email = localStorage.getItem('user_email') || '';
         // } else {
@@ -23,6 +19,15 @@ export class UserProvider extends React.Component {
         this.handleLogin = this.handleLogin.bind(this);
         this.handleRememberMe = this.handleRememberMe.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
+
+        this.state = {
+            user: props.user || {},
+            isLoggedIn: !!(props.user), // if the user prop was given, assume we are logged in
+            isRememberMeOn: localStorage.getItem('user_remember_me') === 'true',
+            login: this.handleLogin,
+            setRememberMe: this.handleRememberMe,
+            logout: this.handleLogout
+        };
     }
 
     handleLogin(user) {
@@ -35,8 +40,8 @@ export class UserProvider extends React.Component {
     }
 
     handleRememberMe(onOrOff) {
-        localStorage.setItem('user_remember_me', onOrOff);
-        this.setState({isRememberMeOn: onOrOff});
+        localStorage.setItem('user_remember_me', onOrOff ? 'true' : 'false');
+        this.setState({isRememberMeOn: !!onOrOff});
     }
 
     handleLogout() {
@@ -46,14 +51,7 @@ export class UserProvider extends React.Component {
     render() {
         return (
             <userContext.Provider
-                value={{
-                    user: this.state.user,
-                    isLoggedIn: this.state.isLoggedIn,
-                    isRememberMeOn: this.state.isRememberMeOn,
-                    login: this.handleLogin,
-                    setRememberMe: this.handleRememberMe,
-                    logout: this.handleLogout
-                }}
+                value={this.state}
             >
                 {/* eslint-disable-next-line react/prop-types */}
                 {this.props.children}

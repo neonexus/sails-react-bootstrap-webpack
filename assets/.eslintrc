@@ -46,6 +46,9 @@
     "rules": {
         "no-undef": [
             "error"
+        ],
+        "react/jsx-newline": [
+            "off"
         ]
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         // ^^Note: If you've enabled the "no-undef" rule in the top level .eslintrc file, then

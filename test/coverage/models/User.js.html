@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75.76% </span>
+                <span class="strong">72.97% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>25/33</span>
+                <span class='fraction'>27/37</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">72.73% </span>
+                <span class="strong">58.82% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>8/11</span>
+                <span class='fraction'>10/17</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">72.22% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>24/32</span>
+                <span class='fraction'>26/36</span>
             </div>
         
             
@@ -225,7 +225,14 @@
 <a name='L166'></a><a href='#L166'>166</a>
 <a name='L167'></a><a href='#L167'>167</a>
 <a name='L168'></a><a href='#L168'>168</a>
-<a name='L169'></a><a href='#L169'>169</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L169'></a><a href='#L169'>169</a>
+<a name='L170'></a><a href='#L170'>170</a>
+<a name='L171'></a><a href='#L171'>171</a>
+<a name='L172'></a><a href='#L172'>172</a>
+<a name='L173'></a><a href='#L173'>173</a>
+<a name='L174'></a><a href='#L174'>174</a>
+<a name='L175'></a><a href='#L175'>175</a>
+<a name='L176'></a><a href='#L176'>176</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -343,6 +350,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -372,7 +387,6 @@
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
@@ -510,6 +524,14 @@ module.exports = {
     },
 &nbsp;
     fullName: (user) =&gt; {
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (!user.firstName) {
+<span class="cstat-no" title="statement not covered" >            throw new Error('User has no firstName attribute.');</span>
+        }
+&nbsp;
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (!user.lastName) {
+<span class="cstat-no" title="statement not covered" >            throw new Error('User has no lastName attribute.');</span>
+        }
+&nbsp;
         return user.firstName + ' ' + user.lastName;
     },
 &nbsp;
@@ -535,12 +557,11 @@ module.exports = {
     beforeCreate: async function(user, next) {
         const email = user.email.toLowerCase().trim();
 &nbsp;
+        user.id = sails.helpers.generateUuid();
         user.email = email;
         user.avatar = getGravatarUrl(email);
         user.firstName = forceUppercaseOnFirst(user.firstName);
         user.lastName = forceUppercaseOnFirst(user.lastName);
-        user.id = sails.helpers.generateUuid();
-&nbsp;
         user.password = await updatePassword(user.password);
 &nbsp;
         return next();
@@ -554,7 +575,7 @@ module.exports = {
 <span class="cstat-no" title="statement not covered" >        user.firstName = forceUppercaseOnFirst(user.firstName);</span>
 <span class="cstat-no" title="statement not covered" >        user.lastName = forceUppercaseOnFirst(user.lastName);</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        if (user.password) {</span>
+<span class="cstat-no" title="statement not covered" >        if (user.password &amp;&amp; user.password !== '') {</span>
 <span class="cstat-no" title="statement not covered" >            user.password = await updatePassword(user.password);</span>
         }
 &nbsp;
@@ -568,7 +589,7 @@ module.exports = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Aug 26 2020 18:50:13 GMT-0500 (Central Daylight Time)
+                at Sun Oct 24 2021 00:59:22 GMT-0500 (Central Daylight Time)
             </div>
         </div>
         <script src="../prettify.js"></script>

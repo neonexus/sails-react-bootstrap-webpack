@@ -1,10 +1,10 @@
 # API
 
-This is where all API controllers, custom hooks, helpers, models, policies and responses live.
+This is where all API controllers, custom hooks, helpers, models, policies and responses live. Basically, anything to do with the backend, that is to say, anything to do with reading/writing/deleting data that is fluid. NOT meant for static assets, like compiled JS/CSS/etc files or images (there is an exception to every rule however...).
 
 ## Controllers
 
-Controllers handle API requests, and decide how to respond, using the custom responses, which track API requests in our datastore.
+Controllers handle API requests, and decide how to respond, using the custom responses, while also tracking API requests in our datastore via our custom hook and responses.
 
 See: [Actions and Controllers](https://sailsjs.com/documentation/concepts/actions-and-controllers)
 

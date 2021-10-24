@@ -9,7 +9,7 @@
  */
 
 const defaultStaticOptions = {
-    maxAge: process.env.NODE_ENV !== 'production' ? 1 : 31557600000,
+    maxAge: process.env.NODE_ENV !== 'production' ? 1 : 31557600000, // in production, a little over a year in milliseconds
     extensions: ['html'],
     dotfiles: 'ignore'
 };

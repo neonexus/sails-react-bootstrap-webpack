@@ -1,10 +1,10 @@
 import React from 'react';
 
-function Dashboard(props) {
+function Dashboard() {
     return (
         <>
             <h1>Admin Dashboard</h1>
-            <div>You must be logged in.</div>
+            <div>You must be logged in to see this.</div>
         </>
     );
 }

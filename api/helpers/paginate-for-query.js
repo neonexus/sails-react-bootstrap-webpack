@@ -1,9 +1,9 @@
 module.exports = {
-    sync: true, // is a synchronous
+    sync: true, // is a synchronous function
 
     friendlyName: 'Paginate for query',
 
-    description: 'Takes in pagination options, and returns query for .find() calls.',
+    description: 'Takes in pagination options and a query, then returns a query for .find() calls.',
 
     inputs: {
         page: {

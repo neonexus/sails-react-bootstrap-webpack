@@ -39,7 +39,7 @@ try {
         config = require(configPath);
     }
 
-    // Setup variables to inject into compiled apps, like which URL to use as a base for API / websocket connections, or CRN URLs.
+    // Setup variables to inject into compiled apps, like which URL to use as a base for API / websocket connections, or CDN URLs.
     baseUrl = config.baseUrl;
     frontendUrl = config.frontendUrl;
     assetUrl = config.assetsUrl ? config.assetsUrl : '/'; // used for CDN rewrites on asset URLs
