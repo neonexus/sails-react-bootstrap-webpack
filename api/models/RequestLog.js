@@ -3,8 +3,9 @@ module.exports = {
 
     attributes: {
         id: {
-            type: 'number',
-            autoIncrement: true
+            type: 'string',
+            columnType: 'varchar(36)',
+            required: true // this is required, but commenting out because it's auto-generated on creation, and will help cleanup useless code
         },
 
         direction: {
@@ -87,5 +88,11 @@ module.exports = {
         },
 
         updatedAt: false
+    },
+
+    beforeCreate: async function(reqlog, next) {
+        reqlog.id = sails.helpers.generateUuid();
+
+        return next();
     }
 };

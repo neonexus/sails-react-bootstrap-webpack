@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">7.41% </span>
+                <span class="strong">8.33% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>2/27</span>
+                <span class='fraction'>2/24</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/18</span>
+                <span class='fraction'>0/16</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">7.41% </span>
+                <span class="strong">8.33% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>2/27</span>
+                <span class='fraction'>2/24</span>
             </div>
         
             
@@ -141,13 +141,7 @@
 <a name='L82'></a><a href='#L82'>82</a>
 <a name='L83'></a><a href='#L83'>83</a>
 <a name='L84'></a><a href='#L84'>84</a>
-<a name='L85'></a><a href='#L85'>85</a>
-<a name='L86'></a><a href='#L86'>86</a>
-<a name='L87'></a><a href='#L87'>87</a>
-<a name='L88'></a><a href='#L88'>88</a>
-<a name='L89'></a><a href='#L89'>89</a>
-<a name='L90'></a><a href='#L90'>90</a>
-<a name='L91'></a><a href='#L91'>91</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L85'></a><a href='#L85'>85</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -211,7 +205,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -222,11 +215,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -275,7 +263,7 @@ module.exports = {
                 headers = <span class="cstat-no" title="statement not covered" >_.merge({}, inputs.res._headers),</span> // copy the object
                 bleep = <span class="cstat-no" title="statement not covered" >'*******';</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            if (!sails.config.logSensitiveData) {</span>
+<span class="cstat-no" title="statement not covered" >            if (!sails.config.logSensitiveData) { // a custom configuration option, for the request logger hook</span>
 <span class="cstat-no" title="statement not covered" >                if (out._csrf) {</span>
 <span class="cstat-no" title="statement not covered" >                    out._csrf = bleep;</span>
                 }
@@ -299,8 +287,7 @@ module.exports = {
 <span class="cstat-no" title="statement not covered" >                out = stringify(out);</span>
             }
 &nbsp;
-            const diff = <span class="cstat-no" title="statement not covered" >process.hrtime(inputs.req._customStartTime),</span>
-                time = <span class="cstat-no" title="statement not covered" >diff[0] * 1e3 + diff[1] * 1e-6,</span>
+            const time = <span class="cstat-no" title="statement not covered" >Number(process.hrtime.bigint() - inputs.req._requestStartTime) / 1000000,</span> // convert the bigint nanoseconds into milliseconds
                 totalTime = <span class="cstat-no" title="statement not covered" >time.toFixed(4) + 'ms';</span>
 &nbsp;
             let log = <span class="cstat-no" title="statement not covered" >{</span>
@@ -310,13 +297,8 @@ module.exports = {
                 responseTime: totalTime
             };
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            if (inputs.req.viewer) {</span>
-<span class="cstat-no" title="statement not covered" >                log.viewer = inputs.req.viewer.id;</span>
-            }
-&nbsp;
 <span class="cstat-no" title="statement not covered" >            sails.models.requestlog.update(inputs.req.requestId, log, <span class="fstat-no" title="function not covered" >(e</span>rr) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >                if (err) {</span>
-                    //utils.createLog(req, err, 'Error updating request audit log');
 <span class="cstat-no" title="statement not covered" >                    console.log(err);</span>
                 }
             });
@@ -334,7 +316,7 @@ module.exports = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Aug 26 2020 18:50:13 GMT-0500 (Central Daylight Time)
+                at Sun Oct 24 2021 00:59:22 GMT-0500 (Central Daylight Time)
             </div>
         </div>
         <script src="../prettify.js"></script>

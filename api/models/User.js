@@ -115,6 +115,14 @@ module.exports = {
     },
 
     fullName: (user) => {
+        if (!user.firstName) {
+            throw new Error('User has no firstName attribute.');
+        }
+
+        if (!user.lastName) {
+            throw new Error('User has no lastName attribute.');
+        }
+
         return user.firstName + ' ' + user.lastName;
     },
 
@@ -140,12 +148,11 @@ module.exports = {
     beforeCreate: async function(user, next) {
         const email = user.email.toLowerCase().trim();
 
+        user.id = sails.helpers.generateUuid();
         user.email = email;
         user.avatar = getGravatarUrl(email);
         user.firstName = forceUppercaseOnFirst(user.firstName);
         user.lastName = forceUppercaseOnFirst(user.lastName);
-        user.id = sails.helpers.generateUuid();
-
         user.password = await updatePassword(user.password);
 
         return next();
@@ -159,7 +166,7 @@ module.exports = {
         user.firstName = forceUppercaseOnFirst(user.firstName);
         user.lastName = forceUppercaseOnFirst(user.lastName);
 
-        if (user.password) {
+        if (user.password && user.password !== '') {
             user.password = await updatePassword(user.password);
         }
 

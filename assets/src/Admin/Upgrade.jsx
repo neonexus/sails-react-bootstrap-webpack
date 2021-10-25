@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Upgrade(props){
+function Upgrade(){
     return (
         <>
             <h1>Upgrade</h1>

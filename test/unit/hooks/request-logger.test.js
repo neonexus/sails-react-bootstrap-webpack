@@ -121,7 +121,9 @@ describe('Request Logger', function() {
 
                 // validate the hook modified the request object
                 thisReq.should.have.property('requestId');
-                thisReq.should.have.property('_customStartTime');
+                thisReq.should.have.property('_requestStartTime');
+                console.log(Number(process.hrtime.bigint() - thisReq._requestStartTime) / 1000000);
+                thisReq._requestStartTime.should.be.a('bigint');
 
                 thisReq.should.have.property('body');
 
@@ -173,7 +175,7 @@ describe('Request Logger', function() {
                 requestLogCount.should.eq(expectedRequestLogCount);
 
                 thisReq.should.have.property('requestId');
-                thisReq.should.have.property('_customStartTime');
+                thisReq.should.have.property('_requestStartTime');
 
                 thisReq.should.have.property('body');
 
@@ -199,11 +201,11 @@ describe('Request Logger', function() {
 
         it('Not block a request on database error', function(done) {
             const thisReq = _.merge({}, defaultReq, {
-                method: 'FAIL'
+                method: 'FORCE FAIL'
             });
 
             hook(thisReq, defaultRes, () => {
-                // this function getting called is a test in it self, because we should have gotten an error
+                // this function getting called is a test in it self, because we should have gotten an error from an invalid request method
                 done();
             });
         });

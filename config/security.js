@@ -53,6 +53,7 @@ module.exports.security = {
      *                                                                           *
      ****************************************************************************/
 
-    csrf: false // this disables Sails's CSRF; this repo has custom CSRF behavior.
+    csrf: false // this disables Sails' CSRF; this repo has custom CSRF behavior.
+    // see the api/policies
 
 };

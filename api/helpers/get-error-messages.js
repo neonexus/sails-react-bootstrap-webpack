@@ -2,7 +2,7 @@ module.exports = {
 
     friendlyName: 'Get error messages',
 
-    description: '',
+    description: 'This condenses down ugly error syntax into a flat array.',
 
     inputs: {
         err: {

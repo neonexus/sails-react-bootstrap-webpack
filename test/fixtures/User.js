@@ -19,6 +19,6 @@ module.exports = [
         lastName: 'Bot',
         role: 'manager',
         email: 'user@testing.com',
-        password: `Passphrases are great, aren't they?`
+        password: `Who doesn't love a good passphrase?`
     }
 ];

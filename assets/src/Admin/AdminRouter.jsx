@@ -16,7 +16,34 @@ import {UserProvider, UserConsumer} from '../data/userContext';
 import api from '../data/api';
 
 import NavBar from './NavBar';
-import {Container} from 'react-bootstrap';
+import {Button, Container} from 'react-bootstrap';
+
+function RenderOrLogin(props) {
+    return (
+        <UserConsumer>
+            {
+                (userContext) => {
+                    if (userContext.isLoggedIn) {
+                        {/* eslint-disable-next-line react/prop-types */}
+                        return props.children;
+                    }
+
+                    if (props.api) {
+                        return (
+                            <Login api={props.api} />
+                        );
+                    }
+
+                    return null; // not ready yet
+                }
+            }
+        </UserConsumer>
+    );
+}
+
+RenderOrLogin.propTypes = {
+    api: PropTypes.object.isRequired
+};
 
 class AdminRouter extends React.Component {
     constructor(props) {
@@ -41,32 +68,6 @@ class AdminRouter extends React.Component {
     }
 
     render() {
-        function RenderOrLogin(props) {
-            return (
-                <UserConsumer>
-                    {
-                        (userContext) => {
-                            if (userContext.isLoggedIn) {
-                                return props.children;
-                            }
-
-                            if (props.api) {
-                                return (
-                                    <Login api={props.api} />
-                                );
-                            }
-
-                            return null; // not ready yet
-                        }
-                    }
-                </UserConsumer>
-            );
-        }
-
-        RenderOrLogin.propTypes = {
-            api: PropTypes.object.isRequired
-        };
-
         if (!this.state.hasRun) {
             return null;
         }
@@ -74,8 +75,8 @@ class AdminRouter extends React.Component {
         return (
             <Router>
                 <UserProvider user={this.state.user}>
+                    <NavBar api={this.state.api} />
                     <RenderOrLogin api={this.state.api}>
-                        <NavBar api={this.state.api} />
                         <Container>
                             <Switch>
                                 <Route path="/admin/dashboard">
@@ -84,8 +85,17 @@ class AdminRouter extends React.Component {
                                 <Route path="/admin/upgrade">
                                     <Upgrade />
                                 </Route>
-                                <Route>
+                                <Route path="/admin" exact>
                                     <Redirect to="/admin/dashboard" />
+                                </Route>
+                                <Route>
+                                    <h1>Page Not Found</h1>
+                                    <div>
+                                        The page you have requested does not exist. Maybe go back and try again?
+                                        <br />
+                                        <br />
+                                        <Button variant="outline-secondary" onClick={() => window.history.back()}>&#8678; Go Back</Button>
+                                    </div>
                                 </Route>
                             </Switch>
                         </Container>

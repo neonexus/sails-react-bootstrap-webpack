@@ -25,6 +25,8 @@ module.exports = {
         }
 
         if (inputs.password.length > 70) {
+            // this 70 character limit is not arbitrary, it is the max size of MySQL utf8mb4 encoding
+            // (71 characters balloons past the 191 character limit of utf8mb4 varchar columns after hashing)
             errors.push('WOW. Password length is TOO good. Max is 70 characters. Sorry.');
         }
 

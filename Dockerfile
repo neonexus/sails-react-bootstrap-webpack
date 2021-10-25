@@ -1,4 +1,4 @@
-FROM node:12.18
+FROM node:14.8
 MAINTAINER NeoNexus DeMortis
 
 RUN apt-get update && apt-get upgrade -y

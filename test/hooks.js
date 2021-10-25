@@ -15,7 +15,7 @@ chai.use(require('chai-uuid'));
 global.should = chai.should();
 
 // setup global testUtils object
-global.testUtils = require('utilities');
+global.testUtils = require('./utilities');
 
 // not the global "sails" variable, this is internal uppercase "Sails"
 const Sails = require('sails');
@@ -23,10 +23,23 @@ const Sails = require('sails');
 // simple database fixture handler
 const Fixted = require('fixted');
 
+const originalConsoleLog = console.log;
+
 exports.mochaHooks = {
     // run once
     beforeAll: function(done) {
         // this.timeout(5000); //  this is set in our .mocharc.yaml
+
+        global.console = {
+            log: () => {}, // this allows us to hide valid error messages during testing
+
+            // keep native behaviour for other methods, use these in tests to log real issues
+            error: console.error,
+            warn: console.warn,
+            info: console.info,
+            debug: console.debug,
+            table: console.table
+        };
 
         // Try to get `rc` dependency
         let rc;
@@ -54,7 +67,7 @@ exports.mochaHooks = {
         } catch (e) {
             err = e;
         }
-        should.exist(err);
+        err.toString().should.eq('ReferenceError: sails is not defined');
 
         Sails.lift(_.merge(rc('sails'), {
             log: {level: 'warn'},
@@ -81,11 +94,34 @@ exports.mochaHooks = {
             // sanity checks
             should.exist(sails);
             sails.should.have.property('models');
+            sails.should.have.property('helpers');
+            sails.should.have.property('hooks');
+            sails.should.have.property('registry');
+            sails.registry.should.have.property('responses');
+            sails.registry.should.have.property('policies');
 
             fs.readdir(path.join(__dirname, '../api/models'), (error, files) => {
                 should.not.exist(error);
 
                 Object.keys(sails.models).should.have.lengthOf(files.length + 1); // add 1 for the built-in archive model
+            });
+
+            fs.readdir(path.join(__dirname, '../api/helpers'), (error, files) => {
+                should.not.exist(error);
+
+                Object.keys(sails.helpers).should.have.lengthOf(files.length);
+            });
+
+            fs.readdir(path.join(__dirname, '../api/responses'), (error, files) => {
+                should.not.exist(error);
+
+                Object.keys(sails.registry.responses).should.have.lengthOf(files.length);
+            });
+
+            fs.readdir(path.join(__dirname, '../api/policies'), (error, files) => {
+                should.not.exist(error);
+
+                Object.keys(sails.registry.policies).should.have.lengthOf(files.length);
             });
 
             // Load fixtures
@@ -101,6 +137,17 @@ exports.mochaHooks = {
 
     // run once
     afterAll: function(done) {
+        global.console = {
+            log: originalConsoleLog, // restore original behavior
+
+            // Keep native behaviour for other methods
+            error: console.error,
+            warn: console.warn,
+            info: console.info,
+            debug: console.debug,
+            table: console.table
+        };
+
         // here you can clear fixtures, etc.
         console.log(); // skip a line before lowering logs
         sails.lower(done);

@@ -15,6 +15,7 @@ function MainRouter() {
                 <Route path="/main">
                     <Main />
                 </Route>
+
                 <Route>
                     <Redirect to={{pathname: '/main'}} />
                 </Route>

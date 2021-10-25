@@ -65,9 +65,10 @@ module.exports = (sails) => {
                         }
 
                         sails.models.requestlog.create({
+                            id: 'c', // required, but is auto-generated
                             direction: 'inbound',
                             method: req.method,
-                            host: req.hostname || req.host || 'unknown',
+                            host: req.hostname || 'unknown',
                             path: req.path,
                             headers: headers,
                             getParams: query,
@@ -80,7 +81,7 @@ module.exports = (sails) => {
                             }
 
                             req.requestId = newRequest.id;
-                            req._customStartTime = process.hrtime();
+                            req._requestStartTime = process.hrtime.bigint();
 
                             return next();
                         });

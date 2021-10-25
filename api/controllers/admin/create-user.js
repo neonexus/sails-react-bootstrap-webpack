@@ -31,7 +31,11 @@ module.exports = {
 
         role: {
             type: 'string',
-            defaultsTo: 'user'
+            defaultsTo: 'user',
+            isIn: [
+                'user',
+                'admin'
+            ]
         }
     },
 
@@ -57,7 +61,7 @@ module.exports = {
             return exits.badRequest(isPasswordValid);
         }
 
-        const foundUser = await User.findOne({email: inputs.email, deletedAt: null});
+        const foundUser = await sails.models.user.findOne({email: inputs.email, deletedAt: null});
 
         if (foundUser) {
             return exits.badRequest('Email is already in-use.');

@@ -69,6 +69,6 @@ module.exports = {
             role: 'admin'
         }).fetch();
 
-        return exits.success(`Admin user ${inputs.firstName} ${inputs.lastName} (${inputs.email}) created; ID: ${newUser.id}.`);
+        return exits.success(`Admin user ${inputs.firstName} ${inputs.lastName} (${inputs.email}) created; ID: ${newUser.id}`);
     }
 };

@@ -21,7 +21,7 @@
 
 module.exports = {
 
-    logSensitiveData: false, // never log sensitive data in production database
+    logSensitiveData: false, // never log sensitive data in production database (for custom request logger hook)
 
     baseUrl: process.env.BASE_URL || 'https://myapi.app',
     assetsUrl: process.env.ASSETS_URL || '', // Something like: https://my-cdn.app/ must end with / or be blank.
@@ -47,6 +47,8 @@ module.exports = {
          * 3. Then set it here (`adapter`), along with a connection URL (`url`)     *
          *    and any other, adapter-specific customizations.                       *
          *    (See https://sailsjs.com/config/datastores for help.)                 *
+         *                                                                          *
+         * 4. NEVER EVER STORE PRODUCTION CREDENTIALS IN THIS FILE!                 *
          *                                                                          *
          ***************************************************************************/
         default: {

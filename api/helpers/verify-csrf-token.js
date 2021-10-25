@@ -16,26 +16,13 @@ module.exports = {
         secret: {
             type: 'string',
             required: true
-        },
-
-        saltLength: {
-            type: 'number',
-            defaultsTo: 8
-        },
-
-        secretLength: {
-            type: 'number',
-            defaultsTo: 18
         }
     },
 
     exits: {},
 
     fn: (inputs, exits) => {
-        const tokens = new Tokens({
-            saltLength: inputs.saltLength,
-            secretLength: inputs.secretLength
-        });
+        const tokens = new Tokens();
 
         return exits.success(tokens.verify(inputs.secret, inputs.token));
     }
