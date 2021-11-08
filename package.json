@@ -46,7 +46,7 @@
         "chai-spies": "^1.0.0",
         "chai-uuid": "^1.0.6",
         "core-js": "^3.18.3",
-        "css-loader": "^6.4.0",
+        "css-loader": "^6.5.1",
         "eslint": "^8.1.0",
         "eslint-plugin-react": "^7.26.1",
         "favicons-webpack-plugin": "^5.0.2",
