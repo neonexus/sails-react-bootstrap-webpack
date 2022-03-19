@@ -11,7 +11,8 @@
 const defaultStaticOptions = {
     maxAge: process.env.NODE_ENV !== 'production' ? 1 : 31557600000, // in production, a little over a year in milliseconds
     extensions: ['html'],
-    dotfiles: 'ignore'
+    dotfiles: 'ignore',
+    redirect: false // prevents redirecting "/main" to "/main/"
 };
 
 const path = require('path');
@@ -22,7 +23,7 @@ module.exports.routes = {
     'GET /': {
         skipAssets: true,
         fn: (req, res) => {
-            return res.redirect('/main/'); // redirect to the "main" React app (the marketing site)
+            return res.redirect(302, '/main'); // redirect to the "main" React app (the marketing site)
         }
     },
 
@@ -56,16 +57,17 @@ module.exports.routes = {
 
     'GET /admin': {
         fn: (req, res) => {
-            return res.redirect('/admin/dashboard');
+            return res.redirect(302, '/admin/dashboard');
         }
     },
 
     'POST /api/v1/user': 'admin/create-user',
-    'POST /api/v1/login': 'admin/login',
-    'GET /api/v1/logout': 'admin/logout',
-    'GET /api/v1/me': 'admin/get-me',
     'DELETE /api/v1/user': 'admin/delete-user',
     'POST /api/v1/token': 'admin/create-api-token',
+
+    'POST /api/v1/login': 'common/login',
+    'GET /api/v1/logout': 'common/logout',
+    'GET /api/v1/me': 'common/get-me',
 
     'GET /_ping': (req, res) => {
         return res.ok('pong');

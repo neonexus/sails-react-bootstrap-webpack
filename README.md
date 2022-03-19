@@ -11,6 +11,25 @@ The `master` branch is experimental, and the [release branch](https://github.com
 
 **FINAL WARNING: DO NOT RELY ON THE MASTER BRANCH!**
 
+# v3.0.0-beta Warning
+Moving from v5 -> v6 of the [React Router](https://reactrouter.com/) is a serious undertaking (see the [the v5 -> v6 migration guide](https://reactrouter.com/docs/en/v6/upgrading/v5)).
+
+While basic features have been upgraded to the new standard of the new React Router, there are still some quarks while developing... When the assets are built for remote use (`npm run build` or `npm run build:prod`), everything works as expected; however, when working with the auto-reloading Webpack dev server, if you don't start from a "root" path (like "/admin" or "/main"), and refresh a path like "/admin/dashboard", things will not render.
+
+I'm still working on a fix for this.
+
+If you would like to use v5 of React Router, make sure you are cloning [v2 of this repo](https://github.com/neonexus/sails-react-bootstrap-webpack/tree/v2.0.0).
+
+## Currently setup with
+* [Sails](https://sailsjs.com/) **v1**
+* [React](https://reactjs.org/) **v17**
+* [React Router](https://reactrouter.com/) **v6**
+* [Bootstrap](https://getbootstrap.com/) **v5**
+* [React-Bootstrap](https://react-bootstrap.github.io/) **v2**
+* [Webpack](https://webpack.js.org/) **v5**
+
+See the [`package.json` for more details](package.json).
+
 ## Main Features
 
 + Automatic (incoming) request logging (manual outgoing), via Sails models / hooks.
@@ -23,39 +42,59 @@ The `master` branch is experimental, and the [release branch](https://github.com
 This repo is not installable via `npm`. Instead, Github provides a handy "Use this template" (green) button at the top of this page. That will create a special fork of this repo (so there is a single, init commit, instead of the commit history from this repo).
 
 ### Configuration
-In the `config` folder, there is `local.js.sample` file, which is meant to be copied to `local.js`. This file is ignored by Git, and intended for use in local development, not remote servers.
+In the `config` folder, there is the `local.js.sample` file, which is meant to be copied to `local.js`. This file (`local.js` not the sample) is ignored by Git, and intended for use in local development, NOT remote servers. Generally one would use environment variables for remote server configuration (and this repo is already setup to handle environment variable configuration for both DEV and PROD). See: [config/env/development.js](config/env/development.js) and [config/env/production.js](config/env/production.js).
 
 #### Want to configure the "X-Powered-By" header?
 Sails, by default, has middleware (akin to [Express.js Middleware](https://expressjs.com/en/guide/using-middleware.html), Sails is built on Express.js after all...). Inside of [`config/http.js`](config/http.js) we disable the default middleware, and create our own `X-Powered-By` header, using Express.js Middleware.
 
 ### Scripts built into [`package.json`](package.json):
 
-| Command       | Description
-|---------------|-------------------
-|npm run start  | Will run both `npm run lift` and `npm run open:client` in parallel.
-|npm&nbsp;run&nbsp;open:client | Will run the [Webpack Dev Server](https://webpack.js.org/configuration/dev-server/) and open a browser tab / window.
-|npm run lift   | The same thing as `sails lift` or `node app.js`; will "[lift our Sails](https://sailsjs.com/documentation/reference/command-line-interface/sails-lift)" instance.
-|npm run debug  | Alias for `node --inspect app.js`.
-|npm run build  | Will run `npm run clean`, then will build production-ready files with Webpack in the `.tmp/public` folder.
-|npm run build:dev | Same thing as `npm run build`, except that it will not optimize the files, retaining newlines and empty spaces.
-|npm run clean  | Will basically delete everything in the `.tmp` folder.
-|npm run lines  | Will count the lines of code in the project, minus `.gitignore`'d files, for funzies. There are currently about 6k custom lines in this repo (views, controllers, helpers, hooks, etc).
-|npm run test   | Run [Mocha](https://mochajs.org/) tests. Everything starts in the [`test/hooks.js`](test/hooks.js) file.
-|npm run coverage | Runs [NYC](https://www.npmjs.com/package/nyc) coverage reporting of the Mocha tests, which generates HTML in `test/coverage`.
+| Command                       | Description
+|-------------------------------|-------------------
+| npm run start                 | Will run both `npm run lift` and `npm run open:client` in parallel.
+| npm&nbsp;run&nbsp;open:client | Will run the [Webpack Dev Server](https://webpack.js.org/configuration/dev-server/) and open a browser tab / window.
+| npm run lift                  | The same thing as `sails lift` or `node app.js`; will "[lift our Sails](https://sailsjs.com/documentation/reference/command-line-interface/sails-lift)" instance (aka starting the API).
+| npm run lift:prod             | The same thing as `sails lift --prod` or `NODE_ENV=production node app.js`.
+| npm run debug                 | Alias for `node --inspect app.js`.
+| npm run build                 | Will run `npm run clean`, then will build production-ready files with Webpack in the `.tmp/public` folder.
+| npm run build:dev             | Same thing as `npm run build`, except that it will not optimize the files, retaining newlines and empty spaces.
+| npm run clean                 | Will basically delete everything in the `.tmp` folder.
+| npm run lines                 | Will count the lines of code in the project, minus `.gitignore`'d files, for funzies. There are currently about 7k custom lines in this repo (views, controllers, helpers, hooks, etc).
+| npm run test                  | Run [Mocha](https://mochajs.org/) tests. Everything starts in the [`test/hooks.js`](test/hooks.js) file.
+| npm run coverage              | Runs [NYC](https://www.npmjs.com/package/nyc) coverage reporting of the Mocha tests, which generates HTML in `test/coverage`.
 
-### Environment Variables used for remote servers:
-| Variable              | DEV default       | PROD default      | Description
-|-----------------------|-------------------|-------------------|----------------------
-| ASSETS_URL            | "" (empty string) | "" (empty string) | Webpack is configured to modify static asset URLs to point to a CDN, like CloudFront. MUST end with a slash " / ", or be empty.
-| BASE_URL              | https://myapi.app | https://myapi.app | The address of the Sails instance.
-| DB_HOST               | localhost         | localhost         | The hostname of the datastore.
-| DB_USER               | root              | produser          | Username for the datastore.
-| DB_PASS               | mypass            | myprodpassword    | Password for the datastore.
-| DB_NAME               | myapp             | proddatabase      | The name of the database inside the datastore.
-| DB_PORT               | 3306              | 3306              | The port number for datastore.
-| DB_SSL                | false             | false             | If the datastore requires SSL, set this to "true".
-| SESSION_SECRET        | "" (empty string) | "" (empty string) | This is used to sign cookies, and SHOULD be set, especially on PRODUCTION environments.
-| DATA_ENCRYPTION_KEY   | "" (empty string) | "" (empty string) | **Currently unused; intended for future use.**
+### Environment Variables
+There are a few environment variables that the remote configuration files are set up for. There are currently 3 variables that change names between DEV and PROD; this is intentional, and has proven very useful in my experience. DEV has shorter names like `DB_HOST`, where PROD has fuller names like `DB_HOSTNAME`. This helps with ensuring you are configuring the correct remote server, and has prevented accidental DEV deployments to PROD.
+
+If you DO NOT like this behavior, and would prefer the variables stay the same across your environments, feel free to change them in [`config/env/development.js`](config/env/development.js) and [`config/env/production.js`](config/env/production.js)
+
+#### DEVELOPMENT Environment Variables:
+| DEV Variable        | DEV default       | Description
+|---------------------|-------------------|----------------------
+| ASSETS_URL          | "" (empty string) | Webpack is configured to modify static asset URLs to point to a CDN, like CloudFront. MUST end with a slash " / ", or be empty.
+| BASE_URL            | https://myapi.app | The address of the Sails instance.
+| DB_HOST             | localhost         | The hostname of the datastore. (Notice this is `DB_HOSTNAME` on PROD.)
+| DB_USER             | root              | Username for the datastore. (Notice this is `DB_USERNAME` on PROD.)
+| DB_PASS             | mypass            | Password for the datastore. (Notice this is `DB_PASSWORD` on PROD.)
+| DB_NAME             | myapp             | The name of the database inside the datastore.
+| DB_PORT             | 3306              | The port number for datastore.
+| DB_SSL              | false             | If the datastore requires SSL, set this to "true".
+| SESSION_SECRET      | "" (empty string) | This is used to sign cookies, and SHOULD be set, especially on PRODUCTION environments.
+| DATA_ENCRYPTION_KEY | "" (empty string) | **Currently unused; intended for future use.**
+
+#### PRODUCTION Environment Variables:
+| PROD Variable       | PROD default      | Description
+|---------------------|-------------------|----------------------
+| ASSETS_URL          | "" (empty string) | Webpack is configured to modify static asset URLs to point to a CDN, like CloudFront. MUST end with a slash " / ", or be empty.
+| BASE_URL            | https://myapi.app | The address of the Sails instance.
+| DB_HOSTNAME         | localhost         | The hostname of the datastore. (Notice this is `DB_HOST` on DEV.)
+| DB_USERNAME         | produser          | Username for the datastore. (Notice this is `DB_USER` on DEV.)
+| DB_PASSWORD         | myprodpassword    | Password for the datastore. (Notice this is `DB_PASS` on DEV.)
+| DB_NAME             | proddatabase      | The name of the database inside the datastore.
+| DB_PORT             | 3306              | The port number for datastore.
+| DB_SSL              | false             | If the datastore requires SSL, set this to "true".
+| SESSION_SECRET      | "" (empty string) | This is used to sign cookies, and SHOULD be set, especially on PRODUCTION environments.
+| DATA_ENCRYPTION_KEY | "" (empty string) | **Currently unused; intended for future use.**
 
 ## Request Logging
 Automatic incoming request logging, is a 2 part process. First, the [`request-logger` hook](api/hooks/request-logger.js) gathers info from the request, and creates a new [`RequestLog` record](api/models/RequestLog.js), making sure to mask anything that may be sensitive, such as passwords. Then, a custom response gathers information from the response, again, scrubbing sensitive data (using the [customToJSON](https://sailsjs.com/documentation/concepts/models-and-orm/model-settings?identity=#customtojson) feature of Sails models) to prevent leaking of password hashes, or anything else that should never be publicly accessible. The [`keepModelsSafe` helper](api/helpers/keep-models-safe.js) and the custom responses (such as [ok](api/responses/ok.js) or [serverError](api/responses/serverError.js)) are responsible for the final leg of request logs.
@@ -104,7 +143,7 @@ middleware: {
         'bodyParser',
         'prerender', // reference our custom middleware found below;
                      // we run this before compression and routing,
-                     // because it is a proxy, saving time a resources
+                     // because it is a proxy, saving time and resources
         'compress',
         'router',
         'assetLog',
@@ -132,11 +171,11 @@ middleware: {
 
 This app was originally generated on Fri Mar 20 2020 17:39:04 GMT-0500 (Central Daylight Time) using Sails v1.2.3.
 
-<!-- Internally, Sails used [`sails-generate@1.16.13`](https://github.com/balderdashy/sails-generate/tree/v1.16.13/lib/core-generators/new). -->
-
 #### Code Coverage
 
 The current code coverage [can be viewed here](https://htmlpreview.github.io/?https://github.com/neonexus/sails-react-bootstrap-webpack/blob/release/test/coverage/index.html).
+
+<!-- Internally, Sails used [`sails-generate@1.16.13`](https://github.com/balderdashy/sails-generate/tree/v1.16.13/lib/core-generators/new). -->
 
 <!--
 Note:  Generators are usually run using the globally-installed `sails` CLI (command-line interface).  This CLI version is _environment-specific_ rather than app-specific, thus over time, as a project's dependencies are upgraded or the project is worked on by different developers on different computers using different versions of Node.js, the Sails dependency in its package.json file may differ from the globally-installed Sails CLI release it was originally generated with.  (Be sure to always check out the relevant [upgrading guides](https://sailsjs.com/upgrading) before upgrading the version of Sails used by your app.  If you're stuck, [get help here](https://sailsjs.com/support).)

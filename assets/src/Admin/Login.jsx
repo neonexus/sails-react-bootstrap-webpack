@@ -31,10 +31,14 @@ class Login extends React.Component {
         // this.props.location.history.push(dest);
     }
 
-    handleLogin(e, done) {
+    handleLogin(e, done, rememberMe) {
         e.preventDefault();
 
-        localStorage.setItem('email', this.state.email);
+        if (rememberMe) {
+            localStorage.setItem('email', this.state.email);
+        } else {
+            localStorage.removeItem('email');
+        }
 
         this.props.api.post({
             url: '/login',
@@ -84,7 +88,7 @@ class Login extends React.Component {
                             {
                                 !userContext.isLoggedIn &&
                                 <div className="row justify-content-center">
-                                    <Form onSubmit={(e) => this.handleLogin(e, userContext.login)} className="col-sm-5">
+                                    <Form onSubmit={(e) => this.handleLogin(e, userContext.login, userContext.isRememberMeOn)} className="col-sm-5">
                                         <h3>Login</h3>
                                         <div className="pb-2">
                                             <Form.Control
@@ -124,7 +128,9 @@ class Login extends React.Component {
                                         <br />
                                         <Row>
                                             <Form.Text id="adminHelpBlock" muted>
-                                                If you need to create your first admin user, run this in your terminal: <div style="">sails run create-admin</div>
+                                                If you need to create your first admin user, run this in your terminal:
+                                                <br />
+                                                <code>sails run create-admin</code>
                                             </Form.Text>
                                         </Row>
                                     </Form>

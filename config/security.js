@@ -33,7 +33,7 @@ module.exports.security = {
         // allowOrigins: '*', // no longer allowed cross-origin with websockets
         allowRequestHeaders: 'content-type,x-csrf-token',
         allowOrigins: [
-            'http://localhost:8080',
+            'http://localhost:8080'
         ],
         allowCredentials: true
     },

@@ -2,10 +2,9 @@ import React from 'react';
 import Dashboard from './Dashboard';
 import '../../styles/admin/admin.scss';
 import {
-    BrowserRouter as Router,
-    Switch,
+    Routes,
     Route,
-    Redirect
+    Navigate
 } from 'react-router-dom';
 
 import Login from '../Admin/Login';
@@ -24,7 +23,7 @@ function RenderOrLogin(props) {
             {
                 (userContext) => {
                     if (userContext.isLoggedIn) {
-                        {/* eslint-disable-next-line react/prop-types */}
+                        /* eslint-disable-next-line react/prop-types */
                         return props.children;
                     }
 
@@ -73,35 +72,32 @@ class AdminRouter extends React.Component {
         }
 
         return (
-            <Router>
-                <UserProvider user={this.state.user}>
-                    <NavBar api={this.state.api} />
-                    <RenderOrLogin api={this.state.api}>
-                        <Container>
-                            <Switch>
-                                <Route path="/admin/dashboard">
-                                    <Dashboard />
-                                </Route>
-                                <Route path="/admin/upgrade">
-                                    <Upgrade />
-                                </Route>
-                                <Route path="/admin" exact>
-                                    <Redirect to="/admin/dashboard" />
-                                </Route>
-                                <Route>
-                                    <h1>Page Not Found</h1>
-                                    <div>
-                                        The page you have requested does not exist. Maybe go back and try again?
-                                        <br />
-                                        <br />
-                                        <Button variant="outline-secondary" onClick={() => window.history.back()}>&#8678; Go Back</Button>
-                                    </div>
-                                </Route>
-                            </Switch>
-                        </Container>
-                    </RenderOrLogin>
-                </UserProvider>
-            </Router>
+            <UserProvider user={this.state.user}>
+                <NavBar api={this.state.api} />
+                <RenderOrLogin api={this.state.api}>
+                    <Container>
+                        <Routes>
+                            <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
+                            <Route path="/admin/dashboard" element={<Dashboard />} />
+                            <Route path="/admin/upgrade" element={<Upgrade />} />
+                            <Route
+                                path="/admin/*"
+                                element={
+                                    <>
+                                        <h1>Page Not Found</h1>
+                                        <div>
+                                            The page you have requested does not exist. Maybe go back and try again?
+                                            <br />
+                                            <br />
+                                            <Button variant="outline-secondary" onClick={() => window.history.back()}>&#8678; Go Back</Button>
+                                        </div>
+                                    </>
+                                }
+                            />
+                        </Routes>
+                    </Container>
+                </RenderOrLogin>
+            </UserProvider>
         );
     }
 }
