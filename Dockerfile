@@ -15,7 +15,7 @@ COPY package.json /var/www/myapp/package.json
 RUN npm install
 
 COPY . /var/www/myapp/
-RUN npm run build:prod
+RUN npm run build
 
 # Expose the compiled public assets, so Nginx can route to them, instead of using Sails to do the file serving.
 VOLUME /var/www/myapp/.tmp/public

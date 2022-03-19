@@ -14,7 +14,7 @@ The `master` branch is experimental, and the [release branch](https://github.com
 # v3.0.0-beta Warning
 Moving from v5 -> v6 of the [React Router](https://reactrouter.com/) is a serious undertaking (see the [the v5 -> v6 migration guide](https://reactrouter.com/docs/en/v6/upgrading/v5)).
 
-While basic features have been upgraded to the new standard of the new React Router, there are still some quarks while developing... When the assets are built for remote use (`npm run build` or `npm run build:prod`), everything works as expected; however, when working with the auto-reloading Webpack dev server, if you don't start from a "root" path (like "/admin" or "/main"), and refresh a path like "/admin/dashboard", things will not render.
+While basic features have been upgraded to the new standard of the new React Router, there are still some quarks while developing... When the assets are built for remote use (`npm run build` or `npm run build:dev`), everything works as expected; however, when working with the auto-reloading Webpack dev server, if you don't start from a "root" path (like "/admin" or "/main"), and refresh a path like "/admin/dashboard", things will not render.
 
 I'm still working on a fix for this.
 
