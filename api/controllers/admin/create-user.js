@@ -67,7 +67,7 @@ module.exports = {
             return exits.badRequest('Email is already in-use.');
         }
 
-        User.create({
+        sails.models.user.create({
             id: 'c', // required, but auto-generated
             firstName: inputs.firstName,
             lastName: inputs.lastName,

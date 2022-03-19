@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {
     BrowserRouter as Router,
-    Switch,
+    Routes,
     Route,
-    Redirect
+    Navigate
 } from 'react-router-dom';
+import Main from './Main/Main';
 import AdminRouter from './Admin/AdminRouter';
-import MainRouter from './Main/MainRouter';
 
 function IndexApp() {
     // This file is here mainly for Webpack's dev server; not used in remote settings.
@@ -15,17 +15,11 @@ function IndexApp() {
     // Sails will handle the webapp redirects in remote configurations.
     return (
         <Router>
-            <Switch>
-                <Route path="/admin">
-                    <AdminRouter />
-                </Route>
-                <Route path="/main">
-                    <MainRouter />
-                </Route>
-                <Route>
-                    <Redirect to={{pathname: '/main/'}} />
-                </Route>
-            </Switch>
+            <Routes>
+                <Route path="/admin/*" element={<AdminRouter />} />
+                <Route index path="/main/*" element={<Main />} />
+                <Route path="/" element={<Navigate to="/main" />} />
+            </Routes>
         </Router>
     );
 }

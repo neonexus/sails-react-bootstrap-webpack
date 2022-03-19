@@ -52,12 +52,14 @@ module.exports = {
          *                                                                          *
          ***************************************************************************/
         default: {
-            host: process.env.DB_HOSTNAME || 'localhost',
-            user: process.env.DB_USERNAME || 'produser',
-            password: process.env.DB_PASSWORD || 'myprodpassword',
-            database: process.env.DB_NAME || 'proddatabase',
-            port: process.env.DB_PORT || 3306,
-            ssl: (process.env.DB_SSL === 'true')
+            // NEVER EVER STORE PRODUCTION CREDENTIALS IN THIS FILE!
+            host: process.env.DB_HOSTNAME || 'localhost',   // To make sure you are
+            user: process.env.DB_USERNAME || 'fail',        // aware of the environment
+            password: process.env.DB_PASSWORD || 'nope',    // you are configuring,
+            database: process.env.DB_NAME || 'prod',        // you must use HOSTNAME not HOST,
+            port: process.env.DB_PORT || 3306,              // and USERNAME not USER,
+            ssl: (process.env.DB_SSL !== 'false')           // and PASSWORD not PASS.
+            // NEVER EVER STORE PRODUCTION CREDENTIALS IN THIS FILE!
         }
     },
 
@@ -73,7 +75,7 @@ module.exports = {
          * https://sailsjs.com/docs/concepts/models-and-orm/model-settings#?migrate *
          *                                                                          *
          ***************************************************************************/
-        migrate: 'safe',
+        migrate: 'safe', // can not be changed; enforced by Sails
 
         /***************************************************************************
          *                                                                          *
@@ -133,13 +135,13 @@ module.exports = {
          ***************************************************************************/
         cors: {
             allRoutes: true,
-            // allowOrigins: [
-            //     'https://my.app',
-            //     'https://my-cdn.app',
-            //     'https://prerender.io'
-            // ],
-            allowOrigins: '*',
-            allowCredentials: false
+            allowOrigins: [
+                'https://my.app',
+                'https://my-cdn.app',
+                'https://prerender.io',
+                'http://localhost:8080'
+            ],
+            allowCredentials: true
         }
 
     },

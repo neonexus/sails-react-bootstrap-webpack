@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import MainRouter from './Main/MainRouter';
+import Main from './Main/Main';
 
 function MainApp() {
     return (
-        <MainRouter />
+        <Main />
     );
 }
 

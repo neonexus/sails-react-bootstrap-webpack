@@ -4,6 +4,9 @@ node_modules
 config/local.js
 .tmp
 .idea
+.github
+.editorconfig
 
 README.md
+CHANGELOG.md
 LICENSE

@@ -35,6 +35,13 @@ try {
                 break;
         }
 
+        if (!fs.existsSync(configPath)) {
+            return console.error(
+                'ERROR! The Webpack configuration is trying to load the environment configuration from "../config/env/'
+                + environment + '.js", but no such file exists. NODE_ENV="' + process.env.NODE_ENV + '".'
+            );
+        }
+
         // now we can read our configuration
         config = require(configPath);
     }
@@ -109,7 +116,7 @@ plugins.push(
     })
 );
 
-// Add in the Favicons plugin, which handles a lot more meta data than just Favicons...
+// Add in the Favicons plugin, which handles a lot more metadata than just Favicons...
 // See: https://www.npmjs.com/package/favicons-webpack-plugin
 plugins.push(new FaviconsWebpackPlugin({
     logo: path.join(__dirname, '/../assets/images/favicon.png'), // svg works too!

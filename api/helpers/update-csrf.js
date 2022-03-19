@@ -27,7 +27,7 @@ module.exports = {
             return exits.success(_.omit(inputs.data, ['__skipCSRF']));
         }
 
-        const foundSession = await Session.findOne({id: inputs.req.session.id});
+        const foundSession = await sails.models.session.findOne({id: inputs.req.session.id});
 
         if (!foundSession) {
             throw new exits.serverError('Session could not be found in Update CSRF helper.');
@@ -38,7 +38,7 @@ module.exports = {
         // Update stored session data, so we can compare our token to the secret on the next request (handled in the isLoggedIn policy).
         const newData = _.merge({}, foundSession.data, {_csrfSecret: csrf.secret});
 
-        Session.update({id: inputs.req.session.id}).set({
+        sails.models.session.update({id: inputs.req.session.id}).set({
             data: newData
         }).exec((err) => {
             if (err) {

@@ -43,8 +43,8 @@ class NavBar extends React.Component {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link as={ReactNavLink} to="/admin/dashboard" onClick={this.closeNavbar} activeClassName="active">Home</Nav.Link>
-                        <Nav.Link as={ReactNavLink} to="/admin/upgrade" onClick={this.closeNavbar} activeClassName="active">Upgrade</Nav.Link>
+                        <Nav.Link as={ReactNavLink} to="/admin/dashboard" onClick={this.closeNavbar}>Home</Nav.Link>
+                        <Nav.Link as={ReactNavLink} to="/admin/upgrade" onClick={this.closeNavbar}>Upgrade</Nav.Link>
                     </Nav>
 
                     <UserConsumer>

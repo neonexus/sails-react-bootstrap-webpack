@@ -22,7 +22,7 @@ function getGravatarUrl(email) {
 }
 
 function forceUppercaseOnFirst(name) {
-    return name.trim().charAt(0).toUpperCase() + name.slice(1).trim();
+    return name.trim().charAt(0).toUpperCase() + name.trim().slice(1);
 }
 
 module.exports = {
@@ -50,7 +50,7 @@ module.exports = {
             type: 'string',
             isEmail: true,
             required: true,
-            // unique: true,
+            unique: true,
             columnType: 'varchar(191)'
         },
 
@@ -75,7 +75,7 @@ module.exports = {
             // encrypt: true // currently, does not work as intended, as password is encrypted before we can hash it
         },
 
-        verificationKey: {
+        verificationKey: { // placeholder for something like email verification
             type: 'string',
             allowNull: true,
             columnType: 'varchar(191)'

@@ -5,7 +5,7 @@ module.exports = {
         id: {
             type: 'string',
             columnType: 'varchar(36)',
-            required: true // this is required, but commenting out because it's auto-generated on creation, and will help cleanup useless code
+            required: true
         },
 
         direction: {

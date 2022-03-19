@@ -18,13 +18,13 @@ module.exports = {
     },
 
     fn: async (inputs, exits, env) => {
-        const foundSession = await Session.findOne({id: env.req.session.id});
+        const foundSession = await sails.models.session.findOne({id: env.req.session.id});
 
         if (!foundSession) {
             return exits.ok();
         }
 
-        await Session.destroy({id: foundSession.id});
+        await sails.models.session.destroy({id: foundSession.id});
 
         return exits.ok({
             cookies: [

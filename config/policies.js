@@ -12,9 +12,11 @@ module.exports.policies = {
     '*': true,
 
     AdminController: {
+        '*': ['isLoggedIn', 'isAdmin']
+    },
+
+    CommonController: {
         '*': 'isLoggedIn',
         'login': true,
-        'create-user': ['isLoggedIn', 'isAdmin'],
-        'delete-user': ['isLoggedIn', 'isAdmin']
     }
 };

@@ -1,4 +1,4 @@
-FROM node:14.8
+FROM node:16.13
 MAINTAINER NeoNexus DeMortis
 
 RUN apt-get update && apt-get upgrade -y
@@ -8,14 +8,14 @@ WORKDIR /var/www/myapp
 
 EXPOSE 1337
 # REMEMBER! NEVER STORE SECRETS, DEK's, PASSWORDS, OR ANYTHING OF A SENSITIVE NATURE IN SOURCE CONTROL! USE ENVIRONMENT VARIABLES!
-ENV PORT=1337 DB_HOSTNAME=localhost DB_USERNAME=user DB_PASSWORD=pass DB_NAME=myappdb DB_PORT=3306 DB_SSL=true DATA_ENCRYPTION_KEY=1234abcd4321asdf0987lkjh SESSION_SECRET=0987poiuqwer1234zxcvmnbv
+ENV PORT=1337 DB_HOSTNAME=localhost DB_USERNAME=root DB_PASSWORD=mypass DB_NAME=myapp DB_PORT=3306 DB_SSL=true DATA_ENCRYPTION_KEY=1234abcd4321asdf0987lkjh SESSION_SECRET=0987poiuqwer1234zxcvmnbv
 
-# This keeps builds more efficient, because we can use cache more effectively.
+# This keeps builds more efficient, because we can use Docker cache more effectively.
 COPY package.json /var/www/myapp/package.json
 RUN npm install
 
 COPY . /var/www/myapp/
-RUN npm run build
+RUN npm run build:prod
 
 # Expose the compiled public assets, so Nginx can route to them, instead of using Sails to do the file serving.
 VOLUME /var/www/myapp/.tmp/public

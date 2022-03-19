@@ -1,7 +1,7 @@
 module.exports = {
-    friendlyName: 'Admin Login',
+    friendlyName: 'User Login',
 
-    description: 'Basic authentication for admin panel.',
+    description: 'Basic authentication for users.',
 
     inputs: {
         email: {
@@ -36,18 +36,18 @@ module.exports = {
         }
 
         const badEmailPass = 'Bad email / password combination.';
-        const foundUser = await User.findOne({email: inputs.email, deletedAt: null});
+        const foundUser = await sails.models.user.findOne({email: inputs.email, deletedAt: null});
 
         if (!foundUser) {
             return exits.badRequest(badEmailPass);
         }
 
-        if (!await User.doPasswordsMatch(inputs.password, foundUser.password)) {
+        if (!await sails.models.user.doPasswordsMatch(inputs.password, foundUser.password)) {
             return exits.badRequest(badEmailPass);
         }
 
         const csrf = sails.helpers.generateCsrfTokenAndSecret();
-        const newSession = await Session.create({
+        const newSession = await sails.models.session.create({
             id: 'c', // required, auto-generated
             user: foundUser.id,
             data: {
