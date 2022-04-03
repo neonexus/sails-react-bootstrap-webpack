@@ -49,52 +49,37 @@ Sails, by default, has middleware (akin to [Express.js Middleware](https://expre
 
 ### Scripts built into [`package.json`](package.json):
 
-| Command                       | Description
-|-------------------------------|-------------------
-| npm run start                 | Will run both `npm run lift` and `npm run open:client` in parallel.
-| npm&nbsp;run&nbsp;open:client | Will run the [Webpack Dev Server](https://webpack.js.org/configuration/dev-server/) and open a browser tab / window.
-| npm run lift                  | The same thing as `sails lift` or `node app.js`; will "[lift our Sails](https://sailsjs.com/documentation/reference/command-line-interface/sails-lift)" instance (aka starting the API).
-| npm run lift:prod             | The same thing as `sails lift --prod` or `NODE_ENV=production node app.js`.
-| npm run debug                 | Alias for `node --inspect app.js`.
-| npm run build                 | Will run `npm run clean`, then will build production-ready files with Webpack in the `.tmp/public` folder.
-| npm run build:dev             | Same thing as `npm run build`, except that it will not optimize the files, retaining newlines and empty spaces.
-| npm run clean                 | Will basically delete everything in the `.tmp` folder.
-| npm run lines                 | Will count the lines of code in the project, minus `.gitignore`'d files, for funzies. There are currently about 7k custom lines in this repo (views, controllers, helpers, hooks, etc).
-| npm run test                  | Run [Mocha](https://mochajs.org/) tests. Everything starts in the [`test/hooks.js`](test/hooks.js) file.
-| npm run coverage              | Runs [NYC](https://www.npmjs.com/package/nyc) coverage reporting of the Mocha tests, which generates HTML in `test/coverage`.
+| Command                       | Description                                                                                                                                                                              |
+|-------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| npm run start                 | Will run both `npm run lift` and `npm run open:client` in parallel.                                                                                                                      |
+| npm&nbsp;run&nbsp;open:client | Will run the [Webpack Dev Server](https://webpack.js.org/configuration/dev-server/) and open a browser tab / window.                                                                     |
+| npm run lift                  | The same thing as `sails lift` or `node app.js`; will "[lift our Sails](https://sailsjs.com/documentation/reference/command-line-interface/sails-lift)" instance (aka starting the API). |
+| npm run lift:prod             | The same thing as `sails lift --prod` or `NODE_ENV=production node app.js`.                                                                                                              |
+| npm run debug                 | Alias for `node --inspect app.js`.                                                                                                                                                       |
+| npm run build                 | Will run `npm run clean`, then will build production-ready files with Webpack in the `.tmp/public` folder.                                                                               |
+| npm run build:dev             | Same thing as `npm run build`, except that it will not optimize the files, retaining newlines and empty spaces.                                                                          |
+| npm run clean                 | Will basically delete everything in the `.tmp` folder.                                                                                                                                   |
+| npm run lines                 | Will count the lines of code in the project, minus `.gitignore`'d files, for funzies. There are currently about 7k custom lines in this repo (views, controllers, helpers, hooks, etc).  |
+| npm run test                  | Run [Mocha](https://mochajs.org/) tests. Everything starts in the [`test/hooks.js`](test/hooks.js) file.                                                                                 |
+| npm run coverage              | Runs [NYC](https://www.npmjs.com/package/nyc) coverage reporting of the Mocha tests, which generates HTML in `test/coverage`.                                                            |
 
 ### Environment Variables
 There are a few environment variables that the remote configuration files are set up for. There are currently 3 variables that change names between DEV and PROD; this is intentional, and has proven very useful in my experience. DEV has shorter names like `DB_HOST`, where PROD has fuller names like `DB_HOSTNAME`. This helps with ensuring you are configuring the correct remote server, and has prevented accidental DEV deployments to PROD.
 
 If you DO NOT like this behavior, and would prefer the variables stay the same across your environments, feel free to change them in [`config/env/development.js`](config/env/development.js) and [`config/env/production.js`](config/env/production.js)
 
-#### DEVELOPMENT Environment Variables:
-| DEV Variable        | DEV default       | Description
-|---------------------|-------------------|----------------------
-| ASSETS_URL          | "" (empty string) | Webpack is configured to modify static asset URLs to point to a CDN, like CloudFront. MUST end with a slash " / ", or be empty.
-| BASE_URL            | https://myapi.app | The address of the Sails instance.
-| DB_HOST             | localhost         | The hostname of the datastore. (Notice this is `DB_HOSTNAME` on PROD.)
-| DB_USER             | root              | Username for the datastore. (Notice this is `DB_USERNAME` on PROD.)
-| DB_PASS             | mypass            | Password for the datastore. (Notice this is `DB_PASSWORD` on PROD.)
-| DB_NAME             | myapp             | The name of the database inside the datastore.
-| DB_PORT             | 3306              | The port number for datastore.
-| DB_SSL              | false             | If the datastore requires SSL, set this to "true".
-| SESSION_SECRET      | "" (empty string) | This is used to sign cookies, and SHOULD be set, especially on PRODUCTION environments.
-| DATA_ENCRYPTION_KEY | "" (empty string) | **Currently unused; intended for future use.**
-
-#### PRODUCTION Environment Variables:
-| PROD Variable       | PROD default      | Description
-|---------------------|-------------------|----------------------
-| ASSETS_URL          | "" (empty string) | Webpack is configured to modify static asset URLs to point to a CDN, like CloudFront. MUST end with a slash " / ", or be empty.
-| BASE_URL            | https://myapi.app | The address of the Sails instance.
-| DB_HOSTNAME         | localhost         | The hostname of the datastore. (Notice this is `DB_HOST` on DEV.)
-| DB_USERNAME         | produser          | Username for the datastore. (Notice this is `DB_USER` on DEV.)
-| DB_PASSWORD         | myprodpassword    | Password for the datastore. (Notice this is `DB_PASS` on DEV.)
-| DB_NAME             | proddatabase      | The name of the database inside the datastore.
-| DB_PORT             | 3306              | The port number for datastore.
-| DB_SSL              | false             | If the datastore requires SSL, set this to "true".
-| SESSION_SECRET      | "" (empty string) | This is used to sign cookies, and SHOULD be set, especially on PRODUCTION environments.
-| DATA_ENCRYPTION_KEY | "" (empty string) | **Currently unused; intended for future use.**
+| DEV Variable        | DEV default       | PROD Variable       | PROD default       | Description                                                                                                                     |
+|---------------------|-------------------|---------------------|--------------------|---------------------------------------------------------------------------------------------------------------------------------|
+| ASSETS_URL          | "" (empty string) | ASSETS_URL          | "" (empty string)  | Webpack is configured to modify static asset URLs to point to a CDN, like CloudFront. MUST end with a slash " / ", or be empty. |
+| BASE_URL            | https://myapi.app | BASE_URL            | https://myapi.app  | The address of the Sails instance.                                                                                              |
+| DB_HOST             | localhost         | DB_HOSTNAME         | localhost          | The hostname of the datastore.                                                                                                  |
+| DB_USER             | root              | DB_USERNAME         | produser           | Username for the datastore.                                                                                                     |
+| DB_PASS             | mypass            | DB_PASSWORD         | myprodpassword     | Password for the datastore.                                                                                                     |
+| DB_NAME             | myapp             | DB_NAME             | proddatabase       | The name of the database inside the datastore.                                                                                  |
+| DB_PORT             | 3306              | DB_PORT             | 3306               | The port number for datastore.                                                                                                  |
+| DB_SSL              | true              | DB_SSL              | true               | If the datastore requires SSL, set this to "true".                                                                              |
+| SESSION_SECRET      | "" (empty string) | SESSION_SECRET      | "" (emptry string) | This is used to sign cookies, and SHOULD be set, especially on PRODUCTION environments.                                         |
+| DATA_ENCRYPTION_KEY | "" (empty string) | DATA_ENCRYPTION_KEY | "" (empty string)  | **Currently unused; intended for future use.**                                                                                  |
 
 ## Request Logging
 Automatic incoming request logging, is a 2 part process. First, the [`request-logger` hook](api/hooks/request-logger.js) gathers info from the request, and creates a new [`RequestLog` record](api/models/RequestLog.js), making sure to mask anything that may be sensitive, such as passwords. Then, a custom response gathers information from the response, again, scrubbing sensitive data (using the [customToJSON](https://sailsjs.com/documentation/concepts/models-and-orm/model-settings?identity=#customtojson) feature of Sails models) to prevent leaking of password hashes, or anything else that should never be publicly accessible. The [`keepModelsSafe` helper](api/helpers/keep-models-safe.js) and the custom responses (such as [ok](api/responses/ok.js) or [serverError](api/responses/serverError.js)) are responsible for the final leg of request logs.
