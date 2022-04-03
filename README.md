@@ -22,7 +22,7 @@ If you would like to use v5 of React Router, make sure you are cloning [v2 of th
 
 ## Currently setup with
 * [Sails](https://sailsjs.com/) **v1**
-* [React](https://reactjs.org/) **v17**
+* [React](https://reactjs.org/) **v18**
 * [React Router](https://reactrouter.com/) **v6**
 * [Bootstrap](https://getbootstrap.com/) **v5**
 * [React-Bootstrap](https://react-bootstrap.github.io/) **v2**
