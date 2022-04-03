@@ -1,24 +1,24 @@
 # Changelog
 
-## [v3.0.0-beta](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v2.0.0...v3.0.0-beta.2) (2022-03-19)
+## [v3.0.0-beta](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v2.0.0...v3.0.0-beta.3) (2022-04-02)
 
 ### Features
 
 * Fixed this CHANGELOG (incorrect date).
 * Updated Dockerfile and package.json to new Node LTS v16.13 requirement.
-* Fixed Dockerfile to build PROD assets, not DEV assets.
 * Fixed a bug in the `forceUppercaseOnFirst` function in the [`User model`](api/models/User.js).
 * Changed default connections to datastores to have SSL enabled (must now explicitly disable SSL connections for remote servers).
 * Removed use of global model names, in-favor of `sails.models` usage (for consistency, and to more easily allow disabling of global models).
 
 ### Breaking Changes
 
+* Updated to React v18. See: [the upgrade guid to React 18](https://reactjs.org/blog/2022/03/08/react-18-upgrade-guide.html).
 * Updated to React Router DOM v6. See: [the v5 -> v6 migration guide](https://reactrouter.com/docs/en/v6/upgrading/v5). This requires a **MAJOR** overhaul of how routes are handled.
 * Moved some controllers into a "common" folder, instead of the "admin" folder (as they could be used outside of admin controls).
 
 ### Known Issues
 
-* There is an issue with the Webpack dev server, and the way React routes are handled. Currently, if you aren't loading from an entry point, nothing renders. While this is not an issue for built assets, it is an issue if you are working with the auto-reload dev server. I'm still working on a fix for this, and suspect it's an issue from moving to new React Router.
+* There is an issue with the Webpack dev server, and the way React routes are handled. Currently, if you aren't loading from an entry point (like /admin), and you refresh the page (on like /admin/dashboard), nothing renders. While this is not an issue for built assets, it is an issue if you are working with the auto-reload dev server. I'm still working on a fix for this, and suspect it's an issue from moving to the new React Router.
 
 ## [v2.0.0](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v1.9.0...v2.0.0) (2021-10-24)
 

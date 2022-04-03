@@ -50,9 +50,7 @@ export class UserProvider extends React.Component {
 
     render() {
         return (
-            <userContext.Provider
-                value={this.state}
-            >
+            <userContext.Provider value={this.state}>
                 {/* eslint-disable-next-line react/prop-types */}
                 {this.props.children}
             </userContext.Provider>

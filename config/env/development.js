@@ -34,8 +34,8 @@ module.exports = {
 
     models: {
         // This is set as safe, so remote development machines are behaving like remote production machines.
-        // It's also good practice, and so one can document any need updates to the schema for PROD prior to deployment.
-        // Use local.js to override locally. It is NOT recommended to change this for any remote machines.
+        // It's also good practice, so one can document any need updates to the schema for PROD prior to deployment.
+        // Use local.js to override locally. It is NOT recommended this change for any remote machines.
         migrate: 'safe'
     },
 

@@ -1,6 +1,6 @@
 {
     "name": "sails-react-bootstrap-webpack",
-    "version": "3.0.0-beta.2",
+    "version": "3.0.0-beta.3",
     "description": "An opinionated base configuration of Sails, with Webpack for React support, and Bootstrap for styling.",
     "keywords": [
         "sails",
@@ -9,7 +9,8 @@
         "webpack",
         "mocha",
         "chai",
-        "react-bootstrap"
+        "react-bootstrap",
+        "monorepo"
     ],
     "dependencies": {
         "csrf": "3.1.0",
@@ -52,9 +53,9 @@
         "mocha": "9.2.2",
         "npm-run-all": "4.1.5",
         "nyc": "15.1.0",
-        "react": "17.0.2",
+        "react": "18.0.0",
         "react-bootstrap": "v2.2.2",
-        "react-dom": "17.0.2",
+        "react-dom": "18.0.0",
         "react-router-dom": "6.2.2",
         "react-transition-group": "4.4.2",
         "rimraf": "3.0.2",
@@ -83,7 +84,7 @@
         "lift": "node app.js",
         "lift:prod": "NODE_ENV=production node app.js",
         "debug": "node --inspect app.js",
-        "lines": "git ls-files --exclude-standard -- ':!:**/*.[pjs][npv]g' ':!:**/*.ai' ':!:.idea' ':!:test/coverage/*' ':!:.github' ':!:.*ignore' ':!:*.md' ':!:assets/dependencies/*' ':!:package.json' ':!:config/*' ':!:.babelrc' ':!:.editorconfig' ':!:*.eslintrc' ':!:.mocharc.yaml' ':!:.npmrc' ':!:.nycrc' ':!:.sailsrc' ':!:LICENSE' ':!:package-lock.json' | xargs wc -l"
+        "lines": "git ls-files --exclude-standard -- ':!:**/*.[pjs][npv]g' ':!:**/*.ai' ':!:.*' ':!:**/.*' ':!:CHANGELOG.md' ':!:**/*.md' ':!:*.md' ':!:test/coverage/*' ':!:assets/dependencies/*' ':!:package.json' ':!:config/*' ':!:LICENSE' ':!:package-lock.json' | xargs wc -l"
     },
     "main": "app.js",
     "repository": {
