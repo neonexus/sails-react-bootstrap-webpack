@@ -70,14 +70,17 @@ If you DO NOT like this behavior, and would prefer the variables stay the same a
 
 <table>
     <thead>
-        <th>Variable</th>
+        <th colspan="2">Variable</th>
         <th>Default</th>
         <th>Description</th>
     </thead>
     <tbody>
         <tr>
+            <td style="text-align: right">
+                <strong>DEV</strong>
+            </td>
             <td>
-                <strong>DEV:</strong> ASSETS_URL
+                ASSETS_URL
             </td>
             <td rowspan="2">
                 "" (empty string)
@@ -87,13 +90,19 @@ If you DO NOT like this behavior, and would prefer the variables stay the same a
             </td>
         </tr>
         <tr>
+            <td style="text-align: right">
+                <strong>PROD</strong>
+            </td>
             <td>
-                <strong>PROD:</strong> ASSETS_URL
+                ASSETS_URL
             </td>
         </tr>
         <tr>
+            <td style="text-align: right">
+                <strong>DEV</strong>
+            </td>
             <td>
-                <strong>DEV:</strong> BASE_URL
+                BASE_URL
             </td>
             <td rowspan="2">
                 https://myapi.app
@@ -103,13 +112,19 @@ If you DO NOT like this behavior, and would prefer the variables stay the same a
             </td>
         </tr>
         <tr>
+            <td style="text-align: right">
+                <strong>PROD</strong>
+            </td>
             <td>
-                <strong>PROD:</strong> BASE_URL
+                BASE_URL
             </td>
         </tr>
         <tr>
+            <td style="text-align: right">
+                <strong>DEV</strong>
+            </td>
             <td>
-                <strong>DEV:</strong> DB_HOST
+                DB_HOST
             </td>
             <td rowspan="2">
                 localhost
@@ -119,13 +134,19 @@ If you DO NOT like this behavior, and would prefer the variables stay the same a
             </td>
         </tr>
         <tr>
+            <td style="text-align: right">
+                <strong>PROD</strong>
+            </td>
             <td>
-                <strong>PROD:</strong>&nbsp;DB_HOSTNAME
+                DB_HOSTNAME
             </td>
         </tr>
         <tr>
+            <td style="text-align: right">
+                <strong>DEV</strong>
+            </td>
             <td>
-                <strong>DEV:</strong> DB_USER
+                DB_USER
             </td>
             <td>
                 root
@@ -135,16 +156,22 @@ If you DO NOT like this behavior, and would prefer the variables stay the same a
             </td>
         </tr>
         <tr>
+            <td style="text-align: right">
+                <strong>PROD</strong>
+            </td>
             <td>
-                <strong>PROD:</strong> DB_USERNAME
+                DB_USERNAME
             </td>
             <td>
                 produser
             </td>
         </tr>
         <tr>
+            <td style="text-align: right">
+                <strong>DEV</strong>
+            </td>
             <td>
-                <strong>DEV:</strong> DB_PASS
+                DB_PASS
             </td>
             <td>
                 root
@@ -154,16 +181,22 @@ If you DO NOT like this behavior, and would prefer the variables stay the same a
             </td>
         </tr>
         <tr>
+            <td style="text-align: right">
+                <strong>PROD</strong>
+            </td>
             <td>
-                <strong>PROD:</strong>&nbsp;DB_PASSWORD
+                DB_PASSWORD
             </td>
             <td>
                 produser
             </td>
         </tr>
         <tr>
+            <td style="text-align: right">
+                <strong>DEV</strong>
+            </td>
             <td>
-                <strong>DEV:</strong> DB_NAME
+                DB_NAME
             </td>
             <td>
                 myapp
@@ -173,16 +206,22 @@ If you DO NOT like this behavior, and would prefer the variables stay the same a
             </td>
         </tr>
         <tr>
+            <td style="text-align: right">
+                <strong>PROD</strong>
+            </td>
             <td>
-                <strong>PROD:</strong>&nbsp;DB_NAME
+                DB_NAME
             </td>
             <td>
                 proddatabase
             </td>
         </tr>
         <tr>
+            <td style="text-align: right">
+                <strong>DEV</strong>
+            </td>
             <td>
-                <strong>DEV:</strong> DB_PORT
+                DB_PORT
             </td>
             <td rowspan="2">
                 3306
@@ -192,13 +231,19 @@ If you DO NOT like this behavior, and would prefer the variables stay the same a
             </td>
         </tr>
         <tr>
+            <td style="text-align: right">
+                <strong>PROD</strong>
+            </td>
             <td>
-                <strong>PROD:</strong> DB_PORT
+                DB_PORT
             </td>
         </tr>
         <tr>
+            <td style="text-align: right">
+                <strong>DEV</strong>
+            </td>
             <td>
-                <strong>DEV:</strong> DB_SSL
+                DB_SSL
             </td>
             <td rowspan="2">
                 true
@@ -208,13 +253,19 @@ If you DO NOT like this behavior, and would prefer the variables stay the same a
             </td>
         </tr>
         <tr>
+            <td style="text-align: right">
+                <strong>PROD</strong>
+            </td>
             <td>
-                <strong>PROD:</strong> DB_SSL
+                DB_SSL
             </td>
         </tr>
         <tr>
+            <td style="text-align: right">
+                <strong>DEV</strong>
+            </td>
             <td>
-                <strong>DEV:</strong>&nbsp;SESSION_SECRET
+                SESSION_SECRET
             </td>
             <td rowspan="2">
                 "" (empty string)
@@ -224,13 +275,19 @@ If you DO NOT like this behavior, and would prefer the variables stay the same a
             </td>
         </tr>
         <tr>
+            <td style="text-align: right">
+                <strong>PROD</strong>
+            </td>
             <td>
-                <strong>PROD:</strong>&nbsp;SESSION_SECRET
+                SESSION_SECRET
             </td>
         </tr>
         <tr>
+            <td style="text-align: right">
+                <strong>DEV</strong>
+            </td>
             <td>
-                <strong>DEV:</strong>&nbsp;DATA_ENCRYPTION_KEY
+                DATA_ENCRYPTION_KEY
             </td>
             <td rowspan="2">
                 "" (empty string)
@@ -240,8 +297,11 @@ If you DO NOT like this behavior, and would prefer the variables stay the same a
             </td>
         </tr>
         <tr>
+            <td style="text-align: right">
+                <strong>PROD</strong>
+            </td>
             <td>
-                <strong>PROD:</strong>&nbsp;DATA_ENCRYPTION_KEY
+                DATA_ENCRYPTION_KEY
             </td>
         </tr>
     </tbody>
