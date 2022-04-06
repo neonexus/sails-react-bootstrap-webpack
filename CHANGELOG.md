@@ -1,6 +1,6 @@
 # Changelog
 
-## [v3.0.0-beta](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v2.0.0...v3.0.0-beta.6) (2022-04-02)
+## [v3.0.0-beta](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v2.0.0...v3.0.0-beta.6) (2022-04-05)
 
 ### Features
 
@@ -27,7 +27,6 @@
 * Updated all dependencies to most recent versions.
 * Built out more tests to get better coverage.
 * Created this CHANGELOG.
-* Fixed discrepancy between DEV and PROD environment variable names.
 
 ### Breaking Changes
 
