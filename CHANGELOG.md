@@ -1,6 +1,12 @@
 # Changelog
 
-## [v3.0.0-beta](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v2.0.0...v3.0.0-beta.7) (2022-04-13)
+## [v3.0.0](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v2.0.0...v3.0.0) (2022-04-13)
+
+### Features
+
+* Fixed the reloading issue when using Webpack Dev Server.
+
+## [v3.0.0-beta](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v2.0.0...v3.0.0-beta.7) (2022-03-19)
 
 ### Features
 
