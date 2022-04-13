@@ -8,13 +8,6 @@
  * https://sailsjs.com/anatomy/config/routes-js
  */
 
-const defaultStaticOptions = {
-    maxAge: process.env.NODE_ENV !== 'production' ? 1 : 31557600000, // in production, a little over a year in milliseconds
-    extensions: ['html'],
-    dotfiles: 'ignore',
-    redirect: false // prevents redirecting "/main" to "/main/"
-};
-
 const path = require('path');
 const fs = require('fs');
 const serveStatic = require('serve-static');
@@ -30,7 +23,12 @@ module.exports.routes = {
     'GET /*': { // default route used to auto switch React apps
         skipAssets: false,
         fn: [
-            serveStatic(path.resolve(__dirname, '../.tmp/public/'), defaultStaticOptions),
+            serveStatic(path.resolve(__dirname, '../.tmp/public/'), {
+                maxAge: process.env.NODE_ENV !== 'production' ? 1 : 31557600000, // in production, a little over a year in milliseconds
+                extensions: ['html'],
+                dotfiles: 'ignore',
+                redirect: false // prevents redirecting "/main" to "/main/"
+            }),
             async (req, res) => {
                 // This will determine which React app we need to serve.
                 const parts = req.url.split('/');

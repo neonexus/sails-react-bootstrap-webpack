@@ -12,15 +12,15 @@ The `master` branch is experimental, and the [release branch](https://github.com
 **FINAL WARNING: DO NOT RELY ON THE MASTER BRANCH!**
 
 # v3.0.0-beta Warning
-Moving from v5 -> v6 of the [React Router](https://reactrouter.com/) is a serious undertaking (see the [the v5 -> v6 migration guide](https://reactrouter.com/docs/en/v6/upgrading/v5)).
+Moving from v5 -> v6 of the [React Router](https://reactrouter.com/) is a serious undertaking (see [the v5 -> v6 migration guide](https://reactrouter.com/docs/en/v6/upgrading/v5)).
 
-While basic features have been upgraded to the new standard of the new React Router, there are still some quarks while developing... When the assets are built for remote use (`npm run build` or `npm run build:dev`), everything works as expected; however, when working with the auto-reloading Webpack dev server, if you don't start from a "root" path (like "/admin" or "/main"), and refresh a path like "/admin/dashboard", things will not render.
+While basic features have been upgraded to the new standard of the new React Router, there are still some quirks while developing... When the assets are built for remote use (`npm run build` or `npm run build:dev`), everything works as expected; however, when working with the auto-reloading Webpack dev server, if you don't start from a "root" path (like "/admin" or "/main"), and refresh a path like "/admin/dashboard", things will not render.
 
 I'm still working on a fix for this.
 
 If you would like to use v5 of React Router, make sure you are cloning [v2 of this repo](https://github.com/neonexus/sails-react-bootstrap-webpack/tree/v2.0.0).
 
-## Currently setup with
+## Current Dependencies
 * [Sails](https://sailsjs.com/) **v1**
 * [React](https://reactjs.org/) **v18**
 * [React Router](https://reactrouter.com/) **v6**
@@ -36,10 +36,10 @@ See the [`package.json` for more details](package.json).
 + Setup for Webpack auto-reload dev server.
 + Setup so Sails will serve Webpack-built bundles as separate apps (so, a marketing site, and an admin site can live side-by-side).
 + Includes [react-bootstrap](https://www.npmjs.com/package/react-bootstrap) to make using Bootstrap styles / features with React easier.
-+ Schema validation and enforcement for `PRODUCTION`. This repo is setup for `MySQL`. If you plan to use a different datastore, you will likely want to disable the schema validation and enforcement feature inside [`config/bootstrap.js`](config/bootstrap.js). See [schema validation and enforcement](#schema-validation-and-enforcement) for more info.
++ Schema validation and enforcement for `PRODUCTION`. This repo is set up for `MySQL`. If you plan to use a different datastore, you will likely want to disable the schema validation and enforcement feature inside [`config/bootstrap.js`](config/bootstrap.js). See [schema validation and enforcement](#schema-validation-and-enforcement) for more info.
 
 ## How to Use
-This repo is not installable via `npm`. Instead, Github provides a handy "Use this template" (green) button at the top of this page. That will create a special fork of this repo (so there is a single, init commit, instead of the commit history from this repo).
+This repo is not installable via `npm`. Instead, GitHub provides a handy "Use this template" (green) button at the top of this page. That will create a special fork of this repo (so there is a single, init commit, instead of the commit history from this repo).
 
 ### Configuration
 In the `config` folder, there is the `local.js.sample` file, which is meant to be copied to `local.js`. This file (`local.js` not the sample) is ignored by Git, and intended for use in local development, NOT remote servers. Generally one would use environment variables for remote server configuration (and this repo is already setup to handle environment variable configuration for both DEV and PROD). See: [config/env/development.js](config/env/development.js) and [config/env/production.js](config/env/production.js).

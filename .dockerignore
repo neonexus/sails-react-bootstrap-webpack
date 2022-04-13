@@ -1,11 +1,13 @@
 node_modules
-.git
-.gitignore
 config/local.js
-.tmp
-.idea
+.git
 .github
+.gitignore
+.idea
 .editorconfig
+.eslintignore
+.eslintrc
+.tmp
 
 README.md
 CHANGELOG.md
