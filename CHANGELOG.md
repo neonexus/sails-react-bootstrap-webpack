@@ -1,6 +1,6 @@
 # Changelog
 
-## [v3.0.0-beta](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v2.0.0...v3.0.0-beta.6) (2022-04-05)
+## [v3.0.0-beta](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v2.0.0...v3.0.0-beta.7) (2022-04-13)
 
 ### Features
 
@@ -12,7 +12,7 @@
 
 ### Breaking Changes
 
-* Updated to React v18. See: [the upgrade guid to React 18](https://reactjs.org/blog/2022/03/08/react-18-upgrade-guide.html).
+* Updated to React v18. See: [the upgrade guide to React 18](https://reactjs.org/blog/2022/03/08/react-18-upgrade-guide.html).
 * Updated to React Router DOM v6. See: [the v5 -> v6 migration guide](https://reactrouter.com/docs/en/v6/upgrading/v5). This requires a **MAJOR** overhaul of how routes are handled.
 * Moved some controllers into a "common" folder, instead of the "admin" folder (as they could be used outside of admin controls).
 
