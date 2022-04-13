@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import {createRoot} from 'react-dom/client';
 import {
     BrowserRouter as Router,
@@ -15,14 +15,16 @@ function IndexApp() {
     // Sails will handle the webapp redirects in remote configurations.
     return (
         <Router>
-            <Routes>
-                <Route path="/admin/*" element={<AdminRouter />} />
-                <Route index path="/main/*" element={<Main />} />
-                <Route path="/" element={<Navigate to="/main" />} />
-            </Routes>
+            <Suspense fallback={<div>Loading...</div>}>
+                <Routes>
+                    <Route path="/admin/*" element={<AdminRouter />} />
+                    <Route index path="/main/*" element={<Main />} />
+                    <Route path="/" element={<Navigate to="/main" />} />
+                </Routes>
+            </Suspense>
         </Router>
     );
 }
 
 const root = createRoot(document.getElementById('root'));
-root.render(<IndexApp />, );
+root.render(<IndexApp />);
