@@ -1,7 +1,7 @@
 {
     "name": "sails-react-bootstrap-webpack",
     "version": "3.0.0-beta.7",
-    "description": "An opinionated base configuration of Sails, with Webpack for React support, and Bootstrap for styling. An extensible, monorepo, start-up in a box.",
+    "description": "An opinionated base configuration of Sails, with Webpack for React support, and Bootstrap for styling.",
     "keywords": [
         "sails",
         "react",
