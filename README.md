@@ -1,5 +1,7 @@
 # sails-react-bootstrap-webpack
 
+[![Travis CI status](https://app.travis-ci.com/neonexus/sails-react-bootstrap-webpack.svg?branch=release)](https://app.travis-ci.com/github/neonexus/sails-react-bootstrap-webpack)
+
 This is an opinionated base [Sails v1](https://sailsjs.com) application, using [Webpack](https://webpack.js.org) to handle [Bootstrap](https://getbootstrap.com) (using [SASS](https://sass-lang.com)) and [React](https://reactjs.org) builds. It is designed such that, one can build multiple React frontends (an admin panel, and a customer site maybe), that use the same API backend. This allows developers to easily share React components across different frontends / applications. Also, because the backend and frontend are in the same repo (and the frontend is compiled before it is handed to the end user), they can share [NPM](http://npmjs.com) libraries, like [Moment.js](https://momentjs.com)
 
 Need help? Want to hire me to build your next app or prototype? You can contact me any time via Gitter: [![Join the chat at https://gitter.im/sails-react-bootstrap-webpack/community](https://badges.gitter.im/sails-react-bootstrap-webpack/community.svg)](https://gitter.im/sails-react-bootstrap-webpack/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -70,8 +72,8 @@ If you DO NOT like this behavior, and would prefer the variables stay the same a
 | BASE_URL            | https://myapi.app | **BASE_URL**            | **https://myapi.app** | The address of the Sails instance.                                                                                              |
 | DB_HOST             | localhost         | **DB_HOSTNAME**         | **localhost**         | The hostname of the datastore.                                                                                                  |
 | DB_USER             | root              | **DB_USERNAME**         | **produser**          | Username of the datastore.                                                                                                      |
-| DB_PASS             | root              | **DB_PASSWORD**         | **produser**          | Password of the datastore.                                                                                                      |
-| DB_NAME             | myapp             | **DB_NAME**             | **myapp**             | The name of the database inside the datastore.                                                                                  |
+| DB_PASS             | mypass            | **DB_PASSWORD**         | **prodpass**          | Password of the datastore.                                                                                                      |
+| DB_NAME             | myapp             | **DB_NAME**             | **prod**              | The name of the database inside the datastore.                                                                                  |
 | DB_PORT             | 3306              | **DB_PORT**             | **3306**              | The port number for the datastore.                                                                                              |
 | DB_SSL              | true              | **DB_SSL**              | **true**              | If the datastore requires SSL, set this to "true".                                                                              |
 | SESSION_SECRET      | "" (empty string) | **SESSION_SECRET**      | **"" (empty string)** | This is used to sign cookies, and SHOULD be set, especially on PRODUCTION environments.                                         |

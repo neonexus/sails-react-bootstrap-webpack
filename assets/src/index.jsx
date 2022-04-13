@@ -1,7 +1,7 @@
 import React, {Suspense} from 'react';
 import {createRoot} from 'react-dom/client';
 import {
-    BrowserRouter as Router,
+    BrowserRouter,
     Routes,
     Route,
     Navigate
@@ -14,7 +14,7 @@ function IndexApp() {
     // Webpack is configured to build the individual apps in their own folders in `.tmp/public` via `npm run build`.
     // Sails will handle the webapp redirects in remote configurations.
     return (
-        <Router>
+        <BrowserRouter>
             <Suspense fallback={<div>Loading...</div>}>
                 <Routes>
                     <Route path="/admin/*" element={<AdminRouter />} />
@@ -22,7 +22,7 @@ function IndexApp() {
                     <Route path="/" element={<Navigate to="/main" />} />
                 </Routes>
             </Suspense>
-        </Router>
+        </BrowserRouter>
     );
 }
 

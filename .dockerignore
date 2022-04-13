@@ -8,6 +8,7 @@ config/local.js
 .eslintignore
 .eslintrc
 .tmp
+.travis.yml
 
 README.md
 CHANGELOG.md
