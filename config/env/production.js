@@ -53,12 +53,12 @@ module.exports = {
          ***************************************************************************/
         default: {
             // NEVER EVER STORE PRODUCTION CREDENTIALS IN THIS FILE!
-            host: process.env.DB_HOSTNAME || 'localhost',   // To make sure you are
-            user: process.env.DB_USERNAME || 'fail',        // aware of the environment
-            password: process.env.DB_PASSWORD || 'nope',    // you are configuring,
-            database: process.env.DB_NAME || 'prod',        // you must use HOSTNAME not HOST,
-            port: process.env.DB_PORT || 3306,              // and USERNAME not USER,
-            ssl: (process.env.DB_SSL !== 'false')           // and PASSWORD not PASS.
+            host: process.env.DB_HOSTNAME || 'localhost',       // To make sure you are
+            user: process.env.DB_USERNAME || 'produser',        // aware of the environment
+            password: process.env.DB_PASSWORD || 'prodpass',    // you are configuring,
+            database: process.env.DB_NAME || 'prod',            // you must use HOSTNAME not HOST,
+            port: process.env.DB_PORT || 3306,                  // and USERNAME not USER,
+            ssl: (process.env.DB_SSL !== 'false')               // and PASSWORD not PASS.
             // NEVER EVER STORE PRODUCTION CREDENTIALS IN THIS FILE!
         }
     },

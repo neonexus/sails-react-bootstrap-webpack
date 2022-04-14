@@ -1,5 +1,11 @@
 # Changelog
 
+## [v3.0.1](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v3.0.0...v3.0.1) (2022-04-13)
+
+### Features
+
+* Created the `.travis.yml` file.
+
 ## [v3.0.0](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v2.0.0...v3.0.0) (2022-04-13)
 
 ### Features
