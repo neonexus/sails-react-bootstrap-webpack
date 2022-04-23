@@ -1,5 +1,12 @@
 # Changelog
 
+## [v3.0.2](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v3.0.1...v3.0.2) (2022-04-23)
+
+### Features
+
+* Rebuilt ENV variables table, again.
+* Updated dependencies.
+
 ## [v3.0.1](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v3.0.0...v3.0.1) (2022-04-13)
 
 ### Features
