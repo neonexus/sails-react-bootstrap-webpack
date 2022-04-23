@@ -6,14 +6,22 @@ This is an opinionated base [Sails v1](https://sailsjs.com) application, using [
 
 Need help? Want to hire me to build your next app or prototype? You can contact me any time via Gitter: [![Join the chat at https://gitter.im/sails-react-bootstrap-webpack/community](https://badges.gitter.im/sails-react-bootstrap-webpack/community.svg)](https://gitter.im/sails-react-bootstrap-webpack/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-# Branch Warning
+## Main Features
+
++ Automatic (incoming) request logging (manual outgoing), via Sails models / hooks.
++ Setup for Webpack auto-reload dev server.
++ Setup so Sails will serve Webpack-built bundles as separate apps (so, a marketing site, and an admin site can live side-by-side).
++ Includes [react-bootstrap](https://www.npmjs.com/package/react-bootstrap) to make using Bootstrap styles / features with React easier.
++ Schema validation and enforcement for `PRODUCTION`. This repo is set up for `MySQL`. If you plan to use a different datastore, you will likely want to disable the schema validation and enforcement feature inside [`config/bootstrap.js`](config/bootstrap.js). See [schema validation and enforcement](#schema-validation-and-enforcement) for more info.
+
+## Branch Warning
 The `master` branch is experimental, and the [release branch](https://github.com/neonexus/sails-react-bootstrap-webpack/tree/release) (or the [`releases section`](https://github.com/neonexus/sails-react-bootstrap-webpack/releases)) is where one should base their use of this template.
 
 `master` is **volatile**, likely to change at any time, for any reason; this includes `git push --force` updates.
 
 **FINAL WARNING: DO NOT RELY ON THE MASTER BRANCH!**
 
-# v3.0.0 Warning
+## v3.0.0 Warning
 Moving from v5 -> v6 of the [React Router](https://reactrouter.com/) can be a serious undertaking (see [the v5 -> v6 migration guide](https://reactrouter.com/docs/en/v6/upgrading/v5)).
 
 If you would like to use v5 of React Router, make sure you are cloning [v2 of this repo](https://github.com/neonexus/sails-react-bootstrap-webpack/tree/v2.0.0).
@@ -27,14 +35,6 @@ If you would like to use v5 of React Router, make sure you are cloning [v2 of th
 * [Webpack](https://webpack.js.org/) **v5**
 
 See the [`package.json` for more details](package.json).
-
-## Main Features
-
-+ Automatic (incoming) request logging (manual outgoing), via Sails models / hooks.
-+ Setup for Webpack auto-reload dev server.
-+ Setup so Sails will serve Webpack-built bundles as separate apps (so, a marketing site, and an admin site can live side-by-side).
-+ Includes [react-bootstrap](https://www.npmjs.com/package/react-bootstrap) to make using Bootstrap styles / features with React easier.
-+ Schema validation and enforcement for `PRODUCTION`. This repo is set up for `MySQL`. If you plan to use a different datastore, you will likely want to disable the schema validation and enforcement feature inside [`config/bootstrap.js`](config/bootstrap.js). See [schema validation and enforcement](#schema-validation-and-enforcement) for more info.
 
 ## How to Use
 This repo is not installable via `npm`. Instead, GitHub provides a handy "Use this template" (green) button at the top of this page. That will create a special fork of this repo (so there is a single, init commit, instead of the commit history from this repo).
@@ -66,18 +66,19 @@ There are a few environment variables that the remote configuration files are se
 
 If you DO NOT like this behavior, and would prefer the variables stay the same across your environments, feel free to change them in [`config/env/development.js`](config/env/development.js) and [`config/env/production.js`](config/env/production.js)
 
-| DEV Variable        | DEV Default       | PROD Variable           | PROD Default          | Description                                                                                                                     |
-|---------------------|-------------------|-------------------------|-----------------------|---------------------------------------------------------------------------------------------------------------------------------|
-| ASSETS_URL          | "" (empty string) | **ASSETS_URL**          | **"" (empty string)** | Webpack is configured to modify static asset URLs to point to a CDN, like CloudFront. MUST end with a slash " / ", or be empty. |
-| BASE_URL            | https://myapi.app | **BASE_URL**            | **https://myapi.app** | The address of the Sails instance.                                                                                              |
-| DB_HOST             | localhost         | **DB_HOSTNAME**         | **localhost**         | The hostname of the datastore.                                                                                                  |
-| DB_USER             | root              | **DB_USERNAME**         | **produser**          | Username of the datastore.                                                                                                      |
-| DB_PASS             | mypass            | **DB_PASSWORD**         | **prodpass**          | Password of the datastore.                                                                                                      |
-| DB_NAME             | myapp             | **DB_NAME**             | **prod**              | The name of the database inside the datastore.                                                                                  |
-| DB_PORT             | 3306              | **DB_PORT**             | **3306**              | The port number for the datastore.                                                                                              |
-| DB_SSL              | true              | **DB_SSL**              | **true**              | If the datastore requires SSL, set this to "true".                                                                              |
-| SESSION_SECRET      | "" (empty string) | **SESSION_SECRET**      | **"" (empty string)** | This is used to sign cookies, and SHOULD be set, especially on PRODUCTION environments.                                         |
-| DATA_ENCRYPTION_KEY | "" (empty string) | **DATA_ENCRYPTION_KEY** | **"" (empty string)** | **Currently unused; intended for future use.**                                                                                  |
+| Variable                                                                | Default                                                               | Description                                                                                                                     |
+|-------------------------------------------------------------------------|-----------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------|
+| ASSETS_URL                                                              | "" (empty string)                                                     | Webpack is configured to modify static asset URLs to point to a CDN, like CloudFront. MUST end with a slash " / ", or be empty. |
+| BASE_URL                                                                | https://myapi.app                                                     | The address of the Sails instance.                                                                                              |
+| **DEV:**&nbsp;&nbsp;&nbsp;&nbsp;DB_HOST<br />**PROD:**&nbsp;DB_HOSTNAME | localhost                                                             | The hostname of the datastore.                                                                                                  |
+| **DEV:**&nbsp;&nbsp;&nbsp;&nbsp;DB_USER<br />**PROD:**&nbsp;DB_USERNAME | **DEV:**&nbsp;&nbsp;&nbsp;&nbsp;root <br /> **PROD:**&nbsp;produser   | Username of the datastore.                                                                                                      |
+| **DEV:**&nbsp;&nbsp;&nbsp;&nbsp;DB_PASS<br />**PROD:**&nbsp;DB_PASSWORD | **DEV:**&nbsp;&nbsp;&nbsp;&nbsp;mypass <br /> **PROD:**&nbsp;prodpass | Password of the datastore.                                                                                                      |
+| DB_NAME                                                                 | **DEV:**&nbsp;&nbsp;&nbsp;&nbsp;myapp <br /> **PROD:**&nbsp;prod      | The name of the database inside the datastore.                                                                                  |
+| DB_PORT                                                                 | 3306                                                                  | The port number for the datastore.                                                                                              |
+| DB_SSL                                                                  | true                                                                  | If the datastore requires SSL, set this to "true".                                                                              |
+| SESSION_SECRET                                                          | "" (empty string)                                                     | Used to sign cookies, and SHOULD be set, especially on PRODUCTION environments.                                                 |
+
+[//]: # (| DATA_ENCRYPTION_KEY | "" &#40;empty string&#41; | **DATA_ENCRYPTION_KEY** | **"" &#40;empty string&#41;** | **Currently unused; intended for future use.**                                                                                  |)
 
 ## Request Logging
 Automatic incoming request logging, is a 2 part process. First, the [`request-logger` hook](api/hooks/request-logger.js) gathers info from the request, and creates a new [`RequestLog` record](api/models/RequestLog.js), making sure to mask anything that may be sensitive, such as passwords. Then, a custom response gathers information from the response, again, scrubbing sensitive data (using the [customToJSON](https://sailsjs.com/documentation/concepts/models-and-orm/model-settings?identity=#customtojson) feature of Sails models) to prevent leaking of password hashes, or anything else that should never be publicly accessible. The [`keepModelsSafe` helper](api/helpers/keep-models-safe.js) and the custom responses (such as [ok](api/responses/ok.js) or [serverError](api/responses/serverError.js)) are responsible for the final leg of request logs.
