@@ -56,9 +56,9 @@ class Login extends React.Component {
         }, (err, resp) => {
             console.error(err.response);
 
-            const errMessage = (resp.errors && resp.errors.problems)
-                               ? resp.errors.problems.join('\n')
-                               : resp.errorMessages.join('\n');
+            const errMessage = (resp && resp.errors && resp.errors.problems)
+                ? resp.errors.problems.join('\n')
+                : (resp && resp.errorMessages) ? resp.errorMessages.join('\n') : 'Unknown Error. Are you connected to the internet?';
 
             alert(errMessage);
         });
@@ -80,10 +80,12 @@ class Login extends React.Component {
                 {
                     (userContext) => (
                         <div id="main-wrapper" className="container">
+                            <br />
+                            <br />
+                            <br />
                             <h2 className="text-center">Admin</h2>
                             {
-                                userContext.isLoggedIn &&
-                                <div>You are logged in</div>
+                                userContext.isLoggedIn ? <div>You are logged in</div> : null
                             }
                             {
                                 !userContext.isLoggedIn &&
@@ -99,6 +101,7 @@ class Login extends React.Component {
                                                 name="email"
                                                 onChange={this.handleEmail}
                                                 autoFocus={!this.state.autoFocusPassword}
+                                                required
                                             />
                                         </div>
                                         <div className="pb-4">
@@ -110,6 +113,7 @@ class Login extends React.Component {
                                                 value={this.state.password}
                                                 onChange={this.handlePassword}
                                                 autoFocus={this.state.autoFocusPassword}
+                                                required
                                             />
                                         </div>
                                         <div className="pb-4">

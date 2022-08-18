@@ -1,4 +1,4 @@
-module.exports = async function forbidden(msg){
+module.exports = async function forbidden(msg) {
     const res = this.res;
     const req = this.req;
 

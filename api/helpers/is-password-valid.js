@@ -1,7 +1,7 @@
 module.exports = {
     friendlyName: 'Is password valid',
 
-    description: 'Does the provided password conform to the given standards?',
+    description: 'Does the provided password conform to the given standards? Returns true, or an array of errors.',
 
     inputs: {
         password: {
@@ -25,7 +25,7 @@ module.exports = {
         }
 
         if (inputs.password.length > 70) {
-            // this 70 character limit is not arbitrary, it is the max size of MySQL utf8mb4 encoding
+            // this 70-character limit is not arbitrary, it is the max size of MySQL utf8mb4 encoding
             // (71 characters balloons past the 191 character limit of utf8mb4 varchar columns after hashing)
             errors.push('WOW. Password length is TOO good. Max is 70 characters. Sorry.');
         }

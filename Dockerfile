@@ -1,4 +1,4 @@
-FROM node:16.14
+FROM node:16.17
 MAINTAINER NeoNexus DeMortis
 
 RUN apt-get update && apt-get upgrade -y
@@ -8,7 +8,7 @@ WORKDIR /var/www/myapp
 
 EXPOSE 1337
 # REMEMBER! NEVER STORE SECRETS, DEK's, PASSWORDS, OR ANYTHING OF A SENSITIVE NATURE IN SOURCE CONTROL (INCLUDING THIS FILE)! USE ENVIRONMENT VARIABLES!
-ENV PORT=1337 DB_HOSTNAME=localhost DB_USERNAME=root DB_PASSWORD=mypass DB_NAME=myapp DB_PORT=3306 DB_SSL=true DATA_ENCRYPTION_KEY=1234abcd4321asdf0987lkjh SESSION_SECRET=0987poiuqwer1234zxcvmnbv
+ENV PORT=1337 DB_HOSTNAME=dockerdb DB_USERNAME=dockeruser DB_PASSWORD=dockerpass DB_NAME=docker DB_PORT=3306 DB_SSL=true DATA_ENCRYPTION_KEY=1234abcd4321asdf0987lkjh SESSION_SECRET=0987poiuqwer1234zxcvmnbv
 
 # This keeps builds more efficient, because we can use Docker cache more effectively.
 COPY package.json /var/www/myapp/package.json

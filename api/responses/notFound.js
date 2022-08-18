@@ -1,4 +1,4 @@
-module.exports = async function notFound(msg){
+module.exports = async function notFound(msg) {
     const req = this.req;
     const res = this.res;
 

@@ -1,5 +1,4 @@
-import React from 'react';
-import Dashboard from './Dashboard';
+import React, {Suspense, lazy} from 'react';
 import '../../styles/admin/admin.scss';
 import {
     Routes,
@@ -8,7 +7,9 @@ import {
 } from 'react-router-dom';
 
 import Login from '../Admin/Login';
-import Upgrade from './Upgrade';
+
+const Dashboard = lazy(() => import('./Dashboard'));
+const Upgrade = lazy(() => import('./Upgrade'));
 import PropTypes from 'prop-types';
 
 import {UserProvider, UserConsumer} from '../data/userContext';
@@ -73,29 +74,45 @@ class AdminRouter extends React.Component {
 
         return (
             <UserProvider user={this.state.user}>
-                <NavBar api={this.state.api} />
                 <RenderOrLogin api={this.state.api}>
-                    <Container>
-                        <Routes>
-                            <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
-                            <Route path="/admin/dashboard" element={<Dashboard />} />
-                            <Route path="/admin/upgrade" element={<Upgrade />} />
-                            <Route
-                                path="/admin/*"
-                                element={
+                    <UserConsumer>
+                        {
+                            (userContext) => (
+                                <Suspense fallback={<div>LOADING...</div>}>
                                     <>
-                                        <h1>Page Not Found</h1>
-                                        <div>
-                                            The page you have requested does not exist. Maybe go back and try again?
-                                            <br />
-                                            <br />
-                                            <Button variant="outline-secondary" onClick={() => window.history.back()}>&#8678; Go Back</Button>
-                                        </div>
+                                        <NavBar handleLogout={() => {
+                                            this.state.api.get('/logout', () => {
+                                                userContext.logout();
+                                            });
+                                        }}
+                                        />
+
+                                        <Container>
+                                            <Routes>
+                                                <Route path="/admin" exact element={<Navigate to="/admin/dashboard" replace />} />
+                                                <Route path="/admin/dashboard" element={<Dashboard />} />
+                                                <Route path="/admin/upgrade" element={<Upgrade />} />
+                                                <Route
+                                                    path="/admin/*"
+                                                    element={
+                                                        <>
+                                                            <h1>Page Not Found</h1>
+                                                            <div>
+                                                                The page you have requested does not exist. Maybe go back and try again?
+                                                                <br />
+                                                                <br />
+                                                                <Button variant="outline-secondary" onClick={() => window.history.back()}>&#8678; Go Back</Button>
+                                                            </div>
+                                                        </>
+                                                    }
+                                                />
+                                            </Routes>
+                                        </Container>
                                     </>
-                                }
-                            />
-                        </Routes>
-                    </Container>
+                                </Suspense>
+                            )
+                        }
+                    </UserConsumer>
                 </RenderOrLogin>
             </UserProvider>
         );

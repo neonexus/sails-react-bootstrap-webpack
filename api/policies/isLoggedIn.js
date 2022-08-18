@@ -31,14 +31,10 @@ module.exports = async function(req, res, next) {
                 token = token.substring(7);
             }
 
-            const foundToken = await sails.models.apitoken.findOne({
-                token
-            }).populate('user');
+            const foundToken = await sails.models.apitoken.findOne({token}).populate('user');
 
             if (foundToken) {
-                await sails.models.apitoken.updateOne({
-                    token
-                }).set({updatedAt: new Date()});
+                await sails.models.apitoken.updateOne({token}).set({updatedAt: new Date()});
 
                 req.session = {user: foundToken.user};
 

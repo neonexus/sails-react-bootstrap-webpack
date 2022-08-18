@@ -1,4 +1,4 @@
-module.exports = async function serverError(msg){
+module.exports = async function serverError(msg) {
     const req = this.req;
     const res = this.res;
 

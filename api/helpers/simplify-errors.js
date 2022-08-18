@@ -12,7 +12,7 @@ module.exports = {
 
     exits: {},
 
-    fn: async function(inputs, exits){
+    fn: async function(inputs, exits) {
         let errors = {},
             err = inputs.err;
 

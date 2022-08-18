@@ -60,7 +60,7 @@ class api {
 
         const thisReq = api.__buildRequestObj(requester.get(this.baseUrl + req.url).withCredentials(), req);
 
-        return thisReq.then((res) => api.__buildResponseWrapper(res, good), (err) => bad(err, err.response.body));
+        return thisReq.then((res) => api.__buildResponseWrapper(res, good), (err) => bad(err, (err.response) ? err.response.body : null));
     }
 
     post(req, good, bad) {
@@ -76,7 +76,7 @@ class api {
 
         const thisReq = api.__buildRequestObj(requester.post(this.baseUrl + req.url).withCredentials(), req);
 
-        return thisReq.then((res) => api.__buildResponseWrapper(res, good), (err) => bad(err, err.response.body));
+        return thisReq.then((res) => api.__buildResponseWrapper(res, good), (err) => bad(err, (err.response) ? err.response.body : null));
     }
 
     put(req, good, bad) {
@@ -92,7 +92,7 @@ class api {
 
         const thisReq = api.__buildRequestObj(requester.put(this.baseUrl + req.url).withCredentials(), req);
 
-        return thisReq.then((res) => api.__buildResponseWrapper(res, good), (err) => bad(err, err.response.body));
+        return thisReq.then((res) => api.__buildResponseWrapper(res, good), (err) => bad(err, (err.response) ? err.response.body : null));
     }
 
     del(req, good, bad) {
@@ -108,7 +108,7 @@ class api {
 
         const thisReq = api.__buildRequestObj(requester.del(this.baseUrl + req.url).withCredentials(), req);
 
-        return thisReq.then((res) => api.__buildResponseWrapper(res, good), (err) => bad(err, err.response.body));
+        return thisReq.then((res) => api.__buildResponseWrapper(res, good), (err) => bad(err, (err.response) ? err.response.body : null));
     }
 }
 
