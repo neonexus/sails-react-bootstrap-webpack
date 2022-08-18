@@ -10,7 +10,7 @@ async function hashPassword(pass) {
 async function updatePassword(password) {
     // "binary to ASCII" aka base64
     // btoa('scrypt') = c2NyeXB0
-    if (password && password.length > 1 && password.substr(0, 8) !== 'c2NyeXB0') {
+    if (password && password.length > 1 && password.substring(0, 8) !== 'c2NyeXB0') {
         password = await hashPassword(password);
     }
 

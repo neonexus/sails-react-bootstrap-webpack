@@ -1,5 +1,13 @@
 # Changelog
 
+## [v3.0.3](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v3.0.2...v3.0.3) (2022-08-18)
+
+### Features
+
+* Fixed an issue with `webpack-dev-server`'s reload issue with complex routes (/admin/dashboard would fail to render properly on reload).
+* Updated usage of `substr` -> `substring` throughout the project.
+* Updated dependencies (except Bootstrap v5.1.3 -> v5.2.0, because it fails to compile with SASS).
+
 ## [v3.0.2](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v3.0.1...v3.0.2) (2022-04-23)
 
 ### Features

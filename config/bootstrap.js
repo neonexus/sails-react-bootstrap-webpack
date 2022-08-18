@@ -13,6 +13,9 @@
 // Use this for subheaders: http://patorjk.com/software/taag/#p=display&c=c&f=Calvin%20S&t=Woot
 
 module.exports.bootstrap = function(next) {
+    /**
+     * START the custom schema validation feature
+     */
     // Check if we need to validate our schema
     if (sails.config.models.validateOnBootstrap && sails.config.models.migrate === 'safe') { // aka PRODUCTION
         let waitingToFinish = 0;
@@ -129,7 +132,7 @@ module.exports.bootstrap = function(next) {
                                      *     │││ │   │ └┬┘├─┘├┤ └─┐  │││├─┤ │ │  ├─┤ ┌┘
                                      *    ─┴┘└─┘   ┴  ┴ ┴  └─┘└─┘  ┴ ┴┴ ┴ ┴ └─┘┴ ┴ o
                                      */
-                                    if (model.schema[column].autoMigrations.columnType.substr(0, 7) === 'varchar' && model.schema[column].autoMigrations.columnType !== columns.rows[foundAt].Type) {
+                                    if (model.schema[column].autoMigrations.columnType.substring(0, 7) === 'varchar' && model.schema[column].autoMigrations.columnType !== columns.rows[foundAt].Type) {
                                         notWhatWasExpected(column, foundAt, model.schema[column].autoMigrations.columnType);
                                     }
 
@@ -353,4 +356,7 @@ module.exports.bootstrap = function(next) {
             }
         }, 3000);
     }
+    /**
+     * END custom schema feature
+     */
 };

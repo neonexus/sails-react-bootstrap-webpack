@@ -1,4 +1,4 @@
-import React, {Suspense} from 'react';
+import React from 'react';
 import {createRoot} from 'react-dom/client';
 import {
     BrowserRouter,
@@ -15,13 +15,11 @@ function IndexApp() {
     // Sails will handle the webapp redirects in remote configurations.
     return (
         <BrowserRouter>
-            <Suspense fallback={<div>Loading...</div>}>
-                <Routes>
-                    <Route path="/admin/*" element={<AdminRouter />} />
-                    <Route index path="/main/*" element={<Main />} />
-                    <Route path="/" element={<Navigate to="/main" />} />
-                </Routes>
-            </Suspense>
+            <Routes>
+                <Route path="/admin/*" element={<AdminRouter />} />
+                <Route index path="/main/*" element={<Main />} />
+                <Route path="/" element={<Navigate to="/main" />} />
+            </Routes>
         </BrowserRouter>
     );
 }

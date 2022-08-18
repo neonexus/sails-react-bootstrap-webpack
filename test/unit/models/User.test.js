@@ -16,7 +16,7 @@ describe('User Model', function() {
         for (let i = 0; i < foundUsers.length; ++i) {
             foundUsers[i].id.should.be.a.uuid();
             foundUsers[i].should.have.property('password');
-            foundUsers[i].password.substr(0, 8).should.equal('c2NyeXB0'); // "scrypt" in base 64
+            foundUsers[i].password.substring(0, 8).should.equal('c2NyeXB0'); // "scrypt" in base 64
         }
     });
 
@@ -41,7 +41,7 @@ describe('User Model', function() {
     it('.doPasswordsMatch() should compare passwords correctly', async function() {
         const foundUser = await sails.models.user.findOne({email: userFixtures[0].email});
 
-        foundUser.password.substr(0, 8).should.equal('c2NyeXB0'); // "scrypt" in base 64
+        foundUser.password.substring(0, 8).should.equal('c2NyeXB0'); // "scrypt" in base 64
         userFixtures[0].password.should.not.equal(foundUser.password);
 
         const isAMatch = await sails.models.user.doPasswordsMatch(userFixtures[0].password, foundUser.password);

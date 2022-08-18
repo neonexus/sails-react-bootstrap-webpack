@@ -6,8 +6,13 @@ const path = require('path');
 
 module.exports = merge(baseConfig, {
     devServer: {
-        historyApiFallback: true,
-        static: path.join(__dirname, '../../assets')
+        historyApiFallback: {
+            rewrites: [ // these force Webpack to only use the first parts of the URL, so it can retrieve the correct index
+                {from: /^\/admin/, to: '/admin'},
+                {from: /^\/main/, to: '/main'}
+            ]
+        },
+        static: path.join(__dirname, '../assets')
     },
     module: {
         rules: [

@@ -15,13 +15,6 @@ class NavBar extends React.Component {
         };
 
         this.closeNavbar = this.closeNavbar.bind(this);
-        this.handleLogout = this.handleLogout.bind(this);
-    }
-
-    handleLogout(userContext) {
-        this.props.api.get('/logout', () => {
-            userContext.logout();
-        });
     }
 
     closeNavbar() {
@@ -51,7 +44,7 @@ class NavBar extends React.Component {
                         {
                             (userContext) => (
                                 userContext.isLoggedIn &&
-                                <Button variant="danger" onClick={() => this.handleLogout(userContext)} size="sm" className="mt-2 mt-sm-0 mb-2 mb-sm-0">Logout</Button>
+                                <Button variant="danger" onClick={() => this.props.handleLogout()} size="sm" className="mt-2 mt-sm-0 mb-2 mb-sm-0">Logout</Button>
                             )
                         }
                     </UserConsumer>
@@ -62,7 +55,7 @@ class NavBar extends React.Component {
 }
 
 NavBar.propTypes = {
-    api: PropTypes.object.isRequired
+    handleLogout: PropTypes.func.isRequired
 };
 
 export default NavBar;

@@ -30,7 +30,7 @@ module.exports = {
         success: {}
     },
 
-    fn: async function(inputs, exits){
+    fn: async function(inputs, exits) {
         if (inputs.req.requestId) {
             let out = _.merge({}, inputs.body),
                 headers = _.merge({}, inputs.res._headers), // copy the object

@@ -1,4 +1,4 @@
-module.exports = async function badRequest(msg){
+module.exports = async function badRequest(msg) {
     const res = this.res;
     const req = this.req;
 
@@ -6,7 +6,7 @@ module.exports = async function badRequest(msg){
         msg = 'Could not understand request';
     }
 
-    const  out = {
+    const out = {
         success: false,
         errors: await sails.helpers.simplifyErrors(msg),
         errorMessages: await sails.helpers.getErrorMessages(msg)
