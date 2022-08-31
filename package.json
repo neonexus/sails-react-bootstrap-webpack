@@ -17,7 +17,7 @@
         "json-stringify-safe": "5.0.1",
         "lodash": "4.17.21",
         "md5": "2.3.0",
-        "moment-timezone": "0.5.34",
+        "moment-timezone": "0.5.35",
         "prop-types": "15.8.1",
         "sails": "1.5.3",
         "sails-hook-orm": "4.0.2",
