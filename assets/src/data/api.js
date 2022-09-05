@@ -58,6 +58,10 @@ class api {
             };
         }
 
+        if (!req.url) {
+            return bad(new Error('URL is required, was not supplied'), {errorMessages: ['URL is required, was not supplied']});
+        }
+
         const thisReq = api.__buildRequestObj(requester.get(this.baseUrl + req.url).withCredentials(), req);
 
         return thisReq.then((res) => api.__buildResponseWrapper(res, good), (err) => bad(err, (err.response) ? err.response.body : null));
@@ -72,6 +76,10 @@ class api {
             bad = (err, body) => {
                 console.error('API Error', req, body, err);
             };
+        }
+
+        if (!req.url) {
+            return bad(new Error('URL is required, was not supplied'), {errorMessages: ['URL is required, was not supplied']});
         }
 
         const thisReq = api.__buildRequestObj(requester.post(this.baseUrl + req.url).withCredentials(), req);
@@ -90,6 +98,10 @@ class api {
             };
         }
 
+        if (!req.url) {
+            return bad(new Error('URL is required, was not supplied'), {errorMessages: ['URL is required, was not supplied']});
+        }
+
         const thisReq = api.__buildRequestObj(requester.put(this.baseUrl + req.url).withCredentials(), req);
 
         return thisReq.then((res) => api.__buildResponseWrapper(res, good), (err) => bad(err, (err.response) ? err.response.body : null));
@@ -104,6 +116,10 @@ class api {
             bad = (err, body) => {
                 console.error('API Error', req, body, err);
             };
+        }
+
+        if (!req.url) {
+            return bad(new Error('URL is required, was not supplied'), {errorMessages: ['URL is required, was not supplied']});
         }
 
         const thisReq = api.__buildRequestObj(requester.del(this.baseUrl + req.url).withCredentials(), req);

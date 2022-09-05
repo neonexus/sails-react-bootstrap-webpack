@@ -23,7 +23,7 @@ module.exports = {
             crypto.createHmac('sha256', sails.config.session.secret).update(
                 crypto.randomBytes(21) // cryptographically-secure random characters
                 + moment(new Date()).format() // throw in the current time stamp
-                + 'I am a tea pot' // the best HTTP status code
+                + 'I\'m a tea pot' // the best HTTP status code
                 + inputs.extra // an optional way to add a bit more randomness to the mix
                 + crypto.randomBytes(21)
             ).digest('hex')

@@ -19,16 +19,9 @@ class Login extends React.Component {
             this.state.autoFocusPassword = true;
         }
 
-        this.goBack = this.goBack.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
         this.handleEmail = this.handleEmail.bind(this);
         this.handlePassword = this.handlePassword.bind(this);
-    }
-
-    goBack() {
-        // const dest = this.props.location.state.from.pathname || '/admin';
-        //
-        // this.props.location.history.push(dest);
     }
 
     handleLogin(e, done, rememberMe) {
@@ -48,7 +41,7 @@ class Login extends React.Component {
             }
         }, (body) => {
             if (body.success) {
-                return done({email: this.state.email});
+                return done(body.user);
             }
 
             // should not happen

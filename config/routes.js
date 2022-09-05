@@ -59,6 +59,7 @@ module.exports.routes = {
         }
     },
 
+    'GET /api/v1/users': 'admin/get-users',
     'POST /api/v1/user': 'admin/create-user',
     'DELETE /api/v1/user': 'admin/delete-user',
     'POST /api/v1/token': 'admin/create-api-token',

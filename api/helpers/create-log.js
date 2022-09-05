@@ -30,9 +30,9 @@ module.exports = {
 
         const newLog = {
             data: inputs.data,
-            user: user,
-            account: account,
-            request: request,
+            user,
+            account,
+            request,
             description: inputs.description
         };
 

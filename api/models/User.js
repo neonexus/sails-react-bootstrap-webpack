@@ -50,7 +50,7 @@ module.exports = {
             type: 'string',
             isEmail: true,
             required: true,
-            unique: true,
+            // unique: true, // can NOT be unique, if we are using soft-deleted users; controller must deal with uniqueness
             columnType: 'varchar(191)'
         },
 

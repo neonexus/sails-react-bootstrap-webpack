@@ -1,0 +1,27 @@
+// .prevent-validation class
+.prevent-validation:valid, .prevent-validation.is-valid {
+    padding: $input-padding-y $input-padding-x !important;
+    border-color: $input-border-color !important;
+    background-image: none !important;
+}
+
+select.prevent-validation:valid,  select.prevent-validation.is-valid{
+    background-image: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3e%3cpath fill=%27none%27 stroke=%27%23343a40%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27M2 5l6 6 6-6%27/%3e%3c/svg%3e") !important;
+
+    &:focus{
+        box-shadow: $form-select-focus-box-shadow !important;
+    }
+}
+
+.form-check.prevent-validation .form-check-input:valid, .form-check.prevent-validation .form-check-input.is-valid {
+    border: $form-check-input-border !important;
+
+    &:checked {
+        background-color: $form-check-input-checked-bg-color !important;
+        border-color: $form-check-input-checked-border-color !important;
+    }
+
+    & ~ .form-check-label {
+        color: var(--#{$variable-prefix}body-color) !important;
+    }
+}

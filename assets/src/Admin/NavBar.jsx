@@ -37,14 +37,18 @@ class NavBar extends React.Component {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         <Nav.Link as={ReactNavLink} to="/admin/dashboard" onClick={this.closeNavbar}>Home</Nav.Link>
-                        <Nav.Link as={ReactNavLink} to="/admin/upgrade" onClick={this.closeNavbar}>Upgrade</Nav.Link>
+                        <Nav.Link as={ReactNavLink} to="/admin/users" onClick={this.closeNavbar}>Users</Nav.Link>
                     </Nav>
 
                     <UserConsumer>
                         {
                             (userContext) => (
-                                userContext.isLoggedIn &&
-                                <Button variant="danger" onClick={() => this.props.handleLogout()} size="sm" className="mt-2 mt-sm-0 mb-2 mb-sm-0">Logout</Button>
+                                userContext.isLoggedIn ?
+                                    <>
+                                        <span className="text-white d-none d-md-block">Welcome, {userContext.user.firstName} &nbsp; &nbsp; </span>
+                                        <Button variant="danger" onClick={() => this.props.handleLogout()} size="sm" className="mt-2 mt-sm-0 mb-2 mb-sm-0">Logout</Button>
+                                    </>
+                                    : null
                             )
                         }
                     </UserConsumer>
