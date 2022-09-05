@@ -9,7 +9,7 @@ import {
 import Login from '../Admin/Login';
 
 const Dashboard = lazy(() => import('./Dashboard'));
-const Upgrade = lazy(() => import('./Upgrade'));
+const Users = lazy(() => import('./Users'));
 import PropTypes from 'prop-types';
 
 import {UserProvider, UserConsumer} from '../data/userContext';
@@ -19,30 +19,23 @@ import NavBar from './NavBar';
 import {Button, Container} from 'react-bootstrap';
 
 function RenderOrLogin(props) {
-    return (
-        <UserConsumer>
-            {
-                (userContext) => {
-                    if (userContext.isLoggedIn) {
-                        /* eslint-disable-next-line react/prop-types */
-                        return props.children;
-                    }
+    if (props.userContext.isLoggedIn) {
+        /* eslint-disable-next-line react/prop-types */
+        return props.children;
+    }
 
-                    if (props.api) {
-                        return (
-                            <Login api={props.api} />
-                        );
-                    }
+    if (props.api) {
+        return (
+            <Login api={props.api} />
+        );
+    }
 
-                    return null; // not ready yet
-                }
-            }
-        </UserConsumer>
-    );
+    return null; // not ready yet
 }
 
 RenderOrLogin.propTypes = {
-    api: PropTypes.object.isRequired
+    api: PropTypes.object.isRequired,
+    userContext: PropTypes.object.isRequired
 };
 
 class AdminRouter extends React.Component {
@@ -74,24 +67,26 @@ class AdminRouter extends React.Component {
 
         return (
             <UserProvider user={this.state.user}>
-                <RenderOrLogin api={this.state.api}>
-                    <UserConsumer>
-                        {
-                            (userContext) => (
-                                <Suspense fallback={<div>LOADING...</div>}>
-                                    <>
-                                        <NavBar handleLogout={() => {
+                <UserConsumer>
+                    {
+                        (userContext) => (
+                            <RenderOrLogin api={this.state.api} userContext={userContext}>
+                                <>
+                                    <NavBar handleLogout={
+                                        () => {
                                             this.state.api.get('/logout', () => {
                                                 userContext.logout();
                                             });
-                                        }}
-                                        />
+                                        }
+                                    }
+                                    />
 
+                                    <Suspense fallback={<Container><h2 className="mt-3">LOADING...</h2></Container>}>
                                         <Container>
                                             <Routes>
                                                 <Route path="/admin" exact element={<Navigate to="/admin/dashboard" replace />} />
                                                 <Route path="/admin/dashboard" element={<Dashboard />} />
-                                                <Route path="/admin/upgrade" element={<Upgrade />} />
+                                                <Route path="/admin/users" element={<Users api={this.state.api} />} />
                                                 <Route
                                                     path="/admin/*"
                                                     element={
@@ -108,12 +103,12 @@ class AdminRouter extends React.Component {
                                                 />
                                             </Routes>
                                         </Container>
-                                    </>
-                                </Suspense>
-                            )
-                        }
-                    </UserConsumer>
-                </RenderOrLogin>
+                                    </Suspense>
+                                </>
+                            </RenderOrLogin>
+                        )
+                    }
+                </UserConsumer>
             </UserProvider>
         );
     }

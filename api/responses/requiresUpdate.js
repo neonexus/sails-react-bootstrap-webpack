@@ -9,7 +9,7 @@ module.exports = async function iAmATeaPot() {
         ]
     };
 
-    res.status(418).json(out);
+    res.status(418).json(out); // I'm a teapot
 
     await sails.helpers.finalizeRequestLog(req, res, out);
 };

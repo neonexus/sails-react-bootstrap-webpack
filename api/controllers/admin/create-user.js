@@ -18,7 +18,6 @@ module.exports = {
 
         password: {
             type: 'string',
-            required: true,
             maxLength: 70
         },
 
@@ -36,6 +35,11 @@ module.exports = {
                 'user',
                 'admin'
             ]
+        },
+
+        setPassword: {
+            type: 'boolean',
+            defaultsTo: true
         }
     },
 
@@ -52,10 +56,18 @@ module.exports = {
     },
 
     fn: async (inputs, exits) => {
-        const isPasswordValid = sails.helpers.isPasswordValid.with({
-            password: inputs.password,
-            user: {firstName: inputs.firstName, lastName: inputs.lastName, email: inputs.email}
-        });
+        let password = inputs.password;
+        let isPasswordValid;
+
+        if (inputs.setPassword) {
+            isPasswordValid = sails.helpers.isPasswordValid.with({
+                password: inputs.password,
+                user: {firstName: inputs.firstName, lastName: inputs.lastName, email: inputs.email}
+            });
+        } else {
+            isPasswordValid = true;
+            password = sails.helpers.generateToken();
+        }
 
         if (isPasswordValid !== true) {
             return exits.badRequest(isPasswordValid);
@@ -71,7 +83,7 @@ module.exports = {
             id: 'c', // required, but auto-generated
             firstName: inputs.firstName,
             lastName: inputs.lastName,
-            password: inputs.password,
+            password,
             role: inputs.role,
             email: inputs.email
         }).meta({fetch: true}).exec((err, newUser) => {
@@ -80,6 +92,10 @@ module.exports = {
 
                 return exits.serverError(err);
             }
+
+            /**
+             * We should probably email the new user their new account info here if the password was generated (!inputs.setPassword)...
+             */
 
             return exits.ok({user: newUser});
         });

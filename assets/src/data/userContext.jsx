@@ -10,12 +10,6 @@ export class UserProvider extends React.Component {
     constructor(props) {
         super(props);
 
-        // if (this.state.isRememberMeOn) {
-        //     this.state.user.email = localStorage.getItem('user_email') || '';
-        // } else {
-        //     this.state.user.email = '';
-        // }
-
         this.handleLogin = this.handleLogin.bind(this);
         this.handleRememberMe = this.handleRememberMe.bind(this);
         this.handleLogout = this.handleLogout.bind(this);

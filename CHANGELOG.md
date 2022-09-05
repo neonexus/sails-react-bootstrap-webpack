@@ -1,5 +1,12 @@
 # Changelog
 
+## [v3.1.0](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v3.0.3...v3.1.0) (2022-09-05)
+
+### Features
+
+* Built start of new user management page, mostly for proof-of-concept purposes.
+* Built "semi-smart" pagination front-end components. More tweaks are required.
+
 ## [v3.0.3](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v3.0.2...v3.0.3) (2022-08-18)
 
 ### Features
