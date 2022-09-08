@@ -1,5 +1,12 @@
 # Changelog
 
+## [v3.1.1](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v3.1.0...v3.1.1) (2022-09-08)
+
+### Features
+
+* Made improvements to SASS files for new Bootstrap version.
+* Updated dependencies.
+
 ## [v3.1.0](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v3.0.3...v3.1.0) (2022-09-05)
 
 ### Features

@@ -31,21 +31,29 @@ class CreateUserModal extends React.Component {
 
         this.setState({wasValidated: true, isLoading: true});
 
-        if (e.target.checkValidity() && (!this.state.setPassword || (this.state.password1 === this.state.password2))) {
-            this.props.onCreate({
-                firstName: this.state.firstName,
-                lastName: this.state.lastName,
-                email: this.state.email,
-                role: this.state.role,
-                setPassword: this.state.setPassword,
-                password: this.state.password1
-            }, () => this.handleClose(() => {}), () => this.setState({isLoading: false}));
+        if (e.target.checkValidity() && (!this.state.setPassword || (this.state.password1 === this.state.password2 && this.state.password1.length > 5))) {
+            this.props.onCreate(
+                {
+                    firstName: this.state.firstName,
+                    lastName: this.state.lastName,
+                    email: this.state.email,
+                    role: this.state.role,
+                    setPassword: this.state.setPassword,
+                    password: this.state.password1
+                },
+                this.handleClose,
+                () => this.setState({isLoading: false})
+            );
         } else {
             this.setState({isLoading: false});
         }
     }
 
     handleClose(onClose) {
+        if (!onClose) {
+            onClose = _.noop;
+        }
+
         this.setState({
             firstName: '',
             lastName: '',
@@ -150,54 +158,52 @@ class CreateUserModal extends React.Component {
 
                         <Collapse in={this.state.setPassword}>
                             <div className="mt-3 mb-2">
-                                {
-                                    this.state.setPassword ?
-                                        <>
-                                            <Form.Group className="mb-3" controlId="password1">
-                                                <Form.Label>Password</Form.Label>
-                                                <Form.Control
-                                                    type="password"
-                                                    placeholder="Enter Password"
-                                                    onChange={(e) => this.setState({password1: e.target.value})}
-                                                    className={(this.state.password1 !== this.state.password2 && this.state.password1.length > 5 && this.state.password2.length > 5)
-                                                        ? 'is-invalid'
-                                                        : null}
-                                                    required
-                                                    disabled={this.state.isLoading}
-                                                />
-                                                <Form.Control.Feedback type="invalid" className={(this.state.password1 !== this.state.password2) ? 'd-none' : null}>Password is
-                                                    required.
-                                                </Form.Control.Feedback>
-                                            </Form.Group>
+                                <Form.Group className="mb-3" controlId="password1">
+                                    <Form.Label>Password</Form.Label>
+                                    <Form.Control
+                                        type="password"
+                                        placeholder="Enter Password"
+                                        onChange={(e) => this.setState({password1: e.target.value})}
+                                        className={
+                                            (this.state.wasValidated && this.state.password1.length < 6)
+                                                ? 'is-invalid'
+                                                : null
+                                        }
+                                        required
+                                        disabled={this.state.isLoading || !this.state.setPassword}
+                                        minLength="6"
+                                        maxLength="72"
+                                    />
+                                    <Form.Control.Feedback type="invalid" className={(!this.state.wasValidated || this.state.password1.length > 5) ? 'd-none' : null}>
+                                        {
+                                            (this.state.password1.length)
+                                                ? 'Password is too short.'
+                                                : 'Password is required.'
+                                        }
+                                    </Form.Control.Feedback>
+                                </Form.Group>
 
-                                            <Form.Group controlId="password2">
-                                                <Form.Label>Verify Password</Form.Label>
-                                                <Form.Control
-                                                    type="password"
-                                                    placeholder="Verify Password"
-                                                    onChange={(e) => this.setState({password2: e.target.value})}
-                                                    className={(this.state.password1 !== this.state.password2 && this.state.password1.length > 5 && this.state.password2.length > 5)
-                                                        ? 'is-invalid'
-                                                        : null}
-                                                    required
-                                                    disabled={this.state.isLoading}
-                                                />
-                                                {
-                                                    (this.state.password1 !== '') ?
-                                                        <Form.Control.Feedback type="invalid">
-                                                            {
-                                                                (this.state.password1 !== this.state.password2)
-                                                                    ? 'Passwords do not match.'
-                                                                    : 'Must verify password.'
-                                                            }
-                                                        </Form.Control.Feedback>
-                                                        :
-                                                        null
-                                                }
-                                            </Form.Group>
-                                        </>
-                                        : null
-                                }
+                                <Form.Group controlId="password2">
+                                    <Form.Label>Verify Password</Form.Label>
+                                    <Form.Control
+                                        type="password"
+                                        placeholder="Verify Password"
+                                        onChange={(e) => this.setState({password2: e.target.value})}
+                                        className={
+                                            (this.state.wasValidated && this.state.password1 !== this.state.password2 && this.state.password2.length)
+                                                ? 'is-invalid'
+                                                : null
+                                        }
+                                        required
+                                        disabled={this.state.isLoading || !this.state.setPassword}
+                                        minLength="6"
+                                    />
+                                    {
+                                        (this.state.wasValidated && this.state.password1.length && this.state.password2.length)
+                                            ? <Form.Control.Feedback type="invalid">Passwords do not match.</Form.Control.Feedback>
+                                            : null
+                                    }
+                                </Form.Group>
                             </div>
                         </Collapse>
                     </Modal.Body>
@@ -205,7 +211,7 @@ class CreateUserModal extends React.Component {
                     <Modal.Footer className="justify-content-between">
                         <Button variant="secondary" onClick={() => this.handleClose(this.props.onClose)} disabled={this.state.isLoading}>Cancel</Button>
                         <Button variant="primary" type="submit" disabled={this.state.isLoading}>
-                            {this.state.isLoading ? 'Loading...': 'Create'}
+                            {this.state.isLoading ? 'Loading...' : 'Create'}
                         </Button>
                     </Modal.Footer>
                 </Form>
