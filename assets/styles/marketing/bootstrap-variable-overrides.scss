@@ -335,6 +335,7 @@ $enable-important-utilities: true;
 // Prefix for :root CSS variables
 
 $variable-prefix: bs-;
+$prefix: $variable-prefix;
 
 // Gradient
 //
