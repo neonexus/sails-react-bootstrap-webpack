@@ -10,7 +10,7 @@ See: [Actions and Controllers](https://sailsjs.com/documentation/concepts/action
 
 ## Helpers
 
-Helpers are generic, reusable functions used by multiple controllers (or hooks, policies, etc).
+Helpers are generic, reusable functions that can be used by controllers, hooks, models, policies, or responses.
 
 See: [Helpers](https://sailsjs.com/documentation/concepts/helpers)
 

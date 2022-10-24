@@ -26,6 +26,10 @@ module.exports = {
     },
 
     fn: async (inputs, exits, env) => {
+        if (inputs.id === env.req.session.user.id) {
+            return exits.badRequest('One does not simply delete themselves...');
+        }
+
         const foundUser = await sails.models.user.findOne({id: inputs.id, deletedAt: null});
 
         if (!foundUser) {

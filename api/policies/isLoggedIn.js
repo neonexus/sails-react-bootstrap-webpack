@@ -3,10 +3,10 @@ module.exports = async function(req, res, next) {
 
     // do we have a signed cookie
     if (sessionId) {
-        const foundSession = await sails.models.session.findOne({id: sessionId});
+        const foundSession = await sails.models.session.findOne({id: sessionId}).populate('user');
 
-        if (foundSession && foundSession.data.user) {
-            req.session = {id: sessionId, user: foundSession.data.user};
+        if (foundSession && foundSession.user) {
+            req.session = {id: sessionId, user: foundSession.user};
 
             if (req.method !== 'GET') {
                 const csrf = req.headers['x-csrf-token'];

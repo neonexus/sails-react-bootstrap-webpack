@@ -31,7 +31,7 @@ module.exports.bootstrap = function(next) {
                         return console.error('Table "' + model.tableName + '" does not seem to exist.');
                     }
 
-                    let i; // we use this to make sure there aren't too many columns in the database
+                    let i; // we use this to make sure there aren't too many columns in the table for this database
                     let continueOn = true;
 
                     function notWhatWasExpected(column, foundAt, expected) {

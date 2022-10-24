@@ -42,6 +42,8 @@ module.exports = {
             return exits.badRequest(badEmailPass);
         }
 
+        await sails.helpers.isPasswordValid(inputs.password);
+
         if (!await sails.models.user.doPasswordsMatch(inputs.password, foundUser.password)) {
             return exits.badRequest(badEmailPass);
         }
@@ -51,13 +53,6 @@ module.exports = {
             id: 'c', // required, auto-generated
             user: foundUser.id,
             data: {
-                user: {
-                    id: foundUser.id,
-                    firstName: foundUser.firstName,
-                    lastName: foundUser.lastName,
-                    email: foundUser.email,
-                    role: foundUser.role
-                },
                 _csrfSecret: csrf.secret
             }
         }).fetch();

@@ -1,6 +1,6 @@
 {
     "name": "sails-react-bootstrap-webpack",
-    "version": "3.1.1",
+    "version": "3.1.2",
     "description": "An opinionated base configuration of Sails, with Webpack for React support, and Bootstrap for styling.",
     "keywords": [
         "sails",
@@ -25,6 +25,7 @@
         "sails-mysql": "3.0.0",
         "scrypt-kdf": "2.0.1",
         "serve-static": "1.15.0",
+        "sha1": "1.1.1",
         "superagent": "8.0.0",
         "uuid": "9.0.0"
     },

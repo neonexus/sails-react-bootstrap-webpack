@@ -5,7 +5,7 @@ describe('isPasswordValid Helper', function() {
     });
 
     it('should require passwords at least 7 characters long', async function() {
-        const isValid = sails.helpers.isPasswordValid('123As.');
+        const isValid = await sails.helpers.isPasswordValid('123As.', true);
 
         isValid.should.be.an('array');
         isValid.length.should.equal(1);
@@ -13,7 +13,7 @@ describe('isPasswordValid Helper', function() {
     });
 
     it('should not allow passwords longer than 70 characters', async function() {
-        const isValid = sails.helpers.isPasswordValid('6CTXn4KDszqsUCXJ7uZJdllAtf0aV3lOHEN32bGuhdicL6Ivukg2h1P0xQnei1GTlXGaS7a');
+        const isValid = await sails.helpers.isPasswordValid('6CTXn@KDszqsUCXJ7uZJdllAtf0aV3lOHEN32bGuhdicL6Ivukg2h1P0xQnei1GTlXGaS7a', true);
 
         isValid.should.be.an('array');
         isValid.length.should.equal(1);
@@ -21,7 +21,7 @@ describe('isPasswordValid Helper', function() {
     });
 
     it('should not let more than 2 characters repeat', async function() {
-        const isValid = sails.helpers.isPasswordValid('1234Abd.aaa93');
+        const isValid = await sails.helpers.isPasswordValid('1234Abd.aaa93', true);
 
         isValid.should.be.an('array');
         isValid.length.should.equal(1);
@@ -29,7 +29,7 @@ describe('isPasswordValid Helper', function() {
     });
 
     it('should require at least 1 lowercase character', async function() {
-        const isValid = sails.helpers.isPasswordValid('1234ABCD.K');
+        const isValid = await sails.helpers.isPasswordValid('1234ABCD.K', true);
 
         isValid.should.be.an('array');
         isValid.length.should.equal(1);
@@ -37,7 +37,7 @@ describe('isPasswordValid Helper', function() {
     });
 
     it('should require at least 1 uppercase character', async function() {
-        const isValid = sails.helpers.isPasswordValid('1234abcd.k');
+        const isValid = await sails.helpers.isPasswordValid('1234abcd.k', true);
 
         isValid.should.be.an('array');
         isValid.length.should.equal(1);
@@ -45,7 +45,7 @@ describe('isPasswordValid Helper', function() {
     });
 
     it('should require at least 1 digit', async function() {
-        const isValid = sails.helpers.isPasswordValid('AbcdEfg.k');
+        const isValid = await sails.helpers.isPasswordValid('AbcdEfg.k', true);
 
         isValid.should.be.an('array');
         isValid.length.should.equal(1);
@@ -53,7 +53,7 @@ describe('isPasswordValid Helper', function() {
     });
 
     it('should require at least 1 special character', async function() {
-        const isValid = sails.helpers.isPasswordValid('12345Abcd');
+        const isValid = await sails.helpers.isPasswordValid('12345Abcd', true);
 
         isValid.should.be.an('array');
         isValid.length.should.equal(1);
@@ -61,14 +61,14 @@ describe('isPasswordValid Helper', function() {
     });
 
     it('should return true for valid password', async function() {
-        const isValid = sails.helpers.isPasswordValid('12345Abcd.k');
+        const isValid = await sails.helpers.isPasswordValid('12345Abcd.k', true);
 
         isValid.should.be.a('boolean');
         isValid.should.equal(true);
     });
 
     it('should return true for valid passphrase', async function() {
-        const isValid = sails.helpers.isPasswordValid('I really like passphrases.');
+        const isValid = await sails.helpers.isPasswordValid('I really like passphrases.', true);
 
         isValid.should.be.a('boolean');
         isValid.should.equal(true);
@@ -82,10 +82,13 @@ describe('isPasswordValid Helper', function() {
         };
 
         it('should not allow email in password', async function() {
-            const isValid = sails.helpers.isPasswordValid.with({
-                password: '123test@domain.com321',
-                user: user
+            const isValid = await sails.helpers.isPasswordValid.with({
+                password: '0987' + user.email + '1234A',
+                user,
+                skipPwned: true
             });
+
+            console.debug(isValid);
 
             isValid.should.be.an('array');
             isValid.length.should.equal(1);
@@ -93,9 +96,10 @@ describe('isPasswordValid Helper', function() {
         });
 
         it('should not allow first name in password', async function() {
-            const isValid = sails.helpers.isPasswordValid.with({
+            const isValid = await sails.helpers.isPasswordValid.with({
                 password: 'I am the best Tester ever!',
-                user: user
+                user,
+                skipPwned: true
             });
 
             isValid.should.be.an('array');
@@ -104,9 +108,10 @@ describe('isPasswordValid Helper', function() {
         });
 
         it('should not allow last name in password', async function() {
-            const isValid = sails.helpers.isPasswordValid.with({
+            const isValid = await sails.helpers.isPasswordValid.with({
                 password: 'Hurray for the great, McUser!',
-                user: user
+                user,
+                skipPwned: true
             });
 
             isValid.should.be.an('array');

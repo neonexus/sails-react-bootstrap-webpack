@@ -38,11 +38,9 @@ module.exports = {
         // Update stored session data, so we can compare our token to the secret on the next request (handled in the isLoggedIn policy).
         const newData = _.merge({}, foundSession.data, {_csrfSecret: csrf.secret});
 
-        sails.models.session.update({id: inputs.req.session.id}).set({
-            data: newData
-        }).exec((err) => {
+        sails.models.session.update({id: inputs.req.session.id}).set({data: newData}).exec((err) => {
             if (err) {
-                throw new Error(err);
+                return exits.serverError(err);
             }
 
             return exits.success(_.merge({}, inputs.data, {_csrf: csrf.token}));

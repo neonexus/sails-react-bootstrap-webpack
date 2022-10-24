@@ -28,7 +28,7 @@ module.exports = {
 
     exits: {
         success: {
-            description: 'Success message if admin user was created.'
+            description: 'Success. Admin user was created!'
         },
         badPassword: {
             description: 'Password does not meet security standards.'
@@ -42,25 +42,25 @@ module.exports = {
     },
 
     fn: async (inputs, exits) => {
-        const foundUsers = await User.count({role: 'admin', deletedAt: null});
+        const foundUsers = await sails.models.user.count({role: 'admin', deletedAt: null});
 
         if (foundUsers) {
             return exits.canNotBeUsed();
         }
 
-        const passwordErrors = sails.helpers.isPasswordValid(inputs.password);
+        const passwordErrors = await sails.helpers.isPasswordValid(inputs.password);
 
         if (passwordErrors !== true) {
             return exits.badPassword(passwordErrors);
         }
 
-        const foundUser = await User.findOne({email: inputs.email, deletedAt: null});
+        const foundUser = await sails.models.user.findOne({email: inputs.email, deletedAt: null});
 
         if (foundUser) {
             return exits.userExists(foundUser.toJSON());
         }
 
-        const newUser = await User.create({
+        const newUser = await sails.models.user.create({
             id: 'c', // required, but auto-generated
             email: inputs.email,
             password: inputs.password,

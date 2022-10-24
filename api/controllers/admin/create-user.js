@@ -60,7 +60,7 @@ module.exports = {
         let isPasswordValid;
 
         if (inputs.setPassword) {
-            isPasswordValid = sails.helpers.isPasswordValid.with({
+            isPasswordValid = await sails.helpers.isPasswordValid.with({
                 password: inputs.password,
                 user: {firstName: inputs.firstName, lastName: inputs.lastName, email: inputs.email}
             });

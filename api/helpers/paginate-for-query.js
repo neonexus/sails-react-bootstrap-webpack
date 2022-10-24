@@ -36,7 +36,7 @@ module.exports = {
         };
 
         if (!baseObj.where) {
-            baseObj.where = {deletedAt: null};
+            baseObj.where = {deletedAt: null}; // prevent soft-deleted records from showing in the collection
         } else if (baseObj.where.sort && baseObj.sort === 'createdAt DESC') { // if sort is the default, and the where contains a sort, use the where.sort, otherwise, use inputs.sort
             baseObj.sort = baseObj.where.sort;
             delete baseObj.where.sort;

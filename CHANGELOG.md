@@ -1,5 +1,13 @@
 # Changelog
 
+## [v3.1.2](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v3.1.1...v3.1.2) (2022-10-24)
+
+### Features
+
+* Built out PnwedPasswords.com (HaveIBeenPwned.com) API functionality into `is-password-valid` helper.
+* FINALLY removed the usage of `res._headers`, so no more annoying deprecation message.
+* Simplified stored session data.
+
 ## [v3.1.1](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v3.1.0...v3.1.1) (2022-09-08)
 
 ### Features
