@@ -8,11 +8,12 @@ Need help? Want to hire me to build your next app or prototype? You can contact 
 
 ## Main Features
 
-+ Automatic (incoming) request logging (manual outgoing), via Sails models / hooks.
-+ Setup for Webpack auto-reload dev server.
-+ Setup so Sails will serve Webpack-built bundles as separate apps (so, a marketing site, and an admin site can live side-by-side).
-+ Includes [react-bootstrap](https://www.npmjs.com/package/react-bootstrap) to make using Bootstrap styles / features with React easier.
-+ Schema validation and enforcement for `PRODUCTION`. This repo is set up for `MySQL`. If you plan to use a different datastore, you will likely want to disable the schema validation and enforcement feature inside [`config/bootstrap.js`](config/bootstrap.js). See [schema validation and enforcement](#schema-validation-and-enforcement) for more info.
+* Automatic (incoming) request logging (manual outgoing), via Sails models / hooks.
+* Setup for Webpack auto-reload dev server.
+* Setup so Sails will serve Webpack-built bundles as separate apps (so, a marketing site, and an admin site can live side-by-side).
+* Includes [react-bootstrap](https://www.npmjs.com/package/react-bootstrap) to make using Bootstrap styles / features with React easier.
+* Schema validation and enforcement for `PRODUCTION`. This repo is set up for `MySQL`. If you plan to use a different datastore, you will likely want to disable the schema validation and enforcement feature inside [`config/bootstrap.js`](config/bootstrap.js). See [schema validation and enforcement](#schema-validation-and-enforcement) for more info.
+* New passwords can be checked against the [PwnedPasswords API](https://haveibeenpwned.com/API/v3#PwnedPasswords). If there is a single hit for the password, an error will be given, and the user will be forced to choose another. See [PwnedPasswords integration](#pwnedpasswordscom-integration) for more info.
 
 ## Branch Warning
 The `master` branch is experimental, and the [release branch](https://github.com/neonexus/sails-react-bootstrap-webpack/tree/release) (or the [`releases section`](https://github.com/neonexus/sails-react-bootstrap-webpack/releases)) is where one should base their use of this template.
@@ -70,10 +71,10 @@ If you DO NOT like this behavior, and would prefer the variables stay the same a
 |-------------------------------------------------------------------------|-----------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------|
 | ASSETS_URL                                                              | "" (empty string)                                                     | Webpack is configured to modify static asset URLs to point to a CDN, like CloudFront. MUST end with a slash " / ", or be empty. |
 | BASE_URL                                                                | https://myapi.app                                                     | The address of the Sails instance.                                                                                              |
-| **DEV:**&nbsp;&nbsp;&nbsp;&nbsp;DB_HOST<br />**PROD:**&nbsp;DB_HOSTNAME | localhost                                                             | The hostname of the datastore.                                                                                                  |
-| **DEV:**&nbsp;&nbsp;&nbsp;&nbsp;DB_USER<br />**PROD:**&nbsp;DB_USERNAME | **DEV:**&nbsp;&nbsp;&nbsp;&nbsp;root <br /> **PROD:**&nbsp;produser   | Username of the datastore.                                                                                                      |
-| **DEV:**&nbsp;&nbsp;&nbsp;&nbsp;DB_PASS<br />**PROD:**&nbsp;DB_PASSWORD | **DEV:**&nbsp;&nbsp;&nbsp;&nbsp;mypass <br /> **PROD:**&nbsp;prodpass | Password of the datastore.                                                                                                      |
-| DB_NAME                                                                 | **DEV:**&nbsp;&nbsp;&nbsp;&nbsp;myapp <br /> **PROD:**&nbsp;prod      | The name of the database inside the datastore.                                                                                  |
+| &nbsp;&nbsp;&nbsp;**DEV:**&nbsp;DB_HOST<br />**PROD:**&nbsp;DB_HOSTNAME | localhost                                                             | The hostname of the datastore.                                                                                                  |
+| &nbsp;&nbsp;&nbsp;**DEV:**&nbsp;DB_USER<br />**PROD:**&nbsp;DB_USERNAME | &nbsp;&nbsp;&nbsp;**DEV:**&nbsp;root <br /> **PROD:**&nbsp;produser   | Username of the datastore.                                                                                                      |
+| &nbsp;&nbsp;&nbsp;**DEV:**&nbsp;DB_PASS<br />**PROD:**&nbsp;DB_PASSWORD | &nbsp;&nbsp;&nbsp;**DEV:**&nbsp;mypass <br /> **PROD:**&nbsp;prodpass | Password of the datastore.                                                                                                      |
+| DB_NAME                                                                 | &nbsp;&nbsp;&nbsp;**DEV:**&nbsp;myapp <br /> **PROD:**&nbsp;prod      | The name of the database inside the datastore.                                                                                  |
 | DB_PORT                                                                 | 3306                                                                  | The port number for the datastore.                                                                                              |
 | DB_SSL                                                                  | true                                                                  | If the datastore requires SSL, set this to "true".                                                                              |
 | SESSION_SECRET                                                          | "" (empty string)                                                     | Used to sign cookies, and SHOULD be set, especially on PRODUCTION environments.                                                 |
@@ -115,6 +116,11 @@ module.exports.bootstrap = function(next) {
 };
 ```
 
+## PwnedPasswords.com Integration
+When a new password is being created, it is checked with the [PwnedPasswords.com API](https://haveibeenpwned.com/API/v3#PwnedPasswords). This API uses a k-anonymity model, so the password that is searched for is never exposed to the API. Basically, the password is hashed, then the first 5 characters are sent to the API, and the API returns any hashes that start with those 5 characters, including the amount of times that hash (aka password) has been found in known security breaches.
+
+This functionality is turned on by default, and can be shutoff per-use, or globally throughout the app. `sails.helpers.isPasswordValid` can be used with `skipPwned` option set to `true`, to disable the check per use. Inside of [`config/security.js`](config/security.js), the variable `checkPwned` can be set to `false` to disable it globally.
+
 ## What about SEO?
 I recommend looking at [prerender.io](https://prerender.io). They offer a service (free up to 250 pages) that caches the end result of a JavaScript-rendered view (React, Vue, Angular), allowing search engines to crawl otherwise un-crawlable web views. You can use the service in a number of ways. One way, is to use the [prerender-node](https://www.npmjs.com/package/prerender-node) package. To use it with Sails, you'll have to add it to the [HTTP Middleware](https://sailsjs.com/documentation/concepts/middleware#?http-middleware). Here's a quick example:
 
@@ -142,13 +148,13 @@ middleware: {
 
 ### Useful Links
 
-+ [Sails Framework Documentation](https://sailsjs.com/get-started)
-+ [Sails Deployment Tips](https://sailsjs.com/documentation/concepts/deployment)
-+ [Sails Community Support Options](https://sailsjs.com/support)
-+ [Sails Professional / Enterprise Options](https://sailsjs.com/enterprise)
-+ [`react-bootstrap` Documentation](https://react-bootstrap.netlify.app/)
-+ [Webpack Documentation](https://webpack.js.org/)
-+ [Simple data fixtures for testing Sails.js (the npm package `fixted`)](https://www.npmjs.com/package/fixted)
+* [Sails Framework Documentation](https://sailsjs.com/get-started)
+* [Sails Deployment Tips](https://sailsjs.com/documentation/concepts/deployment)
+* [Sails Community Support Options](https://sailsjs.com/support)
+* [Sails Professional / Enterprise Options](https://sailsjs.com/enterprise)
+* [`react-bootstrap` Documentation](https://react-bootstrap.netlify.app/)
+* [Webpack Documentation](https://webpack.js.org/)
+* [Simple data fixtures for testing Sails.js (the npm package `fixted`)](https://www.npmjs.com/package/fixted)
 
 
 ### Version info

@@ -1,7 +1,7 @@
 module.exports = {
-    friendlyName: 'Get Users',
+    friendlyName: 'Get Deleted Users',
 
-    description: 'Get paginated list of users',
+    description: 'Get paginated list of soft-deleted users',
 
     inputs: {
         page: {
@@ -33,20 +33,24 @@ module.exports = {
     },
 
     fn: async (inputs, exits) => {
-        const pagination = sails.helpers.paginateForQuery.with({
+        const query = sails.helpers.paginateForQuery.with({
             limit: inputs.limit,
-            page: inputs.page
+            page: inputs.page,
+            where: {
+                deletedAt: {'!=': null} // get all soft-deleted users
+            },
+            sort: 'deletedAt DESC'
         });
 
         let out = await sails.helpers.paginateForJson.with({
             model: sails.models.user,
-            query: pagination,
-            objToWrap: {users: []}
+            objToWrap: {users: []}, // this is the object that will be output to "out", and will contain additional pagination info,
+            query
         });
 
         // We assign the users to the object afterward, so we can run our safety checks.
         // Otherwise, if we were to put the users object into "objToWrap", they would be transformed, and the "customToJSON" feature would no longer work, and hashed passwords would leak.
-        out.users = await sails.models.user.find(_.omit(pagination, ['page']));
+        out.users = await sails.models.user.find(_.omit(query, ['page'])).populate('deletedBy');
 
         return exits.ok(out);
     }

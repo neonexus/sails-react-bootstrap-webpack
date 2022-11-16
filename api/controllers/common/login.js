@@ -36,6 +36,11 @@ module.exports = {
         }
 
         const badEmailPass = 'Bad email / password combination.';
+
+        if (await sails.helpers.isPasswordValid.with({password: inputs.password, skipPwned: true}) !== true) {
+            return exits.badRequest(badEmailPass);
+        }
+
         const foundUser = await sails.models.user.findOne({email: inputs.email, deletedAt: null});
 
         if (!foundUser) {
@@ -51,13 +56,6 @@ module.exports = {
             id: 'c', // required, auto-generated
             user: foundUser.id,
             data: {
-                user: {
-                    id: foundUser.id,
-                    firstName: foundUser.firstName,
-                    lastName: foundUser.lastName,
-                    email: foundUser.email,
-                    role: foundUser.role
-                },
                 _csrfSecret: csrf.secret
             }
         }).fetch();

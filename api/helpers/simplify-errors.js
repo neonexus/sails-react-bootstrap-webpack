@@ -2,7 +2,7 @@ module.exports = {
 
     friendlyName: 'Simplify errors',
 
-    description: '',
+    description: 'This helper smashes down error messages, into a single object.',
 
     inputs: {
         err: {

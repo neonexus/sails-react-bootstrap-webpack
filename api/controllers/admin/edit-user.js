@@ -1,9 +1,15 @@
 module.exports = {
-    friendlyName: 'Create User',
+    friendlyName: 'Edit User',
 
-    description: 'Create a new user.',
+    description: 'Edit an active user.',
 
     inputs: {
+        id: {
+            type: 'string',
+            required: true,
+            isUUID: true
+        },
+
         firstName: {
             type: 'string',
             required: true,
@@ -56,48 +62,41 @@ module.exports = {
     },
 
     fn: async (inputs, exits) => {
-        let password = inputs.password;
-        let isPasswordValid;
+        let isPasswordValid = true;
+        const foundUser = await sails.models.user.findOne({id: inputs.id});
+
+        if (!foundUser) {
+            return exits.badRequest('There is no user with that ID.');
+        }
+
+        if (foundUser.deletedAt !== null) {
+            return exits.badRequest('This user has been deleted, and can not be edited until reactivated.');
+        }
 
         if (inputs.setPassword) {
             isPasswordValid = await sails.helpers.isPasswordValid.with({
                 password: inputs.password,
                 user: {firstName: inputs.firstName, lastName: inputs.lastName, email: inputs.email}
             });
-        } else {
-            isPasswordValid = true;
-            password = sails.helpers.generateToken();
         }
 
         if (isPasswordValid !== true) {
             return exits.badRequest(isPasswordValid);
         }
 
-        const foundUser = await sails.models.user.findOne({email: inputs.email, deletedAt: null});
-
-        if (foundUser) {
-            return exits.badRequest('Email is already in-use.');
-        }
-
-        sails.models.user.create({
-            id: 'c', // required, but auto-generated
+        let updatedUser = {
             firstName: inputs.firstName,
             lastName: inputs.lastName,
-            password,
             role: inputs.role,
             email: inputs.email
-        }).meta({fetch: true}).exec((err, newUser) => {
-            if (err) {
-                console.error(err);
+        };
 
-                return exits.serverError(err);
-            }
+        if (inputs.setPassword) {
+            updatedUser.password = inputs.password;
+        }
 
-            /**
-             * We should probably email the new user their new account info here if the password was generated (!inputs.setPassword)...
-             */
+        const user = await sails.models.user.updateOne({id: inputs.id}).set(updatedUser);
 
-            return exits.ok({user: newUser});
-        });
+        return exits.ok({user});
     }
 };

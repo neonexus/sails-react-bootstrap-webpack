@@ -25,13 +25,11 @@ module.exports = {
 
     fn: function(inputs, exits){
         const user = (inputs.req.session && inputs.req.session.user) ? inputs.req.session.user.id : null,
-            account = (inputs.req.session && inputs.req.session.account) ? inputs.req.session.account.id : null,
             request = (inputs.req.requestId) ? inputs.req.requestId : null;
 
         const newLog = {
             data: inputs.data,
             user,
-            account,
             request,
             description: inputs.description
         };

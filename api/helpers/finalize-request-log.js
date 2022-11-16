@@ -33,7 +33,7 @@ module.exports = {
     fn: async function(inputs, exits) {
         if (inputs.req.requestId) {
             let out = _.merge({}, inputs.body),
-                headers = _.merge({}, inputs.res._headers), // copy the object
+                headers = _.merge({}, inputs.res.getHeaders()), // copy the object
                 bleep = '*******';
 
             if (!sails.config.logSensitiveData) { // a custom configuration option, for the request logger hook

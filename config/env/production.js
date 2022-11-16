@@ -53,12 +53,16 @@ module.exports = {
          ***************************************************************************/
         default: {
             // NEVER EVER STORE PRODUCTION CREDENTIALS IN THIS FILE!
+            // NEVER EVER STORE PRODUCTION CREDENTIALS IN THIS FILE!
+            // NEVER EVER STORE PRODUCTION CREDENTIALS IN THIS FILE!
             host: process.env.DB_HOSTNAME || 'localhost',       // To make sure you are
             user: process.env.DB_USERNAME || 'produser',        // aware of the environment
             password: process.env.DB_PASSWORD || 'prodpass',    // you are configuring,
             database: process.env.DB_NAME || 'prod',            // you must use HOSTNAME not HOST,
             port: process.env.DB_PORT || 3306,                  // and USERNAME not USER,
             ssl: (process.env.DB_SSL !== 'false')               // and PASSWORD not PASS.
+            // NEVER EVER STORE PRODUCTION CREDENTIALS IN THIS FILE!
+            // NEVER EVER STORE PRODUCTION CREDENTIALS IN THIS FILE!
             // NEVER EVER STORE PRODUCTION CREDENTIALS IN THIS FILE!
         }
     },
@@ -67,7 +71,7 @@ module.exports = {
 
         /***************************************************************************
          *                                                                          *
-         * To help avoid accidents, Sails automatically sets the automigration      *
+         * To help avoid accidents, Sails automatically sets the auto-migration     *
          * strategy to "safe" when your app lifts in production mode.               *
          * (This is just here as a reminder.)                                       *
          *                                                                          *
@@ -136,10 +140,10 @@ module.exports = {
         cors: {
             allRoutes: true,
             allowOrigins: [
-                'https://my.app',
-                'https://my-cdn.app',
+                // 'https://my.app',
+                // 'https://my-cdn.app',
                 'https://prerender.io',
-                'http://localhost:8080'
+                // 'http://localhost:8080'
             ],
             allowCredentials: true
         }
@@ -175,7 +179,10 @@ module.exports = {
          *                                                                          *
          ***************************************************************************/
 
-        // We are handling sessions without Sails' middleware, and using Models directly.
+        /**
+         * We are handling sessions without Sails' middleware, and using Models directly.
+         * This section does not apply to this repo's configuration.
+         */
 
         //adapter: 'express-mysql-session',
         // adapter: '@sailshq/connect-redis',

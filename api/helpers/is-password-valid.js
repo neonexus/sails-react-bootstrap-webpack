@@ -1,7 +1,10 @@
+const sha1 = require('sha1');
+const superagent = require('superagent');
+
 module.exports = {
     friendlyName: 'Is password valid',
 
-    description: 'Does the provided password conform to the given standards? Returns true, or an array of errors.',
+    description: 'Does the provided password conform to the given standards? Either returns true, or an array of errors. Also checks the PwndPasswords API.',
 
     inputs: {
         password: {
@@ -9,12 +12,15 @@ module.exports = {
             required: true
         },
 
+        skipPwned: {
+            type: 'boolean',
+            defaultsTo: false
+        },
+
         user: {
             type: 'ref'
         }
     },
-
-    sync: true,
 
     fn: function(inputs, exits) {
         let errors = [],
@@ -30,7 +36,7 @@ module.exports = {
             errors.push('WOW. Password length is TOO good. Max is 70 characters. Sorry.');
         }
 
-        if (inputs.password.length >= 20) {
+        if (inputs.password.length >= 20 && inputs.password.indexOf(' ') > 0) { // I am a teapot, short and stout
             isPassPhrase = true;
         }
 
@@ -71,10 +77,41 @@ module.exports = {
         }
 
         if (!errors.length) {
-            return exits.success(true);
-        }
+            if (sails.config.security.checkPwned && !inputs.skipPwned) {
+                const sha1pass = sha1(inputs.password).toUpperCase();
+                const passChunk1 = sha1pass.substring(0, 5);
+                const passChunk2 = sha1pass.substring(5);
 
-        return exits.success(errors);
+                superagent.get('https://api.pwnedpasswords.com/range/' + passChunk1).end((err, res) => {
+                    if (err) {
+                        console.error(err);
+
+                        return exits.success(err);
+                    }
+
+                    if (res.text && res.text.length) {
+                        const chunks = res.text.split('\r\n');
+                        const matches = chunks.filter(s => s.includes(passChunk2));
+
+                        if (matches.length) {
+                            const bits = matches[0].split(':');
+
+                            return exits.success(
+                                ['Provided password has been found in ' + bits[1] + ' known security breaches. Please choose a new one for safety. We HIGHLY recommend using a password manager!']
+                            );
+                        }
+
+                        return exits.success(true);
+                    }
+
+                    return exits.success(['Unknown internal error']);
+                });
+            } else {
+                return exits.success(true);
+            }
+        } else {
+            return exits.success(errors);
+        }
     }
 };
 

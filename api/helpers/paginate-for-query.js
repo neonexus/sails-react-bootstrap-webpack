@@ -15,8 +15,11 @@ module.exports = {
             defaultsTo: 25
         },
         sort: {
-            type: 'string',
-            defaultsTo: 'createdAt DESC'
+            type: 'ref',
+            defaultsTo: 'createdAt DESC',
+            custom: (val) => { // custom validator
+                return _.isString(val) || _.isArray(val);
+            }
         },
         where: {
             type: 'ref', // JavaScript reference to an object
@@ -36,7 +39,7 @@ module.exports = {
         };
 
         if (!baseObj.where) {
-            baseObj.where = {deletedAt: null};
+            baseObj.where = {deletedAt: null}; // prevent soft-deleted records from showing in the collection
         } else if (baseObj.where.sort && baseObj.sort === 'createdAt DESC') { // if sort is the default, and the where contains a sort, use the where.sort, otherwise, use inputs.sort
             baseObj.sort = baseObj.where.sort;
             delete baseObj.where.sort;
