@@ -36,13 +36,16 @@ module.exports = {
         }
 
         const badEmailPass = 'Bad email / password combination.';
+
+        if (await sails.helpers.isPasswordValid.with({password: inputs.password, skipPwned: true}) !== true) {
+            return exits.badRequest(badEmailPass);
+        }
+
         const foundUser = await sails.models.user.findOne({email: inputs.email, deletedAt: null});
 
         if (!foundUser) {
             return exits.badRequest(badEmailPass);
         }
-
-        await sails.helpers.isPasswordValid(inputs.password);
 
         if (!await sails.models.user.doPasswordsMatch(inputs.password, foundUser.password)) {
             return exits.badRequest(badEmailPass);

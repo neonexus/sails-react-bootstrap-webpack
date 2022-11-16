@@ -87,7 +87,6 @@ class Users extends React.Component {
             url: '/user',
             body: user
         }, (resp) => {
-            // console.log(resp);
             this.setState({showCreateModal: false}, () => {
                 this.getUsers(this.state.currentPage);
                 onSuccess();
@@ -105,7 +104,6 @@ class Users extends React.Component {
             url: '/user',
             body: {id: this.state.currentDeleteUser.id}
         }, (resp) => {
-            // console.log(resp);
             this.setState({showDeleteModal: false}, () => {
                 this.getUsers(this.state.currentPage);
                 alert(this.state.currentDeleteUser.firstName + ' ' + this.state.currentDeleteUser.lastName + ' (' + this.state.currentDeleteUser.role + ') has been deleted.');
@@ -265,7 +263,7 @@ class Users extends React.Component {
                                                                 : (this.state.currentUsers.length !== 0)
                                                                     ? this.state.currentUsers.map((user) => (
                                                                         <tr key={user.id}>
-                                                                            <td>{user.firstName + '\u00A0' + user.lastName}{(user.id === userContext.user.id) ? '\u00A0(me)' : ''}</td>
+                                                                            <td>{user.firstName + '\u00A0' + user.lastName}</td>
                                                                             <td>
                                                                                 <a href={'mailto:' + encodeURIComponent(user.firstName + ' ' + user.lastName) + '<' + user.email + '>'}>
                                                                                     {user.email}
@@ -278,7 +276,6 @@ class Users extends React.Component {
                                                                                 <Button variant="secondary" className="me-xl-2 mb-2 mb-xl-0">Reactivate</Button>
                                                                                 <Button
                                                                                     variant="danger"
-                                                                                    disabled={user.id === userContext.user.id}
                                                                                     onClick={() => this.setState({
                                                                                         currentDeleteUser: {id: user.id, firstName: user.firstName, lastName: user.lastName, role: user.role},
                                                                                         showDeleteModal: true,

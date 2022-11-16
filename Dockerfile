@@ -1,4 +1,4 @@
-FROM node:16.17
+FROM node:18.12
 MAINTAINER NeoNexus DeMortis
 
 RUN apt-get update && apt-get upgrade -y
@@ -22,7 +22,7 @@ COPY assets /var/www/myapp/assets
 COPY webpack /var/www/myapp/webpack
 RUN npm run build
 
-# Copy the reset of the app
+# Copy the rest of the app
 COPY . /var/www/myapp/
 
 # Expose the compiled public assets, so Nginx can route to them, instead of using Sails to do the file serving.

@@ -90,13 +90,15 @@ module.exports = {
                     }
 
                     if (res.text && res.text.length) {
-                        const chunks = res.text.replaceAll('\r', '').split('\n');
+                        const chunks = res.text.split('\r\n');
                         const matches = chunks.filter(s => s.includes(passChunk2));
 
                         if (matches.length) {
                             const bits = matches[0].split(':');
 
-                            return exits.success(['Provided password has been found in ' + bits[1] + ' known breaches. Please choose a new one for safety. We HIGHLY recommend using a password manager!']);
+                            return exits.success(
+                                ['Provided password has been found in ' + bits[1] + ' known security breaches. Please choose a new one for safety. We HIGHLY recommend using a password manager!']
+                            );
                         }
 
                         return exits.success(true);

@@ -39,7 +39,7 @@ module.exports = {
             where: {
                 deletedAt: {'!=': null} // get all soft-deleted users
             },
-            sort: [{deletedAt: 'ASC'}, {createdAt: 'DESC'}]
+            sort: 'deletedAt DESC'
         });
 
         let out = await sails.helpers.paginateForJson.with({
@@ -50,7 +50,7 @@ module.exports = {
 
         // We assign the users to the object afterward, so we can run our safety checks.
         // Otherwise, if we were to put the users object into "objToWrap", they would be transformed, and the "customToJSON" feature would no longer work, and hashed passwords would leak.
-        out.users = await sails.models.user.find(_.omit(pagination, ['page'])).populate('deletedBy');
+        out.users = await sails.models.user.find(_.omit(query, ['page'])).populate('deletedBy');
 
         return exits.ok(out);
     }
