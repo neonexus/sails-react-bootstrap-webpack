@@ -15,8 +15,11 @@ module.exports = {
             defaultsTo: 25
         },
         sort: {
-            type: 'string',
-            defaultsTo: 'createdAt DESC'
+            type: 'ref',
+            defaultsTo: 'createdAt DESC',
+            custom: (val) => { // custom validator
+                return _.isString(val) || _.isArray(val);
+            }
         },
         where: {
             type: 'ref', // JavaScript reference to an object

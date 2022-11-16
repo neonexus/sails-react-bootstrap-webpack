@@ -13,7 +13,7 @@ Need help? Want to hire me to build your next app or prototype? You can contact 
 * Setup so Sails will serve Webpack-built bundles as separate apps (so, a marketing site, and an admin site can live side-by-side).
 * Includes [react-bootstrap](https://www.npmjs.com/package/react-bootstrap) to make using Bootstrap styles / features with React easier.
 * Schema validation and enforcement for `PRODUCTION`. This repo is set up for `MySQL`. If you plan to use a different datastore, you will likely want to disable the schema validation and enforcement feature inside [`config/bootstrap.js`](config/bootstrap.js). See [schema validation and enforcement](#schema-validation-and-enforcement) for more info.
-* Can enforce password creation isn't found in [PwnedPasswords]()
+* New passwords can be checked against the [PwnedPasswords API](https://haveibeenpwned.com/API/v3#PwnedPasswords). If there is a single hit for the password, an error will be given, and the user will be forced to choose another. See [PwnedPasswords integration](#pwnedpasswordscom-integration) for more info.
 
 ## Branch Warning
 The `master` branch is experimental, and the [release branch](https://github.com/neonexus/sails-react-bootstrap-webpack/tree/release) (or the [`releases section`](https://github.com/neonexus/sails-react-bootstrap-webpack/releases)) is where one should base their use of this template.
@@ -115,6 +115,11 @@ module.exports.bootstrap = function(next) {
     next();
 };
 ```
+
+## PwnedPasswords.com Integration
+When a new password is being created, it is checked with the [PwnedPasswords.com API](https://haveibeenpwned.com/API/v3#PwnedPasswords). This API uses a k-anonymity model, so the password that is searched for is never exposed to the API. Basically, the password is hashed, then the first 5 characters are sent to the API, and the API returns any hashes that start with those 5 characters, including the amount of times that hash (aka password) has been found in known security breaches.
+
+This functionality is turned on by default, and can be shutoff per-use, or globally throughout the app. `sails.helpers.isPasswordValid` can be used with `skipPwned` option set to `true`, to disable the check per use. Inside of [`config/security.js`](config/security.js), the variable `checkPwned` can be set to `false` to disable it globally.
 
 ## What about SEO?
 I recommend looking at [prerender.io](https://prerender.io). They offer a service (free up to 250 pages) that caches the end result of a JavaScript-rendered view (React, Vue, Angular), allowing search engines to crawl otherwise un-crawlable web views. You can use the service in a number of ways. One way, is to use the [prerender-node](https://www.npmjs.com/package/prerender-node) package. To use it with Sails, you'll have to add it to the [HTTP Middleware](https://sailsjs.com/documentation/concepts/middleware#?http-middleware). Here's a quick example:

@@ -11,7 +11,7 @@ module.exports = {
             // this is a custom validator, which returns true or false
             custom: (thisQuery) => (
                 _.isObject(thisQuery) && _.isNumber(thisQuery.limit) &&
-                _.isNumber(thisQuery.page) && _.isString(thisQuery.sort) &&
+                _.isNumber(thisQuery.page) && (_.isString(thisQuery.sort) || _.isArray(thisQuery.sort)) &&
                 _.isObject(thisQuery.where)
             )
         },
