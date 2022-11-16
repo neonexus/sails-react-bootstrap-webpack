@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for controllers/admin/create-user.js</title>
+    <title>Code coverage report for controllers/admin/edit-user.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">controllers/admin</a> create-user.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">controllers/admin</a> edit-user.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -32,14 +32,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/8</span>
+                <span class='fraction'>0/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
@@ -165,8 +165,13 @@
 <a name='L100'></a><a href='#L100'>100</a>
 <a name='L101'></a><a href='#L101'>101</a>
 <a name='L102'></a><a href='#L102'>102</a>
-<a name='L103'></a><a href='#L103'>103</a>
-<a name='L104'></a><a href='#L104'>104</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L103'></a><a href='#L103'>103</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -225,12 +230,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -241,22 +244,12 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -266,15 +259,26 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">module.exports = {
-    friendlyName: 'Create User',
+    friendlyName: 'Edit User',
 &nbsp;
-    description: 'Create a new user.',
+    description: 'Edit an active user.',
 &nbsp;
     inputs: {
+        id: {
+            type: 'string',
+            required: true,
+            isUUID: true
+        },
+&nbsp;
         firstName: {
             type: 'string',
             required: true,
@@ -327,49 +331,42 @@
     },
 &nbsp;
     fn: <span class="fstat-no" title="function not covered" >as</span>ync (inputs, exits) =&gt; {
-        let password = <span class="cstat-no" title="statement not covered" >inputs.password;</span>
-        let isPasswordValid;
+        let isPasswordValid = <span class="cstat-no" title="statement not covered" >true;</span>
+        const foundUser = <span class="cstat-no" title="statement not covered" >await sails.models.user.findOne({id: inputs.id});</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (!foundUser) {</span>
+<span class="cstat-no" title="statement not covered" >            return exits.badRequest('There is no user with that ID.');</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (foundUser.deletedAt !== null) {</span>
+<span class="cstat-no" title="statement not covered" >            return exits.badRequest('This user has been deleted, and can not be edited until reactivated.');</span>
+        }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >        if (inputs.setPassword) {</span>
 <span class="cstat-no" title="statement not covered" >            isPasswordValid = await sails.helpers.isPasswordValid.with({</span>
                 password: inputs.password,
                 user: {firstName: inputs.firstName, lastName: inputs.lastName, email: inputs.email}
             });
-        } else {
-<span class="cstat-no" title="statement not covered" >            isPasswordValid = true;</span>
-<span class="cstat-no" title="statement not covered" >            password = sails.helpers.generateToken();</span>
         }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >        if (isPasswordValid !== true) {</span>
 <span class="cstat-no" title="statement not covered" >            return exits.badRequest(isPasswordValid);</span>
         }
 &nbsp;
-        const foundUser = <span class="cstat-no" title="statement not covered" >await sails.models.user.findOne({email: inputs.email, deletedAt: null});</span>
-&nbsp;
-<span class="cstat-no" title="statement not covered" >        if (foundUser) {</span>
-<span class="cstat-no" title="statement not covered" >            return exits.badRequest('Email is already in-use.');</span>
-        }
-&nbsp;
-<span class="cstat-no" title="statement not covered" >        sails.models.user.create({</span>
-            id: 'c', // required, but auto-generated
+        let updatedUser = <span class="cstat-no" title="statement not covered" >{</span>
             firstName: inputs.firstName,
             lastName: inputs.lastName,
-            password,
             role: inputs.role,
             email: inputs.email
-        }).meta({fetch: true}).exec(<span class="fstat-no" title="function not covered" >(e</span>rr, newUser) =&gt; {
-<span class="cstat-no" title="statement not covered" >            if (err) {</span>
-<span class="cstat-no" title="statement not covered" >                console.error(err);</span>
+        };
 &nbsp;
-<span class="cstat-no" title="statement not covered" >                return exits.serverError(err);</span>
-            }
+<span class="cstat-no" title="statement not covered" >        if (inputs.setPassword) {</span>
+<span class="cstat-no" title="statement not covered" >            updatedUser.password = inputs.password;</span>
+        }
 &nbsp;
-            /**
-             * We should probably email the new user their new account info here if the password was generated (!inputs.setPassword)...
-             */
+        const user = <span class="cstat-no" title="statement not covered" >await sails.models.user.updateOne({id: inputs.id}).set(updatedUser);</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            return exits.ok({user: newUser});</span>
-        });
+<span class="cstat-no" title="statement not covered" >        return exits.ok({user});</span>
     }
 };
 &nbsp;</pre></td></tr></table></pre>
