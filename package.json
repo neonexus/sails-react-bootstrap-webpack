@@ -1,6 +1,6 @@
 {
     "name": "sails-react-bootstrap-webpack",
-    "version": "3.2.0",
+    "version": "3.2.1",
     "description": "An opinionated base configuration of Sails, with Webpack for React support, and Bootstrap for styling.",
     "keywords": [
         "sails",
@@ -60,7 +60,7 @@
         "react-router-dom": "6.4.3",
         "react-transition-group": "4.4.5",
         "rimraf": "3.0.2",
-        "sass": "1.56.1",
+        "sass": "1.55.0",
         "sass-loader": "13.2.0",
         "style-loader": "3.3.1",
         "supertest": "6.3.1",

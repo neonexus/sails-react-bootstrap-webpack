@@ -1,5 +1,11 @@
 # Changelog
 
+## [v3.2.1](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v3.2.0...v3.2.1) (2022-11-16)
+
+### Features
+
+Downgraded SASS to prevent issues with deprecations.
+
 ## [v3.2.0](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v3.1.1...v3.2.0) (2022-11-16)
 
 ### Features
