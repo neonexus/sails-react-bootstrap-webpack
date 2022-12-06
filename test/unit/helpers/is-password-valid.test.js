@@ -88,8 +88,6 @@ describe('isPasswordValid Helper', function() {
                 skipPwned: true
             });
 
-            console.debug(isValid);
-
             isValid.should.be.an('array');
             isValid.length.should.equal(1);
             isValid[0].should.equal('Password can not contain your email address');
@@ -118,5 +116,16 @@ describe('isPasswordValid Helper', function() {
             isValid.length.should.equal(1);
             isValid[0].should.equal('Password can not contain your last name');
         });
+    });
+
+    it('should check with PwnedPasswords.com API', async function() {
+        const isValid = await sails.helpers.isPasswordValid('Testing1234!');
+
+        isValid.should.be.an('array').and.have.lengthOf(1);
+        isValid[0].substring(0, 36).should.eq('Provided password has been found in ');
+
+        const isValid2 = await sails.helpers.isPasswordValid('CAPITAL_LETTERS' + sails.helpers.generateUuid());
+
+        isValid2.should.be.a('boolean').and.eq(true);
     });
 });

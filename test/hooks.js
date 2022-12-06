@@ -71,6 +71,7 @@ exports.mochaHooks = {
 
         Sails.lift(_.merge(rc('sails'), {
             log: {level: 'warn'},
+            logSensitiveData: false,
             datastores: {
                 default: {
                     database: 'testing'
@@ -85,7 +86,10 @@ exports.mochaHooks = {
                 async: false,
                 models: false
             },
-            port: 1338 // to allow us to keep local instance running while we run tests
+            port: 1338, // to allow us to keep local instance running while we run tests
+            security: {
+                checkPwnedPasswords: true
+            }
         }), function(err, sailsApp) {
             if (err) {
                 return done(err);
@@ -130,7 +134,8 @@ exports.mochaHooks = {
             // Populate the DB, forcing creation of users first
             fixted.populate([
                 'user',
-                'session'
+                'session',
+                'requestlog'
             ], done);
         });
     },

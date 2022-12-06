@@ -77,12 +77,13 @@ module.exports = {
         }
 
         if (!errors.length) {
-            if (sails.config.security.checkPwned && !inputs.skipPwned) {
+            if (sails.config.security.checkPwnedPasswords && !inputs.skipPwned) {
                 const sha1pass = sha1(inputs.password).toUpperCase();
                 const passChunk1 = sha1pass.substring(0, 5);
                 const passChunk2 = sha1pass.substring(5);
 
                 superagent.get('https://api.pwnedpasswords.com/range/' + passChunk1).end((err, res) => {
+                    /* istanbul ignore if */
                     if (err) {
                         console.error(err);
 
@@ -104,6 +105,7 @@ module.exports = {
                         return exits.success(true);
                     }
 
+                    /* istanbul ignore next */
                     return exits.success(['Unknown internal error']);
                 });
             } else {

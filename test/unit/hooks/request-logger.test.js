@@ -3,7 +3,7 @@ describe('Request Logger', function() {
 
     let logger;
     let hook;
-    let expectedRequestLogCount = 0;
+    let expectedRequestLogCount = 1; // we have a dummy one for other tests
 
     async function getRequestLogCount() {
         return await sails.models.requestlog.count();
@@ -47,7 +47,7 @@ describe('Request Logger', function() {
 
             hook(req, {}, async function() {
                 const requestLogCount = await getRequestLogCount();
-                requestLogCount.should.eq(0);
+                requestLogCount.should.eq(1); // account for dummy log
 
                 done();
             });
@@ -205,7 +205,7 @@ describe('Request Logger', function() {
             });
 
             hook(thisReq, defaultRes, () => {
-                // this function getting called is a test in it self, because we should have gotten an error from an invalid request method
+                // this function getting called is a test in itself, because we should have gotten an error from an invalid request method
                 done();
             });
         });

@@ -1,5 +1,3 @@
-const {validate: validateUuid} = require('uuid');
-
 describe('generateUuid Helper', function() {
     let uuid;
 
@@ -11,9 +9,7 @@ describe('generateUuid Helper', function() {
     it('should generate a new UUID', async function() {
         uuid = sails.helpers.generateUuid();
 
-        const isValid = validateUuid(uuid);
-        isValid.should.be.a('boolean');
-        isValid.should.equal(true);
+        uuid.should.be.a.uuid();
     });
 
     it('should should not repeat itself', async function() {

@@ -1,4 +1,4 @@
-describe('POST /api/v1/user', function() {
+describe.skip('POST /api/v1/user', function() {
     before(function() {
 
     });
