@@ -1,11 +1,13 @@
 # Changelog
 
-## [v3.2.2](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v3.2.1...v3.2.2) (2022-11-16)
+## [v4.0.0](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v3.2.1...v4.0.0) (2023-02-11)
 
 ### Features
 
-* Built out more automated tests for better coverage.
+* More work on automated tests and utilities.
+* Renamed tests entry point (hooks.js -> startTests.js).
 * Updated dependencies.
+* Removed `md5` / `sha1` / `uuid` packages, in favor of Node built-ins.
 
 ## [v3.2.1](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v3.2.0...v3.2.1) (2022-11-16)
 

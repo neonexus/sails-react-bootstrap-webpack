@@ -11,6 +11,7 @@ Need help? Want to hire me to build your next app or prototype? You can contact 
 * Automatic (incoming) request logging (manual outgoing), via Sails models / hooks.
 * Setup for Webpack auto-reload dev server.
 * Setup so Sails will serve Webpack-built bundles as separate apps (so, a marketing site, and an admin site can live side-by-side).
+* Custom functions to make pagination simple.
 * Includes [react-bootstrap](https://www.npmjs.com/package/react-bootstrap) to make using Bootstrap styles / features with React easier.
 * Schema validation and enforcement for `PRODUCTION`. This repo is set up for `MySQL`. If you plan to use a different datastore, you will likely want to disable the schema validation and enforcement feature inside [`config/bootstrap.js`](config/bootstrap.js). See [schema validation and enforcement](#schema-validation-and-enforcement) for more info.
 * New passwords can be checked against the [PwnedPasswords API](https://haveibeenpwned.com/API/v3#PwnedPasswords). If there is a single hit for the password, an error will be given, and the user will be forced to choose another. See [PwnedPasswords integration](#pwnedpasswordscom-integration) for more info.
@@ -58,8 +59,8 @@ Sails, by default, has middleware (akin to [Express.js Middleware](https://expre
 | npm run build                 | Will run `npm run clean`, then will build production-ready files with Webpack in the `.tmp/public` folder.                                                                               |
 | npm run build:dev             | Same thing as `npm run build`, except that it will not optimize the files, retaining newlines and empty spaces.                                                                          |
 | npm run clean                 | Will delete everything in the `.tmp` folder.                                                                                                                                             |
-| npm run lines                 | Will count the lines of code in the project, minus `.gitignore`'d files, for funzies. There are currently about 7k custom lines in this repo (views, controllers, helpers, hooks, etc).  |
-| npm run test                  | Run [Mocha](https://mochajs.org/) tests. Everything starts in the [`test/hooks.js`](test/hooks.js) file.                                                                                 |
+| npm run lines                 | Will count the lines of code in the project, minus `.gitignore`'d files, for funzies. There are currently about 8k custom lines in this repo (views, controllers, helpers, hooks, etc).  |
+| npm run test                  | Run [Mocha](https://mochajs.org/) tests. Everything starts in the [`test/startTests.js`](test/startTests.js) file.                                                                       |
 | npm run coverage              | Runs [NYC](https://www.npmjs.com/package/nyc) coverage reporting of the Mocha tests, which generates HTML in `test/coverage`.                                                            |
 
 ### Environment Variables
@@ -97,7 +98,7 @@ If you want to build assets, but retain spaces / tabs for debugging, you can use
 The webpack configuration can be found in the [`webpack`](webpack) folder. The majority of the configuration can be found in [`common.config.js`](webpack/common.config.js). Then, the other 3 files, such as [`dev.config.js`](webpack/dev.config.js) extend the `common.config.js` file.
 
 ## Building with React
-React source files live in the `assets/src` folder. It is structured in such a way, where the `index.jsx` is really only used for local development (to help Webpack serve up the correct "app"). Then, there are the individual "apps", [main](assets/src/main.jsx) and [admin](assets/src/admin.jsx). These files are used as Webpack "[entry points](https://webpack.js.org/concepts/entry-points/)", to create 2 separate application bundles.
+React source files live in the [`assets/src`](assets/src) folder. It is structured in such a way, where the `index.jsx` is really only used for local development (to help Webpack serve up the correct "app"). Then, there are the individual "apps", [main](assets/src/main.jsx) and [admin](assets/src/admin.jsx). These files are used as Webpack "[entry points](https://webpack.js.org/concepts/entry-points/)", to create 2 separate application bundles.
 
 In a remote environment, Sails will look at the first subdirectory requested, and use that to determine which `index.html` file it needs to actually return. So, in this case, the "main" application will get built in `.tmp/public/main`, where the CSS is `.tmp/public/main/bundle.css`, the JavaScript is `.tmp/public/main/bundle.js`, and the HTML is `.tmp/public/main/index.html`. To view the main application, one would just go to `http://mydomain/` which gets redirected to `/main` (because we need to know what application we are using, we need a subdirectory), and now Sails will serve the `main` application. Whereas, if one were to go to `http://mydomain/admin`, Sails would now serve the `admin` application bundle (aka `.tmp/public/admin/index.html`, `.tmp/public/admin/bundle.css`, etc...).
 

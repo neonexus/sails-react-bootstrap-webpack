@@ -6,14 +6,8 @@ module.exports = {
     inputs: {},
 
     exits: {
-        ok: {
-            responseType: 'ok'
-        },
-        badRequest: {
-            responseType: 'badRequest'
-        },
-        serverError: {
-            responseType: 'serverError'
+        created: {
+            responseType: 'created'
         }
     },
 
@@ -23,7 +17,7 @@ module.exports = {
             user: env.req.session.user.id
         }).fetch();
 
-        return exits.ok({
+        return exits.created({
             token: newToken.token,
             __skipCSRF: true // this tells our "ok" response to ignore the CSRF token update
         });

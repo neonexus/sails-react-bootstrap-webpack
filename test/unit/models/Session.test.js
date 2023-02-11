@@ -6,12 +6,11 @@ describe('Session Model', function() {
         sails.models.should.have.property('session');
     });
 
-    it('should have a session already in database', async function() { // loaded by our model fixtures
-        const foundSessions = await sails.models.session.find({});
+    it('should have sessions already in database', async function() { // loaded by our model fixtures
+        const foundSessions = await sails.models.session.find({user: testUtils.fixtures.user[0].id});
 
-        foundSessions.length.should.equal(1);
-        foundSessions[0].data.should.have.property('isLoggedIn');
-        foundSessions[0].data.isLoggedIn.should.equal(true);
+        foundSessions.length.should.equal(1); // we have been signed in for our test "browser"
+        foundSessions[0].data.should.have.property('_csrfSecret');
         foundSessions[0].createdAt.should.be.a('date');
         foundSessions[0].updatedAt.should.be.a('date');
     });
@@ -33,5 +32,7 @@ describe('Session Model', function() {
 
         newSession.should.have.property('id');
         newSession.id.should.be.a.uuid();
+
+        await sails.models.session.destroy(newSession.id);
     });
 });

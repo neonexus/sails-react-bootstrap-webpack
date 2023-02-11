@@ -17,7 +17,7 @@ module.exports = [
         id: 'c', // auto-generated, but still string required
         firstName: 'User',
         lastName: 'Bot',
-        role: 'manager',
+        role: 'user',
         email: 'user@testing.com',
         password: `Who doesn't love a good passphrase?`
     }

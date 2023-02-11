@@ -70,16 +70,17 @@ module.exports = {
                 responseTime: totalTime
             };
 
-            sails.models.requestlog.update(inputs.req.requestId, log, (err) => {
+            sails.models.requestlog.update({id: inputs.req.requestId}).set(log).exec((err) => {
                 /* istanbul ignore if */
                 if (err) {
-                    console.log(err);
+                    console.error(err);
                 }
-            });
-        }
 
-        // All done.
-        return exits.success();
+                return exits.success();
+            });
+        } else {
+            return exits.success();
+        }
     }
 };
 

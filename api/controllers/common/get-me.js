@@ -20,6 +20,7 @@ module.exports = {
     fn: async (inputs, exits, env) => {
         const foundUser = await sails.models.user.findOne({id: env.req.session.user.id}); // req.session.user is filled in by the isLoggedIn policy
 
+        /* istanbul ignore if */
         if (!foundUser) {
             // this should not happen
             return exits.serverError();

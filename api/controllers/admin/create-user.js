@@ -37,9 +37,10 @@ module.exports = {
             ]
         },
 
-        setPassword: {
+        generatePassword: {
             type: 'boolean',
-            defaultsTo: true
+            defaultsTo: false,
+            description: 'Used to auto-generate a password for the user'
         }
     },
 
@@ -59,7 +60,7 @@ module.exports = {
         let password = inputs.password;
         let isPasswordValid;
 
-        if (inputs.setPassword) {
+        if (!inputs.generatePassword) {
             isPasswordValid = await sails.helpers.isPasswordValid.with({
                 password: inputs.password,
                 user: {firstName: inputs.firstName, lastName: inputs.lastName, email: inputs.email}
@@ -67,6 +68,8 @@ module.exports = {
         } else {
             isPasswordValid = true;
             password = sails.helpers.generateToken();
+
+            // should probably send password somehow; it will be scrubbed in the custom response
         }
 
         if (isPasswordValid !== true) {
@@ -87,6 +90,7 @@ module.exports = {
             role: inputs.role,
             email: inputs.email
         }).meta({fetch: true}).exec((err, newUser) => {
+            /* istanbul ignore if */
             if (err) {
                 console.error(err);
 

@@ -1,4 +1,4 @@
 # This is the test coverage folder
 
-It contains the results after running `npm run coverage`. If you would like to view the resulting HTML view (for what is currently on GitHub, in the most up-to-date release), [go here](https://htmlpreview.github.io/?https://github.com/neonexus/sails-react-bootstrap-webpack/blob/release/test/coverage/index.html).
+It contains the results after running `npm run coverage`. If you would like to view the resulting HTML view (for what is currently on GitHub, in the latest release), [go here](https://htmlpreview.github.io/?https://github.com/neonexus/sails-react-bootstrap-webpack/blob/release/test/coverage/index.html).
 

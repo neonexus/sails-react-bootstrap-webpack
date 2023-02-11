@@ -2,7 +2,7 @@
  * Internationalization / Localization Settings
  * (sails.config.i18n)
  *
- * If your app will touch people from all over the world, i18n (or internationalization)
+ * If your app touches people from all over the world, i18n (or internationalization)
  * may be an important part of your international strategy.
  *
  * For a complete list of options for Sails' built-in i18n support, see:
@@ -20,7 +20,8 @@ module.exports.i18n = {
      *                                                                          *
      ***************************************************************************/
 
-    locales: ['en', 'es', 'fr', 'de']
+    locales: ['en']
+    // locales: ['en', 'es', 'fr', 'de']
 
     /****************************************************************************
      *                                                                           *

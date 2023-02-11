@@ -17,10 +17,9 @@ global.should = chai.should();
 // setup global testUtils object
 global.testUtils = require('./utilities');
 
-// not the global "sails" variable, this is internal uppercase "Sails"
-const Sails = require('sails');
+const TestSails = require('sails');
 
-// simple database fixture handler
+// simple database fixture handler for Sails
 const Fixted = require('fixted');
 
 const originalConsoleLog = console.log;
@@ -69,7 +68,7 @@ exports.mochaHooks = {
         }
         err.toString().should.eq('ReferenceError: sails is not defined');
 
-        Sails.lift(_.merge(rc('sails'), {
+        TestSails.lift(_.merge(rc('sails'), {
             log: {level: 'warn'},
             logSensitiveData: false,
             datastores: {
@@ -128,33 +127,82 @@ exports.mochaHooks = {
                 Object.keys(sails.registry.policies).should.have.lengthOf(files.length);
             });
 
+            // hand our testUtils a reference to the Sails instance
+            global.testUtils = global.testUtils(sailsApp);
+
             // Load fixtures
             const fixted = new Fixted();
 
             // Populate the DB, forcing creation of users first
             fixted.populate([
                 'user',
-                'session',
                 'requestlog'
-            ], done);
+            ], () => {
+                testUtils.fixtures = fixted.data;
+                testUtils.ids = fixted.idMap;
+
+                Object.entries(testUtils.ids).forEach((models) => {
+                    const [model, ids] = models;
+
+                    testUtils.fixtures[model].forEach((val, index) => {
+                        testUtils.fixtures[model][index].id = ids[index];
+                    });
+                });
+
+                // Kick-start our "browser" sessions
+                testUtils.postAsUser({
+                    route: '/login',
+                    data: {
+                        email: testUtils.fixtures.user[2].email,
+                        password: testUtils.fixtures.user[2].password
+                    },
+                    end: (err, res) => {
+                        if (err) {
+                            return done(err);
+                        }
+
+                        res.body.success.should.be.a('boolean').and.eq(true);
+
+                        testUtils.postAsAdmin({
+                            route: '/login',
+                            data: {
+                                email: testUtils.fixtures.user[0].email,
+                                password: testUtils.fixtures.user[0].password
+                            },
+                            end: (err, res) => {
+                                if (err) {
+                                    return done(err);
+                                }
+
+                                res.body.success.should.be.a('boolean').and.eq(true);
+
+                                done();
+                            }
+                        });
+                    }
+                });
+            });
         });
     },
 
     // run once
     afterAll: function(done) {
-        global.console = {
-            log: originalConsoleLog, // restore original behavior
+        // The timeout gives our app enough time to wrap up some database queries.
+        // If we don't do this, our database connection pool will be closed before we are finished, and cause errors.
+        setTimeout(() => {
+            global.console = {
+                log: originalConsoleLog, // restore original behavior
 
-            // Keep native behaviour for other methods
-            error: console.error,
-            warn: console.warn,
-            info: console.info,
-            debug: console.debug,
-            table: console.table
-        };
+                // Keep native behaviour for other methods
+                error: console.error,
+                warn: console.warn,
+                info: console.info,
+                debug: console.debug,
+                table: console.table
+            };
 
-        // here you can clear fixtures, etc.
-        console.log(); // skip a line before lowering logs
-        sails.lower(done);
+            console.log(); // skip a line before lowering logs
+            sails.lower(done);
+        }, 5);
     }
 };

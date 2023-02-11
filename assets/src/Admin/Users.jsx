@@ -13,49 +13,30 @@ class Users extends React.Component {
 
         this.state = {
             activeTab: 'active',
-            hasLoaded: false,
-            currentUsers: [],
-            totalUsers: 0,
-            totalPages: 0,
-            isLoading: false,
+            currentDeleteUser: {firstName: '', lastName: '', role: 'user', id: 0},
             currentPage: 1,
-            perPage: 25,
+            currentUsers: [],
+            hasLoaded: false,
+            isLoading: false,
             isTabLoading: false,
+            perPage: 25,
             showCreateModal: false,
             showDeleteModal: false,
             softDeleteUser: true,
-            currentDeleteUser: {firstName: '', lastName: '', role: 'user', id: 0}
+            totalUsers: 0,
+            totalPages: 0
         };
 
-        this.getUsers = this.getUsers.bind(this);
         this.getDeletedUsers = this.getDeletedUsers.bind(this);
-        this.handlePerPageChange = this.handlePerPageChange.bind(this);
+        this.getUsers = this.getUsers.bind(this);
         this.handleCreateUser = this.handleCreateUser.bind(this);
         this.handleDeleteUser = this.handleDeleteUser.bind(this);
+        this.handlePerPageChange = this.handlePerPageChange.bind(this);
         this.handleTabChange = this.handleTabChange.bind(this);
     }
 
     componentDidMount() {
         this.getUsers(1);
-    }
-
-    getUsers(page = 1) {
-        if (!this.state.isLoading) {
-            this.setState({isLoading: true, currentPage: page});
-
-            this.props.api.get('/users?page=' + page + '&limit=' + this.state.perPage, (resp) => {
-                this.setState({
-                    currentUsers: resp.users,
-                    totalUsers: resp.totalFound.toLocaleString(),
-                    totalPages: resp.totalPages,
-                    hasLoaded: true,
-                    isLoading: false,
-                    isTabLoading: false
-                });
-            }, (err) => {
-                console.error(err);
-            });
-        }
     }
 
     getDeletedUsers(page = 1) {
@@ -76,9 +57,22 @@ class Users extends React.Component {
         }
     }
 
-    handlePerPageChange(newPar, isDeleted = false) {
-        if (newPar !== this.state.perPage) {
-            this.setState({perPage: parseInt(newPar), currentPage: 1}, (isDeleted) ? this.getDeletedUsers : this.getUsers);
+    getUsers(page = 1) {
+        if (!this.state.isLoading) {
+            this.setState({isLoading: true, currentPage: page});
+
+            this.props.api.get('/users?page=' + page + '&limit=' + this.state.perPage, (resp) => {
+                this.setState({
+                    currentUsers: resp.users,
+                    totalUsers: resp.totalFound.toLocaleString(),
+                    totalPages: resp.totalPages,
+                    hasLoaded: true,
+                    isLoading: false,
+                    isTabLoading: false
+                });
+            }, (err) => {
+                console.error(err);
+            });
         }
     }
 
@@ -116,14 +110,23 @@ class Users extends React.Component {
         });
     }
 
+    handlePerPageChange(newPar, isDeleted = false) {
+        if (newPar !== this.state.perPage) {
+            this.setState({perPage: parseInt(newPar), currentPage: 1}, (isDeleted) ? this.getDeletedUsers : this.getUsers);
+        }
+    }
+
     handleTabChange(tab) {
         if (tab !== this.state.activeTab) {
-            if (tab === 'active') {
-                this.setState({activeTab: 'active', isTabLoading: true}, this.getUsers);
-            } else if (tab === 'deleted') {
-                this.setState({activeTab: 'deleted', isTabLoading: true}, this.getDeletedUsers);
-            } else {
-                alert('How did you get here?!');
+            switch (tab) {
+                case 'active':
+                    this.setState({activeTab: 'active', isTabLoading: true}, this.getUsers);
+                    break;
+                case 'deleted':
+                    this.setState({activeTab: 'deleted', isTabLoading: true}, this.getDeletedUsers);
+                    break;
+                default:
+                    alert('How did you get here?!');
             }
         }
     }

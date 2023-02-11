@@ -8,7 +8,7 @@ describe('createLog helper', function() {
     it('should require the data and description input', async function() {
         try {
             await sails.helpers.createLog();
-        } catch(e) {
+        } catch (e) {
             e.code.should.eq('E_INVALID_ARGINS');
             e.problems.should.be.an('array');
             e.problems.length.should.eq(2);

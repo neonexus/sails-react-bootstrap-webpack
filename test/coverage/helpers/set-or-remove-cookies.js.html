@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">6.66% </span>
+                <span class="strong">86.66% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/15</span>
+                <span class='fraction'>13/15</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">73.33% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/15</span>
+                <span class='fraction'>11/15</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">6.66% </span>
+                <span class="strong">86.66% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/15</span>
+                <span class='fraction'>13/15</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -169,41 +169,41 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -240,42 +240,42 @@
         }
     },
 &nbsp;
-    fn: <span class="fstat-no" title="function not covered" >fu</span>nction(inputs, exits) {
-<span class="cstat-no" title="statement not covered" >        if (!inputs.data.cookies) {</span>
-<span class="cstat-no" title="statement not covered" >            return exits.success(inputs.data);</span>
+    fn: function(inputs, exits) {
+        if (!inputs.data.cookies) {
+            return exits.success(inputs.data);
         }
 &nbsp;
-        const cookies = <span class="cstat-no" title="statement not covered" >(_.isArray(inputs.data.cookies))</span>
+        const cookies = (_.isArray(inputs.data.cookies))
                         ? inputs.data.cookies
-                        : [inputs.data.cookies];
+                        : <span class="branch-1 cbranch-no" title="branch not covered" >[inputs.data.cookies];</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        cookies.map(<span class="fstat-no" title="function not covered" >(c</span>ookie) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >            if (_.isUndefined(cookie.name) || !_.isString(cookie.name) || _.isEmpty(cookie.name)) {</span>
+        cookies.map((cookie) =&gt; {
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (_.isUndefined(cookie.name) || !_.isString(cookie.name) || _.isEmpty(cookie.name)) {
 <span class="cstat-no" title="statement not covered" >                throw 'missingName';</span>
             }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            if (_.isUndefined(cookie.value)) {</span>
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (_.isUndefined(cookie.value)) {
 <span class="cstat-no" title="statement not covered" >                throw 'missingValue';</span>
             }
 &nbsp;
-            const defaultCookie = <span class="cstat-no" title="statement not covered" >{</span>
+            const defaultCookie = {
                 signed: true, // Sign the cookie to prevent tampering.
                 httpOnly: true, // Prevent JS from being able to read / write to this cookie in most browsers.
                 secure: sails.config.session.cookie.secure // Only allow over HTTPS.
             };
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            if (cookie.value === null) {</span>
-<span class="cstat-no" title="statement not covered" >                return inputs.res.clearCookie(cookie.name, defaultCookie);</span>
+            if (cookie.value === null) {
+                return inputs.res.clearCookie(cookie.name, defaultCookie);
             }
 &nbsp;
-            const newCookie = <span class="cstat-no" title="statement not covered" >(!cookie.isSession) // if we don't want to use the default "session" to expire the cookie, we use the maxAge</span>
-                              ? _.merge({}, defaultCookie, {maxAge: sails.config.session.cookie.maxAge})
+            const newCookie = (!cookie.isSession) // if we don't want to use the default "session" to expire the cookie, we use the maxAge
+                              ? <span class="branch-0 cbranch-no" title="branch not covered" >_.merge({}, defaultCookie, {maxAge: sails.config.session.cookie.maxAge})</span>
                               : defaultCookie;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            return inputs.res.cookie(cookie.name, cookie.value, newCookie);</span>
+            return inputs.res.cookie(cookie.name, cookie.value, newCookie);
         });
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        return exits.success(_.omit(inputs.data, ['cookies']));</span>
+        return exits.success(_.omit(inputs.data, ['cookies']));
     }
 };
 &nbsp;
@@ -286,7 +286,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Mon Dec 05 2022 23:55:16 GMT-0600 (Central Standard Time)
+                at Sat Feb 11 2023 02:13:20 GMT-0600 (Central Standard Time)
             </div>
         <script src="../prettify.js"></script>
         <script>

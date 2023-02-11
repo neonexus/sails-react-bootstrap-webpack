@@ -27,7 +27,7 @@ module.exports = {
 
         createdAt: {
             type: 'ref',
-            columnType: 'datetime',
+            columnType: 'datetime(3)',
             autoCreatedAt: true
         },
 

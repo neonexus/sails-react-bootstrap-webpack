@@ -14,7 +14,6 @@
       <option name="USE_DOUBLE_QUOTES" value="false" />
       <option name="FORCE_QUOTE_STYlE" value="true" />
       <option name="ENFORCE_TRAILING_COMMA" value="Remove" />
-      <option name="INDENT_CHAINED_CALLS" value="false" />
     </JSCodeStyleSettings>
     <codeStyleSettings language="JSON">
       <indentOptions>

@@ -1,5 +1,5 @@
-const sha1 = require('sha1');
 const superagent = require('superagent');
+const crypto = require('crypto');
 
 module.exports = {
     friendlyName: 'Is password valid',
@@ -78,11 +78,11 @@ module.exports = {
 
         if (!errors.length) {
             if (sails.config.security.checkPwnedPasswords && !inputs.skipPwned) {
-                const sha1pass = sha1(inputs.password).toUpperCase();
+                const sha1pass = crypto.createHash('sha1').update(inputs.password).digest('hex').toUpperCase();
                 const passChunk1 = sha1pass.substring(0, 5);
                 const passChunk2 = sha1pass.substring(5);
 
-                superagent.get('https://api.pwnedpasswords.com/range/' + passChunk1).end((err, res) => {
+                superagent.get('https://api.pwnedpasswords.com/range/' + passChunk1).retry(3).end((err, res) => {
                     /* istanbul ignore if */
                     if (err) {
                         console.error(err);

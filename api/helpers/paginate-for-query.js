@@ -32,7 +32,7 @@ module.exports = {
     fn: (inputs, exits) => {
         let baseObj = {
             limit: inputs.limit,
-            page: inputs.page,
+            page: inputs.page, // this is used to pass to other pagination options; is ignored by Waterline / Sails
             skip: (inputs.page - 1) * inputs.limit,
             sort: inputs.sort,
             where: inputs.where

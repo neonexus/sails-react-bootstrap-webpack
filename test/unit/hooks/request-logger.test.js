@@ -3,7 +3,7 @@ describe('Request Logger', function() {
 
     let logger;
     let hook;
-    let expectedRequestLogCount = 1; // we have a dummy one for other tests
+    let expectedRequestLogCount = 3; // we have a dummy one for other tests, and setup requests
 
     async function getRequestLogCount() {
         return await sails.models.requestlog.count();
@@ -45,9 +45,10 @@ describe('Request Logger', function() {
                 path: '/awesome'
             };
 
-            hook(req, {}, async function() {
+            hook(req, {}, async () => {
                 const requestLogCount = await getRequestLogCount();
-                requestLogCount.should.eq(1); // account for dummy log
+
+                requestLogCount.should.eq(expectedRequestLogCount); // account for dummy log
 
                 done();
             });
@@ -85,7 +86,7 @@ describe('Request Logger', function() {
     describe('Request logging should...', function() {
         const defaultReq = {
             method: 'GET',
-            path: '/testpath',
+            path: '/testpath2',
             hostname: 'localtest',
             body: {
                 password: 'password1',

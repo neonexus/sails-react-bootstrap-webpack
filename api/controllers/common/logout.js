@@ -20,7 +20,9 @@ module.exports = {
     fn: async (inputs, exits, env) => {
         const foundSession = await sails.models.session.findOne({id: env.req.session.id});
 
+        /* istanbul ignore if */
         if (!foundSession) {
+            // should not happen
             return exits.ok();
         }
 

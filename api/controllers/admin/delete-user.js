@@ -19,9 +19,6 @@ module.exports = {
         },
         badRequest: {
             responseType: 'badRequest'
-        },
-        serverError: {
-            responseType: 'serverError'
         }
     },
 
@@ -32,6 +29,7 @@ module.exports = {
 
         const foundUser = await sails.models.user.findOne({id: inputs.id, deletedAt: null});
 
+        /* istanbul ignore if */
         if (!foundUser) {
             return exits.badRequest('User does not exist');
         }
