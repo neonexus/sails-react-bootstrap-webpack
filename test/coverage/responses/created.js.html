@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">7.14% </span>
+                <span class="strong">85.71% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/14</span>
+                <span class='fraction'>12/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>2/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">7.14% </span>
+                <span class="strong">85.71% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/14</span>
+                <span class='fraction'>12/14</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -87,50 +87,50 @@
 <a name='L22'></a><a href='#L22'>22</a>
 <a name='L23'></a><a href='#L23'>23</a>
 <a name='L24'></a><a href='#L24'>24</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">module.exports = async function <span class="fstat-no" title="function not covered" >created(</span>data) {
-    const res = <span class="cstat-no" title="statement not covered" >this.res;</span>
-    const req = <span class="cstat-no" title="statement not covered" >this.req;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">module.exports = async function created(data) {
+    const res = this.res;
+    const req = this.req;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    if (!data) {</span>
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (!data) {
 <span class="cstat-no" title="statement not covered" >        data = {};</span>
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    if (typeof data === 'string') {</span>
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (typeof data === 'string') {
 <span class="cstat-no" title="statement not covered" >        data = {message: data};</span>
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    data = sails.helpers.keepModelsSafe(data);</span>
-<span class="cstat-no" title="statement not covered" >    data = sails.helpers.setOrRemoveCookies(data, res);</span>
-<span class="cstat-no" title="statement not covered" >    data = await sails.helpers.updateCsrf(data, req);</span>
+    data = sails.helpers.keepModelsSafe(data);
+    data = sails.helpers.setOrRemoveCookies(data, res);
+    data = await sails.helpers.updateCsrf(data, req);
 &nbsp;
-    const out = <span class="cstat-no" title="statement not covered" >_.merge({success: true}, data);</span>
+    const out = _.merge({success: true}, data);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    res.status(201);</span>
-<span class="cstat-no" title="statement not covered" >    res.json(out);</span>
+    res.status(201);
+    res.json(out);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    await sails.helpers.finalizeRequestLog(req, res, out);</span>
+    await sails.helpers.finalizeRequestLog(req, res, out);
 };
 &nbsp;</pre></td></tr></table></pre>
 
@@ -139,7 +139,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Wed Nov 16 2022 01:20:11 GMT-0600 (Central Standard Time)
+                at Sat Feb 11 2023 02:13:20 GMT-0600 (Central Standard Time)
             </div>
         <script src="../prettify.js"></script>
         <script>

@@ -49,6 +49,8 @@ module.exports = {
         }
 
         const passwordErrors = await sails.helpers.isPasswordValid(inputs.password);
+        // const passwordErrors = await sails.helpers.isPasswordValid(inputs.password, true); // use this to disable the check with PwnedPasswords.com
+        // const passwordErrors = await sails.helpers.isPasswordValid.with({password: inputs.password, skipPwned: true}); // the same as the line above
 
         if (passwordErrors !== true) {
             return exits.badPassword(passwordErrors);

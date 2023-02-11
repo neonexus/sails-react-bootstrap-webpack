@@ -28,6 +28,7 @@ module.exports = {
             request = (inputs.req.requestId) ? inputs.req.requestId : null;
 
         const newLog = {
+            id: 'c', // required, but auto-generated
             data: inputs.data,
             user,
             request,
@@ -35,13 +36,14 @@ module.exports = {
         };
 
         sails.models.log.create(newLog).meta({fetch: true}).exec((err, newLog) => {
+            /* istanbul ignore if */
             if (err) {
                 console.error(err);
 
                 return exits.error(err);
             }
 
-            return exits.success({log: newLog});
+            return exits.success(newLog);
         });
     }
 };

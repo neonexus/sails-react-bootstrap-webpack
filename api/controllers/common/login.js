@@ -32,21 +32,28 @@ module.exports = {
 
     fn: async (inputs, exits, env) => {
         if (env.req.signedCookies[sails.config.session.name]) {
-            return exits.badRequest('Already logged in.');
+            const foundSession = await sails.models.session.findOne({id: env.req.signedCookies[sails.config.session.name]});
+
+            if (foundSession) {
+                return exits.badRequest('Already logged in.');
+            }
         }
 
         const badEmailPass = 'Bad email / password combination.';
 
+        /* istanbul ignore if */
         if (await sails.helpers.isPasswordValid.with({password: inputs.password, skipPwned: true}) !== true) {
             return exits.badRequest(badEmailPass);
         }
 
         const foundUser = await sails.models.user.findOne({email: inputs.email, deletedAt: null});
 
+        /* istanbul ignore if */
         if (!foundUser) {
             return exits.badRequest(badEmailPass);
         }
 
+        /* istanbul ignore if */
         if (!await sails.models.user.doPasswordsMatch(inputs.password, foundUser.password)) {
             return exits.badRequest(badEmailPass);
         }

@@ -32,9 +32,9 @@ module.exports = {
 
     fn: async function(inputs, exits) {
         if (inputs.req.requestId) {
+            const bleep = '*******';
             let out = _.merge({}, inputs.body),
-                headers = _.merge({}, inputs.res.getHeaders()), // copy the object
-                bleep = '*******';
+                headers = _.merge({}, inputs.res.getHeaders()); // copy the object
 
             if (!sails.config.logSensitiveData) { // a custom configuration option, for the request logger hook
                 if (out._csrf) {
@@ -60,8 +60,8 @@ module.exports = {
                 out = stringify(out);
             }
 
-            const time = Number(process.hrtime.bigint() - inputs.req._requestStartTime) / 1000000, // convert the bigint nanoseconds into milliseconds
-                totalTime = time.toFixed(4) + 'ms';
+            const time = Number(process.hrtime.bigint() - inputs.req._requestStartTime) / 1000000; // convert the bigint nanoseconds into milliseconds
+            const totalTime = time.toFixed(4) + 'ms';
 
             let log = {
                 responseCode: inputs.res.statusCode,
@@ -70,15 +70,17 @@ module.exports = {
                 responseTime: totalTime
             };
 
-            sails.models.requestlog.update(inputs.req.requestId, log, (err) => {
+            sails.models.requestlog.update({id: inputs.req.requestId}).set(log).exec((err) => {
+                /* istanbul ignore if */
                 if (err) {
-                    console.log(err);
+                    console.error(err);
                 }
-            });
-        }
 
-        // All done.
-        return exits.success();
+                return exits.success();
+            });
+        } else {
+            return exits.success();
+        }
     }
 };
 

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">20% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>2/10</span>
+                <span class='fraction'>9/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">20% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>2/10</span>
+                <span class='fraction'>9/9</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -109,9 +109,7 @@
 <a name='L44'></a><a href='#L44'>44</a>
 <a name='L45'></a><a href='#L45'>45</a>
 <a name='L46'></a><a href='#L46'>46</a>
-<a name='L47'></a><a href='#L47'>47</a>
-<a name='L48'></a><a href='#L48'>48</a>
-<a name='L49'></a><a href='#L49'>49</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L47'></a><a href='#L47'>47</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -136,27 +134,25 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const moment = require('moment-timezone');
@@ -180,31 +176,29 @@ module.exports = {
         },
         badRequest: {
             responseType: 'badRequest'
-        },
-        serverError: {
-            responseType: 'serverError'
         }
     },
 &nbsp;
-    fn: <span class="fstat-no" title="function not covered" >as</span>ync (inputs, exits, env) =&gt; {
-<span class="cstat-no" title="statement not covered" >        if (inputs.id === env.req.session.user.id) {</span>
-<span class="cstat-no" title="statement not covered" >            return exits.badRequest('One does not simply delete themselves...');</span>
+    fn: async (inputs, exits, env) =&gt; {
+        if (inputs.id === env.req.session.user.id) {
+            return exits.badRequest('One does not simply delete themselves...');
         }
 &nbsp;
-        const foundUser = <span class="cstat-no" title="statement not covered" >await sails.models.user.findOne({id: inputs.id, deletedAt: null});</span>
+        const foundUser = await sails.models.user.findOne({id: inputs.id, deletedAt: null});
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        if (!foundUser) {</span>
-<span class="cstat-no" title="statement not covered" >            return exits.badRequest('User does not exist');</span>
+        /* istanbul ignore if */
+        if (!foundUser) {
+            return exits.badRequest('User does not exist');
         }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        await sails.models.session.destroy({user: foundUser.id}); </span>// force logout any active sessions user might have
+        await sails.models.session.destroy({user: foundUser.id}); // force logout any active sessions user might have
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        await sails.models.user.update({id: foundUser.id}).set(_.merge({}, foundUser, {</span>
+        await sails.models.user.update({id: foundUser.id}).set(_.merge({}, foundUser, {
             deletedAt: moment.tz(sails.config.datastores.default.timezone).toDate(),
             deletedBy: env.req.session.user.id
         }));
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        return exits.ok();</span>
+        return exits.ok();
     }
 };
 &nbsp;</pre></td></tr></table></pre>
@@ -214,7 +208,7 @@ module.exports = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Wed Nov 16 2022 01:20:11 GMT-0600 (Central Standard Time)
+                at Sat Feb 11 2023 02:13:20 GMT-0600 (Central Standard Time)
             </div>
         <script src="../../prettify.js"></script>
         <script>

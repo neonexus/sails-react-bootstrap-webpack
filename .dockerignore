@@ -7,8 +7,11 @@ config/local.js
 .editorconfig
 .eslintignore
 .eslintrc
+.mocharc.yaml
+.nycrc
 .tmp
 .travis.yml
+test
 
 README.md
 CHANGELOG.md

@@ -68,5 +68,5 @@ module.exports.security = {
      *
      * See this for more details: https://haveibeenpwned.com/API/v3#PwnedPasswords
      */
-    checkPwned: true
+    checkPwnedPasswords: true
 };

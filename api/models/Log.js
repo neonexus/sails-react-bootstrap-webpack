@@ -3,8 +3,9 @@ module.exports = {
 
     attributes: {
         id: {
-            type: 'number',
-            autoIncrement: true
+            type: 'string',
+            columnType: 'varchar(36)',
+            required: true
         },
 
         user: {
@@ -26,10 +27,16 @@ module.exports = {
 
         createdAt: {
             type: 'ref',
-            columnType: 'datetime',
+            columnType: 'datetime(3)',
             autoCreatedAt: true
         },
 
         updatedAt: false
+    },
+
+    beforeCreate: async function(log, next) {
+        log.id = sails.helpers.generateUuid();
+
+        return next();
     }
 };

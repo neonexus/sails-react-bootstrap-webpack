@@ -15,7 +15,7 @@
  * > it to your .gitignore file.  If your repository will be publicly viewable,
  * > don't add private/sensitive data (like API secrets / db passwords) to this file!
  *
- * For more best practices and tips, see:
+ * For more best-practices and tips, see:
  * https://sailsjs.com/docs/concepts/deployment
  */
 

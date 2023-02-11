@@ -1,5 +1,5 @@
 const scrypt = require('scrypt-kdf');
-const md5 = require('md5'); // NEVER USE FOR PASSWORDS!
+const crypto = require('crypto');
 
 async function hashPassword(pass) {
     const hash = await scrypt.kdf(pass, {logN: 15});
@@ -18,7 +18,7 @@ async function updatePassword(password) {
 }
 
 function getGravatarUrl(email) {
-    return 'https://www.gravatar.com/avatar/' + md5(email);
+    return 'https://www.gravatar.com/avatar/' + crypto.createHash('md5').update(email).digest('hex');
 }
 
 function forceUppercaseOnFirst(name) {

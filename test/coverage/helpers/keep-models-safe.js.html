@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">9.09% </span>
+                <span class="strong">72.72% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/11</span>
+                <span class='fraction'>8/11</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">41.66% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/12</span>
+                <span class='fraction'>5/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/3</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">9.09% </span>
+                <span class="strong">72.72% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/11</span>
+                <span class='fraction'>8/11</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -125,28 +125,28 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">53x</span>
+<span class="cline-any cline-yes">169x</span>
+<span class="cline-any cline-yes">41x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">128x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">module.exports = {
@@ -167,18 +167,18 @@
         success: {}
     },
 &nbsp;
-    fn: <span class="fstat-no" title="function not covered" >(i</span>nputs, exits) =&gt; {
-        const dataCopy = <span class="cstat-no" title="statement not covered" >_.merge({}, inputs.data);</span> // don't modify the object given
+    fn: (inputs, exits) =&gt; {
+        const dataCopy = _.merge({}, inputs.data); // don't modify the object given
 &nbsp;
         // Force all objects to their JSON formats, if it has .toJSON() function.
         // This prevents accidental leaking of sensitive data, by utilizing .customToJSON() in model definitions.
-<span class="cstat-no" title="statement not covered" >        (function <span class="fstat-no" title="function not covered" >findTheJson(</span>data) {</span>
-<span class="cstat-no" title="statement not covered" >            _.forEach(data, <span class="fstat-no" title="function not covered" >(v</span>al, key) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >                if (_.isObject(val)) {</span>
-<span class="cstat-no" title="statement not covered" >                    return findTheJson(val);</span>
+        (function findTheJson(data) {
+            _.forEach(data, (val, key) =&gt; {
+                if (_.isObject(val)) {
+                    return findTheJson(val);
                 }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >                if (val &amp;&amp; val.toJSON &amp;&amp; typeof val.toJSON === 'function') {</span>
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (val &amp;&amp; val.toJSON &amp;&amp; <span class="branch-2 cbranch-no" title="branch not covered" >typeof val.toJSON === 'function')</span> {
                     // If this is a moment.js object, force it to .format() instead of .toJSON().
 <span class="cstat-no" title="statement not covered" >                    if (val.toDate &amp;&amp; typeof val.toDate === 'function' &amp;&amp; typeof val.format === 'function') {</span>
 <span class="cstat-no" title="statement not covered" >                        data[key] = val.format();</span>
@@ -189,7 +189,7 @@
             });
         })(dataCopy);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        return exits.success(dataCopy);</span>
+        return exits.success(dataCopy);
     }
 };
 &nbsp;</pre></td></tr></table></pre>
@@ -199,7 +199,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Wed Nov 16 2022 01:20:11 GMT-0600 (Central Standard Time)
+                at Sat Feb 11 2023 02:13:20 GMT-0600 (Central Standard Time)
             </div>
         <script src="../prettify.js"></script>
         <script>
