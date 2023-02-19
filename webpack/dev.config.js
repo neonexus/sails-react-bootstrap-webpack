@@ -42,5 +42,6 @@ module.exports = merge(baseConfig, {
                 ]
             }
         ]
-    }
+    },
+    mode: 'development'
 });
