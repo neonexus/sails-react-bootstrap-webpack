@@ -1,6 +1,6 @@
 {
     "name": "sails-react-bootstrap-webpack",
-    "version": "4.0.0",
+    "version": "4.0.1",
     "description": "An opinionated base configuration of Sails, with Webpack for React support, and Bootstrap for styling.",
     "keywords": [
         "sails",
@@ -99,6 +99,6 @@
     "author": "NeoNexus DeMortis",
     "license": "Unlicense",
     "engines": {
-        "node": ">=18.12"
+        "node": ">=18.14"
     }
 }

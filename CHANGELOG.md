@@ -4,8 +4,10 @@
 ### Features
 
 * Updated GitHub CodeQL config.
+* Regenerated package-lock.json to use version 3.
 * Manually updated package-lock.json to clear `npm audit` issues.
 * Updated dependencies.
+* Updated Node min requirement to 18.14.
 
 ## [v4.0.0](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v3.2.1...v4.0.0) (2023-02-11)
 
