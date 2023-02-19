@@ -42,9 +42,6 @@ module.exports.http = {
         ],
 
         customPoweredBy: (req, res, next) => {
-            // disable the default "X-Powered-By" middleware
-            sails.hooks.http.app.disable('x-powered-by');
-
             // set our own custom "X-Powered-By" header
             res.set('X-Powered-By', 'Awesome Sauce');
 

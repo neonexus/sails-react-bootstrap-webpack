@@ -1,5 +1,14 @@
 # Changelog
 
+## [v4.0.1](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v4.0.0...v4.0.1) (2023-02-19)
+### Features
+
+* Updated GitHub CodeQL config.
+* Regenerated package-lock.json to use version 3.
+* Manually updated package-lock.json to clear `npm audit` issues.
+* Updated dependencies.
+* Updated Node min requirement to 18.14.
+
 ## [v4.0.0](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v3.2.1...v4.0.0) (2023-02-11)
 
 ### Features
@@ -20,7 +29,7 @@
 ### Features
 
 * Built out PnwedPasswords.com (HaveIBeenPwned.com) API functionality into `is-password-valid` helper.
-  * Can be disabled in [config/security.js](config/security.js).
+* Can be disabled in [config/security.js](config/security.js).
 * FINALLY removed the usage of `res._headers`, so no more annoying deprecation message.
 * Simplified stored session data.
 * Updated dependencies.

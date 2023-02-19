@@ -33,5 +33,6 @@ module.exports = merge(baseConfig, {
             filename: '[name]/bundle.css',
             chunkFilename: '[id].css'
         })
-    ]
+    ],
+    mode: 'production'
 });

@@ -1,5 +1,6 @@
+dist: focal
 language: node_js
-node_js: '16'
+node_js: '18'
 services: mysql
 before_install:
     - mysql -e 'CREATE DATABASE IF NOT EXISTS testing;'

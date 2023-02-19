@@ -42,10 +42,10 @@ See the [`package.json` for more details](package.json).
 This repo is not installable via `npm`. Instead, GitHub provides a handy "Use this template" (green) button at the top of this page. That will create a special fork of this repo (so there is a single, init commit, instead of the commit history from this repo).
 
 ### Configuration
-In the `config` folder, there is the `local.js.sample` file, which is meant to be copied to `local.js`. This file (`local.js` not the sample) is ignored by Git, and intended for use in local development, NOT remote servers. Generally one would use environment variables for remote server configuration (and this repo is already setup to handle environment variable configuration for both DEV and PROD). See: [config/env/development.js](config/env/development.js) and [config/env/production.js](config/env/production.js).
+In the `config` folder, there is the [`local.js.sample`](config/local.js.sample) file, which is meant to be copied to `local.js`. This file (`local.js`, not the sample) is ignored by Git, and intended for use in local development, NOT remote servers. Generally one would use environment variables for remote server configuration (and this repo is already setup to handle environment variable configuration for both DEV and PROD). See: [config/env/development.js](config/env/development.js) and [config/env/production.js](config/env/production.js).
 
 #### Want to configure the "X-Powered-By" header?
-Sails, by default, has middleware (akin to [Express.js Middleware](https://expressjs.com/en/guide/using-middleware.html), Sails is built on Express.js after all...). Inside of [`config/http.js`](config/http.js) we disable the default middleware, and create our own `X-Powered-By` header, using Express.js Middleware.
+Sails, by default, has middleware (akin to [Express.js Middleware](https://expressjs.com/en/guide/using-middleware.html), Sails is built on Express.js after all...). Inside of [`config/http.js`](config/http.js) we create our own `X-Powered-By` header, using Express.js Middleware.
 
 ### Scripts built into [`package.json`](package.json):
 

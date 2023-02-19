@@ -43,7 +43,7 @@ describe('Delete User Controller', function() {
         });
     });
 
-    it('should not allow one delete one self', function(done) {
+    it('should not allow one to delete one self', function(done) {
         testUtils.deleteAsAdmin({
             route: '/user',
             expectedStatus: 400,
