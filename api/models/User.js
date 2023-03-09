@@ -1,6 +1,16 @@
 const scrypt = require('scrypt-kdf');
 const crypto = require('crypto');
 
+function forceUppercaseOnFirst(name) {
+    const trimName = name.trim();
+
+    return trimName.charAt(0).toUpperCase() + trimName.slice(1);
+}
+
+function getGravatarUrl(email) {
+    return 'https://www.gravatar.com/avatar/' + crypto.createHash('md5').update(email).digest('hex');
+}
+
 async function hashPassword(pass) {
     const hash = await scrypt.kdf(pass, {logN: 15});
 
@@ -15,14 +25,6 @@ async function updatePassword(password) {
     }
 
     return password;
-}
-
-function getGravatarUrl(email) {
-    return 'https://www.gravatar.com/avatar/' + crypto.createHash('md5').update(email).digest('hex');
-}
-
-function forceUppercaseOnFirst(name) {
-    return name.trim().charAt(0).toUpperCase() + name.trim().slice(1);
 }
 
 module.exports = {
@@ -114,19 +116,8 @@ module.exports = {
         }
     },
 
-    fullName: (user) => {
-        if (!user.firstName) {
-            throw new Error('User has no firstName attribute.');
-        }
-
-        if (!user.lastName) {
-            throw new Error('User has no lastName attribute.');
-        }
-
-        return user.firstName + ' ' + user.lastName;
-    },
-
     customToJSON: function() {
+        // This will be run by the "keep-models-safe" helper.
         return _.omit(this, [
             'password',
             'verificationKey'
@@ -141,6 +132,20 @@ module.exports = {
         const hashBuffer = Buffer.from(hashed, 'base64');
 
         return scrypt.verify(hashBuffer, raw).then((isAMatch) => isAMatch);
+    },
+
+    fullName: (user) => {
+        /* istanbul ignore if */
+        if (!user.firstName) {
+            throw new Error('User has no firstName attribute.');
+        }
+
+        /* istanbul ignore if */
+        if (!user.lastName) {
+            throw new Error('User has no lastName attribute.');
+        }
+
+        return user.firstName + ' ' + user.lastName;
     },
 
     beforeCreate: async function(user, next) {

@@ -68,6 +68,17 @@ module.exports.http = {
         //   return middlewareFn;
         // })(),
 
-    }
+    },
 
+    /****************************************************************************************
+     *                                                                                      *
+     * These are custom configuration options, designed so the `keep-models-safe` helper    *
+     * can standardize date formats for you. This also means you can customize how you      *
+     * see date data from your API on your local machine, if you were so inclined.          *
+     *                                                                                      *
+     ****************************************************************************************/
+    dateOutput: {
+        format: '', // empty string defaults to ISO-8601
+        tz: 'UTC' // timezone coercion
+    }
 };

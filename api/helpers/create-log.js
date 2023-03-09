@@ -1,20 +1,33 @@
+/**
+ * Create Log
+ *
+ * @function sails.helpers.createLog
+ * @param {Object} [req={}] - The request object to associate with this log.
+ * @param {*} data - The data to log.
+ * @param {String} description - The description for the log.
+ *
+ * @returns {Object} The new log model.
+ */
 module.exports = {
-    friendlyName: 'Create a log',
+    friendlyName: 'Create Log',
 
     description: 'Create a log to be stored in the database.',
 
     inputs: {
         req: {
             type: 'ref',
-            defaultsTo: {}
+            defaultsTo: {},
+            description: 'The current incoming request (req).'
         },
         data: {
             type: 'ref',
-            required: true
+            required: true,
+            description: 'The data to log.'
         },
         description: {
             type: 'string',
-            required: true
+            required: true,
+            description: 'Do you really need a description for a description?'
         }
     },
 
@@ -23,7 +36,7 @@ module.exports = {
         error: {}
     },
 
-    fn: function(inputs, exits){
+    fn: (inputs, exits) => {
         const user = (inputs.req.session && inputs.req.session.user) ? inputs.req.session.user.id : null,
             request = (inputs.req.requestId) ? inputs.req.requestId : null;
 

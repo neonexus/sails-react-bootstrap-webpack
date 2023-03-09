@@ -1,3 +1,13 @@
+const moment = require('moment-timezone');
+
+/**
+ * Keep Models Safe
+ *
+ * @function sails.helpers.keepModelsSafe
+ * @param {*} data - An object to traverse recursively, running .toJSON() when possible.
+ *
+ * @returns {*}
+ */
 module.exports = {
     friendlyName: 'Keep Models Safe',
 
@@ -17,27 +27,52 @@ module.exports = {
     },
 
     fn: (inputs, exits) => {
-        const dataCopy = _.merge({}, inputs.data); // don't modify the object given
+        /* istanbul ignore if */
+        if (!inputs.data) {
+            // If it's falsy, then skip everything else.
+            return exits.success(inputs.data);
+        }
 
         // Force all objects to their JSON formats, if it has .toJSON() function.
         // This prevents accidental leaking of sensitive data, by utilizing .customToJSON() in model definitions.
         (function findTheJson(data) {
             _.forEach(data, (val, key) => {
-                if (_.isObject(val)) {
-                    return findTheJson(val);
+                // If it's a date, use Moment.js to standardize output.
+                if (val instanceof Date) {
+                    data[key] = moment(val).tz(sails.config.http.dateOutput.tz).format(sails.config.http.dateOutput.format);
+
+                    return data[key];
+                }
+
+                // If this is a moment.js object, force it to .format().
+                if (val && val._isAMomentObject && val._isAMomentObject === true) {
+                    data[key] = val.tz(sails.config.http.dateOutput.tz).format(sails.config.http.dateOutput.format);
+
+                    return data[key];
                 }
 
                 if (val && val.toJSON && typeof val.toJSON === 'function') {
-                    // If this is a moment.js object, force it to .format() instead of .toJSON().
-                    if (val.toDate && typeof val.toDate === 'function' && typeof val.format === 'function') {
-                        data[key] = val.format();
-                    } else {
-                        data[key] = val.toJSON();
-                    }
+                    // This will call customToJSON function in models.
+                    // See models/user.js for an example.
+                    data[key] = val.toJSON();
+
+                    return data[key];
+                }
+
+                if (_.isObject(val)) {
+                    return findTheJson(val);
                 }
             });
-        })(dataCopy);
+        })(inputs.data);
 
-        return exits.success(dataCopy);
+        if (inputs.data && inputs.data.toJSON && typeof inputs.data.toJSON === 'function') {
+            // This will call customToJSON function in models.
+            // See models/user.js for an example.
+            inputs.data = inputs.data.toJSON();
+
+            return exits.success(inputs.data);
+        }
+
+        return exits.success(inputs.data);
     }
 };

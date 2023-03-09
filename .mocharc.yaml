@@ -3,8 +3,8 @@ async-only: true # require use of "done" cb or an async function (a Promise)
 require:
     - 'test/startTests.js' # starting point for tests
 spec:
-    - 'test/unit/**/*.test.js'
-    - 'test/integration/**/*.test.js'
+    - 'test/unit/index.js'
+    - 'test/integration/index.js'
 timeout: 10000 # Give Sails some breathing room... We are building schemas / data fixtures.
 checkLeaks: true
 global:

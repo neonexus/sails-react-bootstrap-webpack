@@ -1,12 +1,20 @@
 const crypto = require('crypto');
 const moment = require('moment-timezone');
 
+/**
+ * Generate Token
+ *
+ * @function sails.helpers.generateToken
+ * @param {String} [extra='Evil will always triumph, because good is dumb. -Lord Helmet'] - A bit of random, extra bits to change up the hash.
+ *
+ * @returns {String} A SHA256 hash of a cryptographically-secure, randomly generated string of characters.
+ */
 module.exports = {
-    sync: true, // this is a synchronous helper
-
-    friendlyName: 'Generate token',
+    friendlyName: 'Generate Token',
 
     description: 'Generate generic token for generic use, generically. (64 characters)',
+
+    sync: true, // not async
 
     inputs: {
         extra: {
@@ -16,13 +24,13 @@ module.exports = {
         }
     },
 
-    fn: function(inputs, exits) {
+    fn: (inputs, exits) => {
         return exits.success(
-            crypto.createHmac('sha256', sails.config.session.secret).update(
-                crypto.randomBytes(21)          // cryptographically-secure random characters
-                + moment(new Date()).format()   // throw in the current time stamp
-                + inputs.extra                  // an optional way to add a bit more randomness to the mix
-                + crypto.randomBytes(21)        // cryptographically-secure random characters
+            crypto.createHmac('sha512', sails.config.session.secret).update(
+                crypto.randomBytes(21)    // cryptographically-secure random characters
+                + moment(new Date()).format()       // throw in the current time stamp
+                + inputs.extra                      // an optional way to add a bit more randomness to the mix
+                + crypto.randomBytes(21)       // cryptographically-secure random characters
             ).digest('hex')
         );
     }

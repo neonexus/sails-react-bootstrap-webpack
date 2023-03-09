@@ -44,12 +44,14 @@ module.exports = {
 
         let out = await sails.helpers.paginateForJson.with({
             model: sails.models.user,
-            objToWrap: {users: []}, // this is the object that will be output to "out", and will contain additional pagination info,
+            // This is the object that will contain the pagination info.
+            objToWrap: {users: []},
             query
         });
 
         // We assign the users to the object afterward, so we can run our safety checks.
-        // Otherwise, if we were to put the users object into "objToWrap", they would be transformed, and the "customToJSON" feature would no longer work, and hashed passwords would leak.
+        // Otherwise, if we were to put the users object into "objToWrap", they would be transformed,
+        // and the "customToJSON" feature would no longer work, and hashed passwords would leak.
         out.users = await sails.models.user.find(_.omit(query, ['page'])).populate('deletedBy');
 
         return exits.ok(out);

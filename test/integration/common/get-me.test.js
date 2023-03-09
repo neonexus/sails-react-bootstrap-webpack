@@ -31,6 +31,7 @@ describe('Get-Me Controller', function() {
                 res.body.user.firstName.should.be.a('string').and.eq(testUtils.fixtures.user[2].firstName);
                 res.body.user.lastName.should.be.a('string').and.eq(testUtils.fixtures.user[2].lastName);
                 should.not.exist(res.body.user.password);
+                should.not.exist(res.body.user.verificationKey);
 
                 done();
             }

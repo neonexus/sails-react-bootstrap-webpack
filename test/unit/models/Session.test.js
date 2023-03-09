@@ -1,8 +1,6 @@
 describe('Session Model', function() {
     before(function() {
         // sanity checks
-        should.exist(sails);
-        sails.models.should.have.property('user');
         sails.models.should.have.property('session');
     });
 

@@ -14,8 +14,6 @@
  */
 
 module.exports.datastores = {
-
-
     /***************************************************************************
      *                                                                          *
      * Your app's default datastore.                                            *
@@ -47,6 +45,12 @@ module.exports.datastores = {
          * 3. Then pass it in, along with a connection URL.                         *
          *    (See https://sailsjs.com/config/datastores for help.)                 *
          *                                                                          *
+         *                                                                          *
+         * NOTE: These settings are often overwritten in `local.js`, or the remote  *
+         * environment configs: `env/development.js` or `env/production.js`.        *
+         *                                                                          *
+         * NEVER STORE SECURITY CREDENTIALS IN GIT-CONTROLLED FILES!!!              *
+         *                                                                          *
          ***************************************************************************/
         adapter: 'sails-mysql',
         // url: 'mysql://user:password@host:port/database',
@@ -56,10 +60,11 @@ module.exports.datastores = {
         password: process.env.DB_PASS || 'mypass',
         database: process.env.DB_NAME || 'myapp',
         port: process.env.DB_PORT || 3306,
+
+        // These are good settings to standardize across environments,
+        // and should generally only be set in this file.
         charset: 'utf8mb4',
         collation: 'utf8mb4_general_ci',
         timezone: 'UTC'
     }
-
-
 };

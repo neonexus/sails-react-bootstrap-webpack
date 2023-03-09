@@ -20,9 +20,6 @@
  */
 
 module.exports = {
-
-    logSensitiveData: false, // never log sensitive data in production database (for custom request logger hook)
-
     baseUrl: process.env.BASE_URL || 'https://myapi.app',
     assetsUrl: process.env.ASSETS_URL || '', // Something like: https://my-cdn.app/ must end with / or be blank.
 
@@ -52,18 +49,18 @@ module.exports = {
          *                                                                          *
          ***************************************************************************/
         default: {
-            // NEVER EVER STORE PRODUCTION CREDENTIALS IN THIS FILE!
-            // NEVER EVER STORE PRODUCTION CREDENTIALS IN THIS FILE!
-            // NEVER EVER STORE PRODUCTION CREDENTIALS IN THIS FILE!
-            host: process.env.DB_HOSTNAME || 'localhost',       // To make sure you are
-            user: process.env.DB_USERNAME || 'produser',        // aware of the environment
-            password: process.env.DB_PASSWORD || 'prodpass',    // you are configuring,
-            database: process.env.DB_NAME || 'prod',            // you must use HOSTNAME not HOST,
-            port: process.env.DB_PORT || 3306,                  // and USERNAME not USER,
-            ssl: (process.env.DB_SSL !== 'false')               // and PASSWORD not PASS.
-            // NEVER EVER STORE PRODUCTION CREDENTIALS IN THIS FILE!
-            // NEVER EVER STORE PRODUCTION CREDENTIALS IN THIS FILE!
-            // NEVER EVER STORE PRODUCTION CREDENTIALS IN THIS FILE!
+            // NEVER EVER STORE PRODUCTION SECURITY CREDENTIALS IN THIS FILE!!!
+            // NEVER EVER STORE PRODUCTION SECURITY CREDENTIALS IN THIS FILE!!!
+            // NEVER EVER STORE PRODUCTION SECURITY CREDENTIALS IN THIS FILE!!!
+            host: process.env.DB_HOSTNAME || 'localhost',                   // To make sure you are
+            user: process.env.DB_USERNAME || 'produser',                    // aware of the environment
+            password: process.env.DB_PASSWORD || 'prodpass',                // you are configuring,
+            database: process.env.DB_NAME || 'prod',                        // you must use HOSTNAME not HOST,
+            port: process.env.DB_PORT || 3306,                              // and USERNAME not USER,
+            ssl: (process.env.DB_SSL !== 'false')                           // and PASSWORD not PASS.
+            // NEVER EVER STORE PRODUCTION SECURITY CREDENTIALS IN THIS FILE!!!
+            // NEVER EVER STORE PRODUCTION SECURITY CREDENTIALS IN THIS FILE!!!
+            // NEVER EVER STORE PRODUCTION SECURITY CREDENTIALS IN THIS FILE!!!
         }
     },
 
@@ -97,7 +94,6 @@ module.exports = {
         }*/
     },
 
-
     /**************************************************************************
      *                                                                         *
      * Always disable "shortcut" blueprint routes.                             *
@@ -111,7 +107,6 @@ module.exports = {
     blueprints: {
         shortcuts: false
     },
-
 
     /***************************************************************************
      *                                                                          *
@@ -146,8 +141,22 @@ module.exports = {
                 // 'http://localhost:8080'
             ],
             allowCredentials: true
-        }
+        },
 
+        /********************************************************************
+         *                                                                  *
+         * NEVER log sensitive info in request logs!                        *
+         *                                                                  *
+         * If the request logger detects NODE_ENV=PRODUCTION, it will       *
+         * refuse to log sensitive info, regardless of the settings here,   *
+         * or other configuration files. This is a final safeguard, which   *
+         * must be manually removed if you MUST log sensitive info, (but    *
+         * you NEVER should!!!). This option is here as a reminder.         *
+         *                                                                  *
+         ********************************************************************/
+        requestLogger: {
+            logSensitiveData: false // can not be changed
+        }
     },
 
 
@@ -226,7 +235,7 @@ module.exports = {
             maxAge: 24 * 60 * 60 * 1000  // 24 hours
         },
 
-        // https://jsfiddle.net/fsbd3ey5/1/
+        // sails run generate:token
         secret: process.env.SESSION_SECRET, // DO NOT STORE THIS IN SOURCE CONTROL!!!
     },
 

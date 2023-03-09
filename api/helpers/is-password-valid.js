@@ -1,8 +1,18 @@
 const superagent = require('superagent');
 const crypto = require('crypto');
 
+/**
+ * Is Password Valid
+ *
+ * @function sails.helpers.isPasswordValid
+ * @param {String} password - The password to validate.
+ * @param {Boolean} [skipPwned=false] - Whether to skip checking the password with PwnedPasswords.com API or not.
+ * @param {Object} [user] - A user object to check the password against (to prevent obvious passwords).
+ *
+ * @returns {Boolean|Array} True if the password has passed all safety checks; an array of error messages otherwise.
+ */
 module.exports = {
-    friendlyName: 'Is password valid',
+    friendlyName: 'Is Password Valid',
 
     description: 'Does the provided password conform to the given standards? Either returns true, or an array of errors. Also checks the PwndPasswords API.',
 
@@ -22,7 +32,7 @@ module.exports = {
         }
     },
 
-    fn: function(inputs, exits) {
+    fn: (inputs, exits) => {
         let errors = [],
             isPassPhrase = false;
 
@@ -87,9 +97,13 @@ module.exports = {
                     if (err) {
                         console.error(err);
 
-                        return exits.success(err);
+                        return exits.success(['There was an internal error. Please try again.']);
                     }
 
+                    // The API is guaranteed to return something, regardless of the hash prefix we give it, as stated here: https://haveibeenpwned.com/API/v3#SearchingPwnedPasswordsByRange
+                    // So, we just need to find out if our hash has a hit or not.
+                    //
+                    // This `if` is a small safety measure... Just in-case...
                     if (res.text && res.text.length) {
                         const chunks = res.text.split('\r\n');
                         const matches = chunks.filter(s => s.includes(passChunk2));

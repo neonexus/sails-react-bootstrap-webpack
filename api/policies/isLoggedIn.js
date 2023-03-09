@@ -21,10 +21,11 @@ module.exports = async function(req, res, next) {
         }
 
         // Doesn't look like this session is valid, remove the cookie.
-        res.clearCookie(sails.config.session.name, {signed: true, httpOnly: true, secure: sails.config.session.cookie.secure});
+        /* istanbul ignore next */
+        res.clearCookie(sails.config.session.name, {signed: true, secure: sails.config.session.cookie.secure});
     } else {
         // We couldn't find a session via cookies, let's check headers...
-        let token = req.headers['authorization'];
+        let token = req.headers['authorization'] || null;
 
         if (token) {
             if (token.includes('Bearer ')) {
@@ -36,7 +37,7 @@ module.exports = async function(req, res, next) {
             if (foundToken) {
                 await sails.models.apitoken.updateOne({token}).set({updatedAt: new Date()});
 
-                req.session = {user: foundToken.user};
+                req.session = {id: foundToken.id, user: foundToken.user, isAPIToken: true};
 
                 return next();
             }

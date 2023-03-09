@@ -1,11 +1,11 @@
 const Tokens = require('csrf');
 
 module.exports = {
-    sync: true,
-
-    friendlyName: 'Generate CSRF token',
+    friendlyName: 'Generate CSRF Token and Secret',
 
     description: 'Generate a CSRF token, and a secret.',
+
+    sync: true, // not async
 
     inputs: {
         saltLength: {

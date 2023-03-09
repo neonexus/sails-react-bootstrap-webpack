@@ -19,7 +19,7 @@ module.exports = {
 
         return exits.created({
             token: newToken.token,
-            __skipCSRF: true // this tells our "ok" response to ignore the CSRF token update
+            __skipCSRF: true // this tells our "created" response to ignore the CSRF token update
         });
     }
 };

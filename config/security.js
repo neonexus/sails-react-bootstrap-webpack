@@ -57,16 +57,34 @@ module.exports.security = {
     // see the api/policies
 
 
-    /**
-     * This is a custom configuration, for the built-in PwnedPasswords.com API
-     * See: ../api/helpers/is-password-valid.js
-     *
-     * When enabled, sails.helpers.isPasswordValid() will check with the
-     * PwnedPasswords.com API (v3), using a k-Anonymity model, preventing
-     * third parties, including the PwnedPasswords.com API from knowing
-     * which password we are searching for.
-     *
-     * See this for more details: https://haveibeenpwned.com/API/v3#PwnedPasswords
-     */
-    checkPwnedPasswords: true
+    /************************************************************************************
+     *                                                                                  *
+     * This is a custom configuration option, for the built-in PwnedPasswords.com API.  *
+     * See: ../api/helpers/is-password-valid.js                                         *
+     *                                                                                  *
+     * When enabled, sails.helpers.isPasswordValid() will check with the                *
+     * PwnedPasswords.com API (v3), using a k-Anonymity model, preventing               *
+     * third parties, including the PwnedPasswords.com API from knowing                 *
+     * which password we are searching for.                                             *
+     *                                                                                  *
+     * See this for more details:                                                       *
+     *      https://haveibeenpwned.com/API/v3#PwnedPasswords                            *
+     *                                                                                  *
+     ************************************************************************************/
+    checkPwnedPasswords: true,
+
+    /********************************************************************
+     *                                                                  *
+     * This is a custom configuration option, for the request logger    *
+     * hook (api/hook/request-logger.js) and the finalize request log   *
+     * helper (api/helpers/finalize-request-log.js).                    *
+     *                                                                  *
+     * If for some reason you need you debug sensitive info in your     *
+     * request logs, you can set this to `true`. Will ALWAYS be `false` *
+     * on PRODUCTION environments.                                      *
+     *                                                                  *
+     ********************************************************************/
+    requestLogger: {
+        logSensitiveData: false
+    }
 };

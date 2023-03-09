@@ -1,11 +1,11 @@
 const Tokens = require('csrf');
 
 module.exports = {
-    sync: true,
-
     friendlyName: 'Verify CSRF token',
 
     description: 'Verify a CSRF token, given a secret.',
+
+    sync: true, // not async
 
     inputs: {
         token: {

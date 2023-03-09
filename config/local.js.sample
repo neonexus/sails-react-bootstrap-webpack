@@ -32,10 +32,8 @@ module.exports = {
 
     session: {
         name: 'myapp',
-        secret: '85de17bf23b68aa2e9fc85615ca9fd3f62406f25' // https://jsfiddle.net/fsbd3ey5/1/
+        secret: '85de17bf23b68aa2e9fc85615ca9fd3f62406f25' // sails run generate:token
     },
-
-    logSensitiveData: false, // used in request logs hook
 
     models: {
         migrate: 'alter'

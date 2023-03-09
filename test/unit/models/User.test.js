@@ -3,7 +3,6 @@ const userFixtures = require('../../fixtures/User.js');
 describe('User Model', function() {
     before(function() {
         // sanity checks
-        should.exist(sails);
         sails.models.should.have.property('user');
     });
 

@@ -1,8 +1,7 @@
 const stringify = require('json-stringify-safe');
 
 module.exports = {
-
-    friendlyName: 'Finalize request log',
+    friendlyName: 'Finalize Request Log',
 
     description: 'Used by response handlers to log final responses to requests.',
 
@@ -30,13 +29,14 @@ module.exports = {
         success: {}
     },
 
-    fn: async function(inputs, exits) {
+    fn: async (inputs, exits) => {
         if (inputs.req.requestId) {
             const bleep = '*******';
             let out = _.merge({}, inputs.body),
                 headers = _.merge({}, inputs.res.getHeaders()); // copy the object
 
-            if (!sails.config.logSensitiveData) { // a custom configuration option, for the request logger hook
+            // Regardless of what our configuration option is set to, NEVER log sensitive info on PRODUCTION!
+            if (sails.config.security.requestLogger.logSensitiveData !== true || process.env.NODE_ENV.toUpperCase() === 'PROD' || process.env.NODE_ENV.toUpperCase() === 'PRODUCTION') {
                 if (out._csrf) {
                     out._csrf = bleep;
                 }
