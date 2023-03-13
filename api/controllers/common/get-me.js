@@ -17,6 +17,8 @@ module.exports = {
         }
     },
 
+    // `env` is an "escape hatch", to get at the current session `env.req.session`.
+    // This requires the "isLoggedIn" policy is run beforehand.
     fn: async (inputs, exits, env) => {
         const foundUser = await sails.models.user.findOne({id: env.req.session.user.id}); // req.session.user is filled in by the isLoggedIn policy
 

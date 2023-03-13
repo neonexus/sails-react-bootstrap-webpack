@@ -1,3 +1,14 @@
+/**
+ * Paginate for Query
+ *
+ * @function sails.helpers.paginateForQuery
+ * @param {Number} [page=1] - Page number.
+ * @param {Number} [limit=25] - The page limit.
+ * @param {String|String[]} [sort="createdAt DESC"] - Either a string, or an array of strings, of column names to sort and direction.
+ * @param {Object} [where=null] - The criteria to limit the search by.
+ *
+ * @returns {Object} An object to send as the `.find()` input.
+ */
 module.exports = {
     sync: true, // is a synchronous function
 

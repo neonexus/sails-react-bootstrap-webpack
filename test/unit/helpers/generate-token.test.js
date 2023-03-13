@@ -10,13 +10,13 @@ describe('generateToken Helper', function() {
         token = sails.helpers.generateToken();
 
         token.should.be.a('string');
-        token.length.should.equal(64);
+        token.length.should.equal(128);
     });
 
     it('should not return the same token in multiple calls', async function() {
         const thisToken = sails.helpers.generateToken();
 
         thisToken.should.not.equal(token);
-        thisToken.length.should.equal(64);
+        thisToken.length.should.equal(128);
     });
 });

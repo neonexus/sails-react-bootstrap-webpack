@@ -73,22 +73,27 @@ module.exports.models = {
         // updatedAt: {type: 'ref', columnType: 'datetime', autoUpdatedAt: true}
     },
 
-    /******************************************************************************
-     *                                                                             *
-     * The set of DEKs (data encryption keys) for at-rest encryption.              *
-     * i.e. when encrypting/decrypting data for attributes with `encrypt: true`.   *
-     *                                                                             *
-     * > The `default` DEK is used for all new encryptions, but multiple DEKs      *
-     * > can be configured to allow for key rotation.  In production, be sure to   *
-     * > manage these keys like you would any other sensitive credential.          *
-     *                                                                             *
-     * > For more info, see:                                                       *
-     * > https://sailsjs.com/docs/concepts/orm/model-settings#?dataEncryptionKeys  *
-     *                                                                             *
+    /********************************************************************************
+     *                                                                              *
+     * The set of DEKs (data encryption keys) for at-rest encryption.               *
+     * i.e. when encrypting/decrypting data for attributes with `encrypt: true`.    *
+     *                                                                              *
+     * > The `default` DEK is used for all new encryptions, but multiple DEKs       *
+     * > can be configured to allow for key rotation.  In production, be sure to    *
+     * > manage these keys like you would any other sensitive credential.           *
+     *                                                                              *
+     * > For more info, see:                                                        *
+     * > https://sailsjs.com/docs/concepts/orm/model-settings#?dataEncryptionKeys   *
+     *                                                                              *
+     * NOTE: These keys should NEVER be stored in Git-controlled files, such as     *
+     * this one, for PRODUCTION servers! They are security credentials, and should  *
+     * NEVER be shared, or stored in files!                                         *
+     *                                                                              *
      ******************************************************************************/
 
     dataEncryptionKeys: {
-        default: 'ELYo2WqYb1i9WczQnz6zMh+i/ySx6qYJWxdW2hmuHbI='
+        // Run this to generate a new key: `sails run generate:dek` or `npm run generate:dek`
+        default: 'UVbqegnBnrFClPyj4ntsYEL19gs8ZCRmTpmZXdKRKNA=' // NEVER STORE THIS FOR PRODUCTION PURPOSES!!!
     },
 
     /***************************************************************************
@@ -111,13 +116,16 @@ module.exports.models = {
      *                                                                              *
      * This is a custom property, that is used inside of config/bootstrap.js.       *
      * If set to true AND sails.config.models.migrate === 'safe', then the          *
-     * database schema validation and enforcement goes to work. If the database     *
-     * is not configured according to the model specifications, the problem areas   *
-     * will be console.error()'d, and Sails will fail to lift. This is intended for *
-     * remote environments, to help prevent accidental deployment of an             *
-     * incompatible version for the given datastore.                                *
+     * database schema validation and enforcement goes to work.                     *
+     *                                                                              *
+     * If the database is not configured according to the model specifications,     *
+     * the problem areas will be console.error()'d, and Sails will fail to lift.    *
+     *                                                                              *
+     * This is intended for remote environments, to help prevent accidental         *
+     * deployment of an incompatible version for the given datastore.               *
      *                                                                              *
      ********************************************************************************/
+
     validateOnBootstrap: true
 
 };

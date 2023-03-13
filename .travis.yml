@@ -1,6 +1,9 @@
-dist: focal
+dist: jammy
 language: node_js
-node_js: '18'
+node_js: node
+cache:
+    directories: [ node_modules ]
+install: npm install
 services: mysql
 before_install:
     - mysql -e 'CREATE DATABASE IF NOT EXISTS testing;'

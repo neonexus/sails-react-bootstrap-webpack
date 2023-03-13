@@ -67,7 +67,7 @@ module.exports = {
             });
         } else {
             isPasswordValid = true;
-            password = sails.helpers.generateToken();
+            password = sails.helpers.generateToken().substring(0, 42);
 
             // should probably send password somehow; it will be scrubbed in the custom response
         }

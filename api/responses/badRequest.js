@@ -8,8 +8,8 @@ module.exports = async function badRequest(msg) {
 
     const out = {
         success: false,
-        errors: await sails.helpers.simplifyErrors(msg),
-        errorMessages: await sails.helpers.getErrorMessages(msg),
+        errors: sails.helpers.simplifyErrors(msg),
+        errorMessages: sails.helpers.getErrorMessages(msg),
         raw: msg
     };
 

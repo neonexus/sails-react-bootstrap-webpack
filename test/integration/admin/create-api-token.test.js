@@ -26,7 +26,7 @@ describe('Create API Token Controller', function() {
                     return done(err);
                 }
 
-                res.body.token.should.be.a('string').and.have.lengthOf(64);
+                res.body.token.should.be.a('string').and.have.lengthOf(128);
 
                 const foundToken = await sails.models.apitoken.findOne({token: res.body.token});
 

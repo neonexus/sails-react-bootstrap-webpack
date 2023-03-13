@@ -10,7 +10,8 @@ module.exports = {
 
         token: {
             type: 'string',
-            unique: true
+            unique: true,
+            columnType: 'varchar(128)'
         },
 
         user: {

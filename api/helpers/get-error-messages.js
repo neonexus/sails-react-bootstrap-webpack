@@ -1,8 +1,17 @@
+/**
+ * Get Error Messages
+ *
+ * @function sails.helpers.getErrorMessages
+ * @param {Object} err - The error object to smash down into an array of strings.
+ *
+ * @returns {Array} An array of crunched-down errors.
+ */
 module.exports = {
-
-    friendlyName: 'Get error messages',
+    friendlyName: 'Get Error Messages',
 
     description: 'This condenses down ugly error syntax into a flat array.',
+
+    sync: true,
 
     inputs: {
         err: {
@@ -12,7 +21,7 @@ module.exports = {
 
     exits: {},
 
-    fn: async function(inputs, exits) {
+    fn: (inputs, exits) => {
         let errors = [],
             err = inputs.err;
 

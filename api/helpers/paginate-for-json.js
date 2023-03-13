@@ -1,3 +1,13 @@
+/**
+ * Paginate for JSON
+ *
+ * @function sails.helpers.paginateForJson
+ * @param {JSON} query - This should be the value returned from `sails.helpers.paginateForQuery()`.
+ * @param {Object} model - A reference to the Sails model that was paginated, like `User` or `sails.model.user`.
+ * @param {Object} objToWrap - The object to be modified with pagination info, to return to the end-user.
+ *
+ * @returns {Object} A modified copy of the `objToWrap` input, which includes pagination data.
+ */
 module.exports = {
     friendlyName: 'Paginate for JSON',
 
@@ -23,7 +33,7 @@ module.exports = {
         },
 
         objToWrap: {
-            description: 'The response to be given to the end-user.',
+            description: 'The object to be modified with pagination info, to return to the end-user.',
             type: 'json',
             required: true
         }
@@ -48,15 +58,13 @@ module.exports = {
                 throw new Error(err);
             }
 
-            let objToWrap = _.merge({}, inputs.objToWrap); // copy the object
+            inputs.objToWrap.totalFound = totalCount;
+            inputs.objToWrap.totalPages = Math.ceil(totalCount / limit);
+            inputs.objToWrap.limit = limit;
+            inputs.objToWrap.page = page;
+            inputs.objToWrap.sort = sort;
 
-            objToWrap.totalFound = totalCount;
-            objToWrap.totalPages = Math.ceil(totalCount / limit);
-            objToWrap.limit = limit;
-            objToWrap.page = page;
-            objToWrap.sort = sort;
-
-            return exits.success(objToWrap);
+            return exits.success(inputs.objToWrap);
         });
     }
 };

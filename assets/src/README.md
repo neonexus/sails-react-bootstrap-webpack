@@ -7,4 +7,4 @@ This is where our React source files live.
 * [`index.jsx`](index.jsx) is only used by Webpack dev server. Otherwise, is useless on remote servers.
 * The other 2 files in the root of this directory are Webpack entry points. These files are the starting point for our React apps.
 * The `common` folder is where shared, custom components should live.
-* The `data` folder is where React contexts live.
+* The `data` folder is where React contexts live. See: https://beta.reactjs.org/learn/passing-data-deeply-with-context

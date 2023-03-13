@@ -43,7 +43,7 @@ class Users extends React.Component {
         if (!this.state.isLoading) {
             this.setState({isLoading: true, currentPage: page});
 
-            this.props.api.get('/deletedUsers?page=' + page + '&limit=' + this.state.perPage, (resp) => {
+            this.props.api.get('/users/deleted?page=' + page + '&limit=' + this.state.perPage, (resp) => {
                 this.setState({
                     currentUsers: resp.users,
                     totalUsers: resp.totalFound.toLocaleString(),

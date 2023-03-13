@@ -31,7 +31,7 @@ module.exports = {
         }
     },
 
-    fn: function(inputs, exits) {
+    fn: (inputs, exits) => {
         if (!inputs.data.cookies) {
             return exits.success(inputs.data);
         }

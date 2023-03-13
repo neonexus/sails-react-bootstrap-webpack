@@ -41,5 +41,22 @@ module.exports = {
 
     blueprints: {
         shortcuts: false // don't accidentally expose API routes in a remote environment
+    },
+
+    security: {
+        /********************************************************************
+         *                                                                  *
+         * This is a custom configuration option, for the request logger    *
+         * hook (api/hook/request-logger.js) and the finalize request log   *
+         * helper (api/helpers/finalize-request-log.js).                    *
+         *                                                                  *
+         * If for some reason you need you debug sensitive info in your     *
+         * request logs, you can set this to `true`. Will ALWAYS be `false` *
+         * on PRODUCTION environments.                                      *
+         *                                                                  *
+         ********************************************************************/
+        requestLogger: {
+            logSensitiveData: false
+        }
     }
 };

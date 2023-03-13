@@ -1,7 +1,7 @@
 module.exports = {
     friendlyName: 'Create Admin User',
 
-    description: 'Create an admin user via `sails run create-admin`. Only 1 admin user can be created this way; the API must be used otherwise.',
+    description: 'Create an admin user.',
 
     inputs: {
         email: {

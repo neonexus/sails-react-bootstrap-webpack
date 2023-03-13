@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">5% </span>
+                <span class="strong">5.26% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/20</span>
+                <span class='fraction'>1/19</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">5% </span>
+                <span class="strong">5.26% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/20</span>
+                <span class='fraction'>1/19</span>
             </div>
         
             
@@ -125,7 +125,25 @@
 <a name='L60'></a><a href='#L60'>60</a>
 <a name='L61'></a><a href='#L61'>61</a>
 <a name='L62'></a><a href='#L62'>62</a>
-<a name='L63'></a><a href='#L63'>63</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -176,8 +194,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -187,7 +203,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">module.exports = {
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
+ * Paginate for JSON
+ *
+ * @function sails.helpers.paginateForJson
+ * @param {JSON} query - This should be the value returned from `sails.helpers.paginateForQuery()`.
+ * @param {Object} model - A reference to the Sails model that was paginated, like `User` or `sails.model.user`.
+ * @param {Object} objToWrap - The object to be modified with pagination info, to return to the end-user.
+ *
+ * @returns {Object} A modified copy of the `objToWrap` input, which includes pagination data.
+ */
+module.exports = {
     friendlyName: 'Paginate for JSON',
 &nbsp;
     description: 'A pagination helper to modify output with pagination data.',
@@ -212,7 +238,7 @@
         },
 &nbsp;
         objToWrap: {
-            description: 'The response to be given to the end-user.',
+            description: 'The object to be modified with pagination info, to return to the end-user.',
             type: 'json',
             required: true
         }
@@ -237,15 +263,13 @@
 <span class="cstat-no" title="statement not covered" >                throw new Error(err);</span>
             }
 &nbsp;
-            let objToWrap = <span class="cstat-no" title="statement not covered" >_.merge({}, inputs.objToWrap);</span> // copy the object
+<span class="cstat-no" title="statement not covered" >            inputs.objToWrap.totalFound = totalCount;</span>
+<span class="cstat-no" title="statement not covered" >            inputs.objToWrap.totalPages = Math.ceil(totalCount / limit);</span>
+<span class="cstat-no" title="statement not covered" >            inputs.objToWrap.limit = limit;</span>
+<span class="cstat-no" title="statement not covered" >            inputs.objToWrap.page = page;</span>
+<span class="cstat-no" title="statement not covered" >            inputs.objToWrap.sort = sort;</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            objToWrap.totalFound = totalCount;</span>
-<span class="cstat-no" title="statement not covered" >            objToWrap.totalPages = Math.ceil(totalCount / limit);</span>
-<span class="cstat-no" title="statement not covered" >            objToWrap.limit = limit;</span>
-<span class="cstat-no" title="statement not covered" >            objToWrap.page = page;</span>
-<span class="cstat-no" title="statement not covered" >            objToWrap.sort = sort;</span>
-&nbsp;
-<span class="cstat-no" title="statement not covered" >            return exits.success(objToWrap);</span>
+<span class="cstat-no" title="statement not covered" >            return exits.success(inputs.objToWrap);</span>
         });
     }
 };
@@ -256,7 +280,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Sat Feb 11 2023 02:13:20 GMT-0600 (Central Standard Time)
+                at 2023-03-13T05:06:10.294Z
             </div>
         <script src="../prettify.js"></script>
         <script>

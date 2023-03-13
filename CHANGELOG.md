@@ -1,11 +1,34 @@
 # Changelog
 
+## [v4.1.0](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v4.0.1...v4.1.0) (2023-03-13)
+### Features
+
+* Alphabetized the scripts in `package.json`.
+* Added custom configuration options to the main `README`.
+* Updated dependencies.
+* Reworked how tests are run, so they are a bit more organized in a nested tree for reporting.
+* Added JSDoc comments to most helpers to aid with auto-completion (some helpers aren't meant to be used outside of automation).
+* Added some `README` files to a few key folders.
+* Added table of contents to README.
+
+### Breaking Changes
+
+* Renamed `sails.config.logSensitiveData` -> `sails.config.security.requestLogger.logSensitiveData`.
+* Rewrote the [`keepModelsSafe` helper](api/helpers/keep-models-safe.js) to better handle dates (Javascript or Moment).
+* Changed `sails.helpers.getErrorMessages` to be a synchronous function.
+* Changed `sails.helpers.simplifyErrors` to be a synchronous function.
+* Changed `sails.helpers.generateToken` to use `SHA512` instead of `SHA256`, doubling the size of tokens (64 -> 128).
+
+### Future Plans
+
+* Switching [`Moment.js`](https://momentjs.com) -> [`Luxon`](https://moment.github.io/luxon/) per [Moment's recommendations](https://momentjs.com/docs/#/-project-status/recommendations/). There are a few difference to be aware of: [https://moment.github.io/luxon/#/moment](https://moment.github.io/luxon/#/moment). Display formats are also different between the 2.
+
 ## [v4.0.1](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v4.0.0...v4.0.1) (2023-02-19)
 ### Features
 
 * Updated GitHub CodeQL config.
 * Regenerated package-lock.json to use version 3.
-* Manually updated package-lock.json to clear `npm audit` issues.
+* Manually updated `package-lock.json` to clear `npm audit` issues.
 * Updated dependencies.
 * Updated Node min requirement to 18.14.
 
@@ -14,9 +37,12 @@
 ### Features
 
 * More work on automated tests and utilities.
-* Renamed tests entry point (hooks.js -> startTests.js).
 * Updated dependencies.
 * Removed `md5` / `sha1` / `uuid` packages, in favor of Node built-ins.
+
+### Breaking Changes
+
+* Renamed tests entry point (`hooks.js` -> `startTests.js`).
 
 ## [v3.2.1](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v3.2.0...v3.2.1) (2022-11-16)
 

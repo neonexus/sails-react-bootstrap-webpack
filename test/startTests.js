@@ -106,25 +106,31 @@ exports.mochaHooks = {
             fs.readdir(path.join(__dirname, '../api/models'), (error, files) => {
                 should.not.exist(error);
 
-                Object.keys(sails.models).should.have.lengthOf(files.length + 1); // add 1 for the built-in archive model
+                Object.keys(sails.models).should.have.lengthOf(files.length); // add 1 for the built-in archive model, which cancels the README
             });
 
             fs.readdir(path.join(__dirname, '../api/helpers'), (error, files) => {
                 should.not.exist(error);
 
-                Object.keys(sails.helpers).should.have.lengthOf(files.length);
+                Object.keys(sails.helpers).should.have.lengthOf(files.length - 1); // don't include the README
+            });
+
+            fs.readdir(path.join(__dirname, '../api/hooks'), (error, files) => {
+                should.not.exist(error);
+
+                Object.keys(sails.hooks).should.have.lengthOf(files.length + 16); // there are 16 built-in hooks
             });
 
             fs.readdir(path.join(__dirname, '../api/responses'), (error, files) => {
                 should.not.exist(error);
 
-                Object.keys(sails.registry.responses).should.have.lengthOf(files.length);
+                Object.keys(sails.registry.responses).should.have.lengthOf(files.length); // although there is a README, 'negotiate', while deprecated, is still a built-in response
             });
 
             fs.readdir(path.join(__dirname, '../api/policies'), (error, files) => {
                 should.not.exist(error);
 
-                Object.keys(sails.registry.policies).should.have.lengthOf(files.length);
+                Object.keys(sails.registry.policies).should.have.lengthOf(files.length - 1); // don't include the README
             });
 
             // hand our testUtils a reference to the Sails instance

@@ -52,7 +52,7 @@ describe('Create User Controller', function() {
                 firstName: 'New',
                 lastName: 'User',
                 email: 'new@user.com',
-                password: 'Test1234!' + sails.helpers.generateUuid()
+                password: 'Test1234@' + sails.helpers.generateUuid()
             },
             expectedStatus: 201, // created
             end: async (err, res) => {

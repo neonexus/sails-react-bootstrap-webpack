@@ -25,7 +25,8 @@ module.exports = (sails) => {
                             query = _.merge({}, req.query),
                             headers = _.merge({}, req.headers); // copy the object
 
-                        if (!sails.config.logSensitiveData) {
+                        // Regardless of what our configuration option is set to, NEVER log sensitive info on PRODUCTION!
+                        if (sails.config.security.requestLogger.logSensitiveData !== true || process.env.NODE_ENV.toUpperCase() === 'PROD' || process.env.NODE_ENV.toUpperCase() === 'PRODUCTION') {
                             // don't log plain-text passwords
                             if (body.password) {
                                 body.password = bleep;
