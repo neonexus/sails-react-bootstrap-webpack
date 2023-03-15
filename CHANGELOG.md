@@ -1,5 +1,11 @@
 # Changelog
 
+## [v4.1.1](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v4.1.0...v4.1.1) (2023-03-14)
+### Features
+
+* Fixed a stupid mistake in `api/controllers/get-users.js`.
+* Updated dependencies.
+
 ## [v4.1.0](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v4.0.1...v4.1.0) (2023-03-13)
 ### Features
 

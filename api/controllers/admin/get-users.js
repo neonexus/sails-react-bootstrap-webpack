@@ -48,7 +48,7 @@ module.exports = {
         // We assign the users to the object afterward, so we can run our safety checks.
         // Otherwise, if we were to put the users object into "objToWrap", they would be transformed,
         // and the "customToJSON" feature would no longer work, and hashed passwords would leak.
-        out.users = await sails.models.user.find(_.omit(pagination, ['page']));
+        out.users = await sails.models.user.find(_.omit(query, ['page']));
 
         return exits.ok(out);
     }
