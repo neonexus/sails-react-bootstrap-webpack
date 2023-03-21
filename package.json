@@ -1,6 +1,6 @@
 {
     "name": "sails-react-bootstrap-webpack",
-    "version": "4.1.1",
+    "version": "4.2.0",
     "description": "An opinionated base configuration of Sails, with Webpack for React support, and Bootstrap for styling.",
     "keywords": [
         "sails",
@@ -49,7 +49,7 @@
         "file-loader": "6.2.0",
         "fixted": "4.1.0",
         "html-webpack-plugin": "5.5.0",
-        "mini-css-extract-plugin": "2.7.3",
+        "mini-css-extract-plugin": "2.7.5",
         "mkdirp": "2.1.5",
         "mocha": "10.2.0",
         "npm-run-all": "4.1.5",
@@ -61,12 +61,12 @@
         "react-transition-group": "4.4.5",
         "rimraf": "4.4.0",
         "sass": "1.59.3",
-        "sass-loader": "13.2.0",
+        "sass-loader": "13.2.1",
         "style-loader": "3.3.2",
         "supertest": "6.3.3",
-        "webpack": "5.76.1",
+        "webpack": "5.76.2",
         "webpack-cli": "5.0.1",
-        "webpack-dev-server": "4.12.0",
+        "webpack-dev-server": "4.13.1",
         "webpack-merge": "5.8.0"
     },
     "scripts": {

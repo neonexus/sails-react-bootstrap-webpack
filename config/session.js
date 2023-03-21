@@ -1,3 +1,5 @@
+const moment = require('moment-timezone');
+
 /**
  * Session Configuration
  * (sails.config.session)
@@ -38,9 +40,21 @@ module.exports.session = {
         return !!req.path.match(req._sails.LOOKS_LIKE_ASSET_RX);
     },
 
+    /************************************************************************************************
+     *                                                                                              *
+     * This is a custom configuration option, used to set when sessions expire in the datastore.    *
+     * If a user is active, the `expiresAt` will be updated to prevent accidental logouts.          *
+     *                                                                                              *
+     ************************************************************************************************/
+    expiresAt: {
+        amount: 30,
+        unit: 'days'
+    },
+
     cookie: {
+        // if cookies should be HTTPs only
         secure: false,
+        // This age is when we choose not to use "session" cookies, and want max-age instead.
         maxAge: 24 * 60 * 60 * 1000 * 7  // 1 week
     }
-
 };

@@ -1,18 +1,30 @@
+const moment = require('moment-timezone');
+
 module.exports = async function(req, res, next) {
     const sessionId = req.signedCookies[sails.config.session.name] || null; // signed cookies: https://sailsjs.com/documentation/reference/request-req/req-signed-cookies
 
-    // do we have a signed cookie
+    // Do we have a signed cookie?
     if (sessionId) {
-        const foundSession = await sails.models.session.findOne({id: sessionId}).populate('user');
+        const foundSession = await sails.models.session.findOne({id: sessionId}).decrypt().populate('user');
 
+        // Has the session expired?
+        if (moment(foundSession.expiresAt).isBefore(moment(new Date()))) {
+            res.clearCookie(sails.config.session.name, {signed: true, secure: sails.config.session.cookie.secure});
+
+            await sails.models.session.destroy({id: sessionId});
+
+            return res.forbidden('You are not logged in');
+        }
+
+        // If the session was found...
         if (foundSession && foundSession.user) {
-            req.session = {id: sessionId, user: foundSession.user};
+            req.session = {id: sessionId, user: foundSession.user, data: foundSession.data};
 
             if (req.method !== 'GET') {
                 const csrf = req.headers['x-csrf-token'];
 
                 // verify the CSRF token is still valid
-                if (csrf && sails.helpers.verifyCsrfToken.with({token: csrf, secret: foundSession.data._csrfSecret})) {
+                if (csrf && sails.helpers.verifyCsrfToken.with({token: csrf, secret: foundSession.csrfSecret})) {
                     return next();
                 }
             } else {
@@ -32,12 +44,18 @@ module.exports = async function(req, res, next) {
                 token = token.substring(7);
             }
 
-            const foundToken = await sails.models.apitoken.findOne({token}).populate('user');
+            token = token.split(':');
+
+            const foundToken = await sails.models.apitoken.findOne({id: token[0]}).decrypt().populate('user');
+
+            if (!foundToken || token[1] !== foundToken.token) {
+                return res.forbidden('Invalid credentials.');
+            }
 
             if (foundToken) {
-                await sails.models.apitoken.updateOne({token}).set({updatedAt: new Date()});
+                await sails.models.apitoken.updateOne({id: foundToken.id}).set({updatedAt: new Date()});
 
-                req.session = {id: foundToken.id, user: foundToken.user, isAPIToken: true};
+                req.session = {id: foundToken.id, user: foundToken.user, data: foundToken.data, isAPIToken: true};
 
                 return next();
             }

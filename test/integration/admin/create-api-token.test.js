@@ -26,13 +26,22 @@ describe('Create API Token Controller', function() {
                     return done(err);
                 }
 
+                res.body.id.should.be.uuid('v4');
                 res.body.token.should.be.a('string').and.have.lengthOf(128);
 
-                const foundToken = await sails.models.apitoken.findOne({token: res.body.token});
+                const foundToken = await sails.models.apitoken.findOne(res.body.id);
 
                 if (!foundToken) {
                     return done(new Error('Token wasn\'t created as expected.'));
                 }
+
+                // Make sure the token was encrypted.
+                foundToken.token.should.be.a('string').and.not.eq(res.body.token);
+
+                const foundToken2 = await sails.models.apitoken.findOne(res.body.id).decrypt();
+
+                // Make sure we can decrypt it.
+                foundToken2.token.should.be.a('string').and.eq(res.body.token);
 
                 done();
             }

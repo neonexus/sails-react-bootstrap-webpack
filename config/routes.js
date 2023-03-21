@@ -68,6 +68,10 @@ module.exports.routes = {
     'POST /api/v1/login': 'common/login',
     'GET /api/v1/logout': 'common/logout',
     'GET /api/v1/me': 'common/get-me',
+    'POST /api/v1/password': 'common/change-password',
+
+    'POST /api/v1/2fa/enable': 'common/enable-2fa',
+    'POST /api/v1/2fa/finalize': 'common/finalize-2fa',
 
     'GET /_ping': (req, res) => {
         return res.ok('pong');

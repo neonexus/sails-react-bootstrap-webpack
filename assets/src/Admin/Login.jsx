@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {UserConsumer} from '../data/userContext';
+import {UserConsumer} from '../data/UserContext';
+import defaultAPIErrorHandler from '../data/defaultAPIErrorHandler';
 
 import {Row, Button, Form} from 'react-bootstrap';
 
@@ -12,6 +13,7 @@ class Login extends React.Component {
         this.state = {
             email: localStorage.getItem('email') || '',
             password: '',
+            otp: '',
             autoFocusPassword: false
         };
 
@@ -22,6 +24,7 @@ class Login extends React.Component {
         this.handleLogin = this.handleLogin.bind(this);
         this.handleEmail = this.handleEmail.bind(this);
         this.handlePassword = this.handlePassword.bind(this);
+        this.handleOTP = this.handleOTP.bind(this);
     }
 
     handleLogin(e, done, rememberMe) {
@@ -37,24 +40,18 @@ class Login extends React.Component {
             url: '/login',
             body: {
                 email: this.state.email,
-                password: this.state.password
+                password: this.state.password,
+                otp: this.state.otp
             }
         }, (body) => {
             if (body.success) {
                 return done(body.user);
             }
 
-            // should not happen
-            alert('Bad email / password.');
-        }, (err, resp) => {
-            console.error(err.response);
-
-            const errMessage = (resp && resp.errors && resp.errors.problems)
-                ? resp.errors.problems.join('\n')
-                : (resp && resp.errorMessages) ? resp.errorMessages.join('\n') : 'Unknown Error. Are you connected to the internet?';
-
-            alert(errMessage);
-        });
+            // This should not happen, as the error handler below should display the error from the server.
+            alert('Unknown error. Please try again. If this error persists, please contact support.');
+            console.error('Something is wrong in the handleLogin API post...');
+        }, defaultAPIErrorHandler);
 
         return false;
     }
@@ -65,6 +62,10 @@ class Login extends React.Component {
 
     handlePassword(e) {
         this.setState({password: e.target.value});
+    }
+
+    handleOTP(e) {
+        this.setState({otp: e.target.value});
     }
 
     render() {
@@ -86,28 +87,41 @@ class Login extends React.Component {
                                     <Form onSubmit={(e) => this.handleLogin(e, userContext.login, userContext.isRememberMeOn)} className="col-sm-5">
                                         <h3>Login</h3>
                                         <div className="pb-2">
-                                            <Form.Control
-                                                type="email"
-                                                className="form-control"
-                                                placeholder="Email"
-                                                value={this.state.email}
-                                                name="email"
-                                                onChange={this.handleEmail}
-                                                autoFocus={!this.state.autoFocusPassword}
-                                                required
-                                            />
+                                            <Form.FloatingLabel label="Email" controlId="email">
+                                                <Form.Control
+                                                    type="email"
+                                                    value={this.state.email}
+                                                    placeholder="someone@somewhere.com" // This is required, even if it isn't shown, because of the CSS effect.
+                                                    onChange={this.handleEmail}
+                                                    autoFocus={!this.state.autoFocusPassword}
+                                                    required
+                                                />
+                                            </Form.FloatingLabel>
+                                        </div>
+                                        <div className="pb-2">
+                                            <Form.FloatingLabel label="Password" controlId="password">
+                                                <Form.Control
+                                                    type="password"
+                                                    maxLength="70"
+                                                    placeholder="Password"
+                                                    value={this.state.password}
+                                                    onChange={this.handlePassword}
+                                                    autoFocus={this.state.autoFocusPassword}
+                                                    required
+                                                />
+                                            </Form.FloatingLabel>
                                         </div>
                                         <div className="pb-4">
-                                            <Form.Control
-                                                type="password"
-                                                className="form-control"
-                                                placeholder="Password"
-                                                name="password"
-                                                value={this.state.password}
-                                                onChange={this.handlePassword}
-                                                autoFocus={this.state.autoFocusPassword}
-                                                required
-                                            />
+                                            <Form.FloatingLabel label="One-Time Password" controlId="otp">
+                                                <Form.Control
+                                                    type="text"
+                                                    maxLength="8"
+                                                    placeholder="One-Time Password"
+                                                    value={this.state.otp}
+                                                    onChange={this.handleOTP}
+                                                />
+                                                <Form.Text muted className="ms-2">Required only if enabled.</Form.Text>
+                                            </Form.FloatingLabel>
                                         </div>
                                         <div className="pb-4">
                                             <Form.Check

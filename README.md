@@ -3,7 +3,7 @@
 [![Travis CI status](https://app.travis-ci.com/neonexus/sails-react-bootstrap-webpack.svg?branch=release)](https://app.travis-ci.com/github/neonexus/sails-react-bootstrap-webpack)
 
 This is an opinionated base [Sails v1](https://sailsjs.com) application, using [Webpack](https://webpack.js.org) to handle [Bootstrap](https://getbootstrap.com) (using [SASS](https://sass-lang.com))
-and [React](https://reactjs.org) builds. It is designed such that, one can build multiple React frontends (an admin panel, and a customer site maybe), that use the same API backend. This allows
+and [React](https://react.dev) builds. It is designed such that, one can build multiple React frontends (an admin panel, and a customer site maybe), that use the same API backend. This allows
 developers to easily share React components across different frontends / applications. Also, because the backend and frontend are in the same repo (and the frontend is compiled before it is handed to
 the end user), they can share [NPM](http://npmjs.com) libraries, like [Moment.js](https://momentjs.com)
 
@@ -46,6 +46,7 @@ Gitter: [![Join the chat at https://gitter.im/sails-react-bootstrap-webpack/comm
   feature inside [`config/bootstrap.js`](config/bootstrap.js). See [schema validation and enforcement](#schema-validation-and-enforcement) for more info.
 * New passwords will be checked against the [PwnedPasswords API](https://haveibeenpwned.com/API/v3#PwnedPasswords). If there is a single hit for the password, an error will be given, and the user will
   be forced to choose another. See [PwnedPasswords integration](#pwnedpasswordscom-integration) for more info.
+* Google Authenticator-style OTP (One-Time Password) functionality.
 
 ## Branch Warning
 
@@ -58,25 +59,25 @@ the [`releases section`](https://github.com/neonexus/sails-react-bootstrap-webpa
 
 ## Current Dependencies
 
-* [Sails](https://sailsjs.com/) **v1**
-* [React](https://reactjs.org/) **v18**
-* [React Router](https://reactrouter.com/) **v6**
-* [Bootstrap](https://getbootstrap.com/) **v5**
-* [React-Bootstrap](https://react-bootstrap.github.io/) **v2**
-* [Webpack](https://webpack.js.org/) **v5**
+* [Sails](https://sailsjs.com) **v1**
+* [React](https://react.dev) **v18**
+* [React Router](https://reactrouter.com) **v6**
+* [Bootstrap](https://getbootstrap.com) **v5**
+* [React-Bootstrap](https://react-bootstrap.github.io) **v2**
+* [Webpack](https://webpack.js.org) **v5**
 
 See the [`package.json` for more details](package.json).
 
 ## How to Use
 
-This repo is not installable via `npm`. Instead, GitHub provides a handy "Use this template" (green) button at the top of this page. That will create a special fork of this repo (so there is a single,
+This repo is not installable via `npm`. Instead, GitHub provides a handy "Use this template" (green) button at the top of this page. That will create a special clone of this repo (so there is a single,
 init commit, instead of the commit history from this repo).
 
 ## Configuration
 
 In the `config` folder, there is the [`local.js.sample`](config/local.js.sample) file, which is meant to be copied to `local.js`. This file (`local.js`, not the sample) is ignored by Git, and intended
 for use in local development, NOT remote servers. Generally one would use environment variables for remote server configuration (and this repo is already setup to handle environment variable
-configuration for both DEV and PROD). See: [config/env/development.js](config/env/development.js) and [config/env/production.js](config/env/production.js).
+configuration for both DEV and PROD). See [Environment Variables](#environment-variables) for more.
 
 ### Custom Configuration Options
 
@@ -94,11 +95,40 @@ option. If the option path is `sails.config.security.checkPwnedPasswords`, then 
 
 ... to your `config/local.js` to overwrite the option on your local machine only.
 
-| Option Name (`sails.config.`)             | Initially Defined In                                                                                                                                                     | Default | Description                                                                                                                                                                                                                                                                              |
-|-------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `models.validateOnBootstrap`              | [`config/bootstrap.js`](config/bootstrap.js)                                                                                                                             | `true`  | When enabled, and `models.migrate === 'safe'` (aka PRODUCTION), then the SQL schemas of the default datastore will be validated against the model definitions. <br /><br />See [schema validation and enforcement](#schema-validation-and-enforcement) for more info.                    |
-| `security.checkPwnedPasswords`            | [`config/security.js`](config/security.js)                                                                                                                               | `true`  | When enabled, [`sails.helpers.isPasswordValid()`](api/helpers/is-password-valid.js) will run it's normal checks, before checking with the PwnedPasswords.com API to verify the password has not been found in a known security breach. If it has, it will consider the password invalid. |
-| `security.requestLogger.logSensitiveData` | [`config/security.js`](config/security.js) <br /> [`config/env/development.js`](config/env/development.js) <br /> [`config/env/production.js`](config/env/production.js) | `false` | If enabled, and NOT a PRODUCTION environment, the [request logger](#request-logging) will log sensitive info, such as passwords. <br /><br /> This will ALWAYS be false on PRODUCTION. It is in the PRODUCTION configuration file only as a reminder.                                    |
+<table>
+    <thead>
+        <tr>
+            <th>Option Name (<code>sails.config.</code>)</th>
+            <th>Initially Defined In</th>
+            <th>Default</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>models.validateOnBootstrap</code></td>
+            <td><a href="/neonexus/sails-react-bootstrap-webpack/blob/release/config/bootstrap.js"><code>config/bootstrap.js</code></a></td>
+            <td><code>true</code></td>
+            <td>When enabled, and <code>models.migrate === 'safe'</code> (aka PRODUCTION), then the SQL schemas of the default datastore will be validated against the model definitions. <br><br>See <a href="#schema-validation-and-enforcement">schema validation and enforcement</a> for more info.</td>
+        </tr>
+        <tr>
+            <td><code>security.checkPwnedPasswords</code></td>
+            <td><a href="/neonexus/sails-react-bootstrap-webpack/blob/release/config/security.js"><code>config/security.js</code></a></td>
+            <td><code>true</code></td>
+            <td>When enabled, <a href="/neonexus/sails-react-bootstrap-webpack/blob/release/api/helpers/is-password-valid.js"><code>sails.helpers.isPasswordValid()</code></a> will run it's normal checks, before checking with the PwnedPasswords.com API to verify the password has not been found in a known security breach. If it has, it will consider the password invalid.</td>
+        </tr>
+        <tr>
+            <td>
+                <code>security.</code><br/>
+                <code>requestLogger.</code><br/>
+                <code>logSensitiveData</code>
+            </td>
+            <td><a href="/neonexus/sails-react-bootstrap-webpack/blob/release/config/security.js"><code>config/security.js</code></a> <br> <a href="/neonexus/sails-react-bootstrap-webpack/blob/release/config/env/development.js"><code>config/env/development.js</code></a> <br> <a href="/neonexus/sails-react-bootstrap-webpack/blob/release/config/env/production.js"><code>config/env/production.js</code></a></td>
+            <td><code>false</code></td>
+            <td>If enabled, and NOT a PRODUCTION environment, the <a href="#request-logging">request logger</a> will log sensitive info, such as passwords. <br><br> This will ALWAYS be false on PRODUCTION. It is in the PRODUCTION configuration file only as a reminder.</td>
+        </tr>
+    </tbody>
+</table>
 
 ### Want to configure the `X-Powered-By` header?
 
@@ -322,9 +352,7 @@ middleware: {
         'favicon'       // default hook to serve favicon
     ],
 
-        prerender
-:
-    require('prerender-node').set('prerenderToken', 'YOUR_TOKEN')
+        prerender: require('prerender-node').set('prerenderToken', 'YOUR_TOKEN')
 
 }
 ```
@@ -335,9 +363,9 @@ middleware: {
 * [Sails Deployment Tips](https://sailsjs.com/documentation/concepts/deployment)
 * [Sails Community Support Options](https://sailsjs.com/support)
 * [Sails Professional / Enterprise Options](https://sailsjs.com/enterprise)
-* [`react-bootstrap` Documentation](https://react-bootstrap.netlify.app/)
-* [Webpack Documentation](https://webpack.js.org/)
-* [React Documentation](https://beta.reactjs.org/)
+* [`react-bootstrap` Documentation](https://react-bootstrap.netlify.app)
+* [Webpack Documentation](https://webpack.js.org)
+* [React Documentation](https://react.dev)
 * [Bootstrap Documentation](https://getbootstrap.com/docs/5.3/getting-started/introduction/)
 * [Simple data fixtures for testing Sails.js (the npm package `fixted`)](https://www.npmjs.com/package/fixted)
 

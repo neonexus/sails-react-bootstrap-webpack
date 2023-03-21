@@ -1,11 +1,15 @@
-import React from 'react';
+import React, {lazy} from 'react';
 import PropTypes from 'prop-types';
-import {UserConsumer} from '../data/userContext';
+
 import {Button, Col, Row, Table, Tabs, Tab, Spinner} from 'react-bootstrap';
 import moment from 'moment-timezone';
-import PaginationTools from '../common/PaginationTools';
-import CreateUserModal from './CreateUserModal';
-import DeleteUserModal from './DeleteUserModal';
+
+const PaginationTools = lazy(() => import('../../common/PaginationTools'));
+const CreateUserModal = lazy(() => import('./CreateUserModal'));
+const DeleteUserModal = lazy(() => import('./DeleteUserModal'));
+
+import {UserConsumer} from '../../data/UserContext';
+import defaultAPIErrorHandler from '../../data/defaultAPIErrorHandler';
 
 class Users extends React.Component {
     constructor(props) {
@@ -51,9 +55,7 @@ class Users extends React.Component {
                     isLoading: false,
                     isTabLoading: false
                 });
-            }, (err) => {
-                console.error(err);
-            });
+            }, defaultAPIErrorHandler);
         }
     }
 
@@ -70,9 +72,7 @@ class Users extends React.Component {
                     isLoading: false,
                     isTabLoading: false
                 });
-            }, (err) => {
-                console.error(err);
-            });
+            }, defaultAPIErrorHandler);
         }
     }
 
@@ -139,7 +139,7 @@ class Users extends React.Component {
         return (
             <UserConsumer>
                 {
-                    (userContext) => (
+                    (user) => (
                         <>
                             <Tabs className="mb-3" onSelect={this.handleTabChange}>
                                 <Tab title="Active" eventKey="active" disabled={this.state.isLoading}>
@@ -175,23 +175,23 @@ class Users extends React.Component {
                                                     </thead>
                                                     <tbody className="align-middle">
                                                         {
-                                                            this.state.currentUsers.map((user) => (
-                                                                <tr key={user.id}>
-                                                                    <td>{user.firstName}&nbsp;{user.lastName}{(user.id === userContext.user.id) ? '\u00A0(me)' : ''}</td>
+                                                            this.state.currentUsers.map((thisUser) => (
+                                                                <tr key={thisUser.id}>
+                                                                    <td>{thisUser.firstName}&nbsp;{thisUser.lastName}{(thisUser.id === user.info.id) ? '\u00A0(me)' : ''}</td>
                                                                     <td>
-                                                                        <a href={'mailto:' + encodeURIComponent(user.firstName + ' ' + user.lastName) + '<' + user.email + '>'}>
-                                                                            {user.email}
+                                                                        <a href={'mailto:' + encodeURIComponent(thisUser.firstName + ' ' + thisUser.lastName) + '<' + thisUser.email + '>'}>
+                                                                            {thisUser.email}
                                                                         </a>
                                                                     </td>
-                                                                    <td>{user.role}</td>
-                                                                    <td>{moment(user.createdAt).format('l @ LTS').replaceAll(' ', '\u00A0')}</td>
+                                                                    <td>{thisUser.role}</td>
+                                                                    <td>{moment(thisUser.createdAt).format('l @ LTS').replaceAll(' ', '\u00A0')}</td>
                                                                     <td className="text-end">
                                                                         <Button variant="primary" className="me-lg-2 mb-2 mb-lg-0">Edit</Button>
                                                                         <Button
                                                                             variant="danger"
-                                                                            disabled={user.id === userContext.user.id}
+                                                                            disabled={thisUser.id === user.info.id}
                                                                             onClick={() => this.setState({
-                                                                                currentDeleteUser: {id: user.id, firstName: user.firstName, lastName: user.lastName, role: user.role},
+                                                                                currentDeleteUser: {id: thisUser.id, firstName: thisUser.firstName, lastName: thisUser.lastName, role: thisUser.role},
                                                                                 showDeleteModal: true,
                                                                                 softDeleteUser: true
                                                                             })}

@@ -45,7 +45,7 @@ module.exports = {
     },
 
     exits: {
-        ok: {
+        created: {
             responseType: 'created'
         },
         badRequest: {
@@ -56,7 +56,7 @@ module.exports = {
         }
     },
 
-    fn: async (inputs, exits) => {
+    fn: async (inputs, exits, env) => {
         let password = inputs.password;
         let isPasswordValid;
 
@@ -69,7 +69,7 @@ module.exports = {
             isPasswordValid = true;
             password = sails.helpers.generateToken().substring(0, 42);
 
-            // should probably send password somehow; it will be scrubbed in the custom response
+            // should probably send password somehow; it will be scrubbed in the custom response (would be hashed anyway...)
         }
 
         if (isPasswordValid !== true) {
@@ -88,8 +88,9 @@ module.exports = {
             lastName: inputs.lastName,
             password,
             role: inputs.role,
-            email: inputs.email
-        }).meta({fetch: true}).exec((err, newUser) => {
+            email: inputs.email,
+            createdBy: env.req.session.user.id
+        }).fetch().exec((err, user) => {
             /* istanbul ignore if */
             if (err) {
                 console.error(err);
@@ -98,10 +99,10 @@ module.exports = {
             }
 
             /**
-             * We should probably email the new user their new account info here if the password was generated (!inputs.setPassword)...
+             * TODO: We should probably email the new user their new account info here if the password was generated (!inputs.setPassword)...
              */
 
-            return exits.ok({user: newUser});
+            return exits.created({user});
         });
     }
 };

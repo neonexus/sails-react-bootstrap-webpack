@@ -1,5 +1,15 @@
 const stringify = require('json-stringify-safe');
 
+/**
+ * Finalize Request Log
+ *
+ * @function sails.helpers.finalizeRequestLog
+ * @param {Object} req The current `req` object.
+ * @param {Object} res The current `res` object.
+ * @param {Object} body The final body of the response given to the end-user.
+ *
+ * @returns null
+ */
 module.exports = {
     friendlyName: 'Finalize Request Log',
 

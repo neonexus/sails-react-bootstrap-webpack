@@ -103,6 +103,10 @@ module.exports = {
             columnType: 'datetime'
         },
 
+        createdBy: {
+            model: 'user'
+        },
+
         createdAt: {
             type: 'ref',
             columnType: 'datetime',
@@ -116,7 +120,7 @@ module.exports = {
         }
     },
 
-    customToJSON: function() {
+    customToJSON: function() { // DO NOT use => function
         // This will be run by the "keep-models-safe" helper.
         return _.omit(this, [
             'password',
@@ -162,12 +166,20 @@ module.exports = {
     },
 
     beforeUpdate: async function(user, next) {
-        const email = user.email.toLowerCase().trim();
+        if (user.email && user.email !== '') {
+            const email = user.email.toLowerCase().trim();
 
-        user.email = email;
-        user.avatar = getGravatarUrl(email);
-        user.firstName = forceUppercaseOnFirst(user.firstName);
-        user.lastName = forceUppercaseOnFirst(user.lastName);
+            user.email = email;
+            user.avatar = getGravatarUrl(email);
+        }
+
+        if (user.firstName && user.firstName !== '') {
+            user.firstName = forceUppercaseOnFirst(user.firstName);
+        }
+
+        if (user.lastName && user.lastName !== '') {
+            user.lastName = forceUppercaseOnFirst(user.lastName);
+        }
 
         if (user.password && user.password !== '') {
             user.password = await updatePassword(user.password);

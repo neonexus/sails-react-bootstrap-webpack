@@ -1,12 +1,31 @@
 # Changelog
 
+## [v4.2.0](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v4.1.1...v4.2.0) (2023-03-19)
+### Features
+
+* Built 2FA (2-Factor Authentication) capabilities.
+* Added `createdBy` to the [`User`](api/models/User.js) model.
+* Built session expiration handling.
+* Built password changing modal / API.
+* Made session data saving automatic, and work with both sessions / API tokens.
+* Fixed some README quirks.
+* Updated React links to use their new domain.
+* Updated dependencies.
+
+### Breaking Changes
+
+* Moved CSRF secret storage from the `data` column, to its own column, so it can easily be encrypted/decrypted in the [`Session`](api/models/Session.js) model.
+* Changed how API tokens are handled. So now, when using an API token, the ID must be given first, then the token, seperated by a colon.<br />Example: `Authorization` header is: `tokenID:apiToken` (or `Bearer tokenID:apiToken`).
+* Renamed `sails.helpers.updateCsrf` -> `sails.helpers.updateCsrfAndExpiry` to reflect the session expiry update.
+
 ## [v4.1.1](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v4.1.0...v4.1.1) (2023-03-14)
 ### Features
 
-* Fixed a stupid mistake in `api/controllers/get-users.js`.
+* Fixed a stupid mistake in [`api/controllers/admin/get-users.js`](api/controllers/admin/get-users.js).
 * Updated dependencies.
 
 ## [v4.1.0](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v4.0.1...v4.1.0) (2023-03-13)
+
 ### Features
 
 * Alphabetized the scripts in `package.json`.
@@ -48,7 +67,7 @@
 
 ### Breaking Changes
 
-* Renamed tests entry point (`hooks.js` -> `startTests.js`).
+* Renamed tests entry point (`test/hooks.js` -> `test/startTests.js`).
 
 ## [v3.2.1](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v3.2.0...v3.2.1) (2022-11-16)
 
@@ -119,7 +138,7 @@
 
 ### Breaking Changes
 
-* Updated to React v18. See: [the upgrade guide to React 18](https://reactjs.org/blog/2022/03/08/react-18-upgrade-guide.html).
+* Updated to React v18. See: [the upgrade guide to React 18](https://react.dev/blog/2022/03/08/react-18-upgrade-guide).
 * Updated to React Router DOM v6. See: [the v5 -> v6 migration guide](https://reactrouter.com/docs/en/v6/upgrading/v5). This requires a **MAJOR** overhaul of how routes are handled.
 * Moved some controllers into a "common" folder, instead of the "admin" folder (as they could be used outside of admin controls).
 

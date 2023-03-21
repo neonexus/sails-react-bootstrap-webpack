@@ -4,7 +4,7 @@ import React from 'react';
 import {isObject} from 'lodash';
 import PropTypes from 'prop-types';
 
-const userContext = React.createContext();
+const UserContext = React.createContext();
 
 export class UserProvider extends React.Component {
     constructor(props) {
@@ -15,7 +15,7 @@ export class UserProvider extends React.Component {
         this.handleLogout = this.handleLogout.bind(this);
 
         this.state = {
-            user: props.user || {},
+            info: props.user || {},
             isLoggedIn: !!(props.user), // if the user prop was given, assume we are logged in
             isRememberMeOn: localStorage.getItem('user_remember_me') === 'true',
             login: this.handleLogin,
@@ -28,7 +28,7 @@ export class UserProvider extends React.Component {
         if (user && isObject(user)) {
             this.setState({
                 isLoggedIn: true,
-                user
+                info: user
             });
         }
     }
@@ -39,15 +39,15 @@ export class UserProvider extends React.Component {
     }
 
     handleLogout() {
-        this.setState({user: {}, isLoggedIn: false});
+        this.setState({info: {}, isLoggedIn: false});
     }
 
     render() {
         return (
-            <userContext.Provider value={this.state}>
+            <UserContext.Provider value={this.state}>
                 {/* eslint-disable-next-line react/prop-types */}
                 {this.props.children}
-            </userContext.Provider>
+            </UserContext.Provider>
         );
     }
 }
@@ -60,4 +60,6 @@ UserProvider.defaultProps = {
     user: null
 };
 
-export const UserConsumer = userContext.Consumer;
+export const UserConsumer = UserContext.Consumer;
+
+export default UserContext;

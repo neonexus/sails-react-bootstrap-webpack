@@ -1,5 +1,6 @@
 module.exports = {
     primaryKey: 'id',
+    description: 'One-Time Password Secrets',
 
     attributes: {
         id: {
@@ -13,15 +14,22 @@ module.exports = {
             required: true
         },
 
-        data: {
-            type: 'json'
+        isEnabled: {
+            type: 'boolean',
+            defaultsTo: false
         },
 
-        token: {
+        secret: {
             type: 'string',
-            columnType: 'varchar(245)',
+            columnType: 'varchar(191)',
+            encrypt: true
+        },
+
+        backupTokens: {
+            type: 'string',
+            columnType: 'text',
             encrypt: true,
-            allowNull: false
+            allowNull: true
         },
 
         createdAt: {
@@ -40,13 +48,13 @@ module.exports = {
     customToJSON: function() { // DO NOT use => function!
         // This will be run by the "keep-models-safe" helper.
         return _.omit(this, [
-            'token'
+            'secret',
+            'backupTokens'
         ]);
     },
 
     beforeCreate: (obj, next) => {
         obj.id = sails.helpers.generateUuid();
-        // obj.token = sails.helpers.generateToken(); // Can't be used here, because encryption happens before this is called...
 
         return next();
     }

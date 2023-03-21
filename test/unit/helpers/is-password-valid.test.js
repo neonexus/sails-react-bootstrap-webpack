@@ -129,6 +129,12 @@ describe('isPasswordValid Helper', function() {
 
         let pass = 'CAPITAL_LETTERS' + sails.helpers.generateUuid();
 
+        async function done(pass) {
+            const isValid2 = await sails.helpers.isPasswordValid(pass);
+
+            isValid2.should.be.a('boolean').and.eq(true);
+        }
+
         (function findValidPass(inPass){
             // first, find a password that matches our requirements
             sails.helpers.isPasswordValid(pass, true).then((isPassValid) => {
@@ -136,12 +142,10 @@ describe('isPasswordValid Helper', function() {
                     findValidPass('CAPITAL_LETTERS' + sails.helpers.generateUuid());
                 } else {
                     pass = inPass;
+
+                    done(pass);
                 }
             });
         })(pass);
-
-        const isValid2 = await sails.helpers.isPasswordValid(pass);
-
-        isValid2.should.be.a('boolean').and.eq(true);
     });
 });

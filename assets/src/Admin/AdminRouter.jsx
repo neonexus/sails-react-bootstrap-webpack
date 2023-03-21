@@ -1,4 +1,5 @@
 import React, {Suspense, lazy} from 'react';
+import PropTypes from 'prop-types';
 import '../../styles/admin/admin.scss';
 import {
     Routes,
@@ -6,17 +7,17 @@ import {
     Navigate
 } from 'react-router-dom';
 
-import Login from '../Admin/Login';
-
+const Login = lazy(() => import('./Login'));
 const Dashboard = lazy(() => import('./Dashboard'));
-const Users = lazy(() => import('./Users'));
-import PropTypes from 'prop-types';
+const Users = lazy(() => import('./Users/Users'));
+const Settings = lazy(() => import('./Settings/Settings'));
+const PageNotFound = lazy(() => import('./PageNotFound'));
 
-import {UserProvider, UserConsumer} from '../data/userContext';
+import {UserProvider, UserConsumer} from '../data/UserContext';
 import api from '../data/api';
 
 import NavBar from './NavBar';
-import {Button, Container} from 'react-bootstrap';
+import {Container} from 'react-bootstrap';
 
 function RenderOrLogin(props) {
     if (props.userContext.isLoggedIn) {
@@ -38,17 +39,18 @@ RenderOrLogin.propTypes = {
     userContext: PropTypes.object.isRequired
 };
 
+const theApi = new api();
+
 class AdminRouter extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            api: new api(),
             user: null,
             hasRun: false
         };
 
-        this.state.api.get('/me', (res) => {
+        theApi.get('/me', (res) => {
             if (res.success) {
                 return this.setState({user: res.user, hasRun: true});
             }
@@ -71,11 +73,11 @@ class AdminRouter extends React.Component {
                     <UserConsumer>
                         {
                             (userContext) => (
-                                <RenderOrLogin api={this.state.api} userContext={userContext}>
+                                <RenderOrLogin api={theApi} userContext={userContext}>
                                     <>
                                         <NavBar handleLogout={
                                             () => {
-                                                this.state.api.get('/logout', () => {
+                                                theApi.get('/logout', () => {
                                                     userContext.logout();
                                                 });
                                             }
@@ -87,21 +89,9 @@ class AdminRouter extends React.Component {
                                                 <Routes>
                                                     <Route path="/admin" exact element={<Navigate to="/admin/dashboard" replace />} />
                                                     <Route path="/admin/dashboard" element={<Dashboard />} />
-                                                    <Route path="/admin/users" element={<Users api={this.state.api} />} />
-                                                    <Route
-                                                        path="/admin/*"
-                                                        element={
-                                                            <>
-                                                                <h1>Page Not Found</h1>
-                                                                <div>
-                                                                    The page you have requested does not exist. Maybe go back and try again?
-                                                                    <br />
-                                                                    <br />
-                                                                    <Button variant="outline-secondary" onClick={() => window.history.back()}>&#8678; Go Back</Button>
-                                                                </div>
-                                                            </>
-                                                        }
-                                                    />
+                                                    <Route path="/admin/users" element={<Users api={theApi} />} />
+                                                    <Route path="/admin/settings" element={<Settings api={theApi} />} />
+                                                    <Route path="/admin/*" element={<PageNotFound />} />
                                                 </Routes>
                                             </Container>
                                         </Suspense>

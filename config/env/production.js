@@ -89,9 +89,16 @@ module.exports = {
          ***************************************************************************/
         cascadeOnDestroy: false,
 
-        /*dataEncryptionKeys: {
+        /**
+         *
+         * These are the keys used to encrypt data at-rest in our datastore.
+         *
+         * See: https://sailsjs.com/documentation/concepts/models-and-orm/model-settings#dataencryptionkeys
+         *
+         */
+        dataEncryptionKeys: {
             default: process.env.DATA_ENCRYPTION_KEY
-        }*/
+        }
     },
 
     /**************************************************************************
@@ -231,7 +238,7 @@ module.exports = {
          ***************************************************************************/
         cookie: {
             secure: true,
-            // this age is when we choose not to use "session" cookies, and want max-age instead.
+            // This age is when we choose not to use "session" cookies, and want max-age instead.
             maxAge: 24 * 60 * 60 * 1000  // 24 hours
         },
 

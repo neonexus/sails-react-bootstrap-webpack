@@ -7,7 +7,8 @@ describe('isLoggedIn Policy', function(){
         newSession = await sails.models.session.create({
             id: 'c', // required, auto-generated
             user: testUtils.fixtures.user[0].id,
-            data: {blah: true}
+            data: {blah: true},
+            csrfSecret: 'some garbage secret'
         }).fetch();
 
         newSession.id.should.be.a('string').and.a.uuid('v4');
@@ -44,7 +45,7 @@ describe('isLoggedIn Policy', function(){
             id: 'c', // required, auto-generated
             user: testUtils.fixtures.user[0].id
         }).fetch();
-        const req = {headers: {authorization: 'Bearer ' + newToken.token}, signedCookies: []};
+        const req = {headers: {authorization: 'Bearer ' + newToken.id + ':' + newToken.token}, signedCookies: []};
         const next = chai.spy();
 
         await isLoggedInPolicy(req, null, next);

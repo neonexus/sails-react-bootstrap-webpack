@@ -12,7 +12,7 @@ module.exports = async function created(data) {
 
     data = sails.helpers.keepModelsSafe(data);
     data = sails.helpers.setOrRemoveCookies(data, res);
-    data = await sails.helpers.updateCsrf(data, req);
+    data = await sails.helpers.updateCsrfAndExpiry(data, req);
 
     const out = _.merge({success: true}, data);
 

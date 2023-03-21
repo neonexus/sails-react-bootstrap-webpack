@@ -17,7 +17,7 @@ module.exports = async function sendOK(data) {
     data = sails.helpers.setOrRemoveCookies(data, res);
 
     // handle CSRF tokens
-    data = await sails.helpers.updateCsrf(data, req);
+    data = await sails.helpers.updateCsrfAndExpiry(data, req);
 
     const out = _.merge({success: true}, data);
 

@@ -118,7 +118,7 @@ exports.mochaHooks = {
             fs.readdir(path.join(__dirname, '../api/hooks'), (error, files) => {
                 should.not.exist(error);
 
-                Object.keys(sails.hooks).should.have.lengthOf(files.length + 16); // there are 16 built-in hooks
+                Object.keys(sails.hooks).should.have.lengthOf(files.length + 15); // there are 16 built-in hooks, minus the README
             });
 
             fs.readdir(path.join(__dirname, '../api/responses'), (error, files) => {

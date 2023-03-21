@@ -20,6 +20,12 @@ module.exports = {
     // `env` is an "escape hatch", to get at the current session `env.req.session`.
     // This requires the "isLoggedIn" policy is run beforehand.
     fn: async (inputs, exits, env) => {
+        if (env.req.session.isAPIToken) {
+            await sails.models.apitoken.destroy({id: env.req.session.id});
+
+            return exits.ok();
+        }
+
         const foundSession = await sails.models.session.findOne({id: env.req.session.id});
 
         /* istanbul ignore if */

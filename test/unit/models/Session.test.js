@@ -8,7 +8,7 @@ describe('Session Model', function() {
         const foundSessions = await sails.models.session.find({user: testUtils.fixtures.user[0].id});
 
         foundSessions.length.should.equal(1); // we have been signed in for our test "browser"
-        foundSessions[0].data.should.have.property('_csrfSecret');
+        foundSessions[0].should.have.property('csrfSecret');
         foundSessions[0].createdAt.should.be.a('date');
         foundSessions[0].updatedAt.should.be.a('date');
     });
@@ -25,7 +25,8 @@ describe('Session Model', function() {
             user: foundUser[0].id,
             data: {
                 isValidData: true
-            }
+            },
+            csrfSecret: 'some garbage "secret"'
         }).fetch();
 
         newSession.should.have.property('id');
