@@ -1,12 +1,12 @@
 /* eslint-disable react/no-unused-state */
 
-import React from 'react';
+import { createContext, Component } from 'react';
 import {isObject} from 'lodash';
 import PropTypes from 'prop-types';
 
-const UserContext = React.createContext();
+const UserContext = createContext();
 
-export class UserProvider extends React.Component {
+export class UserProvider extends Component {
     constructor(props) {
         super(props);
 

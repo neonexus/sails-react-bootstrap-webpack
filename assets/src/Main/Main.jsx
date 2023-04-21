@@ -1,4 +1,3 @@
-import React from 'react';
 import {Button, Container} from 'react-bootstrap';
 import '../../styles/marketing/marketing.scss';
 import img from '../../images/sails-logo.png';

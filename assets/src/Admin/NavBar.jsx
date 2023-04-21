@@ -1,14 +1,14 @@
-import React from 'react';
+import { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 
-import {Nav, Navbar, Button} from 'react-bootstrap';
+import {Button, Nav, Navbar, NavDropdown} from 'react-bootstrap';
 import {NavLink as ReactNavLink} from 'react-router-dom';
 
 import UserContext from '../data/UserContext';
 
 function NavBar(props) {
-    const [isExpanded, setIsExpanded] = React.useState(false);
-    const user = React.useContext(UserContext);
+    const [isExpanded, setIsExpanded] = useState(false);
+    const user = useContext(UserContext);
 
     function closeNavbar() {
         setIsExpanded(false);
@@ -24,7 +24,7 @@ function NavBar(props) {
             expanded={isExpanded}
             onToggle={() => setIsExpanded(!isExpanded)}
         >
-            <Navbar.Brand>My App</Navbar.Brand>
+            <Navbar.Brand>{appConfig.appName}</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
@@ -35,7 +35,10 @@ function NavBar(props) {
                             : null
                     }
                     <Nav.Link as={ReactNavLink} to="/admin/404" onClick={closeNavbar}>404 Page</Nav.Link>
-                    <Nav.Link as={ReactNavLink} to="/admin/settings" onClick={closeNavbar}>Settings</Nav.Link>
+                    <NavDropdown title="Settings" id="basic-nav-dropdown" menuVariant="dark">
+                        <NavDropdown.Item className="ps-3 pe-3" as={ReactNavLink} to="/admin/settings/profile" onClick={closeNavbar}>Profile</NavDropdown.Item>
+                        <NavDropdown.Item className="ps-3 pe-3" as={ReactNavLink} to="/admin/settings/security" onClick={closeNavbar}>Security</NavDropdown.Item>
+                    </NavDropdown>
                 </Nav>
 
                 {

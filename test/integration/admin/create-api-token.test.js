@@ -21,29 +21,38 @@ describe('Create API Token Controller', function() {
         testUtils.postAsAdmin({
             route: '/token',
             expectedStatus: 201,
-            end: async (err, res) => {
+            end: (err, res) => {
                 if (err) {
                     return done(err);
                 }
 
-                res.body.id.should.be.uuid('v4');
-                res.body.token.should.be.a('string').and.have.lengthOf(128);
+                res.body.token.should.be.a('string').and.have.lengthOf(165);
 
-                const foundToken = await sails.models.apitoken.findOne(res.body.id);
+                const [id, token] = res.body.token.split(':');
 
-                if (!foundToken) {
-                    return done(new Error('Token wasn\'t created as expected.'));
-                }
+                sails.models.apitoken.findOne(id).exec((err, foundToken) => {
+                    if (err) {
+                        return done(err);
+                    }
 
-                // Make sure the token was encrypted.
-                foundToken.token.should.be.a('string').and.not.eq(res.body.token);
+                    if (!foundToken) {
+                        return done('Token wasn\'t created as expected.');
+                    }
 
-                const foundToken2 = await sails.models.apitoken.findOne(res.body.id).decrypt();
+                    // Make sure the token was encrypted.
+                    foundToken.token.should.be.a('string').and.not.eq(token);
 
-                // Make sure we can decrypt it.
-                foundToken2.token.should.be.a('string').and.eq(res.body.token);
+                    sails.models.apitoken.findOne(id).decrypt().exec((err, foundToken) => {
+                        if (err) {
+                            return done(err);
+                        }
 
-                done();
+                        // Make sure we can decrypt it.
+                        foundToken.token.should.be.a('string').and.eq(token);
+
+                        done();
+                    });
+                });
             }
         });
     });

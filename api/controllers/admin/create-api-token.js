@@ -1,7 +1,7 @@
 module.exports = {
     friendlyName: 'Create API Token',
 
-    description: 'Get an API token, which replaces CSRF token / session cookie usage.',
+    description: 'Create an API token, which replaces CSRF token / session cookie usage.',
 
     inputs: {},
 
@@ -19,11 +19,11 @@ module.exports = {
             data: {} // Used to store things that are temporary, or only apply to this session.
         }).fetch().decrypt();
 
+        const outToken = newToken.id + ':' + newToken.token;
+
         return exits.created({
-            id: newToken.id,
-            token: newToken.token,
-            header: 'Bearer ' + newToken.id + ':' + newToken.token,
-            __skipCSRF: true // this tells our "created" response to ignore the CSRF token update
+            token: outToken,
+            header: 'Bearer ' + outToken
         });
     }
 };

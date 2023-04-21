@@ -27,7 +27,7 @@ const originalConsoleLog = console.log;
 exports.mochaHooks = {
     // run once
     beforeAll: function(done) {
-        // this.timeout(5000); //  this is set in our .mocharc.yaml
+        // this.timeout(5000); //  this is set in our .mocharc.yml
 
         global.console = {
             log: () => {}, // this allows us to hide valid error messages during testing
@@ -86,6 +86,11 @@ exports.mochaHooks = {
                 models: false
             },
             port: 1338, // to allow us to keep local instance running while we run tests
+            session: {
+                cookie: {
+                    secure: false // can't have secure cookies when testing
+                }
+            },
             security: {
                 checkPwnedPasswords: true
             }
@@ -106,7 +111,7 @@ exports.mochaHooks = {
             fs.readdir(path.join(__dirname, '../api/models'), (error, files) => {
                 should.not.exist(error);
 
-                Object.keys(sails.models).should.have.lengthOf(files.length); // add 1 for the built-in archive model, which cancels the README
+                Object.keys(sails.models).should.have.lengthOf(files.length - 1); // don't include the README
             });
 
             fs.readdir(path.join(__dirname, '../api/helpers'), (error, files) => {

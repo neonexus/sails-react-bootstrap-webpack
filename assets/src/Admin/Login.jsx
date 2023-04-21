@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import {UserConsumer} from '../data/UserContext';
@@ -6,7 +6,7 @@ import defaultAPIErrorHandler from '../data/defaultAPIErrorHandler';
 
 import {Row, Button, Form} from 'react-bootstrap';
 
-class Login extends React.Component {
+class Login extends Component {
     constructor(props) {
         super(props);
 

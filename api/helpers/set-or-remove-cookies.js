@@ -68,7 +68,7 @@ module.exports = {
                 return inputs.res.clearCookie(cookie.name, defaultCookie);
             }
 
-            const newCookie = (!cookie.isSession) // if we don't want to use the default "session" to expire the cookie, we use the maxAge
+            const newCookie = (!cookie.isSession) // If we don't want to use the default "session" to expire the cookie, we use the maxAge.
                               ? _.merge({}, defaultCookie, {maxAge: sails.config.session.cookie.maxAge})
                               : defaultCookie;
 

@@ -22,7 +22,8 @@ module.exports = {
         secret: {
             type: 'string',
             columnType: 'varchar(191)',
-            encrypt: true
+            encrypt: true,
+            required: true
         },
 
         backupTokens: {

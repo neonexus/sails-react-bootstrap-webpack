@@ -1,5 +1,3 @@
-const {authenticator} = require('otplib');
-
 module.exports = {
     friendlyName: 'User Login',
 
@@ -21,6 +19,7 @@ module.exports = {
 
         otp: {
             type: 'string', // can't be a number, because it may start with a zero
+            required: false, // not required for every user
             minLength: 6,
             maxLength: 8,
             allowNull: true
@@ -62,44 +61,10 @@ module.exports = {
             return exits.badRequest(badEmailPass);
         }
 
-        const foundOTP = await sails.models.otp.findOne({user: foundUser.id, isEnabled: true}).decrypt();
+        // Returns a string if invalid, false if OTP is disabled, true if OTP enabled and valid.
+        const isValidOTP = await sails.helpers.verifyAndSpendOtp(foundUser.id, inputs.otp);
 
-        if (foundOTP) {
-            const backupTokens = JSON.parse(foundOTP.backupTokens);
-
-            if (!inputs.otp || !inputs.otp.length) {
-                return exits.badRequest('Invalid One-Time Password.');
-            }
-
-            // If it's 6 characters long, verify it's a valid OTP.
-            if (inputs.otp.length === 6) {
-                if (!authenticator.verify({token: inputs.otp, secret: foundOTP.secret})) {
-                    return exits.badRequest('Invalid One-Time Password.');
-                }
-            }
-            // If it's 8 characters long, check if it's a valid backup token.
-            else if (inputs.otp.length === 8 && backupTokens.length) {
-                let foundIt = false;
-
-                for (let i = 0; i < backupTokens.length; ++i) {
-                    if (inputs.otp === backupTokens[i]) {
-                        foundIt = true;
-                        delete backupTokens[i];
-
-                        await sails.models.otp.update({id: foundOTP.id}).set({backupTokens: JSON.stringify(backupTokens)});
-
-                        break;
-                    }
-                }
-
-                if (!foundIt) {
-                    return exits.badRequest('Invalid One-Time Password.');
-                }
-            } else {
-                return exits.badRequest('Invalid One-Time Password.');
-            }
-        } else if (inputs.otp && inputs.otp.length) {
-            // OTP is not enabled, but one was supplied to the request.
+        if (typeof isValidOTP === 'string') {
             return exits.badRequest('Invalid One-Time Password.');
         }
 
@@ -120,7 +85,7 @@ module.exports = {
                     isSession: true
                 }
             ],
-            user: _.merge(foundUser, {_isOTPEnabled: (!!foundOTP)}),
+            user: _.merge(foundUser, {_isOTPEnabled: (isValidOTP)}),
             _csrf: csrf.token
         });
     }

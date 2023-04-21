@@ -67,8 +67,8 @@ describe('Logout Controller',  function() {
                     return done(err);
                 }
 
-                const tokenId = res.body.id;
-                const token = tokenId + ':' + res.body.token;
+                const [tokenId] = res.body.token.split(':');
+                const fullToken = res.body.token;
 
                 testUtils.getAsAdmin({
                     route: '/logout',
@@ -81,7 +81,7 @@ describe('Logout Controller',  function() {
                             route: '/me',
                             headers: {
                                 // With 'Bearer '
-                                Authorization: 'Bearer ' + token
+                                Authorization: 'Bearer ' + fullToken
                             },
                             end: (err, res) => {
                                 if (err) {
@@ -96,7 +96,7 @@ describe('Logout Controller',  function() {
                                     route: '/logout',
                                     headers: {
                                         // Without 'Bearer '
-                                        Authorization: token
+                                        Authorization: fullToken
                                     },
                                     end: async (err) => {
                                         if (err) {

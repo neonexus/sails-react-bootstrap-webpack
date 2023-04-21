@@ -44,6 +44,10 @@ module.exports = async function(req, res, next) {
                 token = token.substring(7);
             }
 
+            if (!token.includes(':')) {
+                return res.forbidden('Invalid credentials.');
+            }
+
             token = token.split(':');
 
             const foundToken = await sails.models.apitoken.findOne({id: token[0]}).decrypt().populate('user');

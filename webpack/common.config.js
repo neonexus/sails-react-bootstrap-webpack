@@ -7,8 +7,8 @@ const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 let configPath = path.resolve(__dirname, '../config/local.js'), // try to get local config if it exists
+    appName = 'My App (unknown)',
     baseUrl = 'http://localhost:1337', // default baseUrl (should point to Sails)
-    frontendUrl = 'http://localhost:8080', // default frontendUrl, points to Webpack dev server (external customer domain, https://example.com)
     assetUrl = ''; // used for CDN prefixing on assets (https://cdn.example.com/)
 
 try {
@@ -47,8 +47,8 @@ try {
     }
 
     // Setup variables to inject into compiled apps, like which URL to use as a base for API / websocket connections, or CDN URLs.
-    baseUrl = config.baseUrl;
-    frontendUrl = config.frontendUrl;
+    appName = config.appName ? config.appName : appName;
+    baseUrl = process.env.NGROK_URL || config.baseUrl;
     assetUrl = config.assetsUrl ? config.assetsUrl : '/'; // used for CDN rewrites on asset URLs
 } catch (err) {
     return console.error(err);
@@ -106,12 +106,12 @@ for (let i = 0; i < entryPoints.length; ++i) {
 }
 
 // Inject "environment" variables into our JavaScript bundle.
-// For example, in our React code, we can use `process.env.baseUrl` to get our base API URL (see the top of: ../assets/src/index.jsx)
+// For example, in our React code, we can use `appConfig.baseUrl` to get our base API URL (see the top of: ../assets/src/data/api.js)
 plugins.push(
     new webpack.DefinePlugin({
-        'process.env': JSON.stringify({
-            baseUrl,
-            frontendUrl
+        'appConfig': JSON.stringify({
+            appName,
+            baseUrl // API URL
         })
     })
 );

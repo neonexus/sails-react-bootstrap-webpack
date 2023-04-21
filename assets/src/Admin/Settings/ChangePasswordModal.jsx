@@ -1,15 +1,15 @@
-import React from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import {Button, Form, Modal, Spinner} from 'react-bootstrap';
 
-import defaultAPIErrorHandler from '../../data/defaultAPIErrorHandler';
-
 function ChangePasswordModal(props) {
-    const [isLoading, setIsLoading] = React.useState(false);
-    const [current, setCurrent] = React.useState('');
-    const [newPass, setNewPass] = React.useState('');
-    const [confPass, setConfPass] = React.useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [current, setCurrent] = useState('');
+    const [newPass, setNewPass] = useState('');
+    const [confPass, setConfPass] = useState('');
+
+
 
     function resetState() {
         setCurrent('');

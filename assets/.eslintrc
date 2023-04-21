@@ -39,9 +39,12 @@
         // Make sure backend globals aren't indadvertently tolerated in our client-side JS:
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         "sails": false,
-        "_": false
+        "_": false,
         // ...and any other backend globals (e.g. `"Organization": false`)
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+        "process": false,
+        "appConfig": true
     },
     "rules": {
         "no-undef": [

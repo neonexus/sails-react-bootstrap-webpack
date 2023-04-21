@@ -19,7 +19,7 @@ module.exports = {
 
     fn: async (inputs, exits, env) => {
         const secret = authenticator.generateSecret();
-        const image = await qrcode.toDataURL(authenticator.keyuri(env.req.session.user.email, 'My Service', secret));
+        const image = await qrcode.toDataURL(authenticator.keyuri(env.req.session.user.email, sails.config.appName, secret));
 
         const foundOTP = await sails.models.otp.findOne({user: env.req.session.user.id});
 

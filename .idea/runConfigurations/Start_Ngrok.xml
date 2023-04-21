@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Start Ngrok" type="NodeJSConfigurationType" path-to-js-file="ngrok.js" working-dir="$PROJECT_DIR$">
+    <method v="2" />
+  </configuration>
+</component>

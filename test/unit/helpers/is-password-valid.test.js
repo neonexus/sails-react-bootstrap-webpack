@@ -143,7 +143,7 @@ describe('isPasswordValid Helper', function() {
                 } else {
                     pass = inPass;
 
-                    done(pass);
+                    return done(pass);
                 }
             });
         })(pass);

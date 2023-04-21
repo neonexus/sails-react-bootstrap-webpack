@@ -1,4 +1,4 @@
-export default function(err, resp)  {
+function defaultAPIErrorHandler(err, resp)  {
     console.error(err.response);
 
     const errMessage = (resp && resp.errors && resp.errors.problems)
@@ -6,4 +6,6 @@ export default function(err, resp)  {
         : (resp && resp.errorMessages) ? resp.errorMessages.join('\n') : 'Unknown Error. Are you connected to the internet?';
 
     alert(errMessage);
-};
+}
+
+export default defaultAPIErrorHandler;

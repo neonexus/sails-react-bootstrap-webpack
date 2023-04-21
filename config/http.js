@@ -30,15 +30,15 @@ module.exports.http = {
          ***************************************************************************/
 
         order: [
-            'cookieParser',
-            // 'session', // we are using our own custom handling of sessions
-            'bodyParser',
-            'compress',
-            'customPoweredBy',
-            'router', // custom Sails middleware handler (config/routes.js)
-            'assetLog', // the request wasn't caught by any of the above middleware, must be assets
-            'www', // default hook to serve static files
-            'favicon' // default hook to serve favicon
+            'cookieParser',     // Default HTTP cookie parser.
+            // 'session',       // We are using our own custom handling of sessions, via policies and responses.
+            'bodyParser',       // Default HTTP request body parser.
+            'compress',         // Default HTTP compression handler.
+            'customPoweredBy',  // Custom header middleware (found below).
+            'router',           // Default route handler (config/routes.js)
+            'assetLog',         // Custom middleware to finalize request logs for what is assumed to be assets.
+            'www',              // Default hook to serve static files.
+            'favicon'           // Default hook to serve favicon.
         ],
 
         customPoweredBy: (req, res, next) => {
@@ -53,21 +53,6 @@ module.exports.http = {
 
             return next();
         }
-
-        /***************************************************************************
-         *                                                                          *
-         * The body parser that will handle incoming multipart HTTP requests.       *
-         *                                                                          *
-         * https://sailsjs.com/config/http#?customizing-the-body-parser             *
-         *                                                                          *
-         ***************************************************************************/
-
-        // bodyParser: (function _configureBodyParser(){
-        //   var skipper = require('skipper');
-        //   var middlewareFn = skipper({ strict: true });
-        //   return middlewareFn;
-        // })(),
-
     },
 
     /****************************************************************************************

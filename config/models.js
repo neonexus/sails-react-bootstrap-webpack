@@ -126,6 +126,12 @@ module.exports.models = {
      *                                                                              *
      ********************************************************************************/
 
-    validateOnBootstrap: true
+    validateOnBootstrap: true,
+
+
+    /**
+     * This is a fix for the auto-reload hook.
+     */
+    archiveModelIdentity: false
 
 };

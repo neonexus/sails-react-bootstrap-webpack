@@ -6,8 +6,15 @@ module.exports = {
     description: 'Fully enable the 2FA for the current user.',
 
     inputs: {
+        password: {
+            type: 'string',
+            required: true
+        },
+
         otp: {
             type: 'string',
+            maxLength: 6,
+            minLength: 6,
             required: true
         }
     },
@@ -22,6 +29,12 @@ module.exports = {
     },
 
     fn: async (inputs, exits, env) => {
+        const foundUser = await sails.models.user.findOne(env.req.session.user.id);
+
+        if (!sails.models.user.doPasswordsMatch(inputs.password, foundUser.password)) {
+            return exits.badRequest('Password is invalid.');
+        }
+
         const foundOTP = await sails.models.otp.findOne({user: env.req.session.user.id}).decrypt();
 
         if (!foundOTP) {
@@ -36,12 +49,7 @@ module.exports = {
             return exits.badRequest('OTP is invalid.');
         }
 
-        const token = sails.helpers.generateToken();
-        const backupTokens = [];
-
-        for (let i = 0; i < 10; ++i) {
-            backupTokens[i] = token.substring(i * 8, (i * 8) + 8);
-        }
+        const backupTokens = sails.helpers.generateBackupTokens();
 
         await sails.models.otp.update(foundOTP.id).set({isEnabled: true, backupTokens: JSON.stringify(backupTokens)});
 

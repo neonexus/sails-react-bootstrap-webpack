@@ -19,7 +19,7 @@ module.exports = {
 
         token: {
             type: 'string',
-            columnType: 'varchar(245)',
+            columnType: 'text',
             encrypt: true,
             allowNull: false
         },

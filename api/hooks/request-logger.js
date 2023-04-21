@@ -52,12 +52,28 @@ module.exports = (sails) => {
                                 body.pass = bleep;
                             }
 
+                            if (body.otp) {
+                                body.otp = bleep;
+                            }
+
                             if (query.securityToken) {
                                 query.securityToken = bleep;
                             }
 
+                            if (headers.authorization) {
+                                headers.authorization = bleep;
+                            }
+
+                            if (headers.cookie) {
+                                headers.cookie = bleep;
+                            }
+
                             if (headers.securityToken) {
                                 headers.securityToken = bleep;
+                            }
+
+                            if (headers['x-csrf-token']) {
+                                headers['x-csrf-token'] = bleep;
                             }
                         }
 
@@ -81,7 +97,7 @@ module.exports = (sails) => {
                                 return next(); // don't stop the traffic if there is a problem
                             }
 
-                            req.requestId = newRequest.id;
+                            req.id = newRequest.id;
                             req._requestStartTime = process.hrtime.bigint();
 
                             return next();

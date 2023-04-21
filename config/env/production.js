@@ -20,6 +20,8 @@
  */
 
 module.exports = {
+    appName: 'My App',
+
     baseUrl: process.env.BASE_URL || 'https://myapi.app',
     assetsUrl: process.env.ASSETS_URL || '', // Something like: https://my-cdn.app/ must end with / or be blank.
 
@@ -162,7 +164,7 @@ module.exports = {
          *                                                                  *
          ********************************************************************/
         requestLogger: {
-            logSensitiveData: false // can not be changed
+            logSensitiveData: false // Can not be changed.
         }
     },
 

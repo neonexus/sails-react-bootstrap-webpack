@@ -1,4 +1,4 @@
-import React, {lazy} from 'react';
+import { Component, lazy } from 'react';
 import PropTypes from 'prop-types';
 
 import {Button, Col, Row, Table, Tabs, Tab, Spinner} from 'react-bootstrap';
@@ -11,7 +11,7 @@ const DeleteUserModal = lazy(() => import('./DeleteUserModal'));
 import {UserConsumer} from '../../data/UserContext';
 import defaultAPIErrorHandler from '../../data/defaultAPIErrorHandler';
 
-class Users extends React.Component {
+class Users extends Component {
     constructor(props) {
         super(props);
 
@@ -186,7 +186,11 @@ class Users extends React.Component {
                                                                     <td>{thisUser.role}</td>
                                                                     <td>{moment(thisUser.createdAt).format('l @ LTS').replaceAll(' ', '\u00A0')}</td>
                                                                     <td className="text-end">
-                                                                        <Button variant="primary" className="me-lg-2 mb-2 mb-lg-0">Edit</Button>
+                                                                        <Button variant="primary" className="me-lg-2 mb-2 mb-lg-0" onClick={() => {
+                                                                            if (thisUser.id === user.info.id) {
+
+                                                                            }
+                                                                        }}>Edit</Button>
                                                                         <Button
                                                                             variant="danger"
                                                                             disabled={thisUser.id === user.info.id}

@@ -14,9 +14,10 @@
  */
 
 module.exports = {
+    appName: 'My App (LOCAL)',
 
     baseUrl: 'http://localhost:1337', // API URL
-    frontendUrl: 'http://localhost:8080', // Webpack URL
+    // assetsUrl: 'http://localhost:8080/',
 
     datastores: {
         default: {

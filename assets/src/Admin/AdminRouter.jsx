@@ -1,4 +1,4 @@
-import React, {Suspense, lazy} from 'react';
+import { Component, StrictMode, Suspense, lazy } from 'react';
 import PropTypes from 'prop-types';
 import '../../styles/admin/admin.scss';
 import {
@@ -41,7 +41,7 @@ RenderOrLogin.propTypes = {
 
 const theApi = new api();
 
-class AdminRouter extends React.Component {
+class AdminRouter extends Component {
     constructor(props) {
         super(props);
 
@@ -68,7 +68,7 @@ class AdminRouter extends React.Component {
         }
 
         return (
-            <React.StrictMode>
+            <StrictMode>
                 <UserProvider user={this.state.user}>
                     <UserConsumer>
                         {
@@ -90,7 +90,8 @@ class AdminRouter extends React.Component {
                                                     <Route path="/admin" exact element={<Navigate to="/admin/dashboard" replace />} />
                                                     <Route path="/admin/dashboard" element={<Dashboard />} />
                                                     <Route path="/admin/users" element={<Users api={theApi} />} />
-                                                    <Route path="/admin/settings" element={<Settings api={theApi} />} />
+                                                    <Route path="/admin/settings" exact element={<Navigate to="/admin/settings/profile" replace />} />
+                                                    <Route path="/admin/settings/*" element={<Settings api={theApi} />} />
                                                     <Route path="/admin/*" element={<PageNotFound />} />
                                                 </Routes>
                                             </Container>
@@ -101,7 +102,7 @@ class AdminRouter extends React.Component {
                         }
                     </UserConsumer>
                 </UserProvider>
-            </React.StrictMode>
+            </StrictMode>
         );
     }
 }

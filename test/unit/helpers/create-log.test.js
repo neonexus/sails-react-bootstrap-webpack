@@ -40,7 +40,7 @@ describe('createLog helper', function() {
         const newLog = await sails.helpers.createLog.with({
             data: {test2: true},
             description: 'Testing 2',
-            req: {session: {user: foundUser[0]}, requestId: foundReq[0].id}
+            req: {session: {user: foundUser[0]}, id: foundReq[0].id}
         });
 
         const foundLog = await sails.models.log.findOne(newLog.id).populate('user').populate('request');

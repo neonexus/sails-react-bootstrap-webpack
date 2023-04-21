@@ -7,12 +7,12 @@ config/local.js
 .editorconfig
 .eslintignore
 .eslintrc
-.mocharc.yaml
+.mocharc.yml
 .nycrc
 .tmp
 .travis.yml
 test
 
-README.md
+**/README*
 CHANGELOG.md
 LICENSE

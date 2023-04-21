@@ -1,5 +1,3 @@
-const moment = require('moment-timezone');
-
 /**
  * Session Configuration
  * (sails.config.session)
@@ -36,9 +34,12 @@ module.exports.session = {
      * https://sailsjs.com/config/session                                       *
      *                                                                          *
      ***************************************************************************/
-    isSessionDisabled: function(req) {
-        return !!req.path.match(req._sails.LOOKS_LIKE_ASSET_RX);
-    },
+
+    // We are using custom session handling, and this does not apply.
+
+    // isSessionDisabled: function(req) {
+    //     return !!req.path.match(req._sails.LOOKS_LIKE_ASSET_RX);
+    // },
 
     /************************************************************************************************
      *                                                                                              *
@@ -52,9 +53,9 @@ module.exports.session = {
     },
 
     cookie: {
-        // if cookies should be HTTPs only
+        // If all cookies should be HTTPs only.
         secure: false,
         // This age is when we choose not to use "session" cookies, and want max-age instead.
-        maxAge: 24 * 60 * 60 * 1000 * 7  // 1 week
+        maxAge: 1000 * 60 * 60 * 24 * 7  // 1 week
     }
 };
