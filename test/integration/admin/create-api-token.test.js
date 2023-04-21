@@ -21,20 +21,38 @@ describe('Create API Token Controller', function() {
         testUtils.postAsAdmin({
             route: '/token',
             expectedStatus: 201,
-            end: async (err, res) => {
+            end: (err, res) => {
                 if (err) {
                     return done(err);
                 }
 
-                res.body.token.should.be.a('string').and.have.lengthOf(128);
+                res.body.token.should.be.a('string').and.have.lengthOf(165);
 
-                const foundToken = await sails.models.apitoken.findOne({token: res.body.token});
+                const [id, token] = res.body.token.split(':');
 
-                if (!foundToken) {
-                    return done(new Error('Token wasn\'t created as expected.'));
-                }
+                sails.models.apitoken.findOne(id).exec((err, foundToken) => {
+                    if (err) {
+                        return done(err);
+                    }
 
-                done();
+                    if (!foundToken) {
+                        return done('Token wasn\'t created as expected.');
+                    }
+
+                    // Make sure the token was encrypted.
+                    foundToken.token.should.be.a('string').and.not.eq(token);
+
+                    sails.models.apitoken.findOne(id).decrypt().exec((err, foundToken) => {
+                        if (err) {
+                            return done(err);
+                        }
+
+                        // Make sure we can decrypt it.
+                        foundToken.token.should.be.a('string').and.eq(token);
+
+                        done();
+                    });
+                });
             }
         });
     });

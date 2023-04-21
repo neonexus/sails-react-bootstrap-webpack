@@ -52,11 +52,13 @@ describe('Create User Controller', function() {
                 firstName: 'New',
                 lastName: 'User',
                 email: 'new@user.com',
-                password: 'Test1234@' + sails.helpers.generateUuid()
+                password: 'A super awesome passphrase, to appease the password gods.'
             },
             expectedStatus: 201, // created
             end: async (err, res) => {
                 if (err) {
+                    console.debug(res.body);
+
                     return done(err);
                 }
 

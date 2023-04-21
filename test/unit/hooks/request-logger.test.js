@@ -3,7 +3,7 @@ describe('Request Logger', function() {
 
     let logger;
     let hook;
-    let expectedRequestLogCount = 3; // we have a dummy one for other tests, and setup requests
+    let expectedRequestLogCount = 3; // We have a dummy one for other tests, and setup requests.
 
     async function getRequestLogCount() {
         return await sails.models.requestlog.count();
@@ -95,6 +95,7 @@ describe('Request Logger', function() {
                 newPassword: 'newPassword',
                 newPassword2: 'newPassword2',
                 pass: 'lamepassword',
+                otp: '012345',
                 username: 'blah@doom.boom',
                 mySpecialText: 'This is just a test comment.'
             },
@@ -121,9 +122,8 @@ describe('Request Logger', function() {
                 requestLogCount.should.eq(expectedRequestLogCount);
 
                 // validate the hook modified the request object
-                thisReq.should.have.property('requestId');
+                thisReq.should.have.property('id');
                 thisReq.should.have.property('_requestStartTime');
-                console.log(Number(process.hrtime.bigint() - thisReq._requestStartTime) / 1000000);
                 thisReq._requestStartTime.should.be.a('bigint');
 
                 thisReq.should.have.property('body');
@@ -135,8 +135,9 @@ describe('Request Logger', function() {
                 thisReq.body.newPassword.should.eq(defaultReq.body.newPassword);
                 thisReq.body.newPassword2.should.eq(defaultReq.body.newPassword2);
                 thisReq.body.pass.should.eq(defaultReq.body.pass);
+                thisReq.body.otp.should.eq(defaultReq.body.otp);
 
-                const foundLog = await sails.models.requestlog.findOne({id: thisReq.requestId});
+                const foundLog = await sails.models.requestlog.findOne({id: thisReq.id});
 
                 should.exist(foundLog);
 
@@ -158,6 +159,7 @@ describe('Request Logger', function() {
                 parsedLogBody.newPassword.should.eq(bleep);
                 parsedLogBody.newPassword2.should.eq(bleep);
                 parsedLogBody.pass.should.eq(bleep);
+                parsedLogBody.otp.should.eq(bleep);
 
                 foundLog.getParams.securityToken.should.eq(bleep);
 
@@ -175,7 +177,7 @@ describe('Request Logger', function() {
                 const requestLogCount = await getRequestLogCount();
                 requestLogCount.should.eq(expectedRequestLogCount);
 
-                thisReq.should.have.property('requestId');
+                thisReq.should.have.property('id');
                 thisReq.should.have.property('_requestStartTime');
 
                 thisReq.should.have.property('body');
@@ -184,7 +186,7 @@ describe('Request Logger', function() {
                 thisReq.body.username.should.eq(defaultReq.body.username);
                 thisReq.body.mySpecialText.should.eq(defaultReq.body.mySpecialText);
 
-                const foundLog = await sails.models.requestlog.findOne({id: thisReq.requestId});
+                const foundLog = await sails.models.requestlog.findOne({id: thisReq.id});
 
                 should.exist(foundLog);
 

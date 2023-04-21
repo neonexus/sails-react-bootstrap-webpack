@@ -3,7 +3,7 @@
 [![Travis CI status](https://app.travis-ci.com/neonexus/sails-react-bootstrap-webpack.svg?branch=release)](https://app.travis-ci.com/github/neonexus/sails-react-bootstrap-webpack)
 
 This is an opinionated base [Sails v1](https://sailsjs.com) application, using [Webpack](https://webpack.js.org) to handle [Bootstrap](https://getbootstrap.com) (using [SASS](https://sass-lang.com))
-and [React](https://reactjs.org) builds. It is designed such that, one can build multiple React frontends (an admin panel, and a customer site maybe), that use the same API backend. This allows
+and [React](https://react.dev) builds. It is designed such that, one can build multiple React frontends (an admin panel, and a customer site maybe), that use the same API backend. This allows
 developers to easily share React components across different frontends / applications. Also, because the backend and frontend are in the same repo (and the frontend is compiled before it is handed to
 the end user), they can share [NPM](http://npmjs.com) libraries, like [Moment.js](https://momentjs.com)
 
@@ -14,28 +14,34 @@ Gitter: [![Join the chat at https://gitter.im/sails-react-bootstrap-webpack/comm
 * [Main Features](#main-features)
 * [Branch Warning](#branch-warning)
 * [Current Dependencies](#current-dependencies)
+    * [Optional Dependencies](#optional-dependencies)
 * [How to Use](#how-to-use)
 * [Configuration](#configuration)
-  * [Custom Configuration Options](#custom-configuration-options)
-  * [Want to configure the `X-Powered-By` header?](#want-to-configure-the--x-powered-by--header)
+    * [Custom Configuration Options](#custom-configuration-options)
+    * [Want to configure the `X-Powered-By` header?](#want-to-configure-the-x-powered-by-header)
 * [Scripts Built Into `package.json`](#scripts-built-into-packagejson)
 * [Sails Scripts](#sails-scripts)
 * [Environment Variables](#environment-variables)
 * [Request Logging](#request-logging)
 * [Using Webpack](#using-webpack)
-  * [Local Dev](#local-dev)
-  * [Remote Builds](#remote-builds)
-  * [Configuration](#configuration-1)
+    * [Local Dev](#local-dev)
+    * [Remote Builds](#remote-builds)
+    * [Configuration](#configuration-1)
 * [Building with React](#building-with-react)
-  * [Serving Compiled Assets](#serving-compiled-assets)
+    * [Serving Compiled Assets](#serving-compiled-assets)
 * [Schema Validation and Enforcement](#schema-validation-and-enforcement)
-  * [If you DO NOT want schema validation](#if-you-do-not-want-schema-validation)
+    * [If you DO NOT want schema validation](#if-you-do-not-want-schema-validation)
 * [PwnedPasswords.com Integration](#pwnedpasswordscom-integration)
+* [Working With Ngrok](#working-with-ngrok)
+    * [First Thing's First](#first-things-first)
+    * [Script Options](#script-options)
+* [Support for `sails-hook-autoreload`](#support-for-sails-hook-autoreload)
 * [What About SEO?](#what-about-seo)
 * [Useful Links](#useful-links)
 
 ## Main Features
 
+* Online in a single command, thanks to included [Ngrok support](#working-with-ngrok).
 * Automatic (incoming) request logging (manual outgoing), via Sails models / hooks.
 * Setup for Webpack auto-reload dev server.
 * Setup so Sails will serve Webpack-built bundles as separate apps (so, a marketing site, and an admin site can live side-by-side).
@@ -46,6 +52,7 @@ Gitter: [![Join the chat at https://gitter.im/sails-react-bootstrap-webpack/comm
   feature inside [`config/bootstrap.js`](config/bootstrap.js). See [schema validation and enforcement](#schema-validation-and-enforcement) for more info.
 * New passwords will be checked against the [PwnedPasswords API](https://haveibeenpwned.com/API/v3#PwnedPasswords). If there is a single hit for the password, an error will be given, and the user will
   be forced to choose another. See [PwnedPasswords integration](#pwnedpasswordscom-integration) for more info.
+* Google Authenticator-style OTP (One-Time Password) functionality; also known as 2FA (2-Factor Authentication).
 
 ## Branch Warning
 
@@ -58,25 +65,33 @@ the [`releases section`](https://github.com/neonexus/sails-react-bootstrap-webpa
 
 ## Current Dependencies
 
-* [Sails](https://sailsjs.com/) **v1**
-* [React](https://reactjs.org/) **v18**
-* [React Router](https://reactrouter.com/) **v6**
-* [Bootstrap](https://getbootstrap.com/) **v5**
-* [React-Bootstrap](https://react-bootstrap.github.io/) **v2**
-* [Webpack](https://webpack.js.org/) **v5**
+* [Sails](https://sailsjs.com) **v1**
+* [React](https://react.dev) **v18**
+* [React Router](https://reactrouter.com) **v6**
+* [Bootstrap](https://getbootstrap.com) **v5**
+* [React-Bootstrap](https://react-bootstrap.github.io) **v2**
+* [Webpack](https://webpack.js.org) **v5**
+
+### Optional Dependencies
+
+Optional dependencies are not automatically installed in this repo. You must either manually install them with `npm i`, or you can install all optional dependencies: `npm i --include=optional`.
+
+There are currently 2 optional dependencies in this repo: [`ngrok`](#working-with-ngrok) and [`sails-hook-autoreload`](#support-for-sails-hook-autoreload).
 
 See the [`package.json` for more details](package.json).
 
 ## How to Use
 
-This repo is not installable via `npm`. Instead, GitHub provides a handy "Use this template" (green) button at the top of this page. That will create a special fork of this repo (so there is a single,
+This repo is not installable via `npm`. Instead, GitHub provides a handy "Use this template" (green) button at the top of this page. That will create a special clone of this repo (so there is a single,
 init commit, instead of the commit history from this repo).
+
+Or, you can download a copy of the [latest release](https://github.com/neonexus/sails-react-bootstrap-webpack/releases/latest).
 
 ## Configuration
 
 In the `config` folder, there is the [`local.js.sample`](config/local.js.sample) file, which is meant to be copied to `local.js`. This file (`local.js`, not the sample) is ignored by Git, and intended
 for use in local development, NOT remote servers. Generally one would use environment variables for remote server configuration (and this repo is already setup to handle environment variable
-configuration for both DEV and PROD). See: [config/env/development.js](config/env/development.js) and [config/env/production.js](config/env/production.js).
+configuration for both DEV and PROD). See [Environment Variables](#environment-variables) for more.
 
 ### Custom Configuration Options
 
@@ -92,13 +107,58 @@ option. If the option path is `sails.config.security.checkPwnedPasswords`, then 
 }
 ```
 
-... to your `config/local.js` to overwrite the option on your local machine only.
+... to your `config/local.js` to overwrite any option on your local machine only.
 
-| Option Name (`sails.config.`)             | Initially Defined In                                                                                                                                                     | Default | Description                                                                                                                                                                                                                                                                              |
-|-------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `models.validateOnBootstrap`              | [`config/bootstrap.js`](config/bootstrap.js)                                                                                                                             | `true`  | When enabled, and `models.migrate === 'safe'` (aka PRODUCTION), then the SQL schemas of the default datastore will be validated against the model definitions. <br /><br />See [schema validation and enforcement](#schema-validation-and-enforcement) for more info.                    |
-| `security.checkPwnedPasswords`            | [`config/security.js`](config/security.js)                                                                                                                               | `true`  | When enabled, [`sails.helpers.isPasswordValid()`](api/helpers/is-password-valid.js) will run it's normal checks, before checking with the PwnedPasswords.com API to verify the password has not been found in a known security breach. If it has, it will consider the password invalid. |
-| `security.requestLogger.logSensitiveData` | [`config/security.js`](config/security.js) <br /> [`config/env/development.js`](config/env/development.js) <br /> [`config/env/production.js`](config/env/production.js) | `false` | If enabled, and NOT a PRODUCTION environment, the [request logger](#request-logging) will log sensitive info, such as passwords. <br /><br /> This will ALWAYS be false on PRODUCTION. It is in the PRODUCTION configuration file only as a reminder.                                    |
+<table>
+    <thead>
+        <tr>
+            <th>Option Name (<code>sails.config.</code>)</th>
+            <th>Found In (<code>config/</code>)</th>
+            <th>Default</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>appName</code></td>
+            <td>
+                <code>local.js</code><br />
+                <a href="/neonexus/sails-react-bootstrap-webpack/blob/release/config/env/development.js"><code>env/development.js</code></a><br />
+                <a href="/neonexus/sails-react-bootstrap-webpack/blob/release/config/env/production.js"><code>env/production.js</code></a><br />
+            </td>
+            <td>
+                <code>My&nbsp;App&nbsp;(LOCAL)</code><br />
+                <code>My App (DEV)</code><br />
+                <code>My App</code>
+            </td>
+            <td>
+                The general name to use for this app.
+            </td>
+        </tr>
+        <tr>
+            <td><code>models.validateOnBootstrap</code></td>
+            <td><a href="/neonexus/sails-react-bootstrap-webpack/blob/release/config/bootstrap.js"><code>bootstrap.js</code></a></td>
+            <td><code>true</code></td>
+            <td>When enabled, and <code>models.migrate === 'safe'</code> (aka PRODUCTION), then the SQL schemas of the default datastore will be validated against the model definitions. <br><br>See <a href="#schema-validation-and-enforcement">schema validation and enforcement</a> for more info.</td>
+        </tr>
+        <tr>
+            <td><code>security.checkPwnedPasswords</code></td>
+            <td><a href="/neonexus/sails-react-bootstrap-webpack/blob/release/config/security.js"><code>security.js</code></a></td>
+            <td><code>true</code></td>
+            <td>When enabled, <a href="/neonexus/sails-react-bootstrap-webpack/blob/release/api/helpers/is-password-valid.js"><code>sails.helpers.isPasswordValid()</code></a> will run its normal checks, before checking with the PwnedPasswords.com API to verify the password has not been found in a known security breach. If it has, it will consider the password invalid.</td>
+        </tr>
+        <tr>
+            <td>
+                <code>security.</code><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;<code>requestLogger.</code><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>logSensitiveData</code>
+            </td>
+            <td><a href="/neonexus/sails-react-bootstrap-webpack/blob/release/config/security.js"><code>security.js</code></a> <br> <a href="/neonexus/sails-react-bootstrap-webpack/blob/release/config/env/development.js"><code>env/development.js</code></a></td>
+            <td><code>false</code></td>
+            <td>If enabled, and NOT a PRODUCTION environment, the <a href="#request-logging">request logger</a> will log sensitive info, such as passwords. <br><br> This will ALWAYS be false on PRODUCTION. It is in the PRODUCTION configuration file only as a reminder.</td>
+        </tr>
+    </tbody>
+</table>
 
 ### Want to configure the `X-Powered-By` header?
 
@@ -176,7 +236,7 @@ This does require you either have Sails installed globally, or you have `node_mo
         </tr>
         <tr>
             <td><pre><code>sails run lines</code></pre></td>
-            <td>Will count the lines of code in the project, minus <code>.gitignore</code>'d files, for funzies. There are currently about 9k custom lines in this repo (views, controllers, helpers, hooks, etc); a small drop in the bucket, compared to what it's built on.
+            <td>Will count the lines of code in the project, minus <code>.gitignore</code>'d files, for funzies. There are currently about 7k custom lines in this repo (views, controllers, helpers, hooks, etc); a small drop in the bucket, compared to what it's built on.
             </td>
         </tr>
         <tr>
@@ -222,6 +282,7 @@ and [`config/env/production.js`](config/env/production.js)
 | `DB_PORT`                                            | 3306                                      | The port number for the datastore.                                                                                              |
 | `DB_SSL`                                             | true                                      | If the datastore requires SSL, set this to "true".                                                                              |
 | `SESSION_SECRET`                                     | "" (empty string)                         | Used to sign cookies, and SHOULD be set, especially on PRODUCTION environments.                                                 |
+| `NGROK_AUTH`                                         | "" (empty string)                         | Ngrok auth token used in the [`ngrok.js`](#working-with-ngrok) script.                                                          |
 
 [//]: # (| DATA_ENCRYPTION_KEY | "" &#40;empty string&#41; | **DATA_ENCRYPTION_KEY** | **"" &#40;empty string&#41;** | **Currently unused; intended for future use.**                                                                                  |)
 
@@ -299,6 +360,35 @@ This functionality is turned on by default, and can be shutoff per-use, or globa
 option set to `true`, to disable the check per use (see [`api/controllers/common/login.js`](api/controllers/common/login.js#L40) for example). Inside of [`config/security.js`](config/security.js), the
 variable `checkPwnedPasswords` can be set to `false` to disable it globally.
 
+## Working With Ngrok
+
+This repo has a custom script ([`ngrok.js`](ngrok.js)), which will start an Ngrok tunnel (using the NPM package [`ngrok`](https://npmjs.com/package/ngrok)), build assets, and start Sails.
+
+### First thing's first
+
+You will want to get an auth token (and create an account if you haven't already): https://dashboard.ngrok.com/tunnels/authtokens
+
+You will need to `npm i ngrok --save-dev` (or install optional dependencies) before you can do anything. I've opted to not have it pre-installed, as it does add a bit of bloat, and not everyone is going to use it.
+
+After you have it installed, you can run `ngrok.js`, like this: `node ngrok`.
+
+### Script Options
+
+These are the current configuration flags. Order does not matter. There will likely be more in the future.
+
+| Option                        | Description                                                                                                                                                                                                                                                                                                                         |
+|-------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `nobuild`                     | Adding this flag will disable asset building.                                                                                                                                                                                                                                                                                       |
+| `auth=TOKEN`                  | Adding this flag (replacing TOKEN with your actual token) will set your Ngrok auth token. In most cases, ngrok will automatically save this token in your home folder, and re-use it later. You can test this out by omitting your token on next run, and go to your [Ngrok dashboard](https://dashboard.ngrok.com/tunnels/agents). |
+
+You can also use the environment variable `NGROK_AUTH` to pass your auth token.
+
+Full example: `node ngrok nobuild auth=S1T2A3Y4I5N6G7A8L9I0V1E`
+
+## Support for `sails-hook-autoreload`
+
+If you would like to use [`sails-hook-autoreload`](https://npmjs.com/package/sails-hook-autoreload), just install it: `npm i sails-hook-autoreload --save-dev` (or install optional dependencies). The config file [`config/autoreload.js`](config/autoreload.js) is already pre-configured for this repo.
+
 ## What about SEO?
 
 I recommend looking at [prerender.io](https://prerender.io). They offer a service (free up to 250 pages) that caches the end result of a JavaScript-rendered view (React, Vue, Angular), allowing search
@@ -322,9 +412,7 @@ middleware: {
         'favicon'       // default hook to serve favicon
     ],
 
-        prerender
-:
-    require('prerender-node').set('prerenderToken', 'YOUR_TOKEN')
+        prerender: require('prerender-node').set('prerenderToken', 'YOUR_TOKEN')
 
 }
 ```
@@ -335,9 +423,9 @@ middleware: {
 * [Sails Deployment Tips](https://sailsjs.com/documentation/concepts/deployment)
 * [Sails Community Support Options](https://sailsjs.com/support)
 * [Sails Professional / Enterprise Options](https://sailsjs.com/enterprise)
-* [`react-bootstrap` Documentation](https://react-bootstrap.netlify.app/)
-* [Webpack Documentation](https://webpack.js.org/)
-* [React Documentation](https://beta.reactjs.org/)
+* [`react-bootstrap` Documentation](https://react-bootstrap.netlify.app)
+* [Webpack Documentation](https://webpack.js.org)
+* [React Documentation](https://react.dev)
 * [Bootstrap Documentation](https://getbootstrap.com/docs/5.3/getting-started/introduction/)
 * [Simple data fixtures for testing Sails.js (the npm package `fixted`)](https://www.npmjs.com/package/fixted)
 

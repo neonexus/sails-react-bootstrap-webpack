@@ -68,7 +68,7 @@ module.exports.models = {
      ***************************************************************************/
 
     attributes: {
-        id: {type: 'number', autoIncrement: true},
+        // id: {type: 'number', autoIncrement: true},
         // createdAt: {type: 'ref', columnType: 'datetime', autoCreatedAt: true},
         // updatedAt: {type: 'ref', columnType: 'datetime', autoUpdatedAt: true}
     },
@@ -93,7 +93,7 @@ module.exports.models = {
 
     dataEncryptionKeys: {
         // Run this to generate a new key: `sails run generate:dek` or `npm run generate:dek`
-        default: 'UVbqegnBnrFClPyj4ntsYEL19gs8ZCRmTpmZXdKRKNA=' // NEVER STORE THIS FOR PRODUCTION PURPOSES!!!
+        default: 'rDusXJzo7Pfpyw8APe8hmBb9qElPsOhCwV6HEeiFuAA=' // NEVER STORE THIS FOR PRODUCTION PURPOSES!!!
     },
 
     /***************************************************************************
@@ -126,6 +126,12 @@ module.exports.models = {
      *                                                                              *
      ********************************************************************************/
 
-    validateOnBootstrap: true
+    validateOnBootstrap: true,
+
+
+    /**
+     * This is a fix for the auto-reload hook.
+     */
+    archiveModelIdentity: false
 
 };

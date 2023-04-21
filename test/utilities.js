@@ -1,7 +1,9 @@
 const st = require('supertest');
 
+const apiPrefix = '/api/v1';
+
 module.exports = function(sails) {
-    // Login handling is dealt with in startTests.js
+    // Login handling is dealt with in startTests.js.
     const sendRequestAsAnon = st(sails.hooks.http.app); // anon browser
     const sendRequestAsUser = st.agent(sails.hooks.http.app); // browser with cookies
     const sendRequestAsAdmin = st.agent(sails.hooks.http.app);
@@ -17,16 +19,17 @@ module.exports = function(sails) {
             },
             expectedStatus: 200,
             query: {},
-            data: {}
+            data: {},
+            headers: {}
         }, config);
-
-        const apiPrefix = '/api/v1';
 
         switch (config.method) {
             case 'GET':
                 requestAs
                     .get(apiPrefix + config.route)
                     .query(config.query)
+                    .set(config.headers)
+                    .expect('Content-Type', /json/)
                     .expect(config.expectedStatus)
                     .expect((res) => {
                         if (typeof config.expect === 'function') {
@@ -43,7 +46,9 @@ module.exports = function(sails) {
                 requestAs
                     .post(apiPrefix + config.route)
                     .query(config.query)
+                    .set(config.headers)
                     .send(config.data)
+                    .expect('Content-Type', /json/)
                     .expect(config.expectedStatus)
                     .expect((res) => {
                         if (res.body._csrf) {
@@ -64,7 +69,9 @@ module.exports = function(sails) {
                 requestAs
                     .put(apiPrefix + config.route)
                     .query(config.query)
+                    .set(config.headers)
                     .send(config.data)
+                    .expect('Content-Type', /json/)
                     .expect(config.expectedStatus)
                     .expect((res) => {
                         if (res.body._csrf) {
@@ -85,7 +92,9 @@ module.exports = function(sails) {
                 requestAs
                     .delete(apiPrefix + config.route)
                     .query(config.query)
+                    .set(config.headers)
                     .send(config.data)
+                    .expect('Content-Type', /json/)
                     .expect(config.expectedStatus)
                     .expect((res) => {
                         if (res.body._csrf) {

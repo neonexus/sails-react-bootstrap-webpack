@@ -1,10 +1,16 @@
 <component name="ProjectDictionaryState">
   <dictionary name="neonexusdemortis">
     <words>
+      <w>authtoken</w>
+      <w>autoreload</w>
+      <w>crawlable</w>
       <w>datastore</w>
       <w>datastores</w>
       <w>fixted</w>
       <w>mortis</w>
+      <w>neonexus</w>
+      <w>ngrokrc</w>
+      <w>nobuild</w>
       <w>pnwed</w>
       <w>webpack</w>
       <w>webpack's</w>

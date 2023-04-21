@@ -4,7 +4,7 @@ let requester = null;
 
 class api {
     constructor(baseUrl) {
-        this.baseUrl = baseUrl || process.env.baseUrl; // process.env is coming from webpack
+        this.baseUrl = baseUrl || appConfig.baseUrl; // appConfig is coming from webpack
 
         this.baseUrl += '/api/v1';
 

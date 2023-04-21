@@ -26,7 +26,9 @@ module.exports = {
             err = inputs.err;
 
         if (err) {
-            if (err.invalidAttributes && err.Errors) {
+            if (err.problems) {
+                errors = err.problems;
+            } else if (err.invalidAttributes && err.Errors) {
                 err = _.merge({}, err.invalidAttributes, err.Errors);
 
                 _.forEach(err, (error) => {

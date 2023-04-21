@@ -1,5 +1,14 @@
 const Tokens = require('csrf');
 
+/**
+ * Generate CSRF Token and Secret
+ *
+ * @function sails.helpers.generateCsrfTokenAndSecret
+ * @param {Number} [saltLength=8] The salt length to use (characters, not bytes). Minimum and default are 8 characters.
+ * @param {Number} [secretLength=18] The secret length to generate (bytes, not characters). Minimum and default are 18 bytes.
+ *
+ * @returns {Object} An object with `token` (to send to the end-user) and `secret` (to be stored in back-end for later verification).
+ */
 module.exports = {
     friendlyName: 'Generate CSRF Token and Secret',
 

@@ -21,6 +21,7 @@ module.exports = {
     // This requires the "isLoggedIn" policy is run beforehand.
     fn: async (inputs, exits, env) => {
         const foundUser = await sails.models.user.findOne({id: env.req.session.user.id}); // req.session.user is filled in by the isLoggedIn policy
+        const foundOTP = await sails.models.otp.findOne({user: foundUser.id, isEnabled: true});
 
         /* istanbul ignore if */
         if (!foundUser) {
@@ -28,6 +29,10 @@ module.exports = {
             return exits.serverError();
         }
 
-        return exits.ok({user: foundUser});
+        return exits.ok({
+            user: _.merge(foundUser, {
+                _isOTPEnabled: (!!foundOTP)
+            })
+        });
     }
 };

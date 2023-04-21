@@ -17,6 +17,7 @@ module.exports.blueprints = {
      *                                                                          *
      ***************************************************************************/
 
+    // This is shut-off by default, to encourage explicit API design, to help prevent confusion in the future.
     actions: false,
 
 
@@ -26,6 +27,7 @@ module.exports.blueprints = {
      *                                                                          *
      ***************************************************************************/
 
+    // This is shut-off by default, to encourage explicit API design, to help prevent confusion in the future.
     rest: false,
 
 
@@ -36,6 +38,7 @@ module.exports.blueprints = {
      *                                                                          *
      ***************************************************************************/
 
+    // This is shut-off by default, to encourage explicit API design, to help prevent confusion in the future.
     shortcuts: false
 
 };

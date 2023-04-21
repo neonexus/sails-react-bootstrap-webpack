@@ -20,6 +20,8 @@
  */
 
 module.exports = {
+    appName: 'My App',
+
     baseUrl: process.env.BASE_URL || 'https://myapi.app',
     assetsUrl: process.env.ASSETS_URL || '', // Something like: https://my-cdn.app/ must end with / or be blank.
 
@@ -89,9 +91,16 @@ module.exports = {
          ***************************************************************************/
         cascadeOnDestroy: false,
 
-        /*dataEncryptionKeys: {
+        /**
+         *
+         * These are the keys used to encrypt data at-rest in our datastore.
+         *
+         * See: https://sailsjs.com/documentation/concepts/models-and-orm/model-settings#dataencryptionkeys
+         *
+         */
+        dataEncryptionKeys: {
             default: process.env.DATA_ENCRYPTION_KEY
-        }*/
+        }
     },
 
     /**************************************************************************
@@ -155,7 +164,7 @@ module.exports = {
          *                                                                  *
          ********************************************************************/
         requestLogger: {
-            logSensitiveData: false // can not be changed
+            logSensitiveData: false // Can not be changed.
         }
     },
 
@@ -231,7 +240,7 @@ module.exports = {
          ***************************************************************************/
         cookie: {
             secure: true,
-            // this age is when we choose not to use "session" cookies, and want max-age instead.
+            // This age is when we choose not to use "session" cookies, and want max-age instead.
             maxAge: 24 * 60 * 60 * 1000  // 24 hours
         },
 

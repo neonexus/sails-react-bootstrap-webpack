@@ -1,8 +1,8 @@
-import React from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import {Button, Collapse, Form, Modal, Row} from 'react-bootstrap';
 
-class CreateUserModal extends React.Component {
+class CreateUserModal extends Component {
     constructor(props) {
         super(props);
 

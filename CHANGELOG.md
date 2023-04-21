@@ -1,12 +1,38 @@
 # Changelog
 
+## [v4.2.0](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v4.1.1...v4.2.0) (2023-04-20)
+### Features
+
+* Built a script for [`Ngrok`](https://www.npmjs.com/package/ngrok), which will build assets, start Sails, and create an Ngrok tunnel (to the configured PORT).
+* Built 2FA (2-Factor Authentication) capabilities.
+* Added `appName` as a config option.
+* Added `createdBy` to the [`User`](api/models/User.js) model.
+* Added [`sails-hook-autoreload`](https://www.npmjs.com/package/sails-hook-autoreload) support (must manually install).
+* Built session expiration handling.
+* Built password changing modal / API.
+* Made session data saving automatic, and work with both sessions / API tokens.
+* Fixed some README quirks.
+* Removed unneeded React imports (because of the Babel transform). For more info, [read this announcement (from 2020...)](https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html).
+* Updated React links to use their new domain.
+* Removed `serve-static` in favor of `express.static`.
+* Updated dependencies.
+
+### Breaking Changes
+
+* Moved CSRF secret storage from the `data` column, to its own column, so it can easily be encrypted/decrypted in the [`Session`](api/models/Session.js) model.
+* Changed how API tokens are handled. So now, when using an API token, the ID must be given first, then the token, seperated by a colon.<br />Example: `Authorization` header is: `tokenID:apiToken` (or `Bearer tokenID:apiToken`). This is because `token` is now an encrypted column.
+* Renamed `sails.helpers.updateCsrf` -> `sails.helpers.updateCsrfAndExpiry` to reflect the session expiry update.
+* Renamed `req.requestId`/`env.req.requestId` -> `req.id`/`env.req.id` to better match general convention.
+* Renamed `process.env` -> `appConfig` in the Webpack config (a variable used to pass data down to the frontend). What was I doing?!...
+
 ## [v4.1.1](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v4.1.0...v4.1.1) (2023-03-14)
 ### Features
 
-* Fixed a stupid mistake in `api/controllers/get-users.js`.
+* Fixed a stupid mistake in [`api/controllers/admin/get-users.js`](api/controllers/admin/get-users.js).
 * Updated dependencies.
 
 ## [v4.1.0](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v4.0.1...v4.1.0) (2023-03-13)
+
 ### Features
 
 * Alphabetized the scripts in `package.json`.
@@ -48,7 +74,7 @@
 
 ### Breaking Changes
 
-* Renamed tests entry point (`hooks.js` -> `startTests.js`).
+* Renamed tests entry point (`test/hooks.js` -> `test/startTests.js`).
 
 ## [v3.2.1](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v3.2.0...v3.2.1) (2022-11-16)
 
@@ -119,7 +145,7 @@
 
 ### Breaking Changes
 
-* Updated to React v18. See: [the upgrade guide to React 18](https://reactjs.org/blog/2022/03/08/react-18-upgrade-guide.html).
+* Updated to React v18. See: [the upgrade guide to React 18](https://react.dev/blog/2022/03/08/react-18-upgrade-guide).
 * Updated to React Router DOM v6. See: [the v5 -> v6 migration guide](https://reactrouter.com/docs/en/v6/upgrading/v5). This requires a **MAJOR** overhaul of how routes are handled.
 * Moved some controllers into a "common" folder, instead of the "admin" folder (as they could be used outside of admin controls).
 

@@ -11,7 +11,7 @@
  */
 
 module.exports = {
-    logSensitiveData: false, // never log sensitive data in remote development database (for custom request logger hook)
+    appName: 'My App (DEV)',
 
     baseUrl: process.env.BASE_URL || 'https://myapi.app',
     assetsUrl: process.env.ASSETS_URL || '', // Something like: https://my-cdn.app/ must end with / or be blank.

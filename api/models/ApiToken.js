@@ -8,15 +8,20 @@ module.exports = {
             required: true
         },
 
-        token: {
-            type: 'string',
-            unique: true,
-            columnType: 'varchar(128)'
-        },
-
         user: {
             model: 'user',
             required: true
+        },
+
+        data: {
+            type: 'json'
+        },
+
+        token: {
+            type: 'string',
+            columnType: 'text',
+            encrypt: true,
+            allowNull: false
         },
 
         createdAt: {
@@ -32,9 +37,16 @@ module.exports = {
         }
     },
 
+    customToJSON: function() { // DO NOT use => function!
+        // This will be run by the "keep-models-safe" helper.
+        return _.omit(this, [
+            'token'
+        ]);
+    },
+
     beforeCreate: (obj, next) => {
         obj.id = sails.helpers.generateUuid();
-        obj.token = sails.helpers.generateToken();
+        // obj.token = sails.helpers.generateToken(); // Can't be used here, because encryption happens before this is called...
 
         return next();
     }

@@ -24,7 +24,7 @@ describe('finalizeRequestLog helper', function() {
 
         /* eslint-disable */
         const resp = await sails.helpers.finalizeRequestLog({
-            requestId: foundLog[0].id,
+            id: foundLog[0].id,
             _requestStartTime: process.hrtime.bigint()
         }, {
             getHeaders: () => ({testing: true}),

@@ -1,7 +1,7 @@
 module.exports = {
     friendlyName: 'Create API Token',
 
-    description: 'Get an API token, which replaces CSRF token / session cookie usage.',
+    description: 'Create an API token, which replaces CSRF token / session cookie usage.',
 
     inputs: {},
 
@@ -14,12 +14,16 @@ module.exports = {
     fn: async (inputs, exits, env) => {
         const newToken = await sails.models.apitoken.create({
             id: 'c', // required, auto-generated
-            user: env.req.session.user.id
-        }).fetch();
+            user: env.req.session.user.id,
+            token: sails.helpers.generateToken(),
+            data: {} // Used to store things that are temporary, or only apply to this session.
+        }).fetch().decrypt();
+
+        const outToken = newToken.id + ':' + newToken.token;
 
         return exits.created({
-            token: newToken.token,
-            __skipCSRF: true // this tells our "created" response to ignore the CSRF token update
+            token: outToken,
+            header: 'Bearer ' + outToken
         });
     }
 };

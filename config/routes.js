@@ -10,7 +10,7 @@
 
 const path = require('path');
 const fs = require('fs');
-const serveStatic = require('serve-static');
+const express = require('express'); // Express is a requirement of Sails.
 
 module.exports.routes = {
     'GET /': {
@@ -23,12 +23,7 @@ module.exports.routes = {
     'GET /*': { // default route used to auto switch React apps
         skipAssets: false,
         fn: [
-            serveStatic(path.resolve(__dirname, '../.tmp/public/'), {
-                maxAge: process.env.NODE_ENV !== 'production' ? 1 : 31557600000, // in production, a little over a year in milliseconds
-                extensions: ['html'],
-                dotfiles: 'ignore',
-                redirect: false // prevents redirecting "/main" to "/main/"
-            }),
+            express.static(path.resolve(__dirname, '../.tmp/public/')),
             async (req, res) => {
                 // This will determine which React app we need to serve.
                 const parts = req.url.split('/');
@@ -68,6 +63,11 @@ module.exports.routes = {
     'POST /api/v1/login': 'common/login',
     'GET /api/v1/logout': 'common/logout',
     'GET /api/v1/me': 'common/get-me',
+    'POST /api/v1/password': 'common/change-password',
+
+    'POST /api/v1/2fa/enable': 'common/enable-2fa',
+    'POST /api/v1/2fa/finalize': 'common/finalize-2fa',
+    'POST /api/v1/2fa/disable': 'common/disable-2fa',
 
     'GET /_ping': (req, res) => {
         return res.ok('pong');

@@ -51,4 +51,12 @@ try {
 
 
 // Start server
-sails.lift(rc('sails'));
+sails.lift(rc('sails'), (err, server) => {
+    if (err) {
+        return console.error(err);
+    }
+
+    console.log('');
+    console.log('http://localhost:' + server.config.port);
+    console.log('');
+});

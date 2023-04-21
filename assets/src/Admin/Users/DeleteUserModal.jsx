@@ -1,9 +1,9 @@
-import React from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import {Button, Modal} from 'react-bootstrap';
 
 function DeleteUserModal(props) {
-    const [isLoading, setIsLoading] = React.useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     return (
         <Modal show={props.show} backdrop="static">

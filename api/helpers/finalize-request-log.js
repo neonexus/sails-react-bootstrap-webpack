@@ -1,5 +1,15 @@
 const stringify = require('json-stringify-safe');
 
+/**
+ * Finalize Request Log
+ *
+ * @function sails.helpers.finalizeRequestLog
+ * @param {Object} req The current `req` object.
+ * @param {Object} res The current `res` object.
+ * @param {Object} body The final body of the response given to the end-user.
+ *
+ * @returns null
+ */
 module.exports = {
     friendlyName: 'Finalize Request Log',
 
@@ -30,7 +40,7 @@ module.exports = {
     },
 
     fn: async (inputs, exits) => {
-        if (inputs.req.requestId) {
+        if (inputs.req.id) {
             const bleep = '*******';
             let out = _.merge({}, inputs.body),
                 headers = _.merge({}, inputs.res.getHeaders()); // copy the object
@@ -43,6 +53,11 @@ module.exports = {
 
                 if (out.token) {
                     out.token = bleep;
+
+                    // If we have a token, and a "header" in our out response, hide the header, it contains the token too.
+                    if (out.header) {
+                        out.header = bleep;
+                    }
                 }
 
                 if (out.access_token) {
@@ -53,6 +68,23 @@ module.exports = {
                 if (out.refresh_token) {
                     // eslint-disable-next-line camelcase
                     out.refresh_token = bleep;
+                }
+
+                if (out.secret) {
+                    out.secret = bleep;
+
+                    // It has a secret, and an image? The image is a QR containing the secret, so hide it.
+                    if (out.image) {
+                        out.image = bleep;
+                    }
+                }
+
+                if (out.backupTokens) {
+                    out.backupTokens = bleep;
+                }
+
+                if (headers['set-cookie']) {
+                    headers['set-cookie'] = bleep;
                 }
             }
 
@@ -70,7 +102,7 @@ module.exports = {
                 responseTime: totalTime
             };
 
-            sails.models.requestlog.update({id: inputs.req.requestId}).set(log).exec((err) => {
+            sails.models.requestlog.update({id: inputs.req.id}).set(log).exec((err) => {
                 /* istanbul ignore if */
                 if (err) {
                     console.error(err);

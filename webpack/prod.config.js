@@ -1,3 +1,5 @@
+// This file is used to configure Webpack for PRODUCTION builds of assets.
+
 const {merge} = require('webpack-merge');
 const baseConfig = require('./common.config.js');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');

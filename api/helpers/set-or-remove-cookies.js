@@ -1,9 +1,18 @@
+/**
+ * Set or Remove Cookies
+ *
+ * @function sails.helpers.setOrRemoveCookies
+ * @param {Object} data The `data` object, to return to the end-user, containing a `cookies` object.
+ * @param {Object} res The current `res` object.
+ *
+ * @returns {Object} The modified `data` object, minus the `cookies` (which are now attached to `res`).
+ */
 module.exports = {
-    sync: true, // this is a synchronous helper
-
-    friendlyName: 'Set Cookies',
+    friendlyName: 'Set or Remove Cookies',
 
     description: 'Removes `cookies` from `data`, and attaches them to `res`.',
+
+    sync: true, // this is a synchronous helper
 
     inputs: {
         data: {
@@ -59,7 +68,7 @@ module.exports = {
                 return inputs.res.clearCookie(cookie.name, defaultCookie);
             }
 
-            const newCookie = (!cookie.isSession) // if we don't want to use the default "session" to expire the cookie, we use the maxAge
+            const newCookie = (!cookie.isSession) // If we don't want to use the default "session" to expire the cookie, we use the maxAge.
                               ? _.merge({}, defaultCookie, {maxAge: sails.config.session.cookie.maxAge})
                               : defaultCookie;
 

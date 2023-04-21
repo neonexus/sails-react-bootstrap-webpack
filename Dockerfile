@@ -1,4 +1,4 @@
-FROM node:18.15
+FROM node:18.16
 MAINTAINER NeoNexus DeMortis
 
 RUN mkdir /var/www && mkdir /var/www/myapp

@@ -38,7 +38,7 @@ module.exports = {
 
     fn: (inputs, exits) => {
         const user = (inputs.req.session && inputs.req.session.user) ? inputs.req.session.user.id : null,
-            request = (inputs.req.requestId) ? inputs.req.requestId : null;
+            request = (inputs.req.id) ? inputs.req.id : null;
 
         const newLog = {
             id: 'c', // required, but auto-generated
