@@ -14,7 +14,6 @@ Gitter: [![Join the chat at https://gitter.im/sails-react-bootstrap-webpack/comm
 * [Main Features](#main-features)
 * [Branch Warning](#branch-warning)
 * [Current Dependencies](#current-dependencies)
-    * [Optional Dependencies](#optional-dependencies)
 * [How to Use](#how-to-use)
 * [Configuration](#configuration)
     * [Custom Configuration Options](#custom-configuration-options)
@@ -71,12 +70,6 @@ the [`releases section`](https://github.com/neonexus/sails-react-bootstrap-webpa
 * [Bootstrap](https://getbootstrap.com) **v5**
 * [React-Bootstrap](https://react-bootstrap.github.io) **v2**
 * [Webpack](https://webpack.js.org) **v5**
-
-### Optional Dependencies
-
-Optional dependencies are not automatically installed in this repo. You must either manually install them with `npm i`, or you can install all optional dependencies: `npm i --include=optional`.
-
-There are currently 2 optional dependencies in this repo: [`ngrok`](#working-with-ngrok) and [`sails-hook-autoreload`](#support-for-sails-hook-autoreload).
 
 See the [`package.json` for more details](package.json).
 
@@ -282,7 +275,7 @@ and [`config/env/production.js`](config/env/production.js)
 | `DB_PORT`                                            | 3306                                      | The port number for the datastore.                                                                                              |
 | `DB_SSL`                                             | true                                      | If the datastore requires SSL, set this to "true".                                                                              |
 | `SESSION_SECRET`                                     | "" (empty string)                         | Used to sign cookies, and SHOULD be set, especially on PRODUCTION environments.                                                 |
-| `NGROK_AUTH`                                         | "" (empty string)                         | Ngrok auth token used in the [`ngrok.js`](#working-with-ngrok) script.                                                          |
+| `NGROK_TOKEN`                                        | "" (empty string)                         | Ngrok auth token used in the [`ngrok.js`](#working-with-ngrok) script.                                                          |
 
 [//]: # (| DATA_ENCRYPTION_KEY | "" &#40;empty string&#41; | **DATA_ENCRYPTION_KEY** | **"" &#40;empty string&#41;** | **Currently unused; intended for future use.**                                                                                  |)
 
@@ -368,26 +361,29 @@ This repo has a custom script ([`ngrok.js`](ngrok.js)), which will start an Ngro
 
 You will want to get an auth token (and create an account if you haven't already): https://dashboard.ngrok.com/tunnels/authtokens
 
-You will need to `npm i ngrok --save-dev` (or install optional dependencies) before you can do anything. I've opted to not have it pre-installed, as it does add a bit of bloat, and not everyone is going to use it.
+You will need to `npm i ngrok --save-dev` before you can do anything. I've opted to not have it pre-installed, as it does add a bit of bloat, and not everyone is going to use it.
 
-After you have it installed, you can run `ngrok.js`, like this: `node ngrok`.
+After you have it installed, you can run `ngrok.js`, with node: `node ngrok` or just directly: `./ngrok.js`.
 
 ### Script Options
 
-These are the current configuration flags. Order does not matter. There will likely be more in the future.
+These are the current configuration flags. Order does not matter.
 
-| Option                        | Description                                                                                                                                                                                                                                                                                                                         |
-|-------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `nobuild`                     | Adding this flag will disable asset building.                                                                                                                                                                                                                                                                                       |
-| `auth=TOKEN`                  | Adding this flag (replacing TOKEN with your actual token) will set your Ngrok auth token. In most cases, ngrok will automatically save this token in your home folder, and re-use it later. You can test this out by omitting your token on next run, and go to your [Ngrok dashboard](https://dashboard.ngrok.com/tunnels/agents). |
+| Option                | Description                                                                                                                                                                                                                                                                                |
+|-----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `auth=USER:PASS`      | This will protect the Ngrok tunnel with HTTP Basic Auth, using the USER / PASS you supply.                                                                                                                                                                                                 |
+| `nobuild`             | Adding this flag will disable asset building.                                                                                                                                                                                                                                              |
+| `domain=MYDOMAIN`     | The domain to connect the tunnel from Sails to.                                                                                                                                                                                                                                            |
+| `region=MYREGION`     | The region to use for connection to the Ngrok services. One of Ngrok regions (`us`, `eu`, `au`, `ap`, `sa`, `jp`, `in`). Defaults to `us`.                                                                                                                                                 |
+| `token=MY_AUTH_TOKEN` | Adding this flag will set your Ngrok auth token. In most cases, ngrok will automatically save this token in your home folder, and re-use it later. You can test this out by omitting your token on next run, and go to your [Ngrok dashboard](https://dashboard.ngrok.com/tunnels/agents). |
 
-You can also use the environment variable `NGROK_AUTH` to pass your auth token.
+You can also use the environment variable `NGROK_TOKEN` to pass your auth token. If both environment variable, and script flag are set, the script flag will take priority.
 
-Full example: `node ngrok nobuild auth=S1T2A3Y4I5N6G7A8L9I0V1E`
+An example: `node ngrok nobuild token=S1T2A3Y4I5N6G7A8L9I0V1E region=us`
 
 ## Support for `sails-hook-autoreload`
 
-If you would like to use [`sails-hook-autoreload`](https://npmjs.com/package/sails-hook-autoreload), just install it: `npm i sails-hook-autoreload --save-dev` (or install optional dependencies). The config file [`config/autoreload.js`](config/autoreload.js) is already pre-configured for this repo.
+If you would like to use [`sails-hook-autoreload`](https://npmjs.com/package/sails-hook-autoreload), just install it: `npm i sails-hook-autoreload --save-dev`. The config file [`config/autoreload.js`](config/autoreload.js) is already pre-configured for this repo.
 
 ## What about SEO?
 

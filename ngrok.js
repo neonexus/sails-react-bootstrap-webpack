@@ -1,5 +1,10 @@
+#!/usr/bin/env node
+
 /**
  * This is the file used to lift Sails, build assets, and start Ngrok.
+ *
+ * Run it via node: `node ngrok` OR `node ngrok.js`
+ * Run it directly: `./ngrok.js`
  */
 let ngrok;
 
@@ -7,11 +12,9 @@ try {
     ngrok = require('ngrok');
 } catch (e) { // eslint-disable-line
     console.log('');
-    console.log('In order to run this script, you must either install `Ngrok`:');
-    console.log('npm i ngrok --save-dev');
+    console.log('In order to run this script, you must install `Ngrok`:');
     console.log('');
-    console.log('Or install all the optional dependencies (will also install sails-hook-autoreload):');
-    console.log('npm i --include=optional');
+    console.log('npm i ngrok --save-dev');
     console.log('');
 
     return process.exit(1);
@@ -67,23 +70,37 @@ try {
 }
 
 // Set our defaults.
-config.authtoken = process.env.NGROK_AUTH || null;
+config.auth = null;
+config.token = process.env.NGROK_TOKEN || null;
 config.buildAssets = true;
+config.domain = null;
 config.port = process.env.PORT || config.port || 1337;
+config.region = null;
 
 // Read our console config flags.
 for (let i = 2; i < process.argv.length; ++i) {
-    if (process.argv[i].toLowerCase() === 'nobuild') {
+    const thisFlag = process.argv[i].toLowerCase();
+
+    if (thisFlag === 'nobuild') {
         config.buildAssets = false;
-    } else if (process.argv[i].toLowerCase().startsWith('auth=')) {
-        config.authtoken = process.argv[i].substring(5);
+    } else if (thisFlag.startsWith('auth=')) {
+        config.auth = process.argv[i].substring(5);
+    } else if (thisFlag.startsWith('domain=')) {
+        config.domain = thisFlag.substring(7);
+    } else if (thisFlag.startsWith('region=')) {
+        config.region = thisFlag.substring(7);
+    } else if (thisFlag.startsWith('token=')) {
+        config.token = process.argv[i].substring(6);
     }
 }
 
 ngrok.connect({
-    authtoken: config.authtoken,
+    auth: config.auth, // HTTP Basic auth
+    authtoken: config.token,
     addr: config.port,
-    scheme: 'https' // Currently, this does nothing, but will force Ngrok to open ONLY an HTTPs tunnel, when v5 of `ngrok` package is released.
+    subdomain: config.domain,
+    region: config.region,
+    scheme: 'https' // Currently, this does nothing, but will force Ngrok to open ONLY an HTTPS tunnel, when v5 of `ngrok` package is released.
 }).then((ngrokUrl) => {
     // Close our "http" tunnel (leaving our "https" tunnel open). Hacky, but required until v5.
     const ngrokApi = ngrok.getApi();
@@ -97,6 +114,7 @@ ngrok.connect({
 
     let origins;
 
+    // Smaller helper function, to output the Ngrok URLs.
     function sendUrls() {
         console.log('');
         console.log('Ngrok URL: ' + ngrokUrl);
@@ -104,9 +122,9 @@ ngrok.connect({
         console.log('');
     }
 
+    // Build our assets in the background.
     if (config.buildAssets) {
-        // Build our assets in the background.
-        const assetBuilderProcess = spawn('npm', ['run', 'build'], {env: {...process.env, NGROK_URL: ngrokUrl}});
+        const assetBuilderProcess = spawn('npm', ['run', 'build'], {env: {...process.env, BASE_URL: ngrokUrl}});
 
         assetBuilderProcess.stderr.on('data', (data) => {
             console.log('Error:');
@@ -129,12 +147,14 @@ ngrok.connect({
         console.log('');
     }
 
+    // Add the Ngrok URL to our allowed origins.
     if (config.security && config.security.cors && config.security.cors.allowOrigins) {
         origins = [...config.security.cors.allowOrigins, ngrokUrl];
     } else {
         origins = [ngrokUrl];
     }
 
+    // Start Sails.
     sails.lift({
         ...rc('sails'),
         baseUrl: ngrokUrl,
@@ -150,6 +170,8 @@ ngrok.connect({
             return process.exit(1);
         }
 
+        // Sails tends to be faster at startup than asset building...
+        // Assume we are still waiting for assets (which will output URLs when finished)...
         if (config.buildAssets) {
             console.log('');
             console.log('Please wait for assets...');

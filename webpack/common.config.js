@@ -11,6 +11,8 @@ let configPath = path.resolve(__dirname, '../config/local.js'), // try to get lo
     baseUrl = 'http://localhost:1337', // default baseUrl (should point to Sails)
     assetUrl = ''; // used for CDN prefixing on assets (https://cdn.example.com/)
 
+const environment = process.env.NODE_ENV || 'development';
+
 try {
     let config;
 
@@ -19,8 +21,6 @@ try {
         config = require(configPath);
     } else {
         // no local.js, find our environmental configuration
-        const environment = process.env.NODE_ENV || 'development';
-
         switch (environment.toLowerCase()) {
             case 'dev':
             case 'development':
@@ -48,7 +48,7 @@ try {
 
     // Setup variables to inject into compiled apps, like which URL to use as a base for API / websocket connections, or CDN URLs.
     appName = config.appName ? config.appName : appName;
-    baseUrl = process.env.NGROK_URL || config.baseUrl;
+    baseUrl = process.env.BASE_URL || config.baseUrl;
     assetUrl = config.assetsUrl ? config.assetsUrl : '/'; // used for CDN rewrites on asset URLs
 } catch (err) {
     return console.error(err);
@@ -58,7 +58,7 @@ const baseHtmlConfig = {
     template: 'assets/entry_template.html',
     inject: true,
     hash: true, // add hashes to the end of compiled assets, to help bust cache
-    minify: process.env.NODE_ENV === 'production',
+    minify: environment === 'production',
     publicPath: assetUrl
 };
 
