@@ -3,6 +3,7 @@
     <words>
       <w>authtoken</w>
       <w>autoreload</w>
+      <w>cloudflared</w>
       <w>crawlable</w>
       <w>datastore</w>
       <w>datastores</w>

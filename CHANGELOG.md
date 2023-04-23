@@ -1,4 +1,12 @@
 # Changelog
+## [v4.2.1](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v4.2.0...v4.2.1) (2023-04-23)
+### Features
+
+* Removed optional dependencies from `package.json`, as the setup would remove optional dependencies when installing new packages without use of `--include=optional`...
+* Changed use of `NGROK_URL` -> `BASE_URL`.
+* Renamed `NGROK_AUTH` -> `NGROK_TOKEN` to avoid confusion with the `ngrok.js` config option `auth`.
+* Added some Ngrok config options.
+* Updated dependencies.
 
 ## [v4.2.0](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v4.1.1...v4.2.0) (2023-04-20)
 ### Features

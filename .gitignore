@@ -146,3 +146,6 @@ app.zip
 # SSL files
 *.key
 *.crt
+
+# Downloaded binary files
+.bin
