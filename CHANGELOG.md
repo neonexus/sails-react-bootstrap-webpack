@@ -1,4 +1,11 @@
 # Changelog
+## [v4.2.2](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v4.2.1...v4.2.2) (2023-09-13)
+### Features
+
+* Added in a new configuration to enable/disable automatic request logging.
+*
+* Updated dependencies.
+
 ## [v4.2.1](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v4.2.0...v4.2.1) (2023-04-23)
 ### Features
 

@@ -24,6 +24,19 @@ module.exports.log = {
      *                                                                          *
      ***************************************************************************/
 
-    // level: 'info'
+    level: 'info',
 
+
+    /********************************************************************
+     *                                                                  *
+     * This is a custom configuration option, for the request logger    *
+     * hook (api/hook/request-logger.js) and the finalize request log   *
+     * helper (api/helpers/finalize-request-log.js).                    *
+     *                                                                  *
+     * When enabled, the hook and helper will automatically log all     *
+     * incoming requests using the RequestLog model.                    *
+     *                                                                  *
+     ********************************************************************/
+
+    captureRequests: true
 };
