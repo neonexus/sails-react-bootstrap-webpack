@@ -40,7 +40,7 @@ module.exports = {
     },
 
     fn: async (inputs, exits) => {
-        if (inputs.req.id) {
+        if (inputs.req.id && sails.config.log.captureRequests === true) {
             const bleep = '*******';
             let out = _.merge({}, inputs.body),
                 headers = _.merge({}, inputs.res.getHeaders()); // copy the object

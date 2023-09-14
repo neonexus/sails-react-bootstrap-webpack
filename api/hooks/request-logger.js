@@ -2,23 +2,14 @@ const stringify = require('json-stringify-safe');
 
 module.exports = (sails) => {
     return {
-
         initialize: function(cb) {
-            // Assign this hook object to the `hook` var.
-            // This allows us to add/modify values that users of the hook can retrieve.
-            //hook = this;
-            // Initialize a couple of values on the hook.
-            //hook.numRequestsSeen = 0;
-            //hook.numUnhandledRequestsSeen = 0;
-            // Signal that initialization of this hook is complete
-            // by calling the callback.
             return cb();
         },
 
         routes: {
             before: {
                 '*': function(req, res, next) {
-                    if (req.method !== 'HEAD' && req.path !== '/__getcookie' && req.path !== '/') {
+                    if (req.method !== 'HEAD' && req.path !== '/__getcookie' && req.path !== '/' && sails.config.log.captureRequests === true) {
                         const bleep = '*******';
 
                         let body = _.merge({}, req.body),
