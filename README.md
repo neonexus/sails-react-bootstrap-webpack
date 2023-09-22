@@ -103,7 +103,7 @@ configuration for both DEV and PROD). See [Environment Variables](#environment-v
 ### Custom Configuration Options
 
 These options are **NOT** part of the [Sails Configuration Options](https://sailsjs.com/documentation/reference/configuration), but are ones built for this custom repo. All of these options can be
-overwritten in the `config/local.js`, just like every other option. If the option path is `sails.config.security.checkPwnedPasswords`, then you would add:
+overridden in the `config/local.js`, just like every other option. If the option path is `sails.config.security.checkPwnedPasswords`, then you would add:
 
 ```javascript
 {
@@ -113,7 +113,7 @@ overwritten in the `config/local.js`, just like every other option. If the optio
 }
 ```
 
-... to your `config/local.js` to overwrite any option on your local machine only.
+... to your `config/local.js` to override any option on your local machine only.
 
 <!-- The below comment is to prevent Webstorm from trying to find directories that don't exist. -->
 <!--suppress ALL -->
