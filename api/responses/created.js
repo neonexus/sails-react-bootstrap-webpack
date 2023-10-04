@@ -16,8 +16,7 @@ module.exports = async function created(data) {
 
     const out = _.merge({success: true}, data);
 
-    res.status(201);
-    res.json(out);
+    res.status(201).json(out);
 
     await sails.helpers.finalizeRequestLog(req, res, out);
 };

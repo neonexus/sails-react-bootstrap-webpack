@@ -1,12 +1,12 @@
 # sails-react-bootstrap-webpack
 
 [![Travis CI status](https://img.shields.io/travis/com/neonexus/sails-react-bootstrap-webpack.svg?branch=release&logo=travis)](https://app.travis-ci.com/github/neonexus/sails-react-bootstrap-webpack)
-[![Sails version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv4.2.2%2Fpackage.json&query=%24.dependencies.sails&label=Sails&logo=sailsdotjs)](https://sailsjs.com)
-[![React version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv4.2.2%2Fpackage.json&query=%24.devDependencies.react&label=React&logo=react)](https://react.dev)
-[![Bootstrap version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv4.2.2%2Fpackage.json&query=%24.devDependencies.bootstrap&label=Bootstrap&logo=bootstrap)](https://getbootstrap.com)
-[![Webpack version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv4.2.2%2Fpackage.json&query=%24.devDependencies.webpack&label=Webpack&logo=webpack)](https://webpack.js.org)
+[![Sails version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv4.2.3%2Fpackage.json&query=%24.dependencies.sails&label=Sails&logo=sailsdotjs)](https://sailsjs.com)
+[![React version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv4.2.3%2Fpackage.json&query=%24.devDependencies.react&label=React&logo=react)](https://react.dev)
+[![Bootstrap version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv4.2.3%2Fpackage.json&query=%24.devDependencies.bootstrap&label=Bootstrap&logo=bootstrap&logoColor=white)](https://getbootstrap.com)
+[![Webpack version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv4.2.3%2Fpackage.json&query=%24.devDependencies.webpack&label=Webpack&logo=webpack)](https://webpack.js.org)
 
-[![Gitter Room](https://img.shields.io/badge/Chat-on_Gitter-blue?logo=gitter)](https://app.gitter.im/#/room/#sails-react-bootstrap-webpack:gitter.im)
+[![Discord Server](https://img.shields.io/badge/Discord_server-silver?logo=discord)](http://discord.gg/Y5K73E84Tc)
 
 This is an opinionated, base [Sails v1](https://sailsjs.com) application, using [Webpack](https://webpack.js.org) to handle [Bootstrap](https://getbootstrap.com) (using [SASS](https://sass-lang.com))
 and [React](https://react.dev) builds. It is designed such that, one can build multiple React frontends (an admin panel, and a customer site maybe), that use the same API backend. This allows
@@ -103,7 +103,7 @@ configuration for both DEV and PROD). See [Environment Variables](#environment-v
 ### Custom Configuration Options
 
 These options are **NOT** part of the [Sails Configuration Options](https://sailsjs.com/documentation/reference/configuration), but are ones built for this custom repo. All of these options can be
-overwritten in the `config/local.js`, just like every other option. If the option path is `sails.config.security.checkPwnedPasswords`, then you would add:
+overridden in the `config/local.js`, just like every other option. If the option path is `sails.config.security.checkPwnedPasswords`, then you would add:
 
 ```javascript
 {
@@ -113,7 +113,7 @@ overwritten in the `config/local.js`, just like every other option. If the optio
 }
 ```
 
-... to your `config/local.js` to overwrite any option on your local machine only.
+... to your `config/local.js` to override any option on your local machine only.
 
 <!-- The below comment is to prevent Webstorm from trying to find directories that don't exist. -->
 <!--suppress ALL -->
