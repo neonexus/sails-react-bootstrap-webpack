@@ -84,7 +84,7 @@ for (let i = 2; i < process.argv.length; ++i) {
     if (thisFlag === 'nobuild') {
         config.buildAssets = false;
     } else if (thisFlag.startsWith('auth=')) {
-        config.auth = process.argv[i].substring(5);
+        config.auth = process.argv[i].substring(5); // don't use the lower-cased version
     } else if (thisFlag.startsWith('domain=')) {
         config.domain = thisFlag.substring(7);
     } else if (thisFlag.startsWith('region=')) {
