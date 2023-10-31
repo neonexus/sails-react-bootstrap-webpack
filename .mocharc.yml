@@ -5,7 +5,7 @@ require:
 spec:
     - 'test/unit/index.js'
     - 'test/integration/index.js'
-timeout: 10000 # Give Sails some breathing room... We are building schemas / data fixtures.
+timeout: 60000 # Give Sails some breathing room... We are building schemas / data fixtures.
 checkLeaks: true
 global:
     - '_' # Lodash global

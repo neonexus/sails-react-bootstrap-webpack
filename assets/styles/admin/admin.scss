@@ -2,15 +2,14 @@
 
 @import "bootstrap-variable-overrides";
 @import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/variables-dark";
 
 @import "~bootstrap/scss/maps";
-
 @import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/utilities";
 
 @import "../common/bootstrap";
-
 @import "../common/reboot";
-
 @import "../common/common";
 
 @import "global";

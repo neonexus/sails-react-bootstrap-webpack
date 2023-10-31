@@ -1,4 +1,12 @@
 # Changelog
+
+## [v4.2.4](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v4.2.3...v4.2.4) (2023-10-30)
+### Features
+
+* Fixed Bootstrap build. (Missing dark-mode file.)
+* Built light / dark / auto switch for admin.
+* Updated dependencies.
+
 ## [v4.2.3](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v4.2.2...v4.2.3) (2023-10-03)
 ### Features
 

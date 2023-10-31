@@ -89,14 +89,27 @@ I manually check the changes when a package has a new version, to verify there i
 
 ## How to Use
 
-This repo is not installable via `npm`. Instead, GitHub provides a handy "Use this template" (green) button at the top of this page. That will create a special clone of this repo (so there is a single,
-init commit, instead of the commit history from this repo).
+You can quickly download / install dependencies using [`drfg` (Download Release From GitHub)](https://www.npmjs.com/package/drfg) via NPX (if you have Node.js installed, you have NPX):
 
-Or, you can download a copy of the [latest release](https://github.com/neonexus/sails-react-bootstrap-webpack/releases/latest).
+```shell
+npx drfg neonexus/sails-react-bootstrap-webpack
+```
+
+This will download this repo's latest version, extract it, then install the dependencies into the folder `sails-react-bootstrap-webpack` in the current working directory.
+If you want to install in a different location, just supply the new folder name as the second parameter:
+
+```shell
+npx drfg neonexus/sails-react-bootstrap-webpack my-new-site
+```
+
+Or, GitHub provides a handy "Use this template" (green) button at the top of this page. That will create a special clone of this repo (so there is a single, init commit,
+instead of the commit history from this repo).
+
+Or, you can download a copy of the [latest release](https://github.com/neonexus/sails-react-bootstrap-webpack/releases/latest) manually.
 
 ## Configuration
 
-In the `config` folder, there is the [`local.js.sample`](config/local.js.sample) file, which is meant to be copied to `local.js`. This file (`local.js`, not the sample) is ignored by Git, and intended
+In the [`config` folder](config), there is the [`local.js.sample`](config/local.js.sample) file, which is meant to be copied to `local.js`. This file (`local.js`, not the sample) is ignored by Git, and intended
 for use in local development, NOT remote servers. Generally one would use environment variables for remote server configuration (and this repo is already setup to handle environment variable
 configuration for both DEV and PROD). See [Environment Variables](#environment-variables) for more.
 
