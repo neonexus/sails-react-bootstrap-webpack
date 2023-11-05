@@ -14,5 +14,5 @@ config/local.js
 test
 
 **/README*
-CHANGELOG.md
+*.md
 LICENSE

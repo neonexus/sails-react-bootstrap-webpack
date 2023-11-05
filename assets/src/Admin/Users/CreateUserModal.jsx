@@ -7,7 +7,7 @@ class CreateUserModal extends Component {
         super(props);
 
         this.state = {
-            setPassword: false,
+            generatePassword: true,
             wasValidated: false,
             firstName: '',
             lastName: '',
@@ -31,14 +31,14 @@ class CreateUserModal extends Component {
 
         this.setState({wasValidated: true, isLoading: true});
 
-        if (e.target.checkValidity() && (!this.state.setPassword || (this.state.password1 === this.state.password2 && this.state.password1.length > 5))) {
+        if (e.target.checkValidity() && (this.state.generatePassword || (this.state.password1 === this.state.password2 && this.state.password1.length > 5))) {
             this.props.onCreate(
                 {
                     firstName: this.state.firstName,
                     lastName: this.state.lastName,
                     email: this.state.email,
                     role: this.state.role,
-                    setPassword: this.state.setPassword,
+                    generatePassword: this.state.generatePassword,
                     password: this.state.password1
                 },
                 this.handleClose,
@@ -61,7 +61,7 @@ class CreateUserModal extends Component {
             role: 'user',
             password1: '',
             password2: '',
-            setPassword: false,
+            generatePassword: true,
             wasValidated: false,
             isLoading: false
         }, onClose);
@@ -146,17 +146,17 @@ class CreateUserModal extends Component {
                             </Form.Select>
                         </Form.Group>
 
-                        <Form.Group controlId="setPassword">
+                        <Form.Group controlId="generatePassword">
                             <Form.Check
                                 type="checkbox"
                                 label="Set Password"
-                                onChange={(e) => this.setState({setPassword: (e.target.checked)})}
+                                onChange={(e) => this.setState({generatePassword: !e.target.checked})}
                                 className="prevent-validation"
                                 disabled={this.state.isLoading}
                             />
                         </Form.Group>
 
-                        <Collapse in={this.state.setPassword}>
+                        <Collapse in={!this.state.generatePassword}>
                             <div className="mt-3 mb-2">
                                 <Form.Group className="mb-3" controlId="password1">
                                     <Form.Label>Password</Form.Label>
@@ -170,7 +170,7 @@ class CreateUserModal extends Component {
                                                 : null
                                         }
                                         required
-                                        disabled={this.state.isLoading || !this.state.setPassword}
+                                        disabled={this.state.isLoading || this.state.generatePassword}
                                         minLength="6"
                                         maxLength="72"
                                     />
@@ -195,7 +195,7 @@ class CreateUserModal extends Component {
                                                 : null
                                         }
                                         required
-                                        disabled={this.state.isLoading || !this.state.setPassword}
+                                        disabled={this.state.isLoading || this.state.generatePassword}
                                         minLength="6"
                                     />
                                     {
