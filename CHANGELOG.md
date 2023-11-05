@@ -1,5 +1,10 @@
 # Changelog
 
+## [v4.3.1](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v4.3.0...v4.3.1) (2023-11-05)
+### Features
+
+* Removed [`@ngrok/ngrok`](https://npmjs.org/package/@ngrok/ngrok) from dependencies. Not supposed to be pre-installed.
+
 ## [v4.3.0](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v4.2.4...v4.3.0) (2023-11-04)
 ### Features
 
