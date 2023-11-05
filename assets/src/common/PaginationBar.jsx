@@ -64,11 +64,17 @@ function PaginationBar(props) {
             }
         }
 
-        items.push(
-            <Pagination.Item key="page-item-last" active={props.currentPage === props.pages} onClick={() => handleOnClick(props.pages)} disabled={props.isDisabled}>
-                {props.pages}
-            </Pagination.Item>
-        );
+        if (props.pages < 1) {
+            items.push(
+                <Pagination.Item key="page-item-last" disabled>1</Pagination.Item>
+            );
+        } else {
+            items.push(
+                <Pagination.Item key="page-item-last" active={props.currentPage === props.pages} onClick={() => handleOnClick(props.pages)} disabled={props.isDisabled}>
+                    {props.pages}
+                </Pagination.Item>
+            );
+        }
 
         return items;
     }

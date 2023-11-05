@@ -8,3 +8,6 @@ services: mysql
 before_install:
     - mysql -e 'CREATE DATABASE IF NOT EXISTS testing;'
     - mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'mypass'"
+after_success: npm run codecov
+deploy:
+    skip_cleanup: true

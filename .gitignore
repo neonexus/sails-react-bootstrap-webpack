@@ -149,3 +149,7 @@ app.zip
 
 # Downloaded binary files
 .bin
+
+# Code coverage
+test/coverage/*
+!test/coverage/.gitkeep

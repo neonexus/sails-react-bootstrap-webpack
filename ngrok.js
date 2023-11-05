@@ -9,12 +9,12 @@
 let ngrok;
 
 try {
-    ngrok = require('ngrok');
-} catch (e) { // eslint-disable-line
+    ngrok = require('@ngrok/ngrok');
+} catch {
     console.log('');
     console.log('In order to run this script, you must install `Ngrok`:');
     console.log('');
-    console.log('npm i ngrok --save-dev');
+    console.log('npm i @ngrok/ngrok --save-dev');
     console.log('');
 
     return process.exit(1);
@@ -70,60 +70,55 @@ try {
 }
 
 // Set our defaults.
-config.auth = null;
-config.token = process.env.NGROK_TOKEN || null;
-config.buildAssets = true;
-config.domain = null;
-config.port = process.env.PORT || config.port || 1337;
-config.region = null;
+config.ngrok = {
+    auth: process.env.NGROK_BASIC || null,
+    token: process.env.NGROK_AUTHTOKEN || process.env.NGROK_TOKEN || null,
+    buildAssets: true,
+    domain: process.env.NGROK_DOMAIN || null,
+    port: process.env.PORT || config.port || 1337,
+    region: process.env.NGROK_REGION || null
+};
 
 // Read our console config flags.
 for (let i = 2; i < process.argv.length; ++i) {
     const thisFlag = process.argv[i].toLowerCase();
 
     if (thisFlag === 'nobuild') {
-        config.buildAssets = false;
+        config.ngrok.buildAssets = false;
     } else if (thisFlag.startsWith('auth=')) {
-        config.auth = process.argv[i].substring(5); // don't use the lower-cased version
+        config.ngrok.auth = process.argv[i].substring(5); // don't use the lower-cased version
     } else if (thisFlag.startsWith('domain=')) {
-        config.domain = thisFlag.substring(7);
+        config.ngrok.domain = thisFlag.substring(7);
+    } else if (thisFlag.startsWith('port=')) {
+        config.ngrok.port = thisFlag.substring(5);
     } else if (thisFlag.startsWith('region=')) {
-        config.region = thisFlag.substring(7);
+        config.ngrok.region = thisFlag.substring(7);
     } else if (thisFlag.startsWith('token=')) {
-        config.token = process.argv[i].substring(6);
+        config.ngrok.token = process.argv[i].substring(6);
     }
 }
 
 ngrok.connect({
-    auth: config.auth, // HTTP Basic auth
-    authtoken: config.token,
-    addr: config.port,
-    subdomain: config.domain,
-    region: config.region,
-    scheme: 'https' // Currently, this does nothing, but will force Ngrok to open ONLY an HTTPS tunnel, when v5 of `ngrok` package is released.
-}).then((ngrokUrl) => {
-    // Close our "http" tunnel (leaving our "https" tunnel open). Hacky, but required until v5.
-    const ngrokApi = ngrok.getApi();
-    ngrokApi.listTunnels().then((current) => {
-        current.tunnels.forEach((tunnel) => {
-            if (tunnel.proto === 'http') {
-                ngrokApi.stopTunnel(tunnel.name).then();
-            }
-        });
-    });
-
+    addr: config.ngrok.port, // Point to Sails
+    authtoken: config.ngrok.token,
+    basic_auth: config.ngrok.auth, // eslint-disable-line
+    domain: config.ngrok.domain,
+    region: config.ngrok.region,
+    schemes: ['HTTPS'],
+}).then((listener) => {
     let origins;
+    const ngrokUrl = listener.url();
 
     // Smaller helper function, to output the Ngrok URLs.
     function sendUrls() {
         console.log('');
         console.log('Ngrok URL: ' + ngrokUrl);
-        console.log('Ngrok Dashboard: http://localhost:4040');
+        // console.log('Ngrok Dashboard: https://dashboard.ngrok.com');
         console.log('');
     }
 
     // Build our assets in the background.
-    if (config.buildAssets) {
+    if (config.ngrok.buildAssets) {
         const assetBuilderProcess = spawn('npm', ['run', 'build'], {env: {...process.env, BASE_URL: ngrokUrl}});
 
         assetBuilderProcess.stderr.on('data', (data) => {
@@ -149,7 +144,11 @@ ngrok.connect({
 
     // Add the Ngrok URL to our allowed origins.
     if (config.security && config.security.cors && config.security.cors.allowOrigins) {
-        origins = [...config.security.cors.allowOrigins, ngrokUrl];
+        origins = [...config.security.cors.allowOrigins];
+
+        if (!config.security.cors.allowOrigins.contains(ngrokUrl)) {
+            origins.push(ngrokUrl);
+        }
     } else {
         origins = [ngrokUrl];
     }
@@ -158,6 +157,7 @@ ngrok.connect({
     sails.lift({
         ...rc('sails'),
         baseUrl: ngrokUrl,
+        port: config.ngrok.port,
         security: {
             cors: {
                 allowOrigins: origins
@@ -172,7 +172,7 @@ ngrok.connect({
 
         // Sails tends to be faster at startup than asset building...
         // Assume we are still waiting for assets (which will output URLs when finished)...
-        if (config.buildAssets) {
+        if (config.ngrok.buildAssets) {
             console.log('');
             console.log('Please wait for assets...');
         } else {

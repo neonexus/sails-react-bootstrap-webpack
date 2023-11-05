@@ -5,3 +5,30 @@
 .ls-25 {
     letter-spacing: .25rem;
 }
+
+nav {
+    transition: all .5s;
+
+    .dropdown-menu {
+        min-width: 5rem;
+
+        .dropdown-item.bi::before {
+            padding-right: .35rem;
+        }
+    }
+
+    .right-align-menu .dropdown-menu {
+        left: unset;
+        right: 0;
+    }
+
+    .navbar-nav .nav-link {
+        &.active, &:hover {
+            color: var(--#{$prefix}link-color);
+
+            @include color-mode(dark) {
+                color: $white;
+            }
+        }
+    }
+}

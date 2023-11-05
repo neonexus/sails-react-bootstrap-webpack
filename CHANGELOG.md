@@ -1,4 +1,27 @@
 # Changelog
+
+## [v4.3.0](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v4.2.4...v4.3.0) (2023-11-04)
+### Features
+
+* Fixed the "create user" modal.
+* Fixed the pagination bar when `pages` = 0.
+* Added small css tweaks for light / dark theme transitions.
+* Updated Node LTS version for docker / package.
+* Removed `omit=optional` from `.npmrc`.
+* Replaced code coverage files with [Codecov](https://codecov.io).
+* Updated dependencies.
+
+### Breaking Changes
+
+* Replaced [`ngrok`](https://npmjs.org/package/ngrok) with official [`@ngrok/ngrok`](https://npmjs.org/package/@ngrok/ngrok) in [ngrok.js](ngrok.js).
+
+## [v4.2.4](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v4.2.3...v4.2.4) (2023-10-30)
+### Features
+
+* Fixed Bootstrap build. (Missing dark-mode file.)
+* Built light / dark / auto switch for admin.
+* Updated dependencies.
+
 ## [v4.2.3](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v4.2.2...v4.2.3) (2023-10-03)
 ### Features
 
