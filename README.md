@@ -1,6 +1,7 @@
 # sails-react-bootstrap-webpack
 
 [![Travis CI status](https://img.shields.io/travis/com/neonexus/sails-react-bootstrap-webpack.svg?branch=release&logo=travis)](https://app.travis-ci.com/github/neonexus/sails-react-bootstrap-webpack)
+[![Codecov](https://img.shields.io/codecov/c/github/neonexus/sails-react-bootstrap-webpack)](https://codecov.io/gh/neonexus/sails-react-bootstrap-webpack)
 [![Sails version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv4.2.3%2Fpackage.json&query=%24.dependencies.sails&label=Sails&logo=sailsdotjs)](https://sailsjs.com)
 [![React version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv4.2.3%2Fpackage.json&query=%24.devDependencies.react&label=React&logo=react)](https://react.dev)
 [![Bootstrap version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv4.2.3%2Fpackage.json&query=%24.devDependencies.bootstrap&label=Bootstrap&logo=bootstrap&logoColor=white)](https://getbootstrap.com)
@@ -14,10 +15,11 @@ developers to easily share React components across different frontends / applica
 the end user), they can share [NPM](http://npmjs.com) libraries, like [Moment.js](https://momentjs.com)
 
 ## Table of Contents
+
 * [Main Features](#main-features)
 * [Branch Warning](#branch-warning)
 * [Current Dependencies](#current-dependencies)
-  * [A note about dependency versions](#a-note-about-dependency-versions)
+    * [A note about dependency versions](#a-note-about-dependency-versions)
 * [How to Use](#how-to-use)
 * [Configuration](#configuration)
     * [Custom Configuration Options](#custom-configuration-options)
@@ -27,7 +29,7 @@ the end user), they can share [NPM](http://npmjs.com) libraries, like [Moment.js
 * [Scripts Built Into `package.json`](#scripts-built-into-packagejson)
 * [Sails Scripts](#sails-scripts)
 * [Request Logging](#request-logging)
-  * [If you DO NOT want request logging](#if-you-do-not-want-request-logging)
+    * [If you DO NOT want request logging](#if-you-do-not-want-request-logging)
 * [Using Webpack](#using-webpack)
     * [Local Dev](#local-dev)
     * [Remote Builds](#remote-builds)
@@ -109,9 +111,9 @@ Or, you can download a copy of the [latest release](https://github.com/neonexus/
 
 ## Configuration
 
-In the [`config` folder](config), there is the [`local.js.sample`](config/local.js.sample) file, which is meant to be copied to `local.js`. This file (`local.js`, not the sample) is ignored by Git, and intended
-for use in local development, NOT remote servers. Generally one would use environment variables for remote server configuration (and this repo is already setup to handle environment variable
-configuration for both DEV and PROD). See [Environment Variables](#environment-variables) for more.
+In the [`config` folder](config), there is the [`local.js.sample`](config/local.js.sample) file, which is meant to be copied to `local.js`. This file (`local.js`, not the sample) is ignored by Git,
+and intended for use in local development, NOT remote servers. Generally one would use environment variables for remote server configuration (and this repo is already setup to handle environment
+variable configuration for both DEV and PROD). See [Environment Variables](#environment-variables) for more.
 
 ### Custom Configuration Options
 
@@ -161,7 +163,10 @@ overridden in the `config/local.js`, just like every other option. If the option
             <td><a href="/neonexus/sails-react-bootstrap-webpack/blob/release/config/log.js"><code>log.js</code></a></td>
             <td><code>true</code></td>
             <td>
-                When enabled, all incoming requests will automatically be logged via the <a href="/neonexus/sails-react-bootstrap-webpack/blob/release/api/models/RequestLog.js"><code>RequestLog</code></a> model, by the <a href="/neonexus/sails-react-bootstrap-webpack/blob/release/api/hooks/request-logger.js"><code>request-logger</code></a> hook, and the <a href="/neonexus/sails-react-bootstrap-webpack/blob/release/api/helpers/finalize-request-log.js"><code>finalize-request-log</code></a> helper.
+                When enabled, all incoming requests will automatically be logged via the
+                <a href="/neonexus/sails-react-bootstrap-webpack/blob/release/api/models/RequestLog.js"><code>RequestLog</code></a> model, by the
+                <a href="/neonexus/sails-react-bootstrap-webpack/blob/release/api/hooks/request-logger.js"><code>request-logger</code></a> hook, and the
+                <a href="/neonexus/sails-react-bootstrap-webpack/blob/release/api/helpers/finalize-request-log.js"><code>finalize-request-log</code></a> helper.
                 <br /><br />See <a href="#request-logging">Request Logging</a> for more info.
             </td>
         </tr>
@@ -169,13 +174,19 @@ overridden in the `config/local.js`, just like every other option. If the option
             <td><code>models.validateOnBootstrap</code></td>
             <td><a href="/neonexus/sails-react-bootstrap-webpack/blob/release/config/bootstrap.js"><code>bootstrap.js</code></a></td>
             <td><code>true</code></td>
-            <td>When enabled, and <code>models.migrate === 'safe'</code> (aka PRODUCTION), then the SQL schemas of the default datastore will be validated against the model definitions. <br><br>See <a href="#schema-validation-and-enforcement">schema validation and enforcement</a> for more info.</td>
+            <td>
+                When enabled, and <code>models.migrate === 'safe'</code> (aka PRODUCTION), then the SQL schemas of the default datastore will be validated against the model definitions.
+                <br><br>See <a href="#schema-validation-and-enforcement">schema validation and enforcement</a> for more info.
+            </td>
         </tr>
         <tr>
             <td><code>security.checkPwnedPasswords</code></td>
             <td><a href="/neonexus/sails-react-bootstrap-webpack/blob/release/config/security.js"><code>security.js</code></a></td>
             <td><code>true</code></td>
-            <td>When enabled, <a href="/neonexus/sails-react-bootstrap-webpack/blob/release/api/helpers/is-password-valid.js"><code>sails.helpers.isPasswordValid()</code></a> will run its normal checks, before checking with the PwnedPasswords.com API to verify the password has not been found in a known security breach. If it has, it will consider the password invalid.</td>
+            <td>
+                When enabled, <a href="/neonexus/sails-react-bootstrap-webpack/blob/release/api/helpers/is-password-valid.js"><code>sails.helpers.isPasswordValid()</code></a> will run its normal
+                checks, before checking with the PwnedPasswords.com API to verify the password has not been found in a known security breach. If it has, it will consider the password invalid.
+            </td>
         </tr>
         <tr>
             <td>
@@ -183,9 +194,15 @@ overridden in the `config/local.js`, just like every other option. If the option
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>.requestLogger</code><br/>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>.logSensitiveData</code>
             </td>
-            <td><a href="/neonexus/sails-react-bootstrap-webpack/blob/release/config/security.js"><code>security.js</code></a> <br> <a href="/neonexus/sails-react-bootstrap-webpack/blob/release/config/env/development.js"><code>env/development.js</code></a></td>
+            <td>
+                <a href="/neonexus/sails-react-bootstrap-webpack/blob/release/config/security.js"><code>security.js</code></a>
+                <br/> <a href="/neonexus/sails-react-bootstrap-webpack/blob/release/config/env/development.js"><code>env/development.js</code></a>
+            </td>
             <td><code>false</code></td>
-            <td>If enabled, and NOT a PRODUCTION environment, the <a href="#request-logging">request logger</a> will log sensitive info, such as passwords. <br><br> This will ALWAYS be false on PRODUCTION. It is in the PRODUCTION configuration file only as a reminder.</td>
+            <td>
+                If enabled, and NOT a PRODUCTION environment, the <a href="#request-logging">request logger</a> will log sensitive info, such as passwords.
+                <br/><br/> This will ALWAYS be false on PRODUCTION. It is in the PRODUCTION configuration file only as a reminder.
+            </td>
         </tr>
     </tbody>
 </table>
@@ -208,22 +225,25 @@ and [`config/env/production.js`](config/env/production.js)
 |------------------------------------------------------|-------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------|
 | `ASSETS_URL`                                         | "" (empty string)                         | Webpack is configured to modify static asset URLs to point to a CDN, like CloudFront. MUST end with a slash " / ", or be empty. |
 | `BASE_URL`                                           | https://myapi.app                         | The address of the Sails instance.                                                                                              |
+| `DATA_ENCRYPTION_KEY`                                | "" (empty string)                         | The data encryption key to use when encrypting / decrypting data in the datastore.                                              |
 | **DEV:** `DB_HOST`<br />**PROD:**&nbsp;`DB_HOSTNAME` | localhost                                 | The hostname of the datastore.                                                                                                  |
 | **DEV:** `DB_USER`<br />**PROD:** `DB_USERNAME`      | **DEV:** root <br /> **PROD:** produser   | Username of the datastore.                                                                                                      |
 | **DEV:** `DB_PASS`<br />**PROD:** `DB_PASSWORD`      | **DEV:** mypass <br /> **PROD:** prodpass | Password of the datastore.                                                                                                      |
 | `DB_NAME`                                            | **DEV:** myapp <br /> **PROD:** prod      | The name of the database inside the datastore.                                                                                  |
 | `DB_PORT`                                            | 3306                                      | The port number for the datastore.                                                                                              |
 | `DB_SSL`                                             | true                                      | If the datastore requires SSL, set this to "true".                                                                              |
+| `NGROK_AUTHTOKEN`                                    | "" (empty string)                         | Ngrok auth token used in the [`ngrok.js`](#working-with-ngrok) script.                                                          |
+| `NGROK_BASIC`                                        | "" (empty string)                         | The `user:pass` combo to use for basic authentication with [`ngrok.js`](#working-with-ngrok).                                   |
+| `NGROK_DOMAIN`                                       | "" (empty string)                         | The domain to tunnel Sails to. Used in [`ngrok.js`](#working-with-ngrok).                                                       |
 | `SESSION_SECRET`                                     | "" (empty string)                         | Used to sign cookies, and SHOULD be set, especially on PRODUCTION environments.                                                 |
-| `NGROK_TOKEN`                                        | "" (empty string)                         | Ngrok auth token used in the [`ngrok.js`](#working-with-ngrok) script.                                                          |
-
-[//]: # (| DATA_ENCRYPTION_KEY | "" &#40;empty string&#41; | **DATA_ENCRYPTION_KEY** | **"" &#40;empty string&#41;** | **Currently unused; intended for future use.**                                                                                  |)
 
 ## Custom Security Policies
 
 Security policies that are responsible for protecting API endpoints live in the [api/policies](api/policies) folder, and are configured in the [config/policies.js](config/policies.js) file.
 
-The most important policy, in terms of this repo, is the [`is-logged-in`](api/policies/isLoggedIn.js) policy. It determines if the request is being made from a valid session, and if so, passes the session data down to controllers (and other policies). Past that, there is currently only a second policy: [`is-admin`](api/policies/isAdmin.js). It uses the session data from `is-logged-in` to determine if the user is an admin; if they aren't, the request is rejected.
+The most important policy, in terms of this repo, is the [`is-logged-in`](api/policies/isLoggedIn.js) policy. It determines if the request is being made from a valid session, and if so, passes the
+session data down to controllers (and other policies). Past that, there is currently only a second policy: [`is-admin`](api/policies/isAdmin.js). It uses the session data from `is-logged-in` to
+determine if the user is an admin; if they aren't, the request is rejected.
 
 Read more about Sails' security policies: [https://sailsjs.com/documentation/concepts/policies](https://sailsjs.com/documentation/concepts/policies)
 
@@ -298,7 +318,9 @@ This does require you either have Sails installed globally, or you have `node_mo
         </tr>
         <tr>
             <td><pre><code>sails run lines</code></pre></td>
-            <td>Will count the lines of code in the project, minus <code>.gitignore</code>'d files, for funzies. There are currently about 7k custom lines in this repo (views, controllers, helpers, hooks, etc); a small drop in the bucket, compared to what it's built on.
+            <td>
+                Will count the lines of code in the project, minus <code>.gitignore</code>'d files, for funzies. There are currently about 7k custom lines in this repo
+                (views, controllers, helpers, hooks, etc); a small drop in the bucket, compared to what it's built on.
             </td>
         </tr>
         <tr>
@@ -320,7 +342,8 @@ This does require you either have Sails installed globally, or you have `node_mo
 
 ## Sails Scripts
 
-These scripts generally require access to working models, or helpers, so a quick instance is spun-up to run them. Currently [`create-admin`](scripts/create-admin.js) is the only script in the [`scripts`](scripts) folder.
+These scripts generally require access to working models, or helpers, so a quick instance is spun-up to run them. Currently [`create-admin`](scripts/create-admin.js) is the only script in
+the [`scripts`](scripts) folder.
 
 See the [Sails Docs](https://sailsjs.com/documentation/concepts/shell-scripts) for more info on Sails scripts.
 
@@ -365,11 +388,13 @@ will get built in `.tmp/public/main`, where the CSS is `.tmp/public/main/bundle.
 
 ### Serving Compiled Assets
 
-Sails is currently setup (see [config/routes.js](config/routes.js)) to automatically serve compiled files from `.tmp/public`. If Sails needs to return the initial HTML, it will take the first subdirectory of the request (`/admin` from `/admin/dashboard`), and will return the `index.html` from `.tmp/public`.
+Sails is currently setup (see [config/routes.js](config/routes.js)) to automatically serve compiled files from `.tmp/public`. If Sails needs to return the initial HTML, it will take the first
+subdirectory of the request (`/admin` from `/admin/dashboard`), and will return the `index.html` from `.tmp/public`.
 
 Example: User requests `/admin/dashboard`, Sails will serve `.tmp/public/admin/index.html`.
 
-I recommend using a content CDN, something like [AWS CloudFront](https://aws.amazon.com/cloudfront), to help ease the burden of serving static files, and making less calls to your Sails instance(s). It may also be a good idea to consider using something like [Nginx](https://nginx.org/en/) to handle serving of compiled assets, leaving Sails to only have to handle API requests.
+I recommend using a content CDN, something like [AWS CloudFront](https://aws.amazon.com/cloudfront), to help ease the burden of serving static files, and making less calls to your Sails instance(s).
+It may also be a good idea to consider using something like [Nginx](https://nginx.org/en/) to handle serving of compiled assets, leaving Sails to only have to handle API requests.
 
 ## Schema Validation and Enforcement
 
@@ -404,13 +429,13 @@ variable `checkPwnedPasswords` can be set to `false` to disable it globally.
 
 ## Working With Ngrok
 
-This repo has a custom script ([`ngrok.js`](ngrok.js)), which will start a Ngrok tunnel (using the NPM package [`ngrok`](https://npmjs.com/package/ngrok)), build assets, and start Sails.
+This repo has a custom script ([`ngrok.js`](ngrok.js)), which will start a Ngrok tunnel (using the NPM package [`@ngrok/ngrok`](https://npmjs.com/package/@ngrok/ngrok)), build assets, and start Sails.
 
 ### First thing's first
 
 You will want to get an auth token (and create an account if you haven't already): https://dashboard.ngrok.com/tunnels/authtokens
 
-You will need to `npm i ngrok --save-dev` before you can do anything. I've opted to not have it pre-installed, as it does add a bit of bloat, and not everyone is going to use it.
+You will need to `npm i @ngrok/ngrok --save-dev` before you can do anything. I've opted to not have it pre-installed, as it does add a bit of bloat, and not everyone is going to use it.
 
 After you have it installed, you can run `ngrok.js`, with node: `node ngrok` or just directly: `./ngrok.js`.
 
@@ -418,21 +443,25 @@ After you have it installed, you can run `ngrok.js`, with node: `node ngrok` or 
 
 These are the current configuration flags. Order does not matter.
 
-| Option                | Description                                                                                                                                                                                                                                                                                |
-|-----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `auth=USER:PASS`      | This will protect the Ngrok tunnel with HTTP Basic Auth, using the USER / PASS you supply.                                                                                                                                                                                                 |
-| `nobuild`             | Adding this flag will skip asset building.                                                                                                                                                                                                                                                 |
-| `domain=MYDOMAIN`     | The domain to connect the tunnel from Sails to.                                                                                                                                                                                                                                            |
-| `region=MYREGION`     | The region to use for connection to the Ngrok services. One of Ngrok regions (`us`, `eu`, `au`, `ap`, `sa`, `jp`, `in`). Defaults to `us`.                                                                                                                                                 |
-| `token=MY_AUTH_TOKEN` | Adding this flag will set your Ngrok auth token. In most cases, ngrok will automatically save this token in your home folder, and re-use it later. You can test this out by omitting your token on next run, and go to your [Ngrok dashboard](https://dashboard.ngrok.com/tunnels/agents). |
+An example: `node ngrok.js nobuild token=S1T2A3Y4I5N6G7A8L9I0V1E region=us`
 
-You can also use the environment variable `NGROK_TOKEN` to pass your auth token. If both environment variable, and script flag are set, the script flag will take priority.
+| Option            | Description                                                                                                                                                                                              |
+|-------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `auth=USER:PASS`  | This will protect the Ngrok tunnel with HTTP Basic Auth, using the USER / PASS you supply. You can also use the `NGROK_BASIC` environment variable.                                                      |
+| `nobuild`         | Adding this flag will skip asset building.                                                                                                                                                               |
+| `domain=MYDOMAIN` | The domain to connect the tunnel from Sails to. You can also use the `NGROK_DOMAIN` environment variable.                                                                                                |
+| `port=SAILSPORT`  | The port to use internally for Sails. Useful if you want to run multiple instances on the same machine. The `PORT` environment variable, and `sails.config` options are used a fall-backs.               |
+| `region=MYREGION` | The region to use for connection to the Ngrok services. One of Ngrok regions (`us`, `eu`, `au`, `ap`, `sa`, `jp`, `in`). You can also use the `NGROK_REGION` environment variable. Defaults to `global`. |
+| `token=AUTHTOKEN` | Adding this flag will set your Ngrok auth token. You can also use `NGROK_AUTHTOKEN` or `NGROK_TOKEN` environment variables.                                                                              |
 
-An example: `node ngrok nobuild token=S1T2A3Y4I5N6G7A8L9I0V1E region=us`
+**NOTE:** For each option, the script flag will take precedent if a corresponding environment variable is set as well.
+
+For example: `token=AUTHTOKEN` > `NGROK_AUTHTOKEN`.
 
 ## Support for `sails-hook-autoreload`
 
-If you would like to use [`sails-hook-autoreload`](https://npmjs.com/package/sails-hook-autoreload), just install it: `npm i sails-hook-autoreload --save-dev`. The config file [`config/autoreload.js`](config/autoreload.js) is already pre-configured for this repo.
+If you would like to use [`sails-hook-autoreload`](https://npmjs.com/package/sails-hook-autoreload), just install it: `npm i sails-hook-autoreload --save-dev`. The config
+file [`config/autoreload.js`](config/autoreload.js) is already pre-configured for this repo.
 
 ## What about SEO?
 
@@ -457,8 +486,10 @@ middleware: {
         'favicon'       // default hook to serve favicon
     ],
 
-    // REMEMBER! Environment variables are your friends!!!
-    prerender: require('prerender-node').set('prerenderToken', 'YOUR_TOKEN')
+        // REMEMBER! Environment variables are your friends!!!
+        prerender
+:
+    require('prerender-node').set('prerenderToken', 'YOUR_TOKEN')
 
 }
 ```
@@ -479,12 +510,4 @@ middleware: {
 
 This app was originally generated on Fri Mar 20 2020 17:39:04 GMT-0500 (Central Daylight Time) using Sails v1.2.3.
 
-#### Code Coverage
-
-The current code coverage [can be viewed here](https://htmlpreview.github.io/?https://github.com/neonexus/sails-react-bootstrap-webpack/blob/release/test/coverage/index.html).
-
 <!-- Internally, Sails used [`sails-generate@1.16.13`](https://github.com/balderdashy/sails-generate/tree/v1.16.13/lib/core-generators/new). -->
-
-<!--
-Note:  Generators are usually run using the globally-installed `sails` CLI (command-line interface).  This CLI version is _environment-specific_ rather than app-specific, thus over time, as a project's dependencies are upgraded or the project is worked on by different developers on different computers using different versions of Node.js, the Sails dependency in its package.json file may differ from the globally-installed Sails CLI release it was originally generated with.  (Be sure to always check out the relevant [upgrading guides](https://sailsjs.com/upgrading) before upgrading the version of Sails used by your app.  If you're stuck, [get help here](https://sailsjs.com/support).)
--->
