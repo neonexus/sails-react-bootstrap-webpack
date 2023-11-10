@@ -1,6 +1,6 @@
 {
     "name": "sails-react-bootstrap-webpack",
-    "version": "4.3.1",
+    "version": "4.3.2",
     "description": "An opinionated base configuration of Sails, with Webpack for React support, and Bootstrap for styling. A start-up in a box!",
     "keywords": [
         "sails",
@@ -26,10 +26,10 @@
         "superagent": "8.1.2"
     },
     "devDependencies": {
-        "@babel/core": "7.23.2",
-        "@babel/eslint-parser": "7.22.15",
-        "@babel/preset-env": "7.23.2",
-        "@babel/preset-react": "7.22.15",
+        "@babel/core": "7.23.3",
+        "@babel/eslint-parser": "7.23.3",
+        "@babel/preset-env": "7.23.3",
+        "@babel/preset-react": "7.23.3",
         "@popperjs/core": "2.11.8",
         "babel-loader": "9.1.3",
         "bootstrap": "5.3.2",
@@ -73,7 +73,7 @@
         "build:dev:webpack": "webpack --mode development --config webpack/dev-build.config.js",
         "build:prod": "NODE_ENV=production webpack --mode production --config webpack/prod.config.js",
         "clean": "rm -rf .tmp && mkdir -p .tmp/public",
-        "codecov": "nyc --reporter=text-lcov mocha > test/coverage/report.lcov && codecov --file=test/coverage/report.lcov",
+        "codecov": "npm run lint && NODE_ENV=testing nyc --reporter=lcovonly mocha && codecov --file=test/coverage/lcov.info --disable=gcov",
         "coverage": "npm run lint && NODE_ENV=testing nyc --reporter=html mocha",
         "create:admin": "sails run create-admin",
         "custom-tests": "NODE_ENV=testing mocha",
@@ -96,11 +96,15 @@
             "url": "https://github.com/sponsors/neonexus"
         }
     ],
+    "pre-commit": [
+        "test"
+    ],
     "main": "app.js",
     "repository": {
         "type": "git",
-        "url": "git://github.com/neonexus/sails-react-bootstrap-webpack.git"
+        "url": "https://github.com/neonexus/sails-react-bootstrap-webpack.git"
     },
+    "homepage": "https://github.com/neonexus/sails-react-bootstrap-webpack",
     "author": "NeoNexus DeMortis <neonexus.demortis@gmail.com>",
     "license": "Unlicense",
     "engines": {
