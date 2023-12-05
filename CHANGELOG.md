@@ -1,5 +1,20 @@
 # Changelog
 
+## [v5.0.0](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v4.3.1...v5.0.0) (2023-12-05)
+### Features
+
+* Made [`app.js`](app.js) executable, so now you can run `./app.js` directly.
+* Rewrote how the Ngrok script reads Sails' config files (now uses Sails' internal config loader).
+* Fixed Travis / Codecov integration (so now it's not running the test suite twice).
+* Created the `enforceForeignKeys` config option, to make testing PRODUCTION locally easier.
+* Changed the configuration for PRODUCTION's `DATA_ENCRYPTION_KEY`. Will now throw an error on boot if not supplied.
+* Made [`bootstrap.js`](config/bootstrap.js) enforce use of either `app.js` or `ngrok.js` through detection of `NOT_FROM_SAILS_LIFT` environment variable.
+* Created a new configuration file ([`config/ngrok.js`](config/ngrok.js)) for [ngrok.js](ngrok.js).
+* Fixed relative links in README.
+* Created the [`setup.js`](setup.js) script for easy interactive configuration.
+* Made `npm run create:admin` interactive.
+* Updated dependencies.
+
 ## [v4.3.1](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v4.3.0...v4.3.1) (2023-11-05)
 ### Features
 

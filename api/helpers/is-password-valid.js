@@ -37,7 +37,7 @@ module.exports = {
             isPassPhrase = false;
 
         if (inputs.password.length < 7) {
-            errors.push('Password must be at least 7 characters');
+            errors.push('Password must be at least 7 characters.');
         }
 
         if (inputs.password.length > 70) {
@@ -52,37 +52,37 @@ module.exports = {
 
         if (inputs.user) {
             if (inputs.user.email && inputs.password.indexOf(inputs.user.email) >= 0) {
-                errors.push('Password can not contain your email address');
+                errors.push('Password can not contain your email address.');
             }
 
             if (inputs.user.firstName && inputs.password.indexOf(inputs.user.firstName) >= 0) {
-                errors.push('Password can not contain your first name');
+                errors.push('Password can not contain your first name.');
             }
 
             if (inputs.user.lastName && inputs.password.indexOf(inputs.user.lastName) >= 0) {
-                errors.push('Password can not contain your last name');
+                errors.push('Password can not contain your last name.');
             }
         }
 
         if (/(.)\1{2,}/.test(inputs.password)) {
-            errors.push('Password can not contain 3 or more repeated characters');
+            errors.push('Password can not contain 3 or more repeated characters.');
         }
 
         if (!isPassPhrase) {
             if (!/(?=[a-z])/.test(inputs.password)) {
-                errors.push('Password must have at least 1 lowercase character');
+                errors.push('Password must have at least 1 lowercase character.');
             }
 
             if (!/(?=[A-Z])/.test(inputs.password)) {
-                errors.push('Password must have at least 1 uppercase character');
+                errors.push('Password must have at least 1 uppercase character.');
             }
 
             if (!/(?=[0-9])/.test(inputs.password)) {
-                errors.push('Password must have at least 1 digit');
+                errors.push('Password must have at least 1 digit.');
             }
 
             if (!/(?=[^a-zA-Z0-9])/.test(inputs.password)) {
-                errors.push('Password must have at least 1 special character');
+                errors.push('Password must have at least 1 special character.');
             }
         }
 
@@ -120,7 +120,7 @@ module.exports = {
                     }
 
                     /* istanbul ignore next */
-                    return exits.success(['Unknown internal error']);
+                    return exits.success(['Unknown internal error when talking with PwnedPasswords.com.']);
                 });
             } else {
                 return exits.success(true);

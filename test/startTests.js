@@ -6,6 +6,7 @@
 const _ = require('lodash');
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 global.chai = require('chai');
 
 chai.use(require('chai-spies'));
@@ -68,6 +69,9 @@ exports.mochaHooks = {
         }
         err.toString().should.eq('ReferenceError: sails is not defined');
 
+        // Required to make sure config/bootstrap.js doesn't stop us.
+        process.env.NOT_FROM_SAILS_LIFT = 'true'; // Can't use booleans with environment variables... That's just silly!
+
         TestSails.lift(_.merge(rc('sails'), {
             log: {level: 'warn'},
             logSensitiveData: false,
@@ -77,6 +81,9 @@ exports.mochaHooks = {
                 }
             },
             models: {
+                dataEncryptionKeys: {
+                    default: crypto.randomBytes(32).toString('base64')
+                },
                 migrate: 'drop'
             },
             globals: {
@@ -89,7 +96,8 @@ exports.mochaHooks = {
             session: {
                 cookie: {
                     secure: false // can't have secure cookies when testing
-                }
+                },
+                secret: crypto.createHmac('sha256', crypto.randomBytes(42)).update(crypto.randomBytes(42) + new Date()).digest('hex')
             },
             security: {
                 checkPwnedPasswords: true

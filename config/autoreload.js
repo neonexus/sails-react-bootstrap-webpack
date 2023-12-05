@@ -7,22 +7,28 @@
  * For more info, see: https://www.npmjs.com/package/sails-hook-autoreload
  */
 
-module.exports.autoreload = {
-    active: true,
+module.exports = {
+    autoreload: {
+        active: true,
 
-    dirs: [
-        'api/controllers',
-        'api/helpers',
-        'api/hooks',
-        'api/models',
-        'api/policies',
-        'api/responses',
-        'config'
-    ],
+        dirs: [
+            'api/controllers',
+            'api/helpers',
+            'api/hooks',
+            'api/models',
+            'api/policies',
+            'api/responses',
+            'config'
+        ],
 
-    ignored: [
-        '**.md'
-    ],
+        ignored: [
+            '**.md'
+        ],
 
-    overrideMigrateSetting: false
+        overrideMigrateSetting: false
+    },
+
+    models: {
+        archiveModelIdentity: false
+    }
 };

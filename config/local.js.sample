@@ -1,5 +1,9 @@
 /**
  * COPY ME TO config/local.js
+ *
+ * DON'T DELETE ME!!!
+ * The setup.js script requires a `local.js.sample` file to work.
+ * Additionally, if you change values here, the setup script will need to be modified to match.
  */
 
 
@@ -16,27 +20,49 @@
 module.exports = {
     appName: 'My App (LOCAL)',
 
+    // assetsUrl: 'http://localhost:8080/', // Front-end URL. Used only if assets aren't being served by Sails (or Webpack).
     baseUrl: 'http://localhost:1337', // API URL
-    // assetsUrl: 'http://localhost:8080/',
 
     datastores: {
         default: {
             host: 'localhost',
             user: 'root',
             password: 'my@w3s0m3password',
-            database: 'myappdb',
-            charset: 'utf8mb4',
-            collation: 'utf8mb4_general_ci',
-            timezone: 'UTC'
+            database: 'myapp',
+            port: 3306,
+            ssl: false
         }
     },
 
-    session: {
-        name: 'myapp',
-        secret: '85de17bf23b68aa2e9fc85615ca9fd3f62406f25' // sails run generate:token
+    models: {
+        migrate: 'alter', // Automatically modify the datastores to match our models.
+        // enforceForeignKeys: false // Use this when testing PRODUCTION, and you don't want to validate foreign keys.
+        dataEncryptionKeys: {
+            // Run this to generate a new key: `npm run generate:dek`
+            default: '{{DEK here}}' // NEVER STORE THIS FOR PRODUCTION PURPOSES!!!
+        }
     },
 
-    models: {
-        migrate: 'alter'
+    // Configuration options for ngrok.js script.
+    ngrok: {
+        // auth: 'username:notSoSecretPassword', // Set a basic-auth user/password for the Ngrok tunnel. Password must be between 8 and 128 characters.
+        // buildAssets: false, // Disable asset building for faster launches.
+        domain: 'my-ngrok-domain.ngrok-free.app',
+        token: '{{ngrok authtoken}}'
+    },
+
+    // The port to attach the API to.
+    port: 1337,
+
+    security: {
+        // checkPwnedPasswords: false // Disable the PwnedPasswords.com integration. See config/security.js for more.
+    },
+
+    session: {
+        // RECOMMENDED TO USE A DIFFERENT ONE FOR EACH ENVIRONMENT!
+        // CHANGING THIS WILL INVALIDATE ALL CURRENT SESSIONS!
+        // GENERATE A NEW ONE:
+        // npm run generate:token
+        secret: '{{session secret here}}'
     }
 };

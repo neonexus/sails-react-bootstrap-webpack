@@ -60,6 +60,7 @@ module.exports.datastores = {
         password: process.env.DB_PASS || 'mypass',
         database: process.env.DB_NAME || 'myapp',
         port: process.env.DB_PORT || 3306,
+        ssl: true,
 
         // These are good settings to standardize across environments,
         // and should generally only be set in this file.

@@ -14,6 +14,27 @@
 
 module.exports.bootstrap = function(next) {
     /**
+     * DO NOT START WITH `sails lift`!
+     *
+     * This helps ensure we are "lifting" Sails using either `app.js` or `ngrok.js`.
+     * Using `sails lift` will bypass config overrides / custom error handlers.
+     *
+     * node app.js    OR    ./app.js
+     * node ngrok.js    OR    ./ngrok.js
+     */
+    if (process.env.NOT_FROM_SAILS_LIFT !== 'true') {
+        console.error(''); // Blank line.
+        console.error(''); // Blank line.
+        console.error('WARNING! You can NOT use `sails lift` to run this repo!');
+        console.error('Instead, you should use either `node app.js` OR `./app.js`');
+        console.error('Or you can start with the provided Ngrok script `node ngrok.js` OR `./ngrok.js`');
+        console.error(''); // Blank line.
+        console.error(''); // Blank line.
+
+        return process.exit(1);
+    }
+
+    /**
      * START the custom schema validation feature
      */
     // Check if we need to validate our schema
@@ -282,79 +303,87 @@ module.exports.bootstrap = function(next) {
     }
 
     function validateIndexes() {
-        let waitingToFinish = 0;
+        if (sails.config.models.enforceForeignKeys === true) {
+            let waitingToFinish = 0;
 
-        _.forEach(sails.models, (model, modelName) => {
-            if (model.tableName !== 'archive' && model.associations && model.associations.length) {
-                model.associations.map((association) => {
-                    waitingToFinish++;
+            _.forEach(sails.models, (model, modelName) => {
+                if (model.tableName !== 'archive' && model.associations && model.associations.length) {
+                    model.associations.map((association) => {
+                        waitingToFinish++;
 
-                    // make sure this isn't a collection
-                    if (!association.collection) {
-                        /***
-                         *    ┌─┐┌─┐┌┬┐  ┌─┐┌─┐┬─┐┌─┐┬┌─┐┌┐┌  ┬┌─┌─┐┬ ┬┌─┐
-                         *    │ ┬├┤  │   ├┤ │ │├┬┘├┤ ││ ┬│││  ├┴┐├┤ └┬┘└─┐
-                         *    └─┘└─┘ ┴   └  └─┘┴└─└─┘┴└─┘┘└┘  ┴ ┴└─┘ ┴ └─┘
-                         */
-                        sails.sendNativeQuery(
-                            'SELECT * FROM `information_schema`.`KEY_COLUMN_USAGE` WHERE `TABLE_NAME` = \'' + model.tableName
-                            + '\' AND `COLUMN_NAME` = \'' + association.alias
-                            + '\' AND `REFERENCED_TABLE_NAME` = \'' + sails.models[association.model].tableName
-                            + '\'',
-                            (err, foundKeys) => {
-                                if (err) {
-                                    console.error(err);
+                        // make sure this isn't a collection
+                        if (!association.collection) {
+                            /***
+                             *    ┌─┐┌─┐┌┬┐  ┌─┐┌─┐┬─┐┌─┐┬┌─┐┌┐┌  ┬┌─┌─┐┬ ┬┌─┐
+                             *    │ ┬├┤  │   ├┤ │ │├┬┘├┤ ││ ┬│││  ├┴┐├┤ └┬┘└─┐
+                             *    └─┘└─┘ ┴   └  └─┘┴└─└─┘┴└─┘┘└┘  ┴ ┴└─┘ ┴ └─┘
+                             */
+                            sails.sendNativeQuery(
+                                'SELECT * FROM `information_schema`.`KEY_COLUMN_USAGE` WHERE `TABLE_NAME` = \'' + model.tableName
+                                + '\' AND `COLUMN_NAME` = \'' + association.alias
+                                + '\' AND `REFERENCED_TABLE_NAME` = \'' + sails.models[association.model].tableName
+                                + '\'',
+                                (err, foundKeys) => {
+                                    if (err) {
+                                        console.error(err);
 
-                                    console.error('I can\'t seem to read the required relationship data. HALTING!');
+                                        console.error('I can\'t seem to read the required relationship data. HALTING!');
 
-                                    return process.exit(1);
+                                        return process.exit(1);
+                                    }
+
+                                    if (
+                                        !foundKeys.rows[0]
+                                        || !foundKeys.rows[0]['REFERENCED_COLUMN_NAME']
+                                        || foundKeys.rows[0]['REFERENCED_COLUMN_NAME'] !== sails.models[association.model].primaryKey
+                                    ) {
+                                        /***
+                                         *    ┌┐┌┌─┐  ┬─┐┌─┐┬  ┌─┐┌┬┐┬┌─┐┌┐┌┌─┐┬ ┬┬┌─┐  ┌─┐┌─┐┬ ┬┌┐┌┌┬┐
+                                         *    ││││ │  ├┬┘├┤ │  ├─┤ │ ││ ││││└─┐├─┤│├─┘  ├┤ │ ││ ││││ ││
+                                         *    ┘└┘└─┘  ┴└─└─┘┴─┘┴ ┴ ┴ ┴└─┘┘└┘└─┘┴ ┴┴┴    └  └─┘└─┘┘└┘─┴┘
+                                         */
+                                        console.error('Column "' + association.alias + '" for "' + modelName + '" does not have a relationship setup');
+                                    } else {
+                                        /***
+                                         *    ┬─┐┌─┐┬  ┌─┐┌┬┐┬┌─┐┌┐┌┌─┐┬ ┬┬┌─┐  ┌─┐┌─┐┬ ┬┌┐┌┌┬┐
+                                         *    ├┬┘├┤ │  ├─┤ │ ││ ││││└─┐├─┤│├─┘  ├┤ │ ││ ││││ ││
+                                         *    ┴└─└─┘┴─┘┴ ┴ ┴ ┴└─┘┘└┘└─┘┴ ┴┴┴    └  └─┘└─┘┘└┘─┴┘
+                                         */
+                                        waitingToFinish--;
+                                    }
                                 }
-
-                                if (!foundKeys.rows[0] || !foundKeys.rows[0]['REFERENCED_COLUMN_NAME'] || foundKeys.rows[0]['REFERENCED_COLUMN_NAME'] !== sails.models[association.model].primaryKey) {
-                                    /***
-                                     *    ┌┐┌┌─┐  ┬─┐┌─┐┬  ┌─┐┌┬┐┬┌─┐┌┐┌┌─┐┬ ┬┬┌─┐  ┌─┐┌─┐┬ ┬┌┐┌┌┬┐
-                                     *    ││││ │  ├┬┘├┤ │  ├─┤ │ ││ ││││└─┐├─┤│├─┘  ├┤ │ ││ ││││ ││
-                                     *    ┘└┘└─┘  ┴└─└─┘┴─┘┴ ┴ ┴ ┴└─┘┘└┘└─┘┴ ┴┴┴    └  └─┘└─┘┘└┘─┴┘
-                                     */
-                                    console.error('Column "' + association.alias + '" for "' + modelName + '" does not have a relationship setup');
-                                } else {
-                                    /***
-                                     *    ┬─┐┌─┐┬  ┌─┐┌┬┐┬┌─┐┌┐┌┌─┐┬ ┬┬┌─┐  ┌─┐┌─┐┬ ┬┌┐┌┌┬┐
-                                     *    ├┬┘├┤ │  ├─┤ │ ││ ││││└─┐├─┤│├─┘  ├┤ │ ││ ││││ ││
-                                     *    ┴└─└─┘┴─┘┴ ┴ ┴ ┴└─┘┘└┘└─┘┴ ┴┴┴    └  └─┘└─┘┘└┘─┴┘
-                                     */
-                                    waitingToFinish--;
-                                }
-                            }
-                        );
-                    } else {
-                        /***
-                         *    ┬ ┬┌─┐┌─┐  ┌─┐┌─┐┬  ┬  ┌─┐┌─┐┌┬┐┬┌─┐┌┐┌
-                         *    │││├─┤└─┐  │  │ ││  │  ├┤ │   │ ││ ││││
-                         *    └┴┘┴ ┴└─┘  └─┘└─┘┴─┘┴─┘└─┘└─┘ ┴ ┴└─┘┘└┘
-                         */
-                        waitingToFinish--;
-                    }
-                });
-            }
-        });
-
-        (function waitForIndexChecks() {
-            setTimeout(() => {
-                if (waitingToFinish === 0) {
-                    return next();
-                } else {
-                    waitForIndexChecks();
+                            );
+                        } else {
+                            /***
+                             *    ┬ ┬┌─┐┌─┐  ┌─┐┌─┐┬  ┬  ┌─┐┌─┐┌┬┐┬┌─┐┌┐┌
+                             *    │││├─┤└─┐  │  │ ││  │  ├┤ │   │ ││ ││││
+                             *    └┴┘┴ ┴└─┘  └─┘└─┘┴─┘┴─┘└─┘└─┘ ┴ ┴└─┘┘└┘
+                             */
+                            waitingToFinish--;
+                        }
+                    });
                 }
-            }, 10);
-        })();
+            });
 
-        setTimeout(() => {
-            if (waitingToFinish > 0) {
-                console.error('The database schema is missing foreign key indexes.');
-                process.exit(1);
-            }
-        }, 3000);
+            (function waitForIndexChecks() {
+                setTimeout(() => {
+                    if (waitingToFinish === 0) {
+                        return next();
+                    } else {
+                        waitForIndexChecks();
+                    }
+                }, 10);
+            })();
+
+            setTimeout(() => {
+                if (waitingToFinish > 0) {
+                    console.error('The database schema is missing foreign key indexes.');
+                    process.exit(1);
+                }
+            }, 3000);
+        } else {
+            return next();
+        }
     }
     /**
      * END custom schema feature

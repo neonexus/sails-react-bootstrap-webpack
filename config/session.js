@@ -19,9 +19,9 @@ module.exports.session = {
      *                                                                          *
      ***************************************************************************/
     // sails run generate:token
-    secret: '44b22a25bad8f610e2a378b24a21d5aa6234ef5e',
+    secret: '{{session secret here}}', // Placeholder for shared development default. DO NOT store PRODUCTION credentials in Git-controlled files!
 
-    name: 'myapp-session',
+    name: 'myapp-session', // Name for the cookie
 
     /***************************************************************************
      *                                                                          *
@@ -53,8 +53,9 @@ module.exports.session = {
     },
 
     cookie: {
-        // If all cookies should be HTTPs only.
+        // If all cookies should be HTTPs only. (Should be true when in PRODUCTION).
         secure: false,
+
         // This age is when we choose not to use "session" cookies, and want max-age instead.
         maxAge: 1000 * 60 * 60 * 24 * 7  // 1 week
     }
