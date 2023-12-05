@@ -8,7 +8,7 @@ const {spawn} = require('child_process');
 let prompts;
 try {
     prompts = require('prompts');
-} catch (e) {
+} catch {
     return console.error('Looks like you need to `npm install`');
 }
 
@@ -130,7 +130,7 @@ function runPrompts(defaults = {
             name: 'dbUri',
             type: (prev, ans) => (!defaults.forceIndividual && ans.uriOrIndividual === 'uri') ? 'text' : null,
             validate: (val) => {
-                if (!/^mysql:\/\/[^:]+:[^@]+@[^\/]+\/[^?]+(\?[^#]+)?(#.*)?$/.test(val)) {
+                if (!/^mysql:\/\/[^:]+:[^@]+@[^/]+\/[^?]+(\?[^#]+)?(#.*)?$/.test(val)) {
                     return 'This does not appear to be a valid URI (mysql://user:pass@host:port/name)';
                 }
 
@@ -213,9 +213,9 @@ function runPrompts(defaults = {
                     require('@ngrok/ngrok');
 
                     return null;
-                } catch (e) {}
-
-                return 'toggle';
+                } catch {
+                    return 'toggle';
+                }
             },
             initial: false,
             active: 'Yes',
@@ -228,7 +228,7 @@ function runPrompts(defaults = {
                     await installNgrok();
                 }
 
-                return (ans.useNgrok) ? 'password' : null
+                return (ans.useNgrok) ? 'password' : null;
             },
             initial: defaults.ngrok.token,
             validate: (val) => {
@@ -270,11 +270,11 @@ function runPrompts(defaults = {
             validate: (val) => {
                 // Validate password meets Ngrok's password requirements.
                 if (!val || !val.length || val.length < 8) {
-                    return 'Must be at least 8 characters long.'
+                    return 'Must be at least 8 characters long.';
                 }
 
                 if (val.length > 128) {
-                    return 'Password is too long. Must be 128 characters or less.'
+                    return 'Password is too long. Must be 128 characters or less.';
                 }
 
                 return true;
@@ -327,14 +327,14 @@ function runPrompts(defaults = {
             .replace('port: 3306',                      'port: ' + answers.dbPort)
             .replace('{{session secret here}}',         defaults.sessionSecret)
             .replace('{{DEK here}}',                    defaults.defaultDek)
-        ;
+        ; // eslint-disable-line
 
         // Setup Ngrok configuration if needed.
         if (answers.useNgrok) {
             filledConfigContent = filledConfigContent
                 .replace('{{ngrok authtoken}}', answers.ngrokToken)
                 .replace('my-ngrok-domain.ngrok-free.app', answers.ngrokDomain)
-            ;
+            ; // eslint-disable-line
 
             if (answers.useNgrokAuth) {
                 filledConfigContent = filledConfigContent.replace('// auth: \'username:notSoSecretPassword', 'auth: \'' + answers.ngrokAuthUser + ':' + answers.ngrokAuthPass);
