@@ -9,7 +9,7 @@ describe('isPasswordValid Helper', function() {
 
         isValid.should.be.an('array');
         isValid.length.should.equal(1);
-        isValid[0].should.equal('Password must be at least 7 characters');
+        isValid[0].should.equal('Password must be at least 7 characters.');
     });
 
     it('should not allow passwords longer than 70 characters', async function() {
@@ -25,7 +25,7 @@ describe('isPasswordValid Helper', function() {
 
         isValid.should.be.an('array');
         isValid.length.should.equal(1);
-        isValid[0].should.equal('Password can not contain 3 or more repeated characters');
+        isValid[0].should.equal('Password can not contain 3 or more repeated characters.');
     });
 
     it('should require at least 1 lowercase character', async function() {
@@ -33,7 +33,7 @@ describe('isPasswordValid Helper', function() {
 
         isValid.should.be.an('array');
         isValid.length.should.equal(1);
-        isValid[0].should.equal('Password must have at least 1 lowercase character');
+        isValid[0].should.equal('Password must have at least 1 lowercase character.');
     });
 
     it('should require at least 1 uppercase character', async function() {
@@ -41,7 +41,7 @@ describe('isPasswordValid Helper', function() {
 
         isValid.should.be.an('array');
         isValid.length.should.equal(1);
-        isValid[0].should.equal('Password must have at least 1 uppercase character');
+        isValid[0].should.equal('Password must have at least 1 uppercase character.');
     });
 
     it('should require at least 1 digit', async function() {
@@ -49,7 +49,7 @@ describe('isPasswordValid Helper', function() {
 
         isValid.should.be.an('array');
         isValid.length.should.equal(1);
-        isValid[0].should.equal('Password must have at least 1 digit');
+        isValid[0].should.equal('Password must have at least 1 digit.');
     });
 
     it('should require at least 1 special character', async function() {
@@ -57,7 +57,7 @@ describe('isPasswordValid Helper', function() {
 
         isValid.should.be.an('array');
         isValid.length.should.equal(1);
-        isValid[0].should.equal('Password must have at least 1 special character');
+        isValid[0].should.equal('Password must have at least 1 special character.');
     });
 
     it('should return true for valid password', async function() {
@@ -90,7 +90,7 @@ describe('isPasswordValid Helper', function() {
 
             isValid.should.be.an('array');
             isValid.length.should.equal(1);
-            isValid[0].should.equal('Password can not contain your email address');
+            isValid[0].should.equal('Password can not contain your email address.');
         });
 
         it('should not allow first name in password', async function() {
@@ -102,7 +102,7 @@ describe('isPasswordValid Helper', function() {
 
             isValid.should.be.an('array');
             isValid.length.should.equal(1);
-            isValid[0].should.equal('Password can not contain your first name');
+            isValid[0].should.equal('Password can not contain your first name.');
         });
 
         it('should not allow last name in password', async function() {
@@ -114,7 +114,7 @@ describe('isPasswordValid Helper', function() {
 
             isValid.should.be.an('array');
             isValid.length.should.equal(1);
-            isValid[0].should.equal('Password can not contain your last name');
+            isValid[0].should.equal('Password can not contain your last name.');
         });
     });
 

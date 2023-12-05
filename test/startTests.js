@@ -6,6 +6,7 @@
 const _ = require('lodash');
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 global.chai = require('chai');
 
 chai.use(require('chai-spies'));
@@ -80,6 +81,9 @@ exports.mochaHooks = {
                 }
             },
             models: {
+                dataEncryptionKeys: {
+                    default: crypto.randomBytes(32).toString('base64')
+                },
                 migrate: 'drop'
             },
             globals: {
@@ -92,7 +96,8 @@ exports.mochaHooks = {
             session: {
                 cookie: {
                     secure: false // can't have secure cookies when testing
-                }
+                },
+                secret: crypto.createHmac('sha256', crypto.randomBytes(42)).update(crypto.randomBytes(42) + new Date()).digest('hex')
             },
             security: {
                 checkPwnedPasswords: true
