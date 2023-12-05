@@ -1,8 +1,11 @@
+#!/usr/bin/env node
+
 /**
  * app.js
  *
  * Use `app.js` to run your app without `sails lift`.
  * To start the server, run: `node app.js`.
+ * Or directly: `./app.js`.
  *
  * This is handy in situations where the sails CLI is not relevant or useful,
  * such as when you deploy to a server, or a PaaS like Heroku.
@@ -38,22 +41,26 @@ try {
     console.error('Encountered an error when attempting to require(\'sails\'):');
     console.error(err.stack);
     console.error('--');
-    console.error('To run an app using `node app.js`, you need to have Sails installed');
-    console.error('locally (`./node_modules/sails`).  To do that, just make sure you\'re');
-    console.error('in the same directory as your app and run `npm install`.');
-    console.error();
-    console.error('If Sails is installed globally (i.e. `npm install -g sails`) you can');
-    console.error('also run this app with `sails lift`.  Running with `sails lift` will');
-    console.error('not run this file (`app.js`), but it will do exactly the same thing.');
-    console.error('(It even uses your app directory\'s local Sails install, if possible.)');
-    return;
+    console.error('Did you run `npm install`?');
 }//-•
 
+// Small safety trigger, to help prevent use of `sails lift`, as that circumvents our custom error handlers / configuration overrides.
+process.env.NOT_FROM_SAILS_LIFT = 'true'; // Can't use booleans with environment variables... That's just silly!
 
 // Start server
 sails.lift(rc('sails'), (err, server) => {
     if (err) {
-        return console.error(err);
+        switch (err.code) {
+            case 'E_INVALID_DATA_ENCRYPTION_KEYS':
+                return console.error(
+                    '\nSails is complaining about bad DEK\'s (Data Encryption Keys).'
+                    + '\nThis is likely caused by running as PRODUCTION without a DATA_ENCRYPTION_KEY environment variable set.'
+                    + '\n\nThe DEK ID that is being reported as invalid:   ' + err.dekId
+                    + '\n\nTo generate a new DEK:    npm run generate:dek\n'
+                );
+            default:
+                return console.error(err);
+        }
     }
 
     console.log('');

@@ -68,6 +68,9 @@ exports.mochaHooks = {
         }
         err.toString().should.eq('ReferenceError: sails is not defined');
 
+        // Required to make sure config/bootstrap.js doesn't stop us.
+        process.env.NOT_FROM_SAILS_LIFT = 'true'; // Can't use booleans with environment variables... That's just silly!
+
         TestSails.lift(_.merge(rc('sails'), {
             log: {level: 'warn'},
             logSensitiveData: false,

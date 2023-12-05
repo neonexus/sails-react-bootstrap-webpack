@@ -53,25 +53,25 @@ module.exports.security = {
      *                                                                           *
      ****************************************************************************/
 
-    csrf: false, // this disables Sails' CSRF; this repo has custom CSRF behavior.
-    // see the api/policies
+    csrf: false, // This disables Sails' CSRF; this repo has custom CSRF behavior.
+                 // See the api/policies files for more.
 
 
-    /************************************************************************************
-     *                                                                                  *
-     * This is a custom configuration option, for the built-in PwnedPasswords.com API.  *
-     * See: ../api/helpers/is-password-valid.js                                         *
-     *                                                                                  *
-     * When enabled, sails.helpers.isPasswordValid() will check with the                *
-     * PwnedPasswords.com API (v3), using a k-Anonymity model, preventing               *
-     * third parties, including the PwnedPasswords.com API from knowing                 *
-     * which password we are searching for.                                             *
-     *                                                                                  *
-     * See this for more details:                                                       *
-     *      https://haveibeenpwned.com/API/v3#PwnedPasswords                            *
-     *                                                                                  *
-     ************************************************************************************/
-    checkPwnedPasswords: false,
+    /********************************************************************************
+     *                                                                              *
+     * This is a custom config option, for the PwnedPasswords.com API Integration.  *
+     * See: ../api/helpers/is-password-valid.js                                     *
+     *                                                                              *
+     * When enabled, sails.helpers.isPasswordValid() will check with the            *
+     * PwnedPasswords.com API (v3), using a k-Anonymity model, preventing           *
+     * third parties, including the PwnedPasswords.com API from knowing             *
+     * which password we are searching for.                                         *
+     *                                                                              *
+     * See this for more details:                                                   *
+     *      https://haveibeenpwned.com/API/v3#PwnedPasswords                        *
+     *                                                                              *
+     ********************************************************************************/
+    checkPwnedPasswords: true,
 
     /********************************************************************
      *                                                                  *

@@ -1,13 +1,9 @@
 $bootstrap-icons-font-dir: "~bootstrap-icons/font/fonts";
 @import "~bootstrap-icons/font/bootstrap-icons";
 
-body {
-    transition: all ease .5s;
-}
-
 // fixes a flashing issue when changing themes
 .nav-item .nav-link.active, table {
-    transition: all ease .5s;
+    //transition: all ease .5s;
 }
 
 // .prevent-validation class

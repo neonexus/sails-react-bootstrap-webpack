@@ -24,11 +24,11 @@ const sails = require('sails');
 const rc = require('sails/accessible/rc');
 const {spawn} = require('child_process');
 const path = require('path');
-const loader = require('sails/lib/hooks/moduleloader');
-const merge = require('lodash.merge');
+const moduleLoader = require('sails/lib/hooks/moduleloader');
+const merge = require('lodash/merge');
 
 // Load configuration the way Sails would.
-loader({
+moduleLoader({
     config: {
         environment: process.env.NODE_ENV || 'development',
         paths: {
@@ -37,23 +37,47 @@ loader({
     }
 }).loadUserConfig((err, config) => {
     if (err) {
+        console.error('');
+        console.error('There was an issue loading user configuration:');
+        console.error('');
         console.error(err);
+        console.error('');
 
         return process.exit(1);
     }
 
-    // Set Ngrok defaults.
+    // Set Ngrok defaults. These can be overwritten in `config/ngrok.js` or `config/local.js`.
+    // Basically, this is just a safety net, should one delete the `config/ngrok.js` file.
     config = merge({
         ngrok: {
-            auth: process.env.NGROK_BASIC || null,
-            token: process.env.NGROK_AUTHTOKEN || process.env.NGROK_TOKEN || null,
+            auth: process.env.NGROK_BASIC || undefined,
+            token: process.env.NGROK_AUTHTOKEN || process.env.NGROK_TOKEN || undefined,
             buildAssets: true,
-            domain: process.env.NGROK_DOMAIN || null,
-            region: process.env.NGROK_REGION || null
+            domain: process.env.NGROK_DOMAIN || undefined,
+            region: process.env.NGROK_REGION || undefined,
+            port: process.env.PORT || 4242
         },
-        port: 1337,
         ...config
     });
+
+    // Boolean coercion
+    switch (config.ngrok.buildAssets) {
+        case true:
+        case 'true':
+        case '1':
+        case 1:
+            config.ngrok.buildAssets = true;
+            break;
+        case false:
+        case 'false':
+        case '0':
+        case 0:
+            config.ngrok.buildAssets = false;
+            break;
+        default:
+            console.error('Invalid value set for `buildAssets`. Expected boolean-like, got: ' + config.ngrok.buildAssets);
+            return process.exit(1);
+    }
 
     // Read our console config flags.
     for (let i = 2; i < process.argv.length; ++i) {
@@ -61,21 +85,23 @@ loader({
 
         if (thisFlag === 'nobuild') {
             config.ngrok.buildAssets = false;
+        } else if (thisFlag === 'build') {
+            config.ngrok.buildAssets = true;
         } else if (thisFlag.startsWith('auth=')) {
-            config.ngrok.auth = process.argv[i].substring(5); // don't use the lower-cased version
+            config.ngrok.auth = process.argv[i].substring(5); // this.flag is lower cased; have to use the raw input
         } else if (thisFlag.startsWith('domain=')) {
             config.ngrok.domain = thisFlag.substring(7);
         } else if (thisFlag.startsWith('port=')) {
-            config.port = thisFlag.substring(5);
+            config.ngrok.port = thisFlag.substring(5);
         } else if (thisFlag.startsWith('region=')) {
             config.ngrok.region = thisFlag.substring(7);
         } else if (thisFlag.startsWith('token=')) {
-            config.ngrok.token = process.argv[i].substring(6);
+            config.ngrok.token = process.argv[i].substring(6); // this.flag is lower cased; have to use the raw input
         }
     }
 
-    ngrok.connect({
-        addr: config.port, // Point to Sails
+    ngrok.forward({
+        addr: config.ngrok.port, // This is actually the port to we'll use for Sails. Ngrok will handle its own ports.
         authtoken: config.ngrok.token,
         basic_auth: config.ngrok.auth, // eslint-disable-line
         domain: config.ngrok.domain,
@@ -129,11 +155,14 @@ loader({
             origins = [ngrokUrl];
         }
 
+        // Small safety trigger, to help prevent use of `sails lift`, as that circumvents our custom error handlers / configuration overrides.
+        process.env.NOT_FROM_SAILS_LIFT = 'true'; // Can't use booleans with environment variables. That's just silly!
+
         // Start Sails.
         sails.lift({
             ...rc('sails'),
             baseUrl: ngrokUrl,
-            port: config.port,
+            port: config.ngrok.port,
             security: {
                 cors: {
                     allowOrigins: origins
@@ -141,7 +170,19 @@ loader({
             }
         }, (err) => {
             if (err) {
-                console.error(err);
+                switch (err.code) {
+                    case 'E_INVALID_DATA_ENCRYPTION_KEYS':
+                        console.error(
+                            '\nSails is complaining about bad DEK\'s (Data Encryption Keys).'
+                            + '\nThis is likely caused by running on PRODUCTION without a DATA_ENCRYPTION_KEY environment variable set.'
+                            + '\n\nThe DEK ID that is being reported as invalid: ' + err.dekId
+                            + '\n\nTo generate a new DEK:    npm run generate:dek\n'
+                        );
+                        break;
+                    default:
+                        console.error(err);
+                        break;
+                }
 
                 return process.exit(1);
             }
@@ -156,8 +197,10 @@ loader({
             }
         });
     }).catch((e) => {
-        console.log('There was an error starting the Ngrok tunnel. Likely a bad auth token. Here is the error:');
         console.log('');
-        console.log(e);
+        console.log('There was an error starting the Ngrok tunnel. Here is the error:');
+        console.log('');
+        console.log(e.message);
+        console.log('');
     });
 });

@@ -42,7 +42,7 @@ module.exports.http = {
         ],
 
         customPoweredBy: (req, res, next) => {
-            // set our own custom "X-Powered-By" header
+            // Set our own custom "X-Powered-By" header.
             res.set('X-Powered-By', 'Awesome Sauce');
 
             return next();
@@ -63,7 +63,7 @@ module.exports.http = {
      *                                                                                      *
      ****************************************************************************************/
     dateOutput: {
-        format: '', // empty string defaults to ISO-8601
-        tz: 'UTC' // timezone coercion
+        format: '', // Empty string defaults to ISO-8601.
+        tz: 'UTC'   // Timezone coercion.
     }
 };

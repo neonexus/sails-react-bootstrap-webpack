@@ -7,7 +7,7 @@ const moment = require('moment-timezone');
  * @function sails.helpers.generateToken
  * @param {String} [extra='Evil will always triumph, because good is dumb. -Lord Helmet'] - A bit of random, extra bits to change up the hash.
  *
- * @returns {String} A SHA256 hash of a cryptographically-secure, randomly generated string of characters.
+ * @returns {String} A SHA512 hash of a cryptographically-secure, randomly generated string of characters.
  */
 module.exports = {
     friendlyName: 'Generate Token',

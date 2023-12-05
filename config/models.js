@@ -92,8 +92,8 @@ module.exports.models = {
      ******************************************************************************/
 
     dataEncryptionKeys: {
-        // Run this to generate a new key: `sails run generate:dek` or `npm run generate:dek`
-        default: 'rDusXJzo7Pfpyw8APe8hmBb9qElPsOhCwV6HEeiFuAA=' // NEVER STORE THIS FOR PRODUCTION PURPOSES!!!
+        // Run this to generate a new key: `npm run generate:dek`
+        default: '{{DEK here}}' // NEVER STORE THIS FOR PRODUCTION PURPOSES!!!
     },
 
     /***************************************************************************
@@ -128,10 +128,19 @@ module.exports.models = {
 
     validateOnBootstrap: true,
 
+    /*********************************************************************************
+     *                                                                               *
+     * This is a secondary option for `validateOnBootstrap`.                         *
+     * If both `validateOnBootstrap` and `enforceForeignKeyRelationships` are true,  *
+     * then the connecting database will be required to have all the proper          *
+     * foreign key relationships setup; otherwise the validation will fail.          *
+     *                                                                               *
+     * It can be useful to disable this when testing PRODUCTION setup on a           *
+     * DEVELOPMENT-generated database.                                               *
+     *                                                                               *
+     * Likely only want to change this in local.js.                                  *
+     *                                                                               *
+     *********************************************************************************/
 
-    /**
-     * This is a fix for the auto-reload hook.
-     */
-    archiveModelIdentity: false
-
+    enforceForeignKeys: true,
 };

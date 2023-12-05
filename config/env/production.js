@@ -99,21 +99,21 @@ module.exports = {
          *
          */
         dataEncryptionKeys: {
-            default: process.env.DATA_ENCRYPTION_KEY
+            // Setting as `null` here will prevent the DEK from `models.js` from being used. This is on-purpose and should NOT be changed!
+            default: (process.env.DATA_ENCRYPTION_KEY && process.env.DATA_ENCRYPTION_KEY.length && process.env.DATA_ENCRYPTION_KEY !== 'null') ? process.env.DATA_ENCRYPTION_KEY : null
         }
     },
 
     /**************************************************************************
      *                                                                         *
-     * Always disable "shortcut" blueprint routes.                             *
-     *                                                                         *
-     * > You'll also want to disable any other blueprint routes if you are not *
-     * > actually using them (e.g. "actions" and "rest") -- but you can do     *
-     * > that in `config/blueprints.js`, since you'll want to disable them in  *
-     * > all environments (not just in production.)                            *
+     * Always disable blueprints.                                              *
+     * Blueprints are great development tools, but should NEVER be used in     *
+     * PRODUCTION environments because of security concerns.                   *
      *                                                                         *
      ***************************************************************************/
     blueprints: {
+        actions: false,
+        rest: false,
         shortcuts: false
     },
 
@@ -143,13 +143,14 @@ module.exports = {
          ***************************************************************************/
         cors: {
             allRoutes: true,
+            // When using `ngrok.js`, it will automatically add the Ngrok URL to allowOrigins.
             allowOrigins: [
                 // 'https://my.app',
                 // 'https://my-cdn.app',
                 'https://prerender.io',
                 // 'http://localhost:8080'
             ],
-            allowCredentials: true
+            allowCredentials: true // Allow cookies
         },
 
         /********************************************************************
@@ -160,7 +161,9 @@ module.exports = {
          * refuse to log sensitive info, regardless of the settings here,   *
          * or other configuration files. This is a final safeguard, which   *
          * must be manually removed if you MUST log sensitive info, (but    *
-         * you NEVER should!!!). This option is here as a reminder.         *
+         * you NEVER should!!!).                                            *
+         *                                                                  *
+         * This option is here as a reminder.                               *
          *                                                                  *
          ********************************************************************/
         requestLogger: {
@@ -168,54 +171,7 @@ module.exports = {
         }
     },
 
-
-    /***************************************************************************
-     *                                                                          *
-     * Configure how your app handles sessions in production.                   *
-     *                                                                          *
-     * (https://sailsjs.com/config/session)                                     *
-     *                                                                          *
-     * > If you have disabled the "session" hook, then you can safely remove    *
-     * > this section from your `config/env/production.js` file.                *
-     *                                                                          *
-     ***************************************************************************/
     session: {
-
-        /***************************************************************************
-         *                                                                          *
-         * Production session store configuration.                                  *
-         *                                                                          *
-         * Uncomment the following lines to finish setting up a package called      *
-         * "@sailshq/connect-redis" that will use Redis to handle session data.     *
-         * This makes your app more scalable by allowing you to share sessions      *
-         * across a cluster of multiple Sails/Node.js servers and/or processes.     *
-         * (See http://bit.ly/redis-session-config for more info.)                  *
-         *                                                                          *
-         * > While @sailshq/connect-redis is a popular choice for Sails apps, many  *
-         * > other compatible packages (like "connect-mongo") are available on NPM. *
-         * > (For a full list, see https://sailsjs.com/plugins/sessions)            *
-         *                                                                          *
-         ***************************************************************************/
-
-        /**
-         * We are handling sessions without Sails' middleware, and using Models directly.
-         * This section does not apply to this repo's configuration.
-         */
-
-        //adapter: 'express-mysql-session',
-        // adapter: '@sailshq/connect-redis',
-        // url: 'redis://user:password@localhost:6379/databasenumber',
-        //--------------------------------------------------------------------------
-        // /\   OR, to avoid checking it in to version control, you might opt to
-        // ||   set sensitive credentials like this using an environment variable.
-        //
-        // For example:
-        // ```
-        // sails_session__url=redis://admin:myc00lpAssw2D@bigsquid.redistogo.com:9562/0
-        // ```
-        //
-        //--------------------------------------------------------------------------
-
 
         /***************************************************************************
          *                                                                          *
@@ -244,8 +200,8 @@ module.exports = {
             maxAge: 24 * 60 * 60 * 1000  // 24 hours
         },
 
-        // sails run generate:token
-        secret: process.env.SESSION_SECRET, // DO NOT STORE THIS IN SOURCE CONTROL!!!
+        // npm run generate:token
+        secret: (process.env.SESSION_SECRET && process.env.SESSION_SECRET.length && process.env.SESSION_SECRET !== 'null') ? process.env.SESSION_SECRET : null, // DO NOT STORE THIS IN SOURCE CONTROL!
     },
 
 
@@ -401,7 +357,9 @@ module.exports = {
         // ```
         //--------------------------------------------------------------------------
 
+    },
+
+    autoreload: {
+        active: false // Make sure the sails-hook-autoreload never runs on PRODUCTION (shouldn't be installed on PROD anyway).
     }
-
-
 };

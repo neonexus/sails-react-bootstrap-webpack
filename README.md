@@ -1,47 +1,51 @@
 # sails-react-bootstrap-webpack
 
 [![Travis CI status](https://img.shields.io/travis/com/neonexus/sails-react-bootstrap-webpack.svg?branch=release&logo=travis)](https://app.travis-ci.com/github/neonexus/sails-react-bootstrap-webpack)
-[![Codecov](https://img.shields.io/codecov/c/github/neonexus/sails-react-bootstrap-webpack)](https://codecov.io/gh/neonexus/sails-react-bootstrap-webpack)
-[![Sails version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv4.2.3%2Fpackage.json&query=%24.dependencies.sails&label=Sails&logo=sailsdotjs)](https://sailsjs.com)
-[![React version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv4.2.3%2Fpackage.json&query=%24.devDependencies.react&label=React&logo=react)](https://react.dev)
-[![Bootstrap version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv4.2.3%2Fpackage.json&query=%24.devDependencies.bootstrap&label=Bootstrap&logo=bootstrap&logoColor=white)](https://getbootstrap.com)
-[![Webpack version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv4.2.3%2Fpackage.json&query=%24.devDependencies.webpack&label=Webpack&logo=webpack)](https://webpack.js.org)
+[![Codecov](https://img.shields.io/codecov/c/github/neonexus/sails-react-bootstrap-webpack?logo=codecov)](https://codecov.io/gh/neonexus/sails-react-bootstrap-webpack)
+[![Sails version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.0.0%2Fpackage.json&query=%24.dependencies.sails&label=Sails&logo=sailsdotjs)](https://sailsjs.com)
+[![React version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.0.0%2Fpackage.json&query=%24.devDependencies.react&label=React&logo=react)](https://react.dev)
+[![Bootstrap version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.0.0%2Fpackage.json&query=%24.devDependencies.bootstrap&label=Bootstrap&logo=bootstrap&logoColor=white)](https://getbootstrap.com)
+[![Webpack version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.0.0%2Fpackage.json&query=%24.devDependencies.webpack&label=Webpack&logo=webpack)](https://webpack.js.org)
 
 [![Discord Server](https://img.shields.io/badge/Discord_server-silver?logo=discord)](http://discord.gg/Y5K73E84Tc)
 
-This is an opinionated, base [Sails v1](https://sailsjs.com) application, using [Webpack](https://webpack.js.org) to handle [Bootstrap](https://getbootstrap.com) (using [SASS](https://sass-lang.com))
-and [React](https://react.dev) builds. It is designed such that, one can build multiple React frontends (an admin panel, and a customer site maybe), that use the same API backend. This allows
-developers to easily share React components across different frontends / applications. Also, because the backend and frontend are in the same repo (and the frontend is compiled before it is handed to
-the end user), they can share [NPM](http://npmjs.com) libraries, like [Moment.js](https://momentjs.com)
+This is an easily-modifiable, opinionated, [Sails v1](https://sailsjs.com) base application, using [Webpack](https://webpack.js.org) to handle [Bootstrap](https://getbootstrap.com)
+(using [SASS](https://sass-lang.com)) and [React](https://react.dev) builds. It is designed such that, one can build multiple React frontends (an admin panel, and a customer site maybe), that use the
+same API backend. This allows developers to easily share React components across different frontends / applications. Also, because the backend and frontend are in the same repo (and the frontend is
+compiled before it is handed to the end user), they can share [NPM](http://npmjs.com) libraries, like [Moment.js](https://momentjs.com)
 
 ## Table of Contents
 
 * [Main Features](#main-features)
 * [Branch Warning](#branch-warning)
 * [Current Dependencies](#current-dependencies)
-    * [A note about dependency versions](#a-note-about-dependency-versions)
+  * [A note about dependency versions](#a-note-about-dependency-versions)
 * [How to Use](#how-to-use)
+  * [Downloading a Copy](#downloading-a-copy)
+  * [Interactive Setup](#interactive-setup)
 * [Configuration](#configuration)
-    * [Custom Configuration Options](#custom-configuration-options)
-    * [Want to configure the `X-Powered-By` header?](#want-to-configure-the-x-powered-by-header)
-* [Environment Variables](#environment-variables)
+  * [Custom Configuration Options](#custom-configuration-options)
+  * [Want to configure the `X-Powered-By` header?](#want-to-configure-the-x-powered-by-header)
+  * [Environment Variables](#environment-variables)
 * [Custom Security Policies](#custom-security-policies)
 * [Scripts Built Into `package.json`](#scripts-built-into-packagejson)
 * [Sails Scripts](#sails-scripts)
 * [Request Logging](#request-logging)
-    * [If you DO NOT want request logging](#if-you-do-not-want-request-logging)
-* [Using Webpack](#using-webpack)
-    * [Local Dev](#local-dev)
-    * [Remote Builds](#remote-builds)
-    * [Configuration](#configuration-1)
-* [Building with React](#building-with-react)
-    * [Serving Compiled Assets](#serving-compiled-assets)
+  * [If you DO NOT want request logging](#if-you-do-not-want-request-logging)
+* [Using `Webpack`](#using-webpack)
+  * [Local Dev](#local-dev)
+  * [Remote Builds](#remote-builds)
+  * [Configuration](#configuration-1)
+* [Building with `React`](#building-with-react)
+  * [Serving Compiled Assets](#serving-compiled-assets)
 * [Schema Validation and Enforcement](#schema-validation-and-enforcement)
-    * [If you DO NOT want schema validation](#if-you-do-not-want-schema-validation)
-* [PwnedPasswords.com Integration](#pwnedpasswordscom-integration)
-* [Working With Ngrok](#working-with-ngrok)
-    * [First Thing's First](#first-things-first)
-    * [Script Options](#script-options)
+  * [Why are foreign keys enforced?](#why-are-foreign-keys-enforced)
+  * [If you DO NOT want schema validation](#if-you-do-not-want-schema-validation)
+* [`PwnedPasswords.com` Integration](#pwnedpasswordscom-integration)
+* [Working With `Ngrok`](#working-with-ngrok)
+  * [First Thing's First](#first-things-first)
+  * [Sails-Style Configuration](#sails-style-configuration)
+  * [Script Options](#script-options)
 * [Support for `sails-hook-autoreload`](#support-for-sails-hook-autoreload)
 * [What About SEO?](#what-about-seo)
 * [Useful Links](#useful-links)
@@ -50,21 +54,20 @@ the end user), they can share [NPM](http://npmjs.com) libraries, like [Moment.js
 
 * Online in a single command, thanks to included [Ngrok support](#working-with-ngrok).
 * Automatic (incoming) request logging (manual outgoing), via Sails models / hooks.
-* Setup for Webpack auto-reload dev server.
+* Setup for Webpack auto-reload dev server. Build; save; auto-reload.
 * Setup so Sails will serve Webpack-built bundles as separate apps (so, a marketing site, and an admin site can live side-by-side).
 * More than a few custom [helper functions](api/helpers) to make life a little easier.
 * Includes [react-bootstrap](https://www.npmjs.com/package/react-bootstrap) to make using Bootstrap styles / features with React easier.
-* Schema validation and enforcement for `PRODUCTION`. This repo is set up for `MySQL` (can LIKELY be used with most if not all other SQL-based datastores [I have not tried]). If you plan to use a
-  different datastore, you will likely want to disable the schema validation and enforcement
-  feature inside [`config/bootstrap.js`](config/bootstrap.js). See [schema validation and enforcement](#schema-validation-and-enforcement) for more info.
+* Schema validation and enforcement for `PRODUCTION`. See [schema validation and enforcement](#schema-validation-and-enforcement).
 * New passwords will be checked against the [PwnedPasswords API](https://haveibeenpwned.com/API/v3#PwnedPasswords). If there is a single hit for the password, an error will be given, and the user will
   be forced to choose another. See [PwnedPasswords integration](#pwnedpasswordscom-integration) for more info.
 * Google Authenticator-style OTP (One-Time Password) functionality; also known as 2FA (2-Factor Authentication).
+SMS is costly and [vulnerable to attack](https://authy.com/blog/understanding-2fa-the-authy-app-and-sms/). Please don't use SMS as a primary 2FA method!
+* **Made with 10% more LOVE than the next leading brand!**
 
 ## Branch Warning
 
-The `master` branch is experimental, and the [release branch](https://github.com/neonexus/sails-react-bootstrap-webpack/tree/release) (or
-the [`releases section`](https://github.com/neonexus/sails-react-bootstrap-webpack/releases)) is where one should base their use of this template.
+The `master` branch is experimental, and the [release branch](https://github.com/neonexus/sails-react-bootstrap-webpack/tree/release) (or the [`releases section`](https://github.com/neonexus/sails-react-bootstrap-webpack/releases)) is where one should base their use of this template.
 
 `master` is **volatile**, likely to change at any time, for any reason; this includes `git push --force` updates.
 
@@ -83,13 +86,23 @@ See the [`package.json`](package.json) for full details.
 
 ### A note about dependency versions
 
-All dependencies in `package.json` are "version locked". This means that explicit version numbers are used ONLY, no fuzzy matches like `^` or `*`. The reason for this is the rampant uptick in package
-poisoning. Once a version has been created on NPM, it can't be updated or recreated, only deleted. Plus, it's nice to see when dependency versions change in Git commits.
+All dependencies in `package.json` are "version locked". This means that explicit version numbers are used, no fuzzy matches like `^` or `*`.
+A couple of reasons / advantages for why this is done:
 
-I manually check the changes when a package has a new version, to verify there isn't any sneaky bits trying to compromise something. I use
-[`npm-check-updates`](https://www.npmjs.com/package/npm-check-updates), and just run `ncu` when I want to check dependencies.
+* Package poisoning is a serious threat, that should NOT be taken lightly. You are relying on someone else's package, and if you have a fuzzy match for a dependency, you are opening the door wide open
+for bad actors to do bad things. If the author of the package you depend on gets hacked, and the hacker decides to manipulate a package for nefarious purposes, all they have to do is release a minor
+version to the package, and your fuzzy match will download it, no questions asked.
+* If there happens to be a release that falls in a fuzzy match, which just so happens to have been released after testing is completed, but before PRODUCTION has done an `npm install`, there is a
+possibility of bugs being introduced into PRODUCTION, and not caught until well after customers become extremely irate.
+* Version locking helps prevent "works on my machine" syndrome. Because it is generally habit to `npm install` after a `git pull` (or at least should be if not a Git hook), keeping versions explicit
+with commits helps prevent a LOT of weirdness.
+* It's just easier to see when dependency versions change in commit history. Helps prevent headaches.
+
+In the end, **DON'T BE FUZZY! BE EXPLICIT!** Use a tool like [`npm-check-updates`](https://www.npmjs.com/package/npm-check-updates) to make dependency updates easier to audit / update.
 
 ## How to Use
+
+### Downloading a Copy
 
 You can quickly download / install dependencies using [`drfg` (Download Release From GitHub)](https://www.npmjs.com/package/drfg) via NPX (if you have Node.js installed, you have NPX):
 
@@ -108,6 +121,30 @@ Or, GitHub provides a handy "Use this template" (green) button at the top of thi
 instead of the commit history from this repo).
 
 Or, you can download a copy of the [latest release](https://github.com/neonexus/sails-react-bootstrap-webpack/releases/latest) manually.
+
+See [the scripts section](#scripts-built-into-packagejson) for the various ways to build the frontend and run the backend.
+See the [working with Ngrok](#working-with-ngrok) section on how to spin-up an instance with Ngrok attached.
+
+### Interactive Setup
+
+```shell
+npm run setup
+```
+OR
+```shell
+./setup.js
+```
+
+The [setup.js](setup.js) script will walk you through interactive questions, and create a `config/local.js` for you, based on the contents of [`config/local.js.sample`](config/local.js.sample).
+If you already have a `config/local.js`, the setup script will use the configuration options as defaults (including passwords), and rebuild it.
+
+After you're all configured, you'll likely want an admin user:
+
+```shell
+npm run create:admin
+```
+
+The create admin script is designed to allow only a single admin user to be created in this manner. After this point, the API must be used.
 
 ## Configuration
 
@@ -145,9 +182,9 @@ overridden in the `config/local.js`, just like every other option. If the option
         <tr>
             <td><code>appName</code></td>
             <td>
-                <code>local.js</code><br />
-                <a href="/neonexus/sails-react-bootstrap-webpack/blob/release/config/env/development.js"><code>env/development.js</code></a><br />
-                <a href="/neonexus/sails-react-bootstrap-webpack/blob/release/config/env/production.js"><code>env/production.js</code></a><br />
+                <a href="config/local.js.sample"><code>local.js</code></a><br />
+                <a href="config/env/development.js"><code>env/development.js</code></a><br />
+                <a href="config/env/production.js"><code>env/production.js</code></a><br />
             </td>
             <td>
                 <code>My&nbsp;App&nbsp;(LOCAL)</code><br />
@@ -160,19 +197,19 @@ overridden in the `config/local.js`, just like every other option. If the option
         </tr>
         <tr>
             <td><code>log.captureRequests</code></td>
-            <td><a href="/neonexus/sails-react-bootstrap-webpack/blob/release/config/log.js"><code>log.js</code></a></td>
+            <td><a href="config/log.js"><code>log.js</code></a></td>
             <td><code>true</code></td>
             <td>
                 When enabled, all incoming requests will automatically be logged via the
-                <a href="/neonexus/sails-react-bootstrap-webpack/blob/release/api/models/RequestLog.js"><code>RequestLog</code></a> model, by the
-                <a href="/neonexus/sails-react-bootstrap-webpack/blob/release/api/hooks/request-logger.js"><code>request-logger</code></a> hook, and the
-                <a href="/neonexus/sails-react-bootstrap-webpack/blob/release/api/helpers/finalize-request-log.js"><code>finalize-request-log</code></a> helper.
+                <a href="api/models/RequestLog.js"><code>RequestLog</code></a> model, by the
+                <a href="api/hooks/request-logger.js"><code>request-logger</code></a> hook, and the
+                <a href="api/helpers/finalize-request-log.js"><code>finalize-request-log</code></a> helper.
                 <br /><br />See <a href="#request-logging">Request Logging</a> for more info.
             </td>
         </tr>
         <tr>
             <td><code>models.validateOnBootstrap</code></td>
-            <td><a href="/neonexus/sails-react-bootstrap-webpack/blob/release/config/bootstrap.js"><code>bootstrap.js</code></a></td>
+            <td><a href="config/models.js"><code>models.js</code></a></td>
             <td><code>true</code></td>
             <td>
                 When enabled, and <code>models.migrate === 'safe'</code> (aka PRODUCTION), then the SQL schemas of the default datastore will be validated against the model definitions.
@@ -180,11 +217,21 @@ overridden in the `config/local.js`, just like every other option. If the option
             </td>
         </tr>
         <tr>
-            <td><code>security.checkPwnedPasswords</code></td>
-            <td><a href="/neonexus/sails-react-bootstrap-webpack/blob/release/config/security.js"><code>security.js</code></a></td>
+            <td><code>models.enforceForeignKeys</code></td>
+            <td><a href="config/models.js"><code>models.js</code></a></td>
             <td><code>true</code></td>
             <td>
-                When enabled, <a href="/neonexus/sails-react-bootstrap-webpack/blob/release/api/helpers/is-password-valid.js"><code>sails.helpers.isPasswordValid()</code></a> will run its normal
+                This is a modification option for the <code>validateOnBootstrap</code> configuration.
+                When both are <code>true</code>, the schema validation and enforcement will also enforce foreign key relationships.
+                It can be useful to disable this option when testing PRODUCTION configuration locally.
+            </td>
+        </tr>
+        <tr>
+            <td><code>security.checkPwnedPasswords</code></td>
+            <td><a href="config/security.js"><code>security.js</code></a></td>
+            <td><code>true</code></td>
+            <td>
+                When enabled, <a href="api/helpers/is-password-valid.js"><code>sails.helpers.isPasswordValid()</code></a> will run its normal
                 checks, before checking with the PwnedPasswords.com API to verify the password has not been found in a known security breach. If it has, it will consider the password invalid.
             </td>
         </tr>
@@ -195,8 +242,8 @@ overridden in the `config/local.js`, just like every other option. If the option
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>.logSensitiveData</code>
             </td>
             <td>
-                <a href="/neonexus/sails-react-bootstrap-webpack/blob/release/config/security.js"><code>security.js</code></a>
-                <br/> <a href="/neonexus/sails-react-bootstrap-webpack/blob/release/config/env/development.js"><code>env/development.js</code></a>
+                <a href="config/security.js"><code>security.js</code></a>
+                <br/> <a href="config/env/development.js"><code>env/development.js</code></a>
             </td>
             <td><code>false</code></td>
             <td>
@@ -212,7 +259,7 @@ overridden in the `config/local.js`, just like every other option. If the option
 Sails.js has middleware (akin to [Express.js Middleware](https://expressjs.com/en/guide/using-middleware.html), Sails is built on Express.js after all...). Inside
 of [`config/http.js`](config/http.js) we create our own `X-Powered-By` header, using Express.js Middleware.
 
-## Environment Variables
+### Environment Variables
 
 There are a few environment variables that the remote configuration files are set up for. There are currently 3 variables that change names between DEV and PROD; this is intentional, and has proven
 very useful in my experience. DEV has shorter names like `DB_HOST`, where PROD has fuller names like `DB_HOSTNAME`. This helps with ensuring you are configuring the correct remote server, and has
@@ -235,7 +282,7 @@ and [`config/env/production.js`](config/env/production.js)
 | `NGROK_AUTHTOKEN`                                    | "" (empty string)                         | Ngrok auth token used in the [`ngrok.js`](#working-with-ngrok) script.                                                          |
 | `NGROK_BASIC`                                        | "" (empty string)                         | The `user:pass` combo to use for basic authentication with [`ngrok.js`](#working-with-ngrok).                                   |
 | `NGROK_DOMAIN`                                       | "" (empty string)                         | The domain to tunnel Sails to. Used in [`ngrok.js`](#working-with-ngrok).                                                       |
-| `SESSION_SECRET`                                     | "" (empty string)                         | Used to sign cookies, and SHOULD be set, especially on PRODUCTION environments.                                                 |
+| `SESSION_SECRET`                                     | "" (empty string)                         | Used to sign cookies. If changed, will invalidate all sessions.                                                                 |
 
 ## Custom Security Policies
 
@@ -249,11 +296,6 @@ Read more about Sails' security policies: [https://sailsjs.com/documentation/con
 
 ## Scripts built into [`package.json`](package.json):
 
-Here, `sails run ...` is nearly the same as `npm run ...`, except that `sails run` tends to be quieter/cleaner (try `npm run generate:dek` vs `sails run generate:dek`), and will spin up a quick
-instance of Sails, so one can build terminal scripts that deal with Sails' architecture (like `sails run create-admin`). So, I've opted to use `sails run` as my go-to for running scripts.
-
-This does require you either have Sails installed globally, or you have `node_modules/.bin` of this project added to your `$PATH`.
-
 <table>
     <thead>
         <tr>
@@ -263,79 +305,88 @@ This does require you either have Sails installed globally, or you have `node_mo
     </thead>
     <tbody>
         <tr>
-            <td><pre><code>sails run build</code></pre></td>
-            <td>Will run <code>sails run clean</code>, then <code>sails run build:prod</code>.</td>
+            <td><pre><code>npm run build</code></pre></td>
+            <td>Will run <code>npm run clean</code>, then <code>npm run build:prod</code>.</td>
         </tr>
         <tr>
-            <td><pre><code>sails run build:dev</code></pre></td>
-            <td>Will run <code>sails run clean</code>, then <code>sails run build:dev:webpack</code>.</td>
+            <td><pre><code>npm run build:dev</code></pre></td>
+            <td>
+                Same thing as <code>npm run build:prod</code>, except that it will not optimize the files, retaining newlines and empty spaces. Will run <code>npm run clean</code>, then
+                <code>npm run build:dev:webpack</code>.
+            </td>
         </tr>
         <tr>
-            <td><pre><code>sails run build:dev:webpack</code></pre></td>
-            <td>Same thing as <code>sails run build:prod</code>, except that it will not optimize the files, retaining newlines and empty spaces.</td>
-        </tr>
-        <tr>
-            <td><pre><code>sails run build:prod</code></pre></td>
-            <td>Runs Webpack to build production-level assets into <code>.tmp/public</code>.</td>
-        </tr>
-        <tr>
-            <td><pre><code>sails run clean</code></pre></td>
+            <td><pre><code>npm run clean</code></pre></td>
             <td>Will delete everything in the <code>.tmp</code> folder.</td>
         </tr>
         <tr>
-            <td><pre><code>sails run coverage</code></pre></td>
+            <td><pre><code>npm run codecov</code></pre></td>
+            <td>Command to run tests, generate code coverage, and upload said coverage to Codecov. Designed to be run by CI test runners like <a href="https://www.travis-ci.com">Travis CI</a>.</td>
+        </tr>
+        <tr>
+            <td><pre><code>npm run coverage</code></pre></td>
             <td>Runs <a rel="nofollow" href="https://www.npmjs.com/package/nyc">NYC</a> coverage reporting of the Mocha tests, which generates HTML in <code>test/coverage</code>.</td>
         </tr>
         <tr>
-            <td><pre><code>sails run create:admin</code></pre></td>
-            <td>An alias for the Sails script <code>sails run create-admin</code>. See <a href="#sails-scripts">Sails Scripts</a> for more info.</td>
+            <td><pre><code>npm run create:admin</code></pre></td>
+            <td>
+                Will run the Sails script <code>sails run create-admin</code> (<a href="scripts/create-admin.js">scripts/create-admin.js</a>).
+                See <a href="#sails-scripts">Sails Scripts</a> for more info.
+            </td>
         </tr>
         <tr>
-            <td><pre><code>sails run debug</code></pre></td>
+            <td><pre><code>npm run debug</code></pre></td>
             <td>Alias for <code>node --inspect app.js</code>.</td>
         </tr>
         <tr>
-            <td><pre><code>sails run generate:dek</code></pre></td>
+            <td><pre><code>npm run generate:dek</code></pre></td>
             <td>Generate a DEK (Data Encryption Key).</td>
         </tr>
         <tr>
-            <td><pre><code>sails run generate:token</code></pre></td>
+            <td><pre><code>npm run generate:token</code></pre></td>
             <td>Generate a 64-character token.</td>
         </tr>
         <tr>
-            <td><pre><code>sails run generate:uuid</code></pre></td>
+            <td><pre><code>npm run generate:uuid</code></pre></td>
             <td>Generate a v4 UUID.</td>
         </tr>
         <tr>
-            <td><pre><code>sails run lift</code></pre></td>
-            <td>The same thing as <code>sails lift</code> or <code>node app.js</code>; will
+            <td><pre><code>npm run lift</code></pre></td>
+            <td>The same thing as <code>node app.js</code> or <code>./app.js</code>; will
                 "<a rel="nofollow" href="https://sailsjs.com/documentation/reference/command-line-interface/sails-lift">lift our Sails</a>" instance (aka starting the API).
             </td>
         </tr>
         <tr>
-            <td><pre><code>sails run lift:prod</code></pre></td>
-            <td>The same thing as <code>sails lift --prod</code> or <code>NODE_ENV=production node app.js</code>.</td>
+            <td><pre><code>npm run lift:prod</code></pre></td>
+            <td>The same thing as <code>NODE_ENV=production node app.js</code>.</td>
         </tr>
         <tr>
-            <td><pre><code>sails run lines</code></pre></td>
+            <td><pre><code>npm run lines</code></pre></td>
             <td>
                 Will count the lines of code in the project, minus <code>.gitignore</code>'d files, for funzies. There are currently about 7k custom lines in this repo
                 (views, controllers, helpers, hooks, etc); a small drop in the bucket, compared to what it's built on.
             </td>
         </tr>
         <tr>
-            <td><pre><code>sails run open:client</code></pre></td>
-            <td>Will run the <a rel="nofollow" href="https://webpack.js.org/configuration/dev-server/">Webpack Dev Server</a> and open a browser tab / window.</td>
+            <td><pre><code>npm run setup</code></pre></td>
+            <td>
+                Same thing as <code>node setup.js</code> or <code>./setup.js</code>. The setup script will interactively ask questions, and create a <code>`config/local.js</code>
+                based on the contents of <a href="config/local.js.sample"><code>config/local.js.sample</code></a>.
+            </td>
         </tr>
         <tr>
-            <td><pre><code>sails run start</code></pre></td>
-            <td>Will run both <code>sails run lift</code> and <code>sails run open:client</code> in parallel.</td>
+            <td><pre><code>npm run start</code></pre></td>
+            <td>Will run both <code>npm run lift</code> and <code>npm run webpack</code> in parallel.</td>
         </tr>
         <tr>
-            <td><pre><code>sails run test</code></pre></td>
+            <td><pre><code>npm run test</code></pre></td>
             <td>Run <a rel="nofollow" href="https://mochajs.org/">Mocha</a> tests. Everything starts in the
                 <a href="test/startTests.js"><code>test/startTests.js</code></a> file.
             </td>
+        </tr>
+        <tr>
+            <td><pre><code>npm run webpack</code></pre></td>
+            <td>Will run the <a rel="nofollow" href="https://webpack.js.org/configuration/dev-server/">Webpack Dev Server</a> and open a browser tab / window.</td>
         </tr>
     </tbody>
 </table>
@@ -363,7 +414,7 @@ You can easily disable request logging, by setting `sails.config.log.captureRequ
 
 ### Local Dev
 
-The script `npm run open:client` will start the auto-reloading Webpack development server, and open a browser window. When you save changes to assets (React files mainly), it will auto-compile the
+The script `npm run webpack` will start the auto-reloading Webpack development server, and open a browser window. When you save changes to assets (React files mainly), it will auto-compile the
 update, then refresh the browser automatically.
 
 ### Remote Builds
@@ -398,24 +449,23 @@ It may also be a good idea to consider using something like [Nginx](https://ngin
 
 ## Schema Validation and Enforcement
 
+This repo is set up for `MySQL` (can LIKELY be used with most if not all other SQL-based datastores [I have not tried]). If you plan to use a different datastore, you will likely want to disable this
+feature.
+
 Inside [`config/bootstrap.js`](config/bootstrap.js) is a bit of logic (**HEAVILY ROOTED IN NATIVE `MySQL` QUERIES**), which validates column types in the `PRODUCTION` database (
 aka `sails.config.models.migrate === 'safe'`), then will validate foreign key indexes. If there are too many columns, or there is a missing index, or incorrect column type, the logic
 will `console.error` any issues, then `process.exit(1)` (kill) the Sails server. The idea here, is that if anything is out of alignment, Sails will fail to lift, which will mean failure to deploy on
 PRODUCTION, preventing accidental, invalid live deployments; a final safety net if you will.
 
+### Why are foreign keys enforced?
+
+While yes, Sails (rather [Waterline](https://npmjs.com/package/waterline)) does not actually require foreign keys to handle relationships, generally in a PRODUCTION environment there are more tools
+at-play that DO require these relationships to work properly. So, by default, this repo is designed to validate that the keys are set up correctly. This feature can be turned off by changing
+`sails.config.enforceForeignKeys = false` in `config/local.js` (or `config/models.js`).
+
 ### If you DO NOT want schema validation
 
-... then you have 2 options:
-
-* Set `sails.config.models.validateOnBootstrap = false` at the bottom of [`config/models.js`](config/models.js).
-* OR replace the contents of `config/bootstrap.js` with the following:
-
-```javascript
-module.exports.bootstrap = function(next) {
-    // You must call the callback function, or Sails will fail to lift!
-    next();
-};
-```
+...then you can set `sails.config.models.validateOnBootstrap = false` at the bottom of [`config/models.js`](config/models.js).
 
 ## PwnedPasswords.com Integration
 
@@ -439,24 +489,30 @@ You will need to `npm i @ngrok/ngrok --save-dev` before you can do anything. I'v
 
 After you have it installed, you can run `ngrok.js`, with node: `node ngrok` or just directly: `./ngrok.js`.
 
+### Sails-Style Configuration
+
+If you prefer to configure Ngrok using Sails' style configuration, you can do so with [`config/ngrok.js`](config/ngrok.js), or `config/local.js`. Additionally, the [setup script](#interactive-setup)
+will help you configure / install Ngrok.
+
 ### Script Options
 
 These are the current configuration flags. Order does not matter.
 
-An example: `node ngrok.js nobuild token=S1T2A3Y4I5N6G7A8L9I0V1E region=us`
+An example: `node ngrok.js nobuild token=S1T2A3Y4I5N6G7A8L9I0V1E`
 
-| Option            | Description                                                                                                                                                                                              |
-|-------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `auth=USER:PASS`  | This will protect the Ngrok tunnel with HTTP Basic Auth, using the USER / PASS you supply. You can also use the `NGROK_BASIC` environment variable.                                                      |
-| `nobuild`         | Adding this flag will skip asset building.                                                                                                                                                               |
-| `domain=MYDOMAIN` | The domain to connect the tunnel from Sails to. You can also use the `NGROK_DOMAIN` environment variable.                                                                                                |
-| `port=SAILSPORT`  | The port to use internally for Sails. Useful if you want to run multiple instances on the same machine. The `PORT` environment variable, and `sails.config` options are used a fall-backs.               |
-| `region=MYREGION` | The region to use for connection to the Ngrok services. One of Ngrok regions (`us`, `eu`, `au`, `ap`, `sa`, `jp`, `in`). You can also use the `NGROK_REGION` environment variable. Defaults to `global`. |
-| `token=AUTHTOKEN` | Adding this flag will set your Ngrok auth token. You can also use `NGROK_AUTHTOKEN` or `NGROK_TOKEN` environment variables.                                                                              |
+| Option            | Description                                                                                                                                                                                                                 |
+|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `auth=USER:PASS`  | This will protect the Ngrok tunnel with HTTP Basic Auth, using the USER / PASS you supply. You can also use the `NGROK_BASIC` environment variable.                                                                         |
+| `build`           | Adding this flag will force asset building.                                                                                                                                                                                 |
+| `nobuild`         | Adding this flag will skip asset building.                                                                                                                                                                                  |
+| `domain=MYDOMAIN` | The domain to connect the tunnel from Sails to. You can also use the `NGROK_DOMAIN` environment variable.                                                                                                                   |
+| `port=SAILSPORT`  | The port to use internally for Sails. Useful if you want to run multiple instances on the same machine. The `PORT` environment variable or `sails.config.port` option is used as fall-backs if the script option isn't set. |
+| `region=MYREGION` | The region to use for connection to the Ngrok services. One of Ngrok regions (`us`, `eu`, `au`, `ap`, `sa`, `jp`, `in`). You can also use the `NGROK_REGION` environment variable. Defaults to `global`.                    |
+| `token=AUTHTOKEN` | Adding this flag will set your Ngrok auth token. You can also use `NGROK_AUTHTOKEN` or `NGROK_TOKEN` environment variables.                                                                                                 |
 
-**NOTE:** For each option, the script flag will take precedent if a corresponding environment variable is set as well.
+**NOTE:** For each option, the script flag will take precedent if a corresponding environment variable (or Sails configuration) is set.
 
-For example: `token=AUTHTOKEN` > `NGROK_AUTHTOKEN`.
+For example: `./ngrok.js token=AUTHTOKEN1` > `NGROK_AUTHTOKEN=AUTHTOKEN2 ./ngork.js`.
 
 ## Support for `sails-hook-autoreload`
 
