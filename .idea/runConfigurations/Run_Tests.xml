@@ -9,7 +9,7 @@
       <env name="NODE_ENV" value="testing" />
     </envs>
     <ui>bdd</ui>
-    <extra-mocha-options />
+    <extra-mocha-options>--config .mocharc</extra-mocha-options>
     <test-kind>TEST_FILE</test-kind>
     <test-file>$PROJECT_DIR$/test/startTests.js</test-file>
     <method v="2" />

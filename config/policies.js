@@ -9,14 +9,17 @@
  */
 
 module.exports.policies = {
+    // Default to "allow" if not defined below.
     '*': true,
 
+    // ALl the functions found in /controllers/admin/*
     AdminController: {
         '*': ['isLoggedIn', 'isAdmin']
     },
 
+    // The functions in /controllers/common/*
     CommonController: {
-        '*': 'isLoggedIn',
-        'login': true,
+        '*': 'isLoggedIn', // Default require the user is authenticated
+        'login': true, // Allow non-authenticated users access.
     }
 };

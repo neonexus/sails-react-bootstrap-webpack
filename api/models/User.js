@@ -166,23 +166,23 @@ module.exports = {
     },
 
     beforeUpdate: async function(user, next) {
-        if (user.email && user.email !== '') {
+        if (user.email && user.email.trim().length) {
             const email = user.email.toLowerCase().trim();
 
             user.email = email;
             user.avatar = getGravatarUrl(email);
         }
 
-        if (user.firstName && user.firstName !== '') {
-            user.firstName = forceUppercaseOnFirst(user.firstName);
+        if (user.firstName && user.firstName.trim().length) {
+            user.firstName = forceUppercaseOnFirst(user.firstName.trim());
         }
 
-        if (user.lastName && user.lastName !== '') {
-            user.lastName = forceUppercaseOnFirst(user.lastName);
+        if (user.lastName && user.lastName.trim().length) {
+            user.lastName = forceUppercaseOnFirst(user.lastName.trim());
         }
 
-        if (user.password && user.password !== '') {
-            user.password = await updatePassword(user.password);
+        if (user.password && user.password !== '' && user.password.length > 7) {
+            user.password = await updatePassword(user.password.trim());
         }
 
         return next();

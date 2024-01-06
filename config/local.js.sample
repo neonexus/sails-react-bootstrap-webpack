@@ -3,7 +3,7 @@
  *
  * DON'T DELETE ME!!!
  * The setup.js script requires a `local.js.sample` file to work.
- * Additionally, if you change values here, the setup script will need to be modified to match.
+ * Additionally, if you change anything here, the setup script will likely need to be modified to match.
  */
 
 

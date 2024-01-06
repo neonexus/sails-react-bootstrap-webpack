@@ -1,0 +1,25 @@
+{
+    "bail": false,
+    "async-only": true,
+    "require": [
+        "test/startTests.js"
+    ],
+    "spec": [
+        "test/unit/index.js",
+        "test/integration/index.js"
+    ],
+    "timeout": 60000,
+    "checkLeaks": true,
+    "global": [
+        "_",
+        "sails",
+        "__core-js_shared__",
+        "Archive",
+        "User",
+        "Session",
+        "RequestLog",
+        "Log",
+        "__coverage__",
+        "match"
+    ]
+}

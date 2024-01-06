@@ -1,4 +1,4 @@
-import { Component, StrictMode, Suspense, lazy } from 'react';
+import {Component, StrictMode, Suspense, lazy} from 'react';
 import PropTypes from 'prop-types';
 import '../../styles/admin/admin.scss';
 import {
@@ -27,7 +27,10 @@ function RenderOrLogin(props) {
 
     if (props.api) {
         return (
-            <Login api={props.api} />
+            <>
+                <NavBar handleLogout={() => alert('logout')} />
+                <Login api={props.api} />
+            </>
         );
     }
 

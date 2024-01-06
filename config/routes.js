@@ -57,7 +57,9 @@ module.exports.routes = {
     'GET /api/v1/users': 'admin/get-users',
     'GET /api/v1/users/deleted': 'admin/get-deleted-users',
     'POST /api/v1/user': 'admin/create-user',
-    'DELETE /api/v1/user': 'admin/delete-user',
+    'PUT /api/v1/user/:id': 'admin/edit-user',
+    'DELETE /api/v1/user/:id': 'admin/delete-user',
+    'PUT /api/v1/user/:id/reactivate': 'admin/reactivate-user',
     'POST /api/v1/token': 'admin/create-api-token',
 
     'POST /api/v1/login': 'common/login',

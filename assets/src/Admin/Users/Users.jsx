@@ -95,8 +95,7 @@ class Users extends Component {
 
     handleDeleteUser(after) {
         this.props.api.del({
-            url: '/user',
-            body: {id: this.state.currentDeleteUser.id}
+            url: '/user/' + this.state.currentDeleteUser.id,
         }, (resp) => {
             this.setState({showDeleteModal: false}, () => {
                 this.getUsers(this.state.currentPage);

@@ -1,5 +1,17 @@
 # Changelog
 
+## [v5.1.0](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v5.0.0...v5.1.0) (2023-12-22)
+### Features
+
+* Minor tweaks / fixes.
+* Created the datastore wipe script, to reset LOCAL / DEVELOPMENT datastore. Will **not** run on PRODUCTION (or when migrate = "safe").
+* Converted `.mocharc.yml` -> `.mocharc` (JSON) to be more consistent.
+* Made the Ngrok script capable of installing [`@ngrok/ngrok`](https://npmjs.com/package/@ngrok/ngrok) when needed.
+* Minor visual fix in security settings page.
+* Built the "reactivate user" endpoint.
+* Corrected "edit" and "delete" user routes to use ID in the route.
+* Updated dependencies.
+
 ## [v5.0.0](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v4.3.1...v5.0.0) (2023-12-05)
 ### Features
 
@@ -277,4 +289,6 @@
 * Fixed webpack config.
 * Made `isLoggedIn` policy clear cookie if not logged in.
 
-This changelog is incomplete, as it was not started until **v2** (and rehashing that far back in the past is a lot of work for very little gain, the commits are there). I've gone as far back as this template became "popular" (people other than me began to clone it).
+<br/><br/>
+
+#### This changelog is incomplete, as it was not started until **v2** (and rehashing that far back in the past is a lot of work for very little gain, the commits are there). I've gone as far back as this template became "popular" (people other than me began to clone it).

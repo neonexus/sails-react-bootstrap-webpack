@@ -45,13 +45,13 @@ module.exports = {
 
         setPassword: {
             type: 'boolean',
-            defaultsTo: true
+            defaultsTo: false
         }
     },
 
     exits: {
         ok: {
-            responseType: 'created'
+            responseType: 'ok'
         },
         badRequest: {
             responseType: 'badRequest'

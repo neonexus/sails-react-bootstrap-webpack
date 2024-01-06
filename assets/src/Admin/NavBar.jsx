@@ -93,11 +93,17 @@ function NavBar(props) {
                             ? <Nav.Link as={ReactNavLink} to="/admin/users" onClick={closeNavbar}>Users</Nav.Link>
                             : null
                     }
-                    <Nav.Link as={ReactNavLink} to="/admin/404" onClick={closeNavbar}>404 Page</Nav.Link>
-                    <NavDropdown title="Settings" id="basic-nav-dropdown">
-                        <NavDropdown.Item className="ps-3 pe-3" as={ReactNavLink} to="/admin/settings/profile" onClick={closeNavbar}><i className="bi bi-person-fill" /> Profile</NavDropdown.Item>
-                        <NavDropdown.Item className="ps-3 pe-3" as={ReactNavLink} to="/admin/settings/security" onClick={closeNavbar}><i className="bi bi-shield-lock-fill" /> Security</NavDropdown.Item>
-                    </NavDropdown>
+                    {
+                        (user.isLoggedIn)
+                            ? <>
+                                <Nav.Link as={ReactNavLink} to="/admin/404" onClick={closeNavbar}>404 Page</Nav.Link>
+                                <NavDropdown title="Settings" id="basic-nav-dropdown">
+                                    <NavDropdown.Item className="ps-3 pe-3" as={ReactNavLink} to="/admin/settings/profile" onClick={closeNavbar}><i className="bi bi-person-fill" /> Profile</NavDropdown.Item>
+                                    <NavDropdown.Item className="ps-3 pe-3" as={ReactNavLink} to="/admin/settings/security" onClick={closeNavbar}><i className="bi bi-shield-lock-fill" /> Security</NavDropdown.Item>
+                                </NavDropdown>
+                            </>
+                            : null
+                    }
                 </Nav>
 
                 {
@@ -109,7 +115,7 @@ function NavBar(props) {
                         : null
                 }
 
-                <NavDropdown title={<i className={'bi ' + lightDarkAutoClass}/>} id="light-or-dark-toggle" className="ms-3 right-align-menu">
+                <NavDropdown title={<i className={'bi ' + lightDarkAutoClass} />} id="light-or-dark-toggle" className="ms-3 right-align-menu">
                     <NavDropdown.Item className="bi bi-sun-fill" active={lightOrDark === 'light'} data-theme-set="light" onClick={switchTheme}>Light</NavDropdown.Item>
                     <NavDropdown.Item className="bi bi-moon-fill" active={lightOrDark === 'dark'} data-theme-set="dark" onClick={switchTheme}>Dark</NavDropdown.Item>
                     <NavDropdown.Item className="bi bi-circle-half" active={lightOrDark !== 'light' && lightOrDark !== 'dark'} data-theme-set="auto" onClick={switchTheme}>Auto</NavDropdown.Item>

@@ -1,5 +1,17 @@
 #!/usr/bin/env node
 
+/**
+ *
+ * WELCOME TO THE SETUP FILE!
+ *
+ * This file requires a template `config/local.js.sample` file in order to work.
+ * It is meant to create a `config/local.js` file, which is a "master" file, if you will; dictating any configuration overrides.
+ *
+ * While `config/env/DEVELOPMENT.js` (or `config/env/PRODUCTION.js`) override the general configuration files,
+ * `config/local.js` takes precedence over all other files, including the `config/env` files.
+ *
+ */
+
 const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
@@ -381,7 +393,10 @@ function runPrompts(defaults = {
         //     fs.writeFileSync(modelsConfigPath, modelsConfigContent);
         // }
 
+        console.log('');
         console.log('Setup complete!');
+        console.log('`config/local.js.sample` copied to -> `config/local.js`');
+        console.log('');
 
         return process.exit(0);
     });

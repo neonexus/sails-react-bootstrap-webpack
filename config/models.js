@@ -92,7 +92,7 @@ module.exports.models = {
      ******************************************************************************/
 
     dataEncryptionKeys: {
-        // Run this to generate a new key: `npm run generate:dek`
+        // Run this to generate a new key: `npm run generate:dek` OR `npm run setup`
         default: '{{DEK here}}' // NEVER STORE THIS FOR PRODUCTION PURPOSES!!!
     },
 
@@ -143,4 +143,13 @@ module.exports.models = {
      *********************************************************************************/
 
     enforceForeignKeys: true,
+
+    /*********************************************************************************
+     *                                                                               *
+     * Disable Sails' built-in archive system by default. It tends to mess with      *
+     * other things, like `sails-hook-autoreload`.                                   *
+     *                                                                               *
+     *********************************************************************************/
+
+    archiveModelIdentity: false
 };
