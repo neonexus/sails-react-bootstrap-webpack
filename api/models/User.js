@@ -53,7 +53,7 @@ module.exports = {
             isEmail: true,
             required: true,
             // unique: true, // can NOT be unique, if we are using soft-deleted users; controller must deal with uniqueness
-            columnType: 'varchar(191)'
+            columnType: 'varchar(191)' // 191 is the max length to safely use the utf8mb4 varchar.
         },
 
         firstName: {
@@ -71,7 +71,7 @@ module.exports = {
         password: {
             type: 'string',
             allowNull: true,
-            columnType: 'varchar(191)',
+            columnType: 'varchar(191)', // 191 is the max length to safely use the utf8mb4 varchar.
             // see: https://sailsjs.com/documentation/reference/waterline-orm/queries/decrypt
             // You will need to "decrypt" the user object before you can check if the password is valid.
             // encrypt: true // currently, does not work as intended, as password is encrypted before we can hash it
@@ -80,13 +80,13 @@ module.exports = {
         verificationKey: { // placeholder for something like email verification
             type: 'string',
             allowNull: true,
-            columnType: 'varchar(191)'
+            columnType: 'varchar(191)' // 191 is the max length to safely use the utf8mb4 varchar.
         },
 
         avatar: {
             type: 'string',
             isURL: true,
-            columnType: 'varchar(191)'
+            columnType: 'varchar(191)' // 191 is the max length to safely use the utf8mb4 varchar.
         },
 
         isGravatar: {

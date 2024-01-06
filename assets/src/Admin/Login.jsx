@@ -48,7 +48,7 @@ class Login extends Component {
                 return done(body.user);
             }
 
-            // This should not happen, as the error handler below should display the error from the server.
+            // This should not happen, as the `defaultAPIErrorHandler` should display the error from the server.
             alert('Unknown error. Please try again. If this error persists, please contact support.');
             console.error('Something is wrong in the handleLogin API post...');
         }, defaultAPIErrorHandler);

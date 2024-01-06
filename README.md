@@ -9,7 +9,17 @@
 
 [![Discord Server](https://img.shields.io/badge/Discord_server-silver?logo=discord)](http://discord.gg/Y5K73E84Tc)
 
-Kick-start your project with this startup in a box.
+This is a starter application, built on [Sails v1](https://sailsjs.com), [React](https://react.dev), [Bootstrap](https://getbootstrap.com), and [Webpack](https://webpack.js.org). It is designed
+so that multiple front-ends (a customer front-end, and an admin panel perhaps; more if need be) can live side-by-side, and use the same API. It even has built-in [Ngrok support](#working-with-ngrok).
+A virtual start-up in a box!
+
+## Quick Install
+
+```shell
+npx drfg neonexus/sails-react-bootstrap-webpack my-new-site
+npm run setup
+npm run start   OR   npm run ngrok
+```
 
 ## Table of Contents
 
@@ -53,7 +63,7 @@ Kick-start your project with this startup in a box.
 * Automatic (incoming) request logging (manual outgoing), via Sails models / hooks.
 * Setup for Webpack auto-reload dev server. Build; save; auto-reload.
 * Setup so Sails will serve Webpack-built bundles as separate apps (so, a marketing site, and an admin site can live side-by-side).
-* More than a few custom [helper functions](api/helpers) to make life a little easier.
+* More than a few custom [API helper functions](api/helpers) to make life a little easier.
 * Includes [react-bootstrap](https://www.npmjs.com/package/react-bootstrap) to make using Bootstrap styles / features with React easier.
 * Schema validation and enforcement for `PRODUCTION`. See [schema validation and enforcement](#schema-validation-and-enforcement).
 * New passwords will be checked against the [PwnedPasswords API](https://haveibeenpwned.com/API/v3#PwnedPasswords). If there is a single hit for the password, an error will be given, and the user will

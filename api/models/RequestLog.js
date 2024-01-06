@@ -34,13 +34,13 @@ module.exports = {
         host: {
             type: 'string',
             required: true,
-            columnType: 'varchar(191)'
+            columnType: 'varchar(191)' // 191 is the max length to safely use the utf8mb4 varchar.
         },
 
         path: {
             type: 'string',
             required: true,
-            columnType: 'varchar(191)'
+            columnType: 'varchar(191)' // 191 is the max length to safely use the utf8mb4 varchar.
         },
 
         headers: {

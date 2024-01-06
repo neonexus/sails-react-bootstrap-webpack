@@ -5,7 +5,7 @@
  */
 
 module.exports.ngrok = {
-    // Set an HTTP basic-auth wall for the app.
+    // Set an HTTP basic-auth wall for the app. Optional.
     auth: process.env.NGROK_BASIC || undefined, // Use a string of 'username:password' style (raw password)
 
     // Default Ngrok authtoken, to tie to your account.
@@ -15,10 +15,10 @@ module.exports.ngrok = {
     // Whether to build assets by default or not.
     buildAssets: true,
 
-    // The static domain to use for the Ngrok tunnel. Something like: 'running-grey-gazelle.ngrok-free.app'
+    // The static domain to use for the Ngrok tunnel. Something like: 'running-grey-gazelle.ngrok-free.app'. Optional; Ngrok can generate a single-use random domain.
     domain: process.env.NGROK_DOMAIN || undefined,
 
-    // The default region for the Ngrok tunnel.
+    // The default region for the Ngrok tunnel. Optional.
     region: process.env.NGROK_REGION || undefined,
 
     // The default port to start Sails for the Ngrok tunnel.
