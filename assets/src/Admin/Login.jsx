@@ -141,7 +141,7 @@ class Login extends Component {
                                             <Form.Text id="adminHelpBlock" muted>
                                                 If you need to create your first admin user, run this in your terminal:
                                                 <br />
-                                                <code>sails run create-admin</code>
+                                                <code>npm run create:admin</code>
                                             </Form.Text>
                                         </Row>
                                     </Form>

@@ -17,6 +17,7 @@ A virtual start-up in a box!
 
 ```shell
 npx drfg neonexus/sails-react-bootstrap-webpack my-new-site
+cd my-new-site
 npm run setup
 npm run start   OR   npm run ngrok
 ```

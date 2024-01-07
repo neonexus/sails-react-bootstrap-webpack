@@ -1,6 +1,6 @@
 {
     "name": "sails-react-bootstrap-webpack",
-    "version": "5.1.0",
+    "version": "5.1.1",
     "description": "An opinionated, starter application built on Sails, React, Bootstrap and Webpack. A start-up in a box!",
     "keywords": [
         "sails",
