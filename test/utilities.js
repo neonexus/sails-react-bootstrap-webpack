@@ -3,10 +3,10 @@ const st = require('supertest');
 const apiPrefix = '/api/v1';
 
 module.exports = function(sails) {
-    // Login handling is dealt with in startTests.js.
-    const sendRequestAsAnon = st(sails.hooks.http.app); // anon browser
-    const sendRequestAsUser = st.agent(sails.hooks.http.app); // browser with cookies
-    const sendRequestAsAdmin = st.agent(sails.hooks.http.app);
+    // Logins are handled in startTests.js.
+    const sendRequestAsAnon = st(sails.hooks.http.app); // Anon browser. Not authenticated.
+    const sendRequestAsUser = st.agent(sails.hooks.http.app); // Browser with cookies; will be logged-in as user.
+    const sendRequestAsAdmin = st.agent(sails.hooks.http.app); // Different browser with cookies; will be logged-in as admin.
 
     sendRequestAsUser._csrf = 'none';
     sendRequestAsAdmin._csrf = 'none';

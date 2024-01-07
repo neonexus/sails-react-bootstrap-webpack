@@ -3,18 +3,16 @@
 #   ║╣  ║║║ ║ ║ ║╠╦╝│  │ ││││├┤ ││ ┬
 #  o╚═╝═╩╝╩ ╩ ╚═╝╩╚═└─┘└─┘┘└┘└  ┴└─┘
 #
-# > Formatting conventions for your Sails app.
+# > Formatting conventions for your app.
 #
 # This file (`.editorconfig`) exists to help
 # maintain consistent formatting throughout the
-# files in your Sails app.
+# files in your app.
 #
-# For the sake of convention, the Sails team's
-# preferred settings are included here out of the
-# box.  You can also change this file to fit your
-# team's preferences (for example, if all of the
-# developers on your team have a strong preference
-# for tabs over spaces),
+# These defaults have proven to be effective
+# though many teams / years / projects. 4 spaces
+# is much easier to see block separations than
+# with just 2 (as is the Sails default).
 #
 # To review what each of these options mean, see:
 # http://editorconfig.org/

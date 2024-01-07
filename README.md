@@ -2,17 +2,24 @@
 
 [![Travis CI status](https://img.shields.io/travis/com/neonexus/sails-react-bootstrap-webpack.svg?branch=release&logo=travis)](https://app.travis-ci.com/github/neonexus/sails-react-bootstrap-webpack)
 [![Codecov](https://img.shields.io/codecov/c/github/neonexus/sails-react-bootstrap-webpack?logo=codecov)](https://codecov.io/gh/neonexus/sails-react-bootstrap-webpack)
-[![Sails version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.0.0%2Fpackage.json&query=%24.dependencies.sails&label=Sails&logo=sailsdotjs)](https://sailsjs.com)
-[![React version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.0.0%2Fpackage.json&query=%24.devDependencies.react&label=React&logo=react)](https://react.dev)
-[![Bootstrap version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.0.0%2Fpackage.json&query=%24.devDependencies.bootstrap&label=Bootstrap&logo=bootstrap&logoColor=white)](https://getbootstrap.com)
-[![Webpack version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.0.0%2Fpackage.json&query=%24.devDependencies.webpack&label=Webpack&logo=webpack)](https://webpack.js.org)
+[![Sails version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.1.0%2Fpackage.json&query=%24.dependencies.sails&label=Sails&logo=sailsdotjs)](https://sailsjs.com)
+[![React version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.1.0%2Fpackage.json&query=%24.devDependencies.react&label=React&logo=react)](https://react.dev)
+[![Bootstrap version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.1.0%2Fpackage.json&query=%24.devDependencies.bootstrap&label=Bootstrap&logo=bootstrap&logoColor=white)](https://getbootstrap.com)
+[![Webpack version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.1.0%2Fpackage.json&query=%24.devDependencies.webpack&label=Webpack&logo=webpack)](https://webpack.js.org)
 
 [![Discord Server](https://img.shields.io/badge/Discord_server-silver?logo=discord)](http://discord.gg/Y5K73E84Tc)
 
-This is an easily-modifiable, opinionated, [Sails v1](https://sailsjs.com) base application, using [Webpack](https://webpack.js.org) to handle [Bootstrap](https://getbootstrap.com)
-(using [SASS](https://sass-lang.com)) and [React](https://react.dev) builds. It is designed such that, one can build multiple React frontends (an admin panel, and a customer site maybe), that use the
-same API backend. This allows developers to easily share React components across different frontends / applications. Also, because the backend and frontend are in the same repo (and the frontend is
-compiled before it is handed to the end user), they can share [NPM](http://npmjs.com) libraries, like [Moment.js](https://momentjs.com)
+This is a starter application, built on [Sails v1](https://sailsjs.com), [React](https://react.dev), [Bootstrap](https://getbootstrap.com), and [Webpack](https://webpack.js.org). It is designed
+so that multiple front-ends (a customer front-end, and an admin panel perhaps; more if need be) can live side-by-side, and use the same API. It even has built-in [Ngrok support](#working-with-ngrok).
+A virtual start-up in a box!
+
+## Quick Install
+
+```shell
+npx drfg neonexus/sails-react-bootstrap-webpack my-new-site
+npm run setup
+npm run start   OR   npm run ngrok
+```
 
 ## Table of Contents
 
@@ -56,7 +63,7 @@ compiled before it is handed to the end user), they can share [NPM](http://npmjs
 * Automatic (incoming) request logging (manual outgoing), via Sails models / hooks.
 * Setup for Webpack auto-reload dev server. Build; save; auto-reload.
 * Setup so Sails will serve Webpack-built bundles as separate apps (so, a marketing site, and an admin site can live side-by-side).
-* More than a few custom [helper functions](api/helpers) to make life a little easier.
+* More than a few custom [API helper functions](api/helpers) to make life a little easier.
 * Includes [react-bootstrap](https://www.npmjs.com/package/react-bootstrap) to make using Bootstrap styles / features with React easier.
 * Schema validation and enforcement for `PRODUCTION`. See [schema validation and enforcement](#schema-validation-and-enforcement).
 * New passwords will be checked against the [PwnedPasswords API](https://haveibeenpwned.com/API/v3#PwnedPasswords). If there is a single hit for the password, an error will be given, and the user will
@@ -449,7 +456,7 @@ It may also be a good idea to consider using something like [Nginx](https://ngin
 
 ## Schema Validation and Enforcement
 
-This repo is set up for `MySQL` (can LIKELY be used with most if not all other SQL-based datastores [I have not tried]). If you plan to use a different datastore, you will likely want to disable this
+This feature is designed for `MySQL` (can LIKELY be used with most if not all other SQL-based datastores [I have not tried]). If you plan to use a different datastore, you will likely want to disable this
 feature.
 
 Inside [`config/bootstrap.js`](config/bootstrap.js) is a bit of logic (**HEAVILY ROOTED IN NATIVE `MySQL` QUERIES**), which validates column types in the `PRODUCTION` database (

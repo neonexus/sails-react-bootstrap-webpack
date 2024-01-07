@@ -25,7 +25,7 @@ module.exports = {
             type: 'string',
             isEmail: true,
             required: true,
-            maxLength: 191
+            maxLength: 191 // Max size of an utf8mb4 varchar in MySQL.
         },
 
         role: {
@@ -69,7 +69,7 @@ module.exports = {
             isPasswordValid = true;
             password = sails.helpers.generateToken().substring(0, 42);
 
-            // should probably send password somehow; it will be scrubbed in the custom response (would be hashed anyway...)
+            // should probably send password somehow; it will be scrubbed in the response (would be hashed anyway...)
         }
 
         if (isPasswordValid !== true) {
@@ -99,7 +99,7 @@ module.exports = {
             }
 
             /**
-             * TODO: We should probably email the new user their new account info here if the password was generated (!inputs.setPassword)...
+             * TODO: We should probably email the new user their new account info here if the password was generated (inputs.generatePassword)...
              */
 
             return exits.created({user});

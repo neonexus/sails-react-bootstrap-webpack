@@ -64,7 +64,7 @@ module.exports.security = {
      *                                                                              *
      * When enabled, sails.helpers.isPasswordValid() will check with the            *
      * PwnedPasswords.com API (v3), using a k-Anonymity model, preventing           *
-     * third parties, including the PwnedPasswords.com API from knowing             *
+     * third parties, including the PwnedPasswords.com API, from knowing            *
      * which password we are searching for.                                         *
      *                                                                              *
      * See this for more details:                                                   *

@@ -27,7 +27,7 @@ describe('Delete User Controller', function() {
 
     it('should require an admin be logged in', function(done) {
         testUtils.deleteAsAnonymous({
-            route: '/user',
+            route: '/user/' + userId,
             expectedStatus: 403,
             end: (err) => {
                 if (err) {
@@ -35,7 +35,7 @@ describe('Delete User Controller', function() {
                 }
 
                 testUtils.deleteAsUser({
-                    route: '/user',
+                    route: '/user/' + userId,
                     expectedStatus: 403,
                     end: done
                 });
@@ -45,21 +45,15 @@ describe('Delete User Controller', function() {
 
     it('should not allow one to delete one self', function(done) {
         testUtils.deleteAsAdmin({
-            route: '/user',
+            route: '/user/' + testUtils.fixtures.user[0].id,
             expectedStatus: 400,
-            data: {
-                id: testUtils.fixtures.user[0].id
-            },
             end: done
         });
     });
 
     it('should SOFT DELETE the user', function(done) {
         testUtils.deleteAsAdmin({
-            route: '/user',
-            data: {
-                id: userId
-            },
+            route: '/user/' + userId,
             end: done
         });
     });

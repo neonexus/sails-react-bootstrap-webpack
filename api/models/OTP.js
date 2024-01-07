@@ -21,7 +21,7 @@ module.exports = {
 
         secret: {
             type: 'string',
-            columnType: 'varchar(191)',
+            columnType: 'varchar(191)', // 191 is the max length to safely use the utf8mb4 varchar.
             encrypt: true,
             required: true
         },

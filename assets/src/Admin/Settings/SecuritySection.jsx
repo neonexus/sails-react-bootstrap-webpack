@@ -27,16 +27,16 @@ function SecuritySection(props) {
             <h2 className="mb-4 text-center">Security Settings</h2>
             <Row className="m-0 pt-2" style={{border: '1px solid #ddd', borderWidth: '1px 0 0 0'}}>
                 <Col>
-                    <h3>Change Password</h3>
+                    <h3 className="pt-2">Change Password</h3>
                     <p>Always a good idea to rotate your passwords.</p>
                 </Col>
-                <Col className="pt-3">
+                <Col className="pt-4">
                     <Button variant="secondary" className="float-end" onClick={() => setShowChangePassword(true)}>Change Password</Button>
                 </Col>
             </Row>
             <Row className="m-0 pt-2" style={{border: '1px solid #ddd', borderWidth: '1px 0 1px 0'}}>
                 <Col>
-                    <h3>
+                    <h3 className="pt-2">
                         2-Factor Authentication
                         {
                             (user.info._isOTPEnabled)
@@ -46,7 +46,7 @@ function SecuritySection(props) {
                     </h3>
                     {
                         (user.info._isOTPEnabled)
-                            ? <p className="m-0">Nice! Your account security is even stronger, because 2FA is enabled.</p>
+                            ? <p className="m-0 pb-3">Nice! Your account security is even stronger, because 2FA is enabled.</p>
                             : <p>It is highly recommended to enable 2FA to increase security with your account.</p>
                     }
 
@@ -56,7 +56,7 @@ function SecuritySection(props) {
                         //     : null
                     }
                 </Col>
-                <Col className="pt-3">
+                <Col className="pt-4">
                     {
                         (user.info._isOTPEnabled)
                             ? <Button variant="danger" className="float-end" onClick={() => setShowDisableOTP(true)}>Disable 2FA</Button>
