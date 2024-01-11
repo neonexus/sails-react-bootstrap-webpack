@@ -1,5 +1,12 @@
 # Changelog
 
+## [v5.2.0](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v5.1.1...v5.2.0) (2024-01-11)
+### Features
+
+* Made setup script handle DEV default DEK and session secret generation.
+* NPM audit fix for `follow-redirects`.
+* Updated dependencies.
+
 ## [v5.1.1](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v5.1.0...v5.1.1) (2024-01-06)
 ### Features
 
