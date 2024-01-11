@@ -25,9 +25,9 @@ try {
 }
 
 const configPath = path.join(__dirname, 'config/local.js');
-// const modelsConfigPath = path.join(__dirname, 'config/models.js');
+const modelsConfigPath = path.join(__dirname, 'config/models.js');
 const sampleConfigPath = path.join(__dirname, 'config/local.js.sample');
-// const sessionConfigPath = path.join(__dirname, 'config/session.js');
+const sessionConfigPath = path.join(__dirname, 'config/session.js');
 
 if (!fs.existsSync(sampleConfigPath)) {
     console.error('The template file for the `local.js` config file (config/local.js.sample) is missing. Can not continue.');
@@ -369,33 +369,34 @@ function runPrompts(defaults = {
         // Write the filled configuration to the local.js file.
         fs.writeFileSync(configPath, filledConfigContent);
 
-        // TODO: Maybe make this an option for the user...
+        console.log(''); // blank line
 
+        // TODO: Maybe make this an option for the user...
         // Generate a default session secret if it hasn't been done already.
-        // let sessionConfigContent = fs.readFileSync(sessionConfigPath, 'utf8');
-        // const sessionSearch = '{{session secret here}}';
-        // if (sessionConfigContent.includes(sessionSearch)) {
-        //     console.log('Default session secret hasn\'t been created yet... Generating a new one...');
-        //
-        //     sessionConfigContent = sessionConfigContent.replace(sessionSearch, generateToken());
-        //
-        //     fs.writeFileSync(sessionConfigPath, sessionConfigContent);
-        // }
-        //
-        // // Generate a default DEK if it hasn't been done already.
-        // let modelsConfigContent = fs.readFileSync(modelsConfigPath, 'utf8');
-        // const dekSearch = '{{DEK here}}';
-        // if (modelsConfigContent.includes(dekSearch)) {
-        //     console.log('Default data encryption key hasn\'t been created yet... Generating a new one...');
-        //
-        //     modelsConfigContent = modelsConfigContent.replace(dekSearch, generateDEK());
-        //
-        //     fs.writeFileSync(modelsConfigPath, modelsConfigContent);
-        // }
+        let sessionConfigContent = fs.readFileSync(sessionConfigPath, 'utf8');
+        const sessionSearch = '{{session secret here}}';
+        if (sessionConfigContent.includes(sessionSearch)) {
+            console.log('Default session secret hasn\'t been created yet... Generating a new one...');
+
+            sessionConfigContent = sessionConfigContent.replace(sessionSearch, generateToken());
+
+            fs.writeFileSync(sessionConfigPath, sessionConfigContent);
+        }
+
+        // Generate a default DEK if it hasn't been done already.
+        let modelsConfigContent = fs.readFileSync(modelsConfigPath, 'utf8');
+        const dekSearch = '{{DEK here}}';
+        if (modelsConfigContent.includes(dekSearch)) {
+            console.log('Default data encryption key hasn\'t been created yet... Generating a new one...');
+
+            modelsConfigContent = modelsConfigContent.replace(dekSearch, generateDEK());
+
+            fs.writeFileSync(modelsConfigPath, modelsConfigContent);
+        }
 
         console.log('');
         console.log('Setup complete!');
-        console.log('`config/local.js.sample` copied to -> `config/local.js`');
+        console.log('`' + sampleConfigPath.replace(__dirname, '') + '` copied to -> `' + configPath.replace(__dirname, '') + '`');
         console.log('');
 
         return process.exit(0);

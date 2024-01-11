@@ -2,10 +2,10 @@
 
 [![Travis CI status](https://img.shields.io/travis/com/neonexus/sails-react-bootstrap-webpack.svg?branch=release&logo=travis)](https://app.travis-ci.com/github/neonexus/sails-react-bootstrap-webpack)
 [![Codecov](https://img.shields.io/codecov/c/github/neonexus/sails-react-bootstrap-webpack?logo=codecov)](https://codecov.io/gh/neonexus/sails-react-bootstrap-webpack)
-[![Sails version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.1.0%2Fpackage.json&query=%24.dependencies.sails&label=Sails&logo=sailsdotjs)](https://sailsjs.com)
-[![React version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.1.0%2Fpackage.json&query=%24.devDependencies.react&label=React&logo=react)](https://react.dev)
-[![Bootstrap version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.1.0%2Fpackage.json&query=%24.devDependencies.bootstrap&label=Bootstrap&logo=bootstrap&logoColor=white)](https://getbootstrap.com)
-[![Webpack version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.1.0%2Fpackage.json&query=%24.devDependencies.webpack&label=Webpack&logo=webpack)](https://webpack.js.org)
+[![Sails version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.2.0%2Fpackage.json&query=%24.dependencies.sails&label=Sails&logo=sailsdotjs)](https://sailsjs.com)
+[![React version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.2.0%2Fpackage.json&query=%24.devDependencies.react&label=React&logo=react)](https://react.dev)
+[![Bootstrap version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.2.0%2Fpackage.json&query=%24.devDependencies.bootstrap&label=Bootstrap&logo=bootstrap&logoColor=white)](https://getbootstrap.com)
+[![Webpack version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.2.0%2Fpackage.json&query=%24.devDependencies.webpack&label=Webpack&logo=webpack)](https://webpack.js.org)
 
 [![Discord Server](https://img.shields.io/badge/Discord_server-silver?logo=discord)](http://discord.gg/Y5K73E84Tc)
 
@@ -487,7 +487,7 @@ variable `checkPwnedPasswords` can be set to `false` to disable it globally.
 
 ## Working With Ngrok
 
-This repo has a custom script ([`ngrok.js`](ngrok.js)), which will start a Ngrok tunnel (using the NPM package [`@ngrok/ngrok`](https://npmjs.com/package/@ngrok/ngrok)), build assets, and start Sails.
+This repo has a custom script ([`ngrok.js`](ngrok.js)), which will start a Ngrok tunnel (using the official Ngrok NPM package [`@ngrok/ngrok`](https://npmjs.com/package/@ngrok/ngrok)), build assets, and start Sails.
 
 ### First thing's first
 
@@ -550,10 +550,8 @@ middleware: {
         'favicon'       // default hook to serve favicon
     ],
 
-        // REMEMBER! Environment variables are your friends!!!
-        prerender
-:
-    require('prerender-node').set('prerenderToken', 'YOUR_TOKEN')
+    // REMEMBER! Environment variables are your friends!!!
+    prerender: require('prerender-node').set('prerenderToken', 'YOUR_TOKEN')
 
 }
 ```
