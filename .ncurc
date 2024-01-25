@@ -1,0 +1,5 @@
+// This allows us to "lock" Chai into v4.
+
+{
+    "reject": ["chai"]
+}

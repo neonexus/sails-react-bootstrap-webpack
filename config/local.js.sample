@@ -40,7 +40,9 @@ module.exports = {
         dataEncryptionKeys: {
             // Run this to generate a new key: `npm run generate:dek`
             default: '{{DEK here}}' // NEVER STORE THIS FOR PRODUCTION PURPOSES!!!
-        }
+        },
+        //validateOnBootstrap: false, // Disable datastores validation (when running as PRODUCTION).
+        //enforceForeignKeys: false // Don't enforce foreign keys in the datastores (when running as PRODUCTION).
     },
 
     // Configuration options for ngrok.js script.
