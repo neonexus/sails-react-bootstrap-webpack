@@ -1,5 +1,12 @@
 # Changelog
 
+## [v5.2.1](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v5.2.0...v5.2.1) (2024-01-24)
+### Features
+
+* Created the [`.ncurc`](.ncurc) config file for [`npm-check-updates`](https://npmjs.com/package/npm-check-updates). Doing this to "lock" [Chai](https://npmjs.com/package/chai) into v4 on `ncu` calls.
+* Small tweak to [`local.js.sample`](config/local.js.sample).
+* Updated dependencies.
+
 ## [v5.2.0](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v5.1.1...v5.2.0) (2024-01-11)
 ### Features
 
