@@ -1,5 +1,11 @@
 # Changelog
 
+## [v5.2.2](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v5.2.1...v5.2.2) (2024-01-24)
+### Features
+
+* Fixed stupid mistake with README (no update to the badges).
+* Commented out Codecov for now... It's reporting 0%, which is not true...
+
 ## [v5.2.1](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v5.2.0...v5.2.1) (2024-01-24)
 ### Features
 
