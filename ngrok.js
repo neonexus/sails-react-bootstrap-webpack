@@ -201,6 +201,7 @@ function afterChecks() {
             sails.lift({
                 ...rc('sails'),
                 baseUrl: ngrokUrl,
+                http: {...config.http, trustProxy: true}, // See: https://sailsjs.com/documentation/reference/configuration/sails-config-http
                 port: config.ngrok.port,
                 security: {
                     cors: {

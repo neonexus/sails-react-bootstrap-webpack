@@ -337,6 +337,7 @@ function runPrompts(defaults = {
             .replace('password: \'my@w3s0m3password',   'password: \'' + answers.dbPass)
             .replace('database: \'myapp',               'database: \'' + answers.dbName)
             .replace('port: 3306',                      'port: ' + answers.dbPort)
+            .replace('ssl: false',                      (answers.dbSsl) ? 'ssl: true' : 'ssl: false')
             .replace('{{session secret here}}',         defaults.sessionSecret)
             .replace('{{DEK here}}',                    defaults.defaultDek)
         ; // eslint-disable-line

@@ -5,6 +5,7 @@ const fs = require('fs');
 const _ = require('lodash');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const appDescription = require('../package.json').description;
 
 let configPath = path.resolve(__dirname, '../config/local.js'), // try to get local config if it exists
     appName = 'My App (unknown)',
@@ -123,8 +124,8 @@ plugins.push(new FaviconsWebpackPlugin({
     mode: 'webapp', // 'webapp' or 'light' - 'webapp' by default
     devMode: 'light', // 'webapp' or 'light' - 'light' by default
     favicons: {
-        appName: 'sails-react-bootstrap-webpack',
-        appDescription: 'A great start to an awesome application.',
+        appName,
+        appDescription,
         developerName: null,
         developerURL: null, // prevent retrieving from the nearest package.json
         display: 'standalone', // Preferred display mode: "fullscreen", "standalone", "minimal-ui" or "browser".
