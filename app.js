@@ -64,6 +64,6 @@ sails.lift(rc('sails'), (err, server) => {
     }
 
     console.log('');
-    console.log('http://localhost:' + server.config.port);
+    console.log(server.config.baseUrl);
     console.log('');
 });
