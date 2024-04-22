@@ -1,10 +1,10 @@
 # sails-react-bootstrap-webpack
 
 [![Travis CI status](https://img.shields.io/travis/com/neonexus/sails-react-bootstrap-webpack.svg?branch=release&logo=travis)](https://app.travis-ci.com/github/neonexus/sails-react-bootstrap-webpack)
-[![Sails version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.2.3%2Fpackage.json&query=%24.dependencies.sails&label=Sails&logo=sailsdotjs)](https://sailsjs.com)
-[![React version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.2.3%2Fpackage.json&query=%24.devDependencies.react&label=React&logo=react)](https://react.dev)
-[![Bootstrap version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.2.3%2Fpackage.json&query=%24.devDependencies.bootstrap&label=Bootstrap&logo=bootstrap&logoColor=white)](https://getbootstrap.com)
-[![Webpack version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.2.3%2Fpackage.json&query=%24.devDependencies.webpack&label=Webpack&logo=webpack)](https://webpack.js.org)
+[![Sails version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.3.0%2Fpackage.json&query=%24.dependencies.sails&label=Sails&logo=sailsdotjs)](https://sailsjs.com)
+[![React version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.3.0%2Fpackage.json&query=%24.devDependencies.react&label=React&logo=react)](https://react.dev)
+[![Bootstrap version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.3.0%2Fpackage.json&query=%24.devDependencies.bootstrap&label=Bootstrap&logo=bootstrap&logoColor=white)](https://getbootstrap.com)
+[![Webpack version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.3.0%2Fpackage.json&query=%24.devDependencies.webpack&label=Webpack&logo=webpack)](https://webpack.js.org)
 
 [//]: # ([![Codecov]&#40;https://img.shields.io/codecov/c/github/neonexus/sails-react-bootstrap-webpack?logo=codecov&#41;]&#40;https://codecov.io/gh/neonexus/sails-react-bootstrap-webpack&#41;)
 
@@ -17,6 +17,10 @@ A virtual start-up in a box!
 ## Quick Install
 
 NOTE: You will need access to a MySQL / MariaDB database for the setup. If you want to use a different datastore, you'll need to configure it manually.
+
+[Aiven.io](https://aiven.io) has FREE (no CC required) secure MySQL (5 GB), and Redis (1 GB). Both require use of SSL, and can be restricted to specified IPs. (If you are having trouble finding the
+FREE instances, you need to select Digital Ocean as the cloud provider.) Use my [referral link](https://console.aiven.io/signup?referral_code=mk36ekt3wo1dvij7joon) to signup, and you'll get $100
+extra when you start a trial (trial is NOT needed for the free servers).
 
 ```shell
 npx drfg neonexus/sails-react-bootstrap-webpack my-new-site
@@ -58,6 +62,9 @@ npm run start   OR   npm run ngrok
   * [Sails-Style Configuration](#sails-style-configuration)
   * [Script Options](#script-options)
 * [Support for `sails-hook-autoreload`](#support-for-sails-hook-autoreload)
+* [Getting Setup Remotely](#getting-setup-remotely)
+  * [What is TMUX?](#what-is-tmux)
+  * [A simple walkthrough for a self-updating VM](#a-simple-walkthrough-for-a-self-updating-vm)
 * [What About SEO?](#what-about-seo)
 * [Useful Links](#useful-links)
 
@@ -529,6 +536,154 @@ For example: `./ngrok.js token=AUTHTOKEN1` > `NGROK_AUTHTOKEN=AUTHTOKEN2 ./ngork
 
 If you would like to use [`sails-hook-autoreload`](https://npmjs.com/package/sails-hook-autoreload), just install it: `npm i sails-hook-autoreload --save-dev`. The config
 file [`config/autoreload.js`](config/autoreload.js) is already pre-configured for this repo.
+
+## Getting setup remotely
+
+There are a lot of ways to go about remote deployments; many automated, some not so much. For the sake of argument, let's say you want to set up a remote server by hand. It would be nice if said
+server (or servers if behind a load-balancer), could do a `git pull`, `npm install`, and an asset build if need be `npm run build`.  It would also be great if you could see the progress, or even
+just the console of the Node server.
+
+That's what the [`self-update.sh`](self-update.sh) and [`tmux.sh`](tmux.sh) shell scripts are for. Note, they are both defaulted to `bash`, but should work just fine in `zsh`.
+
+### What is TMUX?
+
+In simplest terms, TMUX is a "terminal multiplexer". It lets you switch between programs in one terminal, detach them (they keep running in the background) and reattach them to a different terminal.
+
+In other words, it adds a lot of magic to the terminal. One of the most useful things, is being able to run programs in the background, but still being able to see the console output later (as
+it is still running). It runs on most Linux-y distros, including macOS.
+
+[Check out their "Getting Started" docs](https://github.com/tmux/tmux/wiki/Getting-Started) for more on what you can do.
+
+To install (remember: on the remote machine, not your local machine), it's most likely `sudo INSTALLER install tmux`. Amazon Linux is `sudo yum install tmux`, Ubuntu is `sudo apt-get install tmux`.
+
+### A simple walkthrough for a self-updating VM
+
+For this guide, I'm going to be using Amazon Linux as the basis; it's a great default if using AWS. However, most of these steps can easily be adapted.
+
+It should also be noted, this is by no means the only way to set up remote servers; nor is it a thorough guide. This is just a quick-n-dirty, get off the ground running without a lot of tooling, kind
+of guide. There are PLENTY of automated deployment managers and documentation out there. This is fairly open-ended; it is assumed you know how to do a portion of basic remote server management.
+
+#### Getting Started
+
+Spin up a new instance at the smallest size possible (as of this writing, `t4g.nano` is the smallest) and SSH into it and follow along.
+
+#### Lack of Memory
+
+While the smallest instance size will certainly not have enough RAM to support an asset build, it is plenty for running our Node server.
+
+To make it so the instance CAN handle an asset build (despite its lack of memory), you'll want to create a swapfile. I use 4 GB swapfiles, as that seems to be more than enough head-room for asset
+building, however, you can most likely get away with just 2G.
+
+First, create the file, and allocate the space:
+```shell
+sudo fallocate -l 4G /swapfile
+```
+
+Make it readable / writable only from ROOT:
+```shell
+sudo chmod 600 /swapfile
+```
+
+Make it a proper swapfile:
+```shell
+sudo mkswap /swapfile
+```
+
+Tell the OS to actually use the swapfile:
+```shell
+sudo swapon /swapfile
+```
+
+Edit the `fstab` table to make this swapfile permanent:
+```shell
+sudo nano /etc/fstab
+```
+
+Add this to the bottom of the `fstab` and save:
+```shell
+/swapfile swap swap defaults 0 0
+```
+
+#### Get the basics installed
+
+Now that we have the lack of memory issue dealt with, let's get the 3 bits of software installed that we for sure need: `git`, `node` and `tmux`:
+
+```shell
+sudo yum install git nodejs tmux
+```
+
+#### Setup server to be authenticated for `git pull`
+
+This is going to assume you have a repo setup with GitHub, but the keygen is pretty much universal.
+
+Generate SSH key:
+```shell
+ssh-keygen -t ed25519 -C server.name@my.app
+```
+
+Copy the public key:
+```shell
+cat ~/.ssh/id_ed25519.pub
+```
+
+Save it as a ["deploy key"](https://docs.github.com/v3/guides/managing-deploy-keys/#deploy-keys). (Or however you need to save it in your repo to allow `git pull` on the remote server).
+
+#### Clone your repo
+
+Now that you have the server's public key saved in your repo, you should be able to clone your repo on the remote server:
+
+```shell
+git clone git@github.com:USERNAME/REPO.git myapp
+```
+
+#### Make sure everything works
+
+Now, you'll want to `cd myapp`, and `npm install`.
+
+Now, before you can actually start the server for a dry-run, you need to decide how you are going to store the server's credentials (user/pass for datastores and the like). It is recommended you use
+the [environment variables](#environment-variables), but it is also possible to run the [interactive setup](#interactive-setup), and generate a `local.js`.
+
+#### Give it a spin
+
+You should now be able to `sudo npm run lift:prod` (recommended for all remote environments, even DEV). `sudo` is needed on Amazon Linux, because it required ROOT permissions to open ports.
+
+If everything is working as intended... congrats (or so you thought)! Now that you have everything working; it's time to get the server to update / rebuild / start itself.
+
+#### Final stretch
+
+Now you need to decide how you are going to have the `tmux.sh` script run on startup. The easiest way would be to just install `cronie`:
+
+```shell
+sudo yum install cronie
+```
+
+Enable the service:
+```shell
+sudo systemctl enable crond.service
+```
+
+Start said service:
+```shell
+sudo systemctl start crond.service
+```
+
+Now edit the `crontab` to run the script at `@reboot`:
+
+```shell
+@reboot cd myapp; ./tmux.sh
+```
+
+#### Have you tried turning it off and on again?
+
+```shell
+sudo reboot
+```
+
+Now re-login to the instance. You should be able to `tmux attach` and see the Sails console.
+
+#### Now save that image!
+
+Now you should create an AMI from that server. You should be able to terminate the running instance, and spin up a new one using your new custom AMI, and everything should just work.
 
 ## What about SEO?
 
