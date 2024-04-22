@@ -1,5 +1,10 @@
 # Changelog
 
+## [v5.3.1](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v5.3.0...v5.3.1) (2024-04-22)
+### Features
+
+* Added a couple tips about TMUX to README.
+
 ## [v5.3.0](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v5.2.3...v5.3.0) (2024-04-22)
 ### Features
 
