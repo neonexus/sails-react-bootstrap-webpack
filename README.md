@@ -1,10 +1,10 @@
 # sails-react-bootstrap-webpack
 
 [![Travis CI status](https://img.shields.io/travis/com/neonexus/sails-react-bootstrap-webpack.svg?branch=release&logo=travis)](https://app.travis-ci.com/github/neonexus/sails-react-bootstrap-webpack)
-[![Sails version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.3.0%2Fpackage.json&query=%24.dependencies.sails&label=Sails&logo=sailsdotjs)](https://sailsjs.com)
-[![React version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.3.0%2Fpackage.json&query=%24.devDependencies.react&label=React&logo=react)](https://react.dev)
-[![Bootstrap version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.3.0%2Fpackage.json&query=%24.devDependencies.bootstrap&label=Bootstrap&logo=bootstrap&logoColor=white)](https://getbootstrap.com)
-[![Webpack version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.3.0%2Fpackage.json&query=%24.devDependencies.webpack&label=Webpack&logo=webpack)](https://webpack.js.org)
+[![Sails version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.3.1%2Fpackage.json&query=%24.dependencies.sails&label=Sails&logo=sailsdotjs)](https://sailsjs.com)
+[![React version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.3.1%2Fpackage.json&query=%24.devDependencies.react&label=React&logo=react)](https://react.dev)
+[![Bootstrap version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.3.1%2Fpackage.json&query=%24.devDependencies.bootstrap&label=Bootstrap&logo=bootstrap&logoColor=white)](https://getbootstrap.com)
+[![Webpack version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.3.1%2Fpackage.json&query=%24.devDependencies.webpack&label=Webpack&logo=webpack)](https://webpack.js.org)
 
 [//]: # ([![Codecov]&#40;https://img.shields.io/codecov/c/github/neonexus/sails-react-bootstrap-webpack?logo=codecov&#41;]&#40;https://codecov.io/gh/neonexus/sails-react-bootstrap-webpack&#41;)
 
@@ -537,28 +537,44 @@ For example: `./ngrok.js token=AUTHTOKEN1` > `NGROK_AUTHTOKEN=AUTHTOKEN2 ./ngork
 If you would like to use [`sails-hook-autoreload`](https://npmjs.com/package/sails-hook-autoreload), just install it: `npm i sails-hook-autoreload --save-dev`. The config
 file [`config/autoreload.js`](config/autoreload.js) is already pre-configured for this repo.
 
-## Getting setup remotely
+## Getting Setup Remotely
 
 There are a lot of ways to go about remote deployments; many automated, some not so much. For the sake of argument, let's say you want to set up a remote server by hand. It would be nice if said
-server (or servers if behind a load-balancer), could do a `git pull`, `npm install`, and an asset build if need be `npm run build`.  It would also be great if you could see the progress, or even
+server (or servers if behind a load-balancer), could do a `git pull`, `npm install`, and if need be `npm run build`.  It would also be great if you could see the progress, or even
 just the console of the Node server.
 
-That's what the [`self-update.sh`](self-update.sh) and [`tmux.sh`](tmux.sh) shell scripts are for. Note, they are both defaulted to `bash`, but should work just fine in `zsh`.
+That's what the [`self-update.sh`](self-update.sh) and [`tmux.sh`](tmux.sh) shell scripts are for. Note, they are both using `bash`, but should work just fine in `zsh`.
 
 ### What is TMUX?
 
 In simplest terms, TMUX is a "terminal multiplexer". It lets you switch between programs in one terminal, detach them (they keep running in the background) and reattach them to a different terminal.
 
-In other words, it adds a lot of magic to the terminal. One of the most useful things, is being able to run programs in the background, but still being able to see the console output later (as
-it is still running). It runs on most Linux-y distros, including macOS.
+In other words, it adds a lot of magic to the terminal. One of the most useful things, is being able to run programs in the background, but still be able to see the console output later (as
+it is still running). It runs (on the remote server) on most Linux-y distros, including macOS.
 
-[Check out their "Getting Started" docs](https://github.com/tmux/tmux/wiki/Getting-Started) for more on what you can do.
+[TMUXCheatSheet.com](https://tmuxcheatsheet.com/) has a great "how to install and use" that you can find here: https://tmuxcheatsheet.com/how-to-install-tmux/
 
-To install (remember: on the remote machine, not your local machine), it's most likely `sudo INSTALLER install tmux`. Amazon Linux is `sudo yum install tmux`, Ubuntu is `sudo apt-get install tmux`.
+Once installed, just run `tmux a` (or `tmux attach`), which will attach to the last open session. If there isn't one, it'll open one. Running just `tmux` will create a whole new session, and you
+generally don't want that.
+
+`Ctrl + b` is the command to start a TMUX shortcut. It is how you navigate around inside TMUX.
+
+A couple shortcuts you'll want to know:
+
+| Description     | Command                                              |
+|-----------------|------------------------------------------------------|
+| Detach TMUX     | `Ctrl + b` then `d`                                  |
+| Next Window     | `Ctrl + b` then `n`                                  |
+| Previous Window | `Ctrl + b` then `p`                                  |
+| Create Window   | `Ctrl + b` then `c`                                  |
+| Close Window    | `Ctrl + b` then `&` (aka `Shift + 7`) OR just `exit` |
+| Window Preview  | `Ctrl + b` then `w`                                  |
+| Rename Window   | `Ctrl + b` then `,`                                  |
+
 
 ### A simple walkthrough for a self-updating VM
 
-For this guide, I'm going to be using Amazon Linux as the basis; it's a great default if using AWS. However, most of these steps can easily be adapted.
+For this guide, I'm going to be using Amazon Linux as the basis; it's a great default if using AWS. However, most of these steps can easily be adapted for other distros.
 
 It should also be noted, this is by no means the only way to set up remote servers; nor is it a thorough guide. This is just a quick-n-dirty, get off the ground running without a lot of tooling, kind
 of guide. There are PLENTY of automated deployment managers and documentation out there. This is fairly open-ended; it is assumed you know how to do a portion of basic remote server management.
@@ -636,7 +652,7 @@ Now that you have the server's public key saved in your repo, you should be able
 git clone git@github.com:USERNAME/REPO.git myapp
 ```
 
-#### Make sure everything works
+#### Make sure dependencies work
 
 Now, you'll want to `cd myapp`, and `npm install`.
 
@@ -645,13 +661,13 @@ the [environment variables](#environment-variables), but it is also possible to 
 
 #### Give it a spin
 
-You should now be able to `sudo npm run lift:prod` (recommended for all remote environments, even DEV). `sudo` is needed on Amazon Linux, because it required ROOT permissions to open ports.
+You should now be able to `sudo npm run lift:prod` (recommended for all remote environments, even DEV). `sudo` is needed on Amazon Linux, because it requires ROOT permissions to open ports.
 
 If everything is working as intended... congrats (or so you thought)! Now that you have everything working; it's time to get the server to update / rebuild / start itself.
 
 #### Final stretch
 
-Now you need to decide how you are going to have the `tmux.sh` script run on startup. The easiest way would be to just install `cronie`:
+Now you need to decide how you are going to have the `tmux.sh` script run on startup. The easiest way would be to just install `cronie` (for the use of `crontab`):
 
 ```shell
 sudo yum install cronie
@@ -675,15 +691,20 @@ Now edit the `crontab` to run the script at `@reboot`:
 
 #### Have you tried turning it off and on again?
 
+Now force it to restart, and the instance should automatically lift the server.
+
 ```shell
 sudo reboot
 ```
 
 Now re-login to the instance. You should be able to `tmux attach` and see the Sails console.
 
+Once you've verified everything works, you can use `./tmux.sh myapp status` / `./tmux.sh myapp start` / `./tmux.sh myapp stop` / `./tmux.sh myapp restart` (but you don't have to).
+
 #### Now save that image!
 
-Now you should create an AMI from that server. You should be able to terminate the running instance, and spin up a new one using your new custom AMI, and everything should just work.
+Now that you have a self-starting/updating server, you should create an AMI from that instance. After it's been created, you should be able to terminate the running instance, and spin up a new one
+using your new custom AMI, and everything should just work. Now you have the start of a robust remote fleet; because spinning up new servers is just a couple clicks (or commands) away.
 
 ## What about SEO?
 
