@@ -646,7 +646,7 @@ Save it as a ["deploy key"](https://docs.github.com/v3/guides/managing-deploy-ke
 
 #### Clone your repo
 
-Now that you have the server's public key saved in your repo, you should be able to clone your repo on the remote server:
+Once you have the server's public key saved in your repo manager, you should be able to clone your repo on the remote server:
 
 ```shell
 git clone git@github.com:USERNAME/REPO.git myapp
@@ -654,20 +654,20 @@ git clone git@github.com:USERNAME/REPO.git myapp
 
 #### Make sure dependencies work
 
-Now, you'll want to `cd myapp`, and `npm install`.
+Next, you'll want to `cd myapp`, and `npm install`.
 
-Now, before you can actually start the server for a dry-run, you need to decide how you are going to store the server's credentials (user/pass for datastores and the like). It is recommended you use
+Before you can actually start the server for a dry-run, you need to decide how you are going to store the server's credentials (user/pass for datastores and the like). It is recommended you use
 the [environment variables](#environment-variables), but it is also possible to run the [interactive setup](#interactive-setup), and generate a `local.js`.
 
 #### Give it a spin
 
 You should now be able to `sudo npm run lift:prod` (recommended for all remote environments, even DEV). `sudo` is needed on Amazon Linux, because it requires ROOT permissions to open ports.
 
-If everything is working as intended... congrats (or so you thought)! Now that you have everything working; it's time to get the server to update / rebuild / start itself.
+If everything is working as intended... congrats (or so you thought)! Now that you have everything working, it's time to get the server to update / rebuild / start itself.
 
 #### Final stretch
 
-Now you need to decide how you are going to have the `tmux.sh` script run on startup. The easiest way would be to just install `cronie` (for the use of `crontab`):
+Next up, you need to decide how you are going to have the `tmux.sh` script run on startup. The easiest way would be to just install `cronie` (for the use of `crontab`):
 
 ```shell
 sudo yum install cronie
@@ -683,7 +683,7 @@ Start said service:
 sudo systemctl start crond.service
 ```
 
-Now edit the `crontab` to run the script at `@reboot`:
+Edit the `crontab` to run the script at `@reboot`:
 
 ```shell
 @reboot cd myapp; ./tmux.sh
@@ -691,13 +691,13 @@ Now edit the `crontab` to run the script at `@reboot`:
 
 #### Have you tried turning it off and on again?
 
-Now force it to restart, and the instance should automatically lift the server.
+Force the instance to restart, and it should automatically lift the server inside of TMUX.
 
 ```shell
 sudo reboot
 ```
 
-Now re-login to the instance. You should be able to `tmux attach` and see the Sails console.
+After reconnecting to the instance, you should be able to `tmux attach` and see the Sails console.
 
 Once you've verified everything works, you can use `./tmux.sh myapp status` / `./tmux.sh myapp start` / `./tmux.sh myapp stop` / `./tmux.sh myapp restart` (but you don't have to).
 
