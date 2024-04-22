@@ -1,11 +1,18 @@
 # Changelog
 
+## [v5.3.0](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v5.2.3...v5.3.0) (2024-04-22)
+### Features
+
+* Added TMUX and self-update scripts.
+* Updated README for the new scripts, and Aiven.io mention.
+* Updated dependencies.
+
 ## [v5.2.3](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v5.2.2...v5.2.3) (2024-04-09)
 ### Features
 
 * Fixed issue with setup not setting DB SSL correctly.
 * Fixed npm audit issues.
-* Fixed meta data issue with Favicons.
+* Fixed metadata issue with Favicons.
 * Updated dependencies.
 
 ## [v5.2.2](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v5.2.1...v5.2.2) (2024-01-24)
