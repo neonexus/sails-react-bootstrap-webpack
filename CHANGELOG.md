@@ -1,5 +1,11 @@
 # Changelog
 
+# [v5.3.2](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v5.3.1...v5.3.2) (2024-04-22)
+### Features
+
+* Reworded the guide a bit, so it didn't sound so repetitive.
+* Updated `fixted`.
+
 ## [v5.3.1](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v5.3.0...v5.3.1) (2024-04-22)
 ### Features
 
