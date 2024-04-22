@@ -18,9 +18,9 @@ A virtual start-up in a box!
 
 NOTE: You will need access to a MySQL / MariaDB database for the setup. If you want to use a different datastore, you'll need to configure it manually.
 
-[Aiven.io](https://aiven.io) has FREE secure MySQL (5 GB), and Redis (1 GB). Both require use of SSL, and can be restricted to specified IPs. (If you are having trouble finding the FREE instances,
-you need to select Digital Ocean as the cloud provider.) Use my [referral link](https://console.aiven.io/signup?referral_code=mk36ekt3wo1dvij7joon) to signup, and you'll get $100 extra when you start
-a trial (NOT needed for the free servers).
+[Aiven.io](https://aiven.io) has FREE (no CC required) secure MySQL (5 GB), and Redis (1 GB). Both require use of SSL, and can be restricted to specified IPs. (If you are having trouble finding the
+FREE instances, you need to select Digital Ocean as the cloud provider.) Use my [referral link](https://console.aiven.io/signup?referral_code=mk36ekt3wo1dvij7joon) to signup, and you'll get $100
+extra when you start a trial (trial is NOT needed for the free servers).
 
 ```shell
 npx drfg neonexus/sails-react-bootstrap-webpack my-new-site
