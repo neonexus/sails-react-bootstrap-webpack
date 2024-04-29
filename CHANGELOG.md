@@ -1,5 +1,11 @@
 # Changelog
 
+# [v5.3.3](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v5.3.2...v5.3.3) (2024-04-29)
+### Features
+
+* Added `ignoreAssets` option to the request logger. Should cut down noise a bit.
+* Re-installed dependencies to do a package-lock reset. Should fix issues reported by Snyk.
+
 # [v5.3.2](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v5.3.1...v5.3.2) (2024-04-22)
 ### Features
 

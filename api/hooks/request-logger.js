@@ -9,7 +9,19 @@ module.exports = (sails) => {
         routes: {
             before: {
                 '*': function(req, res, next) {
-                    if (req.method !== 'HEAD' && req.path !== '/__getcookie' && req.path !== '/' && sails.config.log.captureRequests === true) {
+                    if (
+                        req.method !== 'HEAD'
+                        && req.path !== '/__getcookie'
+                        && req.path !== '/_ping'
+                        && req.path !== '/'
+                        && sails.config.log.captureRequests === true
+                    ) {
+                        if (sails.config.log.ignoreAssets && req.path.includes('.')) {
+                            req.id = 'IGNORE';
+
+                            return next();
+                        }
+
                         const bleep = '*******';
 
                         let body = _.merge({}, req.body),

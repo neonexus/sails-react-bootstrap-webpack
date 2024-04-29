@@ -226,6 +226,14 @@ overridden in the `config/local.js`, just like every other option. If the option
             </td>
         </tr>
         <tr>
+            <td><code>log.ignoreAssets</code></td>
+            <td><a href="config/log.js"><code>log.js</code></a></td>
+            <td><code>true</code></td>
+            <td>
+                When enabled (and `captureRequests` is `true`), this will force the logger to skip over assets (things like `.js` / `.css`, etc.).
+            </td>
+        </tr>
+        <tr>
             <td><code>models.validateOnBootstrap</code></td>
             <td><a href="config/models.js"><code>models.js</code></a></td>
             <td><code>true</code></td>
