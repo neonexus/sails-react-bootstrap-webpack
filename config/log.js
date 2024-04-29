@@ -38,5 +38,13 @@ module.exports.log = {
      *                                                                  *
      ********************************************************************/
 
-    captureRequests: true
+    captureRequests: true,
+
+    /********************************************************************
+     * This will ignore logging of asset requests                       *
+     * (things like `.js`, `.css`, etc.), when capturing request data.  *
+     *                                                                  *
+     * Turning this off could make request logs balloon very quickly.   *
+     ********************************************************************/
+    ignoreAssets: true
 };
