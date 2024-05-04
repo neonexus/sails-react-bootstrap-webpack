@@ -1,5 +1,11 @@
 # Changelog
 
+# [v5.3.4](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v5.3.3...v5.3.4) (2024-05-03)
+### Features
+
+* Fixed `ejs` audit warning.
+* Updated dependencies.
+
 # [v5.3.3](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v5.3.2...v5.3.3) (2024-04-29)
 ### Features
 
