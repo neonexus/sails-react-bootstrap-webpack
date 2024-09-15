@@ -13,12 +13,12 @@ const fs = require('fs');
 const express = require('express'); // Express is a requirement of Sails.
 
 module.exports.routes = {
-    'GET /': {
-        skipAssets: true,
-        fn: (req, res) => {
-            return res.redirect(302, '/main'); // redirect to the "main" React app (the marketing site)
-        }
-    },
+    // 'GET /': {
+    //     skipAssets: true,
+    //     fn: (req, res) => {
+    //         return res.redirect(302, '/main'); // redirect to the "main" React app (the marketing site)
+    //     }
+    // },
 
     'GET /*': { // default route used to auto switch React apps
         skipAssets: false,
@@ -26,7 +26,13 @@ module.exports.routes = {
             express.static(path.resolve(__dirname, '../.tmp/public/')),
             async (req, res) => {
                 // This will determine which React app we need to serve.
-                const parts = req.url.split('/');
+                let url = req.url;
+
+                if (url === '/') {
+                    url = '/main'; // Default to "main"
+                }
+
+                const parts = url.split('/');
                 const pathToCheck = path.join(__dirname, '../.tmp/public/', parts[1], '/index.html');
 
                 if (fs.existsSync(pathToCheck)) {

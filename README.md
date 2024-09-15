@@ -1,10 +1,10 @@
 # sails-react-bootstrap-webpack
 
-[![Travis CI status](https://img.shields.io/travis/com/neonexus/sails-react-bootstrap-webpack.svg?branch=release&logo=travis)](https://app.travis-ci.com/github/neonexus/sails-react-bootstrap-webpack)
-[![Sails version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.3.4%2Fpackage.json&query=%24.dependencies.sails&label=Sails&logo=sailsdotjs)](https://sailsjs.com)
-[![React version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.3.4%2Fpackage.json&query=%24.devDependencies.react&label=React&logo=react)](https://react.dev)
-[![Bootstrap version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.3.4%2Fpackage.json&query=%24.devDependencies.bootstrap&label=Bootstrap&logo=bootstrap&logoColor=white)](https://getbootstrap.com)
-[![Webpack version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.3.4%2Fpackage.json&query=%24.devDependencies.webpack&label=Webpack&logo=webpack)](https://webpack.js.org)
+[//]: # ([![Travis CI status]&#40;https://img.shields.io/travis/com/neonexus/sails-react-bootstrap-webpack.svg?branch=release&logo=travis&#41;]&#40;https://app.travis-ci.com/github/neonexus/sails-react-bootstrap-webpack&#41;)
+[![Sails version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv6.0.0%2Fpackage.json&query=%24.dependencies.sails&label=Sails&logo=sailsdotjs)](https://sailsjs.com)
+[![React version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv6.0.0%2Fpackage.json&query=%24.devDependencies.react&label=React&logo=react)](https://react.dev)
+[![Bootstrap version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv6.0.0%2Fpackage.json&query=%24.devDependencies.bootstrap&label=Bootstrap&logo=bootstrap&logoColor=white)](https://getbootstrap.com)
+[![Webpack version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv6.0.0%2Fpackage.json&query=%24.devDependencies.webpack&label=Webpack&logo=webpack)](https://webpack.js.org)
 
 [//]: # ([![Codecov]&#40;https://img.shields.io/codecov/c/github/neonexus/sails-react-bootstrap-webpack?logo=codecov&#41;]&#40;https://codecov.io/gh/neonexus/sails-react-bootstrap-webpack&#41;)
 
@@ -16,7 +16,7 @@ A virtual start-up in a box!
 
 ## Quick Install
 
-NOTE: You will need access to a MySQL / MariaDB database for the setup. If you want to use a different datastore, you'll need to configure it manually.
+NOTE: You will need access to a MySQL / MariaDB database for the quick setup. If you want to use a different datastore, you'll need to configure it manually.
 
 [Aiven.io](https://aiven.io) has FREE (no CC required) secure MySQL (5 GB), and Redis (1 GB). Both require use of SSL, and can be restricted to specified IPs. (If you are having trouble finding the
 FREE instances, you need to select Digital Ocean as the cloud provider.) Use my [referral link](https://console.aiven.io/signup?referral_code=mk36ekt3wo1dvij7joon) to signup, and you'll get $100
@@ -28,6 +28,10 @@ cd my-new-site
 npm run setup
 npm run start   OR   npm run ngrok
 ```
+
+NOTE: `drfg` is a secondary, standalone script I've been working on, which can be used for your own projects: [Download Release From GitHub](https://www.npmjs.com/package/drfg). It downloads
+/ extracts / installs a release from a GitHub repo. (Currently only supports public repos...) `npx` if you weren't aware, downloads / runs NPM packages; comes standard with `npm`
+(at least, as of v5.2.0).
 
 ## Table of Contents
 

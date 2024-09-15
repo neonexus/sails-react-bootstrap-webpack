@@ -71,13 +71,13 @@ const entryPoints = [
         title: 'My Admin',
         template: 'assets/webapp_entry_template.html'
     },
-    {
-        // this entry is mainly for local development, and won't be served by Sails
-        name: 'index',
-        entry: path.join(__dirname, '/../assets/src/index.jsx'),
-        outfile: 'index.html',
-        title: 'My Application'
-    },
+    // {
+    //     // this entry is mainly for local development, and won't be served by Sails
+    //     name: 'index',
+    //     entry: path.join(__dirname, '/../assets/src/index.jsx'),
+    //     outfile: 'index.html',
+    //     title: 'My Application'
+    // },
     {
         name: 'main',
         entry: path.join(__dirname, '/../assets/src/main.jsx'),
