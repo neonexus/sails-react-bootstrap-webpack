@@ -30,8 +30,7 @@ npm run start   OR   npm run ngrok
 ```
 
 NOTE: `drfg` is a secondary, standalone script I've been working on, which can be used for your own projects: [Download Release From GitHub](https://www.npmjs.com/package/drfg). It downloads
-/ extracts / installs a release from a GitHub repo. (Currently only supports public repos...) `npx` if you weren't aware, downloads / runs NPM packages; comes standard with `npm`
-(at least, as of v5.2.0).
+/ extracts / installs a release from a GitHub repo. (Currently only supports public repos...) `npx` downloads / runs NPM packages; comes standard with `npm` (at least, as of v5.2.0).
 
 ## Table of Contents
 

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+##!/usr/bin/env zsh
 
 # This file will git pull, npm i, and if needed, build assets. See README "getting setup remotely" for more.
 
