@@ -5,6 +5,7 @@
 [![React version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.3.4%2Fpackage.json&query=%24.devDependencies.react&label=React&logo=react)](https://react.dev)
 [![Bootstrap version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.3.4%2Fpackage.json&query=%24.devDependencies.bootstrap&label=Bootstrap&logo=bootstrap&logoColor=white)](https://getbootstrap.com)
 [![Webpack version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv5.3.4%2Fpackage.json&query=%24.devDependencies.webpack&label=Webpack&logo=webpack)](https://webpack.js.org)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fneonexus%2Fsails-react-bootstrap-webpack.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fneonexus%2Fsails-react-bootstrap-webpack?ref=badge_shield)
 
 [//]: # ([![Codecov]&#40;https://img.shields.io/codecov/c/github/neonexus/sails-react-bootstrap-webpack?logo=codecov&#41;]&#40;https://codecov.io/gh/neonexus/sails-react-bootstrap-webpack&#41;)
 
@@ -760,3 +761,7 @@ middleware: {
 This app was originally generated on Fri Mar 20 2020 17:39:04 GMT-0500 (Central Daylight Time) using Sails v1.2.3.
 
 <!-- Internally, Sails used [`sails-generate@1.16.13`](https://github.com/balderdashy/sails-generate/tree/v1.16.13/lib/core-generators/new). -->
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fneonexus%2Fsails-react-bootstrap-webpack.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fneonexus%2Fsails-react-bootstrap-webpack?ref=badge_large)
