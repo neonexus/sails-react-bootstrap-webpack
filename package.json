@@ -21,7 +21,7 @@
         "moment-timezone": "0.5.45",
         "otplib": "12.0.1",
         "qrcode": "1.5.3",
-        "sails": "1.5.10",
+        "sails": "1.5.12",
         "sails-hook-orm": "4.0.3",
         "sails-hook-sockets": "3.0.0",
         "sails-mysql": "3.0.1",
