@@ -1,5 +1,9 @@
 const moment = require('moment-timezone');
 
+// Standardize messages; not just for ease of change...
+const invalid = 'Invalid credentials.';
+const notLoggedIn = 'You are not logged in';
+
 module.exports = async function(req, res, next) {
     const sessionId = req.signedCookies[sails.config.session.name] || null; // signed cookies: https://sailsjs.com/documentation/reference/request-req/req-signed-cookies
 
@@ -13,7 +17,7 @@ module.exports = async function(req, res, next) {
 
             await sails.models.session.destroy({id: sessionId});
 
-            return res.forbidden('You are not logged in');
+            return res.forbidden(notLoggedIn);
         }
 
         // If the session was found...
@@ -45,7 +49,7 @@ module.exports = async function(req, res, next) {
             }
 
             if (!token.includes(':')) {
-                return res.forbidden('Invalid credentials.');
+                return res.forbidden(invalid);
             }
 
             token = token.split(':');
@@ -53,7 +57,7 @@ module.exports = async function(req, res, next) {
             const foundToken = await sails.models.apitoken.findOne({id: token[0]}).decrypt().populate('user');
 
             if (!foundToken || token[1] !== foundToken.token) {
-                return res.forbidden('Invalid credentials.');
+                return res.forbidden(invalid);
             }
 
             if (foundToken) {
@@ -66,5 +70,5 @@ module.exports = async function(req, res, next) {
         }
     }
 
-    return res.forbidden('You are not logged in');
+    return res.forbidden(notLoggedIn);
 };
