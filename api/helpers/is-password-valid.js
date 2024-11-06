@@ -51,15 +51,15 @@ module.exports = {
         }
 
         if (inputs.user) {
-            if (inputs.user.email && inputs.password.indexOf(inputs.user.email) >= 0) {
+            if (inputs.user.email && inputs.password.toLowerCase().indexOf(inputs.user.email.toLowerCase()) >= 0) {
                 errors.push('Password can not contain your email address.');
             }
 
-            if (inputs.user.firstName && inputs.password.indexOf(inputs.user.firstName) >= 0) {
+            if (inputs.user.firstName && inputs.password.toLowerCase().indexOf(inputs.user.firstName.toLowerCase()) >= 0) {
                 errors.push('Password can not contain your first name.');
             }
 
-            if (inputs.user.lastName && inputs.password.indexOf(inputs.user.lastName) >= 0) {
+            if (inputs.user.lastName && inputs.password.toLowerCase().indexOf(inputs.user.lastName.toLowerCase()) >= 0) {
                 errors.push('Password can not contain your last name.');
             }
         }

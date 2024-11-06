@@ -1,5 +1,5 @@
-// This allows us to "lock" Chai into v4.
+// This allows us to "lock" packages into specific versions (mostly because of ES updates).
 
 {
-    "reject": ["chai", "eslint"]
+    "reject": ["chai", "eslint", "scrypt-kdf"]
 }

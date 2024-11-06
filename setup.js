@@ -40,7 +40,7 @@ if (fs.existsSync(configPath)) {
         const answer = await prompts({
             type: 'confirm',
             name: 'moveOn',
-            message: 'A `local.js` config file already exists. Continuing will completely rewrite this file. Are you sure you want to continue?',
+            message: 'A `local.js` config file already exists. Continuing will completely rewrite this file (using the values from this config file as defaults). Are you sure you want to continue?',
             initial: false
         });
 
@@ -416,7 +416,7 @@ function generateDEK(){
 
 function installNgrok() {
     return new Promise((resolve, reject) => {
-        const ngrokInstall = spawn('npm', ['install', '@ngrok/ngrok@v0.9.1', '--save-dev', '--save-exact'], {cwd: __dirname, stdio: 'inherit'});
+        const ngrokInstall = spawn('npm', ['install', '@ngrok/ngrok@v1.4.1', '--save-dev', '--save-exact'], {cwd: __dirname, stdio: 'inherit'});
 
         ngrokInstall.on('error', (err) => {
             return reject(err);

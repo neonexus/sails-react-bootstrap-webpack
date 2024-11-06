@@ -81,40 +81,76 @@ describe('isPasswordValid Helper', function() {
             lastName: 'McUser'
         };
 
-        it('should not allow email in password', async function() {
-            const isValid = await sails.helpers.isPasswordValid.with({
-                password: '0987' + user.email + '1234A',
+        it('should not allow email in different cases in password', async function() {
+            const tests = [];
+
+            tests[0] = await sails.helpers.isPasswordValid.with({
+                password: '0987' + user.email.toUpperCase() + '1234a',
                 user,
                 skipPwned: true
             });
 
-            isValid.should.be.an('array');
-            isValid.length.should.equal(1);
-            isValid[0].should.equal('Password can not contain your email address.');
+            tests[0].should.be.an('array');
+            tests[0].length.should.equal(1);
+            tests[0][0].should.equal('Password can not contain your email address.');
+
+            tests[1] = await sails.helpers.isPasswordValid.with({
+                password: '0987' + user.email.toLowerCase() + '1234A',
+                user,
+                skipPwned: true
+            });
+
+            tests[1].should.be.an('array');
+            tests[1].length.should.equal(1);
+            tests[1][0].should.equal('Password can not contain your email address.');
         });
 
-        it('should not allow first name in password', async function() {
-            const isValid = await sails.helpers.isPasswordValid.with({
-                password: 'I am the best Tester ever!',
+        it('should not allow first name in different cases in password', async function() {
+            const tests = [];
+
+            tests[0] = await sails.helpers.isPasswordValid.with({
+                password: 'I am the best TESTER ever!', // Tester is the first name
                 user,
                 skipPwned: true
             });
 
-            isValid.should.be.an('array');
-            isValid.length.should.equal(1);
-            isValid[0].should.equal('Password can not contain your first name.');
+            tests[0].should.be.an('array');
+            tests[0].length.should.equal(1);
+            tests[0][0].should.equal('Password can not contain your first name.');
+
+            tests[1] = await sails.helpers.isPasswordValid.with({
+                password: 'I am the best tester ever!', // Tester is the first name
+                user,
+                skipPwned: true
+            });
+
+            tests[1].should.be.an('array');
+            tests[1].length.should.equal(1);
+            tests[1][0].should.equal('Password can not contain your first name.');
         });
 
-        it('should not allow last name in password', async function() {
-            const isValid = await sails.helpers.isPasswordValid.with({
-                password: 'Hurray for the great, McUser!',
+        it('should not allow last name in different cases in password', async function() {
+            const tests = [];
+
+            tests[0] = await sails.helpers.isPasswordValid.with({
+                password: 'Hurray for the great, mcuser!', // McUser is last name
                 user,
                 skipPwned: true
             });
 
-            isValid.should.be.an('array');
-            isValid.length.should.equal(1);
-            isValid[0].should.equal('Password can not contain your last name.');
+            tests[0].should.be.an('array');
+            tests[0].length.should.equal(1);
+            tests[0][0].should.equal('Password can not contain your last name.');
+
+            tests[1] = await sails.helpers.isPasswordValid.with({
+                password: 'Hurray for the great, MCUSER!', // McUser is last name
+                user,
+                skipPwned: true
+            });
+
+            tests[1].should.be.an('array');
+            tests[1].length.should.equal(1);
+            tests[1][0].should.equal('Password can not contain your last name.');
         });
     });
 

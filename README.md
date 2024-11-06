@@ -6,6 +6,10 @@
 [![Bootstrap version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv6.0.0%2Fpackage.json&query=%24.devDependencies.bootstrap&label=Bootstrap&logo=bootstrap&logoColor=white)](https://getbootstrap.com)
 [![Webpack version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv6.0.0%2Fpackage.json&query=%24.devDependencies.webpack&label=Webpack&logo=webpack)](https://webpack.js.org)
 
+Latest version only:
+[![FOSSA License Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fneonexus%2Fsails-react-bootstrap-webpack.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fneonexus%2Fsails-react-bootstrap-webpack?ref=badge_shield)
+[![FOSSA Security Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fneonexus%2Fsails-react-bootstrap-webpack.svg?type=shield&issueType=security)](https://app.fossa.com/projects/git%2Bgithub.com%2Fneonexus%2Fsails-react-bootstrap-webpack?ref=badge_shield&issueType=security)
+
 [//]: # ([![Codecov]&#40;https://img.shields.io/codecov/c/github/neonexus/sails-react-bootstrap-webpack?logo=codecov&#41;]&#40;https://codecov.io/gh/neonexus/sails-react-bootstrap-webpack&#41;)
 
 [//]: # ([![Discord Server]&#40;https://img.shields.io/badge/Discord_server-silver?logo=discord&#41;]&#40;http://discord.gg/Y5K73E84Tc&#41;)
