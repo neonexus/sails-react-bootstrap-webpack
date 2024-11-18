@@ -416,7 +416,7 @@ function generateDEK(){
 
 function installNgrok() {
     return new Promise((resolve, reject) => {
-        const ngrokInstall = spawn('npm', ['install', '@ngrok/ngrok@v1.4.1', '--save-dev', '--save-exact'], {cwd: __dirname, stdio: 'inherit'});
+        const ngrokInstall = spawn('npm', ['install', '@ngrok/ngrok', '--save-dev', '--save-exact'], {cwd: __dirname, stdio: 'inherit'});
 
         ngrokInstall.on('error', (err) => {
             return reject(err);

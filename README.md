@@ -1,9 +1,9 @@
 # sails-react-bootstrap-webpack
 
-[![Sails version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv6.0.1%2Fpackage.json&query=%24.dependencies.sails&label=Sails&logo=sailsdotjs)](https://sailsjs.com)
-[![React version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv6.0.1%2Fpackage.json&query=%24.devDependencies.react&label=React&logo=react)](https://react.dev)
-[![Bootstrap version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv6.0.1%2Fpackage.json&query=%24.devDependencies.bootstrap&label=Bootstrap&logo=bootstrap&logoColor=white)](https://getbootstrap.com)
-[![Webpack version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv6.0.1%2Fpackage.json&query=%24.devDependencies.webpack&label=Webpack&logo=webpack)](https://webpack.js.org)
+[![Sails version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv6.1.0%2Fpackage.json&query=%24.dependencies.sails&label=Sails&logo=sailsdotjs)](https://sailsjs.com)
+[![React version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv6.1.0%2Fpackage.json&query=%24.devDependencies.react&label=React&logo=react)](https://react.dev)
+[![Bootstrap version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv6.1.0%2Fpackage.json&query=%24.devDependencies.bootstrap&label=Bootstrap&logo=bootstrap&logoColor=white)](https://getbootstrap.com)
+[![Webpack version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv6.1.0%2Fpackage.json&query=%24.devDependencies.webpack&label=Webpack&logo=webpack)](https://webpack.js.org)
 
 Latest version only:
 [![FOSSA License Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fneonexus%2Fsails-react-bootstrap-webpack.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fneonexus%2Fsails-react-bootstrap-webpack?ref=badge_shield)
