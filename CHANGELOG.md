@@ -1,5 +1,26 @@
 # Changelog
 
+# [v6.1.0](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v6.0.1...v6.1.0) (2024-11-18)
+### Features
+
+* Updated dependencies.
+* Fixed CHANGELOG.
+* Set minimum Node version to v22.11, to help encourage updating.
+* Updated self-updater to use SHA-512 for stronger file integrity, and future-proofing (also keeps in-line with Node standards).
+
+# [v6.0.1](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v6.0.0...v6.0.1) (2024-11-12)
+### Features
+
+* Updated Sails.
+* Rebuilt `package-lock.json` (it had several tweaks for security issues, which are no longer an issue).
+
+# [v6.0.0](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v5.3.4...v6.0.0) (2024-11-06)
+### Features
+
+* Removed unneeded index.jsx.
+* Made self-update a little smarter.
+* Updated dependencies.
+
 # [v5.3.4](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v5.3.3...v5.3.4) (2024-05-03)
 ### Features
 

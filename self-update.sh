@@ -1,23 +1,26 @@
 #!/usr/bin/env bash
 ##!/usr/bin/env zsh
 
-# This file will git pull, npm i, and if needed, build assets. See README "getting setup remotely" for more.
+# This file will git pull, npm install, and if needed, build assets. See README "getting setup remotely" for more.
 
-# Function to calculate hash using sha256sum or shasum based on availability
+# Function to calculate hash using SHA-512 based on availability
 calculate_hash() {
     local dir="$1"
     local hash_command
 
-    # Check if sha256sum command is available
-    if command -v sha256sum >/dev/null 2>&1; then
-        hash_command="sha256sum"
+    if command -v sha512sum >/dev/null 2>&1; then
+        hash_command="sha512sum"
+    elif command -v shasum >/dev/null 2>&1 && shasum -a 512 /dev/null >/dev/null 2>&1; then
+        hash_command="shasum -a 512"
     else
-        hash_command="shasum -a 256"
+        echo "Error: SHA-512 is not available on your system. Please install 'sha512sum' or 'shasum' to proceed." >&2
+        return 1
     fi
 
     # Calculate hash using the determined command
     find "$dir" -type f -exec $hash_command {} + | awk '{print $1}' | $hash_command
 }
+
 
 # Calculate the old hash of the assets/webpack directories
 old_hash=$(calculate_hash "assets")

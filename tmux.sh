@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+##!/usr/bin/env zsh
 
 # This file is used to start things inside of TMUX. See README "getting setup remotely" for more.
 
