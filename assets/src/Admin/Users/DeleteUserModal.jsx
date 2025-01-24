@@ -1,15 +1,22 @@
-import { useState } from 'react';
-import PropTypes from 'prop-types';
+import {useState} from 'react';
 import {Button, Modal} from 'react-bootstrap';
 
-function DeleteUserModal(props) {
+function DeleteUserModal({
+    firstName = '',
+    lastName = '',
+    onAccept = () => {},
+    onCancel = () => {},
+    role = '',
+    show = false,
+    softDelete = true
+}) {
     const [isLoading, setIsLoading] = useState(false);
 
     return (
-        <Modal show={props.show} backdrop="static">
+        <Modal show={show} backdrop="static">
             <Modal.Header>
                 <Modal.Title>
-                    {props.softDelete ? 'Delete User' : 'PERMANENTLY Delete User'}
+                    {softDelete ? 'Delete User' : 'PERMANENTLY Delete User'}
                 </Modal.Title>
             </Modal.Header>
 
@@ -17,20 +24,20 @@ function DeleteUserModal(props) {
                 Are you sure you want to delete this user?
                 <br />
                 {
-                    props.softDelete
+                    softDelete
                         ? <div>(This action can be undone later)</div>
                         : <div>(This is a <strong>PERMANENT</strong> action, and <strong>CAN NOT</strong> be undone!)</div>
                 }
                 <br />
-                <strong>{props.firstName} {props.lastName} ({props.role})</strong>
+                <strong>{firstName} {lastName} ({role})</strong>
             </Modal.Body>
 
             <Modal.Footer className="justify-content-between">
-                <Button variant="secondary" onClick={props.onCancel} disabled={isLoading}>Cancel</Button>
+                <Button variant="secondary" onClick={onCancel} disabled={isLoading}>Cancel</Button>
                 <Button variant="danger" onClick={
                     () => {
                         setIsLoading(true);
-                        props.onAccept(() => setIsLoading(false));
+                        onAccept(() => setIsLoading(false));
                     }} disabled={isLoading}
                 >
                     {isLoading ? 'Working...' : 'Yes, Delete User'}
@@ -39,15 +46,5 @@ function DeleteUserModal(props) {
         </Modal>
     );
 }
-
-DeleteUserModal.propTypes = {
-    firstName: PropTypes.string.isRequired,
-    lastName: PropTypes.string.isRequired,
-    onAccept: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired,
-    role: PropTypes.string.isRequired,
-    show: PropTypes.bool.isRequired,
-    softDelete: PropTypes.bool.isRequired
-};
 
 export default DeleteUserModal;

@@ -1,6 +1,4 @@
 import {useState, useContext, useEffect} from 'react';
-import PropTypes from 'prop-types';
-
 import {Button, Nav, Navbar, NavDropdown} from 'react-bootstrap';
 import {NavLink as ReactNavLink} from 'react-router-dom';
 
@@ -23,7 +21,13 @@ function scrollListener() {
     }
 }
 
-function NavBar(props) {
+function NavBar({handleLogout = null}) {
+    if (typeof handleLogout !== 'function') {
+        console.error('`handleLogout` is a required function for NavBar.');
+
+        return 'ERROR!';
+    }
+
     const [isExpanded, setIsExpanded] = useState(false);
     const user = useContext(UserContext);
 
@@ -110,7 +114,7 @@ function NavBar(props) {
                     user.isLoggedIn ?
                         <>
                             <Navbar.Text>Welcome, {user.info.firstName} &nbsp; &nbsp; </Navbar.Text>
-                            <Button variant="danger" onClick={() => props.handleLogout()} size="sm" className="mt-2 mt-sm-0 mb-2 mb-sm-0">Logout</Button>
+                            <Button variant="danger" onClick={() => handleLogout()} size="sm" className="mt-2 mt-sm-0 mb-2 mb-sm-0">Logout</Button>
                         </>
                         : null
                 }
@@ -124,9 +128,5 @@ function NavBar(props) {
         </Navbar>
     );
 }
-
-NavBar.propTypes = {
-    handleLogout: PropTypes.func.isRequired
-};
 
 export default NavBar;

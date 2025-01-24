@@ -23,7 +23,14 @@ module.exports = merge(baseConfig, {
                     {
                         loader: 'sass-loader',
                         options: {
-                            sourceMap: false
+                            sourceMap: false,
+                            // https://github.com/webpack-contrib/sass-loader#sassoptions
+                            sassOptions: {
+                                // If set to true, Sass won’t print warnings that are caused by dependencies (like Bootstrap):
+                                // https://sass-lang.com/documentation/js-api/interfaces/options/#quietDeps
+                                quietDeps: true,
+                                silenceDeprecations: ['import', 'global-builtin']
+                            }
                         }
                     }
                 ]

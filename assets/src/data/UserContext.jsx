@@ -1,8 +1,7 @@
 /* eslint-disable react/no-unused-state */
 
-import { createContext, Component } from 'react';
+import {createContext, Component} from 'react';
 import {isObject} from 'lodash';
-import PropTypes from 'prop-types';
 
 const UserContext = createContext();
 
@@ -51,14 +50,6 @@ export class UserProvider extends Component {
         );
     }
 }
-
-UserProvider.propTypes = {
-    user: PropTypes.object
-};
-
-UserProvider.defaultProps = {
-    user: null
-};
 
 export const UserConsumer = UserContext.Consumer;
 

@@ -1,6 +1,4 @@
 import { Component, lazy } from 'react';
-import PropTypes from 'prop-types';
-
 import {Button, Col, Row, Table, Tabs, Tab, Spinner} from 'react-bootstrap';
 import moment from 'moment-timezone';
 
@@ -160,6 +158,7 @@ class Users extends Component {
                                                     onPerPageChange={(limit) => this.handlePerPageChange(limit)}
                                                     onPageChange={(page) => this.getUsers(page)}
                                                     isDisabled={this.state.isLoading}
+                                                    limits={[5, 7, 9]}
                                                 />
 
                                                 <Table striped hover responsive>
@@ -335,9 +334,5 @@ class Users extends Component {
         );
     }
 }
-
-Users.propTypes = {
-    api: PropTypes.object.isRequired
-};
 
 export default Users;

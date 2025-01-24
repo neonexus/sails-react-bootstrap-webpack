@@ -40,7 +40,7 @@ module.exports = {
         generatePassword: {
             type: 'boolean',
             defaultsTo: false,
-            description: 'Used to auto-generate a password for the user'
+            description: 'Used to auto-generate a password for the user. Negates the `password` input.'
         }
     },
 

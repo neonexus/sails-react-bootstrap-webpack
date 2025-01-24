@@ -1,9 +1,9 @@
 # sails-react-bootstrap-webpack
 
-[![Sails version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv6.1.0%2Fpackage.json&query=%24.dependencies.sails&label=Sails&logo=sailsdotjs)](https://sailsjs.com)
-[![React version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv6.1.0%2Fpackage.json&query=%24.devDependencies.react&label=React&logo=react)](https://react.dev)
-[![Bootstrap version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv6.1.0%2Fpackage.json&query=%24.devDependencies.bootstrap&label=Bootstrap&logo=bootstrap&logoColor=white)](https://getbootstrap.com)
-[![Webpack version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv6.1.0%2Fpackage.json&query=%24.devDependencies.webpack&label=Webpack&logo=webpack)](https://webpack.js.org)
+[![Sails version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv7.0.0%2Fpackage.json&query=%24.dependencies.sails&label=Sails&logo=sailsdotjs)](https://sailsjs.com)
+[![React version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv7.0.0%2Fpackage.json&query=%24.devDependencies.react&label=React&logo=react)](https://react.dev)
+[![Bootstrap version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv7.0.0%2Fpackage.json&query=%24.devDependencies.bootstrap&label=Bootstrap&logo=bootstrap&logoColor=white)](https://getbootstrap.com)
+[![Webpack version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fneonexus%2Fsails-react-bootstrap-webpack%2Fv7.0.0%2Fpackage.json&query=%24.devDependencies.webpack&label=Webpack&logo=webpack)](https://webpack.js.org)
 
 Latest version only:
 [![FOSSA License Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fneonexus%2Fsails-react-bootstrap-webpack.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fneonexus%2Fsails-react-bootstrap-webpack?ref=badge_shield)
@@ -21,9 +21,13 @@ A virtual start-up in a box!
 
 NOTE: You will need access to a MySQL / MariaDB database for the quick setup. If you want to use a different datastore, you'll need to configure it manually.
 
-[Aiven.io](https://aiven.io) has FREE (no CC required) secure MySQL (5 GB), and Redis (1 GB). Both require use of SSL, and can be restricted to specified IPs. (If you are having trouble finding the
-FREE instances, you need to select Digital Ocean as the cloud provider.) Use my [referral link](https://console.aiven.io/signup?referral_code=mk36ekt3wo1dvij7joon) to signup, and you'll get $100
+<details>
+    <summary>For a free / quick option, check out...</summary>
+
+[Aiven.io](https://aiven.io) has a no credit card required, secure MySQL (5 GB), and Redis (1 GB). Both require use of SSL, and can be restricted to specified IPs. (If you are having trouble finding
+the FREE instances, you need to select Digital Ocean as the cloud provider.) Use my [referral link](https://console.aiven.io/signup?referral_code=mk36ekt3wo1dvij7joon) to signup, and you'll get $100
 extra when you start a trial (trial is NOT needed for the free servers).
+</details>
 
 ```shell
 npx drfg neonexus/sails-react-bootstrap-webpack my-new-site
@@ -100,8 +104,8 @@ The `master` branch is experimental, and the [release branch](https://github.com
 ## Current Dependencies
 
 * [Sails](https://sailsjs.com) **v1**
-* [React](https://react.dev) **v18**
-* [React Router](https://reactrouter.com) **v6**
+* [React](https://react.dev) **v19**
+* [React Router](https://reactrouter.com) **v7**
 * [Bootstrap](https://getbootstrap.com) **v5**
 * [React-Bootstrap](https://react-bootstrap.github.io) **v2**
 * [Webpack](https://webpack.js.org) **v5**
@@ -697,7 +701,16 @@ Start said service:
 sudo systemctl start crond.service
 ```
 
-Edit the `crontab` to run the script at `@reboot`:
+Edit the `crontab` to run the script at `@reboot` (you don't have to use `nano`, I just find it easier):
+
+Also, notice to lack of `sudo` here. This is because we DON'T want our backend to have super-user powers! That just, would not be good... We want it running under a general user.
+For better security, it should be run via a user with limited permissions.
+
+```shell
+EDITOR=nano crontab -e
+```
+
+Add this:
 
 ```shell
 @reboot cd myapp; ./tmux.sh
