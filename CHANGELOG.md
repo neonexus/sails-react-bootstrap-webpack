@@ -1,5 +1,19 @@
 # Changelog
 
+# [v7.0.0](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v6.1.0...v7.0.0) (2025-01-23)
+### Features
+
+* Updated to React 19.
+  * Rewrote most (nearly all) custom React elements to work with v19 (due to removal of `PropTypes`).
+* Fixed (read: silenced) SASS deprecation warnings in Webpack config.
+* Fixed security audits.
+* Updated dependencies.
+* Set minimum Node version to v22.13.
+
+### Breaking Changes
+
+* Because of the upgrade to React 19, there are fairly major changes to the custom React elements.
+
 # [v6.1.0](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v6.0.1...v6.1.0) (2024-11-18)
 ### Features
 
@@ -17,9 +31,12 @@
 # [v6.0.0](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v5.3.4...v6.0.0) (2024-11-06)
 ### Features
 
-* Removed unneeded index.jsx.
 * Made self-update a little smarter.
 * Updated dependencies.
+
+### Breaking Changes
+
+* Removed unneeded index.jsx.
 
 # [v5.3.4](https://github.com/neonexus/sails-react-bootstrap-webpack/compare/v5.3.3...v5.3.4) (2024-05-03)
 ### Features

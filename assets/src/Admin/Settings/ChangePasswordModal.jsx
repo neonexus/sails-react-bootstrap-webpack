@@ -1,15 +1,37 @@
-import { useState } from 'react';
-import PropTypes from 'prop-types';
-
+import {useState} from 'react';
 import {Button, Form, Modal, Spinner} from 'react-bootstrap';
 
-function ChangePasswordModal(props) {
+/**
+ * Change Password Modal
+ *
+ * @param {object} api
+ * @param {function} onCancel
+ * @param {function} onUpdate
+ * @param {boolean} show
+ *
+ * @returns {JSX.Element}
+ */
+function ChangePasswordModal({api, onCancel, onUpdate, show}) {
+    if (api === undefined || onCancel === undefined || onUpdate === undefined || show === undefined) {
+        throw new Error('`api`, `onCancel`, `onUpdate`, and `show` are required parameters for ChangePasswordModal.');
+    }
+
+    if (typeof onCancel !== 'function') {
+        throw new Error('`onCancel` must be a function in ChangePasswordModal.');
+    }
+
+    if (typeof onUpdate !== 'function') {
+        throw new Error('`onUpdate` must be a function in ChangePasswordModal.');
+    }
+
+    if (typeof show !== 'boolean') {
+        throw new Error('`show` must be a boolean in ChangePasswordModal.');
+    }
+
     const [isLoading, setIsLoading] = useState(false);
     const [current, setCurrent] = useState('');
     const [newPass, setNewPass] = useState('');
     const [confPass, setConfPass] = useState('');
-
-
 
     function resetState() {
         setCurrent('');
@@ -18,16 +40,16 @@ function ChangePasswordModal(props) {
         setIsLoading(false);
     }
 
-    function onCancel() {
+    function onCancelHandler() {
         resetState();
 
-        props.onCancel();
+        onCancel();
     }
 
-    function onUpdate() {
+    function onUpdateHandler() {
         setIsLoading(true);
 
-        props.api.post({
+        api.post({
             url: '/password',
             body: {
                 currentPassword: current,
@@ -37,7 +59,7 @@ function ChangePasswordModal(props) {
         }, (body) => {
             setIsLoading(false);
             alert('Password updated successfully.');
-            props.onUpdate();
+            onUpdate();
             resetState();
         }, (err, body) => {
             console.error(err);
@@ -47,8 +69,8 @@ function ChangePasswordModal(props) {
     }
 
     return (
-        <Modal show={props.show} backdrop="static" size="md">
-            <Form onSubmit={(e) => {e.preventDefault(); onUpdate();}}>
+        <Modal show={show} backdrop="static" size="md">
+            <Form onSubmit={(e) => {e.preventDefault(); onUpdateHandler();}}>
                 <Modal.Header>
                     <Modal.Title>
                         Change Password
@@ -68,7 +90,7 @@ function ChangePasswordModal(props) {
                 </Modal.Body>
 
                 <Modal.Footer className="justify-content-between">
-                    <Button variant="secondary" onClick={onCancel} disabled={isLoading}>Cancel</Button>
+                    <Button variant="secondary" onClick={onCancelHandler} disabled={isLoading}>Cancel</Button>
                     <Button variant="primary" type="submit" disabled={isLoading}>
                         {
                             (isLoading)
@@ -81,12 +103,5 @@ function ChangePasswordModal(props) {
         </Modal>
     );
 }
-
-ChangePasswordModal.propTypes = {
-    api: PropTypes.object.isRequired,
-    onCancel: PropTypes.func.isRequired,
-    onUpdate: PropTypes.func.isRequired,
-    show: PropTypes.bool.isRequired
-};
 
 export default ChangePasswordModal;

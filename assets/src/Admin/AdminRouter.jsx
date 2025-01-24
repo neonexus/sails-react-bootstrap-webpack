@@ -1,5 +1,4 @@
 import {Component, StrictMode, Suspense, lazy} from 'react';
-import PropTypes from 'prop-types';
 import '../../styles/admin/admin.scss';
 import {
     Routes,
@@ -36,11 +35,6 @@ function RenderOrLogin(props) {
 
     return null; // not ready yet
 }
-
-RenderOrLogin.propTypes = {
-    api: PropTypes.object.isRequired,
-    userContext: PropTypes.object.isRequired
-};
 
 const theApi = new api();
 

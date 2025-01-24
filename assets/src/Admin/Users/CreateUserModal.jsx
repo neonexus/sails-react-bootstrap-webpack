@@ -1,229 +1,199 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, {useState, useCallback} from 'react';
 import {Button, Collapse, Form, Modal, Row} from 'react-bootstrap';
 
-class CreateUserModal extends Component {
-    constructor(props) {
-        super(props);
+const initialState = {
+    generatePassword: true,
+    wasValidated: false,
+    firstName: '',
+    lastName: '',
+    email: '',
+    role: 'user',
+    password1: '',
+    password2: '',
+    isDuplicateEmail: false,
+    doPasswordsMatch: true,
+    isLoading: false
+};
 
-        this.state = {
-            generatePassword: true,
-            wasValidated: false,
-            firstName: '',
-            lastName: '',
-            email: '',
-            role: 'user',
-            password1: '',
-            password2: '',
-            isDuplicateEmail: false,
-            doPasswordsMatch: true,
-            isLoading: false
-        };
+const CreateUserModal = ({ show, onClose, onCreate }) => {
+    const [state, setState] = useState(initialState);
 
-        this.handleClose = this.handleClose.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handlePasswordMatching = this.handlePasswordMatching.bind(this);
-    }
+    const handleClose = useCallback(() => {
+        setState(initialState);
+        if (onClose) onClose();
+    }, [onClose]);
 
-    handleSubmit(e) {
+    const handlePasswordMatching = useCallback(() => {
+        setState((prevState) => ({
+            ...prevState,
+            doPasswordsMatch: prevState.password1 === prevState.password2
+        }));
+    }, []);
+
+    const handleSubmit = useCallback((e) => {
         e.preventDefault();
         e.stopPropagation();
 
-        this.setState({wasValidated: true, isLoading: true});
+        setState((prevState) => ({ ...prevState, wasValidated: true, isLoading: true }));
 
-        if (e.target.checkValidity() && (this.state.generatePassword || (this.state.password1 === this.state.password2 && this.state.password1.length > 5))) {
-            this.props.onCreate(
+        const isValidPassword =
+            state.generatePassword ||
+            (state.password1 === state.password2 && state.password1.length > 5);
+
+        if (e.target.checkValidity() && isValidPassword) {
+            onCreate(
                 {
-                    firstName: this.state.firstName,
-                    lastName: this.state.lastName,
-                    email: this.state.email,
-                    role: this.state.role,
-                    generatePassword: this.state.generatePassword,
-                    password: this.state.password1
+                    firstName: state.firstName,
+                    lastName: state.lastName,
+                    email: state.email,
+                    role: state.role,
+                    generatePassword: state.generatePassword,
+                    password: state.password1
                 },
-                this.handleClose,
-                () => this.setState({isLoading: false})
+                handleClose,
+                () => setState((prevState) => ({ ...prevState, isLoading: false }))
             );
         } else {
-            this.setState({isLoading: false});
+            setState((prevState) => ({ ...prevState, isLoading: false }));
         }
-    }
+    }, [state, onCreate, handleClose]);
 
-    handleClose(onClose) {
-        if (!onClose) {
-            onClose = _.noop;
-        }
+    return (
+        <Modal show={show} onHide={handleClose} backdrop="static">
+            <Modal.Header closeButton>
+                <Modal.Title>Create New User</Modal.Title>
+            </Modal.Header>
 
-        this.setState({
-            firstName: '',
-            lastName: '',
-            email: '',
-            role: 'user',
-            password1: '',
-            password2: '',
-            generatePassword: true,
-            wasValidated: false,
-            isLoading: false
-        }, onClose);
-    }
-
-    handlePasswordMatching() {
-        if (this.state.doPasswordsMatch && this.state.password1 !== this.state.password2) {
-            this.setState({doPasswordsMatch: false});
-        } else if (!this.state.doPasswordsMatch && this.state.password1 === this.state.password2) {
-            this.setState({doPasswordsMatch: true});
-        }
-    }
-
-    render() {
-        return (
-            <Modal show={this.props.show} onHide={() => this.handleClose(this.props.onClose)} backdrop="static">
-                <Modal.Header closeButton>
-                    <Modal.Title>
-                        Create New User
-                    </Modal.Title>
-                </Modal.Header>
-
-                <Form onSubmit={(e) => this.handleSubmit(e)} validated={this.state.wasValidated} noValidate>
-                    <Modal.Body>
-                        <Row>
-                            <Form.Group className="mb-3 col-sm" controlId="firstName">
-                                <Form.Label>First Name</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Enter First Name"
-                                    value={this.state.firstName}
-                                    onChange={(e) => this.setState({firstName: e.target.value})}
-                                    required
-                                    autoFocus
-                                    disabled={this.state.isLoading}
-                                />
-                                <Form.Control.Feedback type="invalid">First name is required.</Form.Control.Feedback>
-                            </Form.Group>
-
-                            <Form.Group className="mb-3 col-sm" controlId="lastName">
-                                <Form.Label>Last Name</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Enter Last Name"
-                                    value={this.state.lastName}
-                                    onChange={(e) => this.setState({lastName: e.target.value})}
-                                    required
-                                    disabled={this.state.isLoading}
-                                />
-                                <Form.Control.Feedback type="invalid">Last name is required.</Form.Control.Feedback>
-                            </Form.Group>
-                        </Row>
-
-                        <Form.Group className="mb-3" controlId="email">
-                            <Form.Label>Email address</Form.Label>
+            <Form onSubmit={handleSubmit} noValidate validated={state.wasValidated}>
+                <Modal.Body>
+                    <Row>
+                        <Form.Group className="mb-3 col-sm" controlId="firstName">
+                            <Form.Label>First Name</Form.Label>
                             <Form.Control
-                                type="email"
-                                placeholder="Enter Email Address"
-                                value={this.state.email}
-                                onChange={(e) => this.setState({email: e.target.value})}
+                                type="text"
+                                placeholder="Enter First Name"
+                                value={state.firstName}
+                                onChange={(e) => setState((prevState) => ({ ...prevState, firstName: e.target.value }))}
                                 required
-                                disabled={this.state.isLoading}
+                                autoFocus
+                                disabled={state.isLoading}
                             />
-                            <Form.Control.Feedback type="invalid">
-                                {
-                                    (this.state.isDuplicateEmail) ? 'Email is already in-use.' : 'Email address is required.'
-                                }
-                            </Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid">First name is required.</Form.Control.Feedback>
                         </Form.Group>
 
-                        <Form.Group className="mb-3" controlId="role">
-                            <Form.Label>Role</Form.Label>
-                            <Form.Select
-                                aria-label="Select role"
-                                defaultValue="user"
-                                className="prevent-validation"
-                                onChange={(e) => this.setState({role: e.target.value})}
-                                disabled={this.state.isLoading}
-                            >
-                                <option value="user">User</option>
-                                <option value="admin">Admin</option>
-                            </Form.Select>
-                        </Form.Group>
-
-                        <Form.Group controlId="generatePassword">
-                            <Form.Check
-                                type="checkbox"
-                                label="Set Password"
-                                onChange={(e) => this.setState({generatePassword: !e.target.checked})}
-                                className="prevent-validation"
-                                disabled={this.state.isLoading}
+                        <Form.Group className="mb-3 col-sm" controlId="lastName">
+                            <Form.Label>Last Name</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Enter Last Name"
+                                value={state.lastName}
+                                onChange={(e) => setState((prevState) => ({ ...prevState, lastName: e.target.value }))}
+                                required
+                                disabled={state.isLoading}
                             />
+                            <Form.Control.Feedback type="invalid">Last name is required.</Form.Control.Feedback>
                         </Form.Group>
+                    </Row>
 
-                        <Collapse in={!this.state.generatePassword}>
-                            <div className="mt-3 mb-2">
-                                <Form.Group className="mb-3" controlId="password1">
-                                    <Form.Label>Password</Form.Label>
-                                    <Form.Control
-                                        type="password"
-                                        placeholder="Enter Password"
-                                        onChange={(e) => this.setState({password1: e.target.value})}
-                                        className={
-                                            (this.state.wasValidated && this.state.password1.length < 6)
-                                                ? 'is-invalid'
-                                                : null
-                                        }
-                                        required
-                                        disabled={this.state.isLoading || this.state.generatePassword}
-                                        minLength="6"
-                                        maxLength="72"
-                                    />
-                                    <Form.Control.Feedback type="invalid" className={(!this.state.wasValidated || this.state.password1.length > 5) ? 'd-none' : null}>
-                                        {
-                                            (this.state.password1.length)
-                                                ? 'Password is too short.'
-                                                : 'Password is required.'
-                                        }
-                                    </Form.Control.Feedback>
-                                </Form.Group>
+                    <Form.Group className="mb-3" controlId="email">
+                        <Form.Label>Email address</Form.Label>
+                        <Form.Control
+                            type="email"
+                            placeholder="Enter Email Address"
+                            value={state.email}
+                            onChange={(e) => setState((prevState) => ({ ...prevState, email: e.target.value }))}
+                            required
+                            disabled={state.isLoading}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                            {state.isDuplicateEmail ? 'Email is already in-use.' : 'Email address is required.'}
+                        </Form.Control.Feedback>
+                    </Form.Group>
 
-                                <Form.Group controlId="password2">
-                                    <Form.Label>Verify Password</Form.Label>
-                                    <Form.Control
-                                        type="password"
-                                        placeholder="Verify Password"
-                                        onChange={(e) => this.setState({password2: e.target.value})}
-                                        className={
-                                            (this.state.wasValidated && this.state.password1 !== this.state.password2 && this.state.password2.length)
-                                                ? 'is-invalid'
-                                                : null
-                                        }
-                                        required
-                                        disabled={this.state.isLoading || this.state.generatePassword}
-                                        minLength="6"
-                                    />
-                                    {
-                                        (this.state.wasValidated && this.state.password1.length && this.state.password2.length)
-                                            ? <Form.Control.Feedback type="invalid">Passwords do not match.</Form.Control.Feedback>
-                                            : null
+                    <Form.Group className="mb-3" controlId="role">
+                        <Form.Label>Role</Form.Label>
+                        <Form.Select
+                            aria-label="Select role"
+                            value={state.role}
+                            onChange={(e) => setState((prevState) => ({ ...prevState, role: e.target.value }))}
+                            disabled={state.isLoading}
+                        >
+                            <option value="user">User</option>
+                            <option value="admin">Admin</option>
+                        </Form.Select>
+                    </Form.Group>
+
+                    <Form.Group controlId="generatePassword">
+                        <Form.Check
+                            type="checkbox"
+                            label="Set Password"
+                            checked={!state.generatePassword}
+                            onChange={(e) => setState((prevState) => ({ ...prevState, generatePassword: !e.target.checked }))}
+                            disabled={state.isLoading}
+                        />
+                    </Form.Group>
+
+                    <Collapse in={!state.generatePassword}>
+                        <div className="mt-3 mb-2">
+                            <Form.Group className="mb-3" controlId="password1">
+                                <Form.Label>Password</Form.Label>
+                                <Form.Control
+                                    type="password"
+                                    placeholder="Enter Password"
+                                    value={state.password1}
+                                    onChange={(e) => setState((prevState) => ({ ...prevState, password1: e.target.value }))}
+                                    className={
+                                        state.wasValidated && state.password1.length < 6 ? 'is-invalid' : ''
                                     }
-                                </Form.Group>
-                            </div>
-                        </Collapse>
-                    </Modal.Body>
+                                    required
+                                    disabled={state.isLoading || state.generatePassword}
+                                    minLength="6"
+                                    maxLength="72"
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {state.password1.length
+                                        ? 'Password is too short.'
+                                        : 'Password is required.'}
+                                </Form.Control.Feedback>
+                            </Form.Group>
 
-                    <Modal.Footer className="justify-content-between">
-                        <Button variant="secondary" onClick={() => this.handleClose(this.props.onClose)} disabled={this.state.isLoading}>Cancel</Button>
-                        <Button variant="primary" type="submit" disabled={this.state.isLoading}>
-                            {this.state.isLoading ? 'Loading...' : 'Create'}
-                        </Button>
-                    </Modal.Footer>
-                </Form>
-            </Modal>
-        );
-    }
-}
+                            <Form.Group controlId="password2">
+                                <Form.Label>Verify Password</Form.Label>
+                                <Form.Control
+                                    type="password"
+                                    placeholder="Verify Password"
+                                    value={state.password2}
+                                    onChange={(e) => setState((prevState) => ({ ...prevState, password2: e.target.value }))}
+                                    className={
+                                        state.wasValidated &&
+                                        state.password1 !== state.password2 &&
+                                        state.password2.length
+                                            ? 'is-invalid'
+                                            : ''
+                                    }
+                                    required
+                                    disabled={state.isLoading || state.generatePassword}
+                                    minLength="6"
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    Passwords do not match.
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                        </div>
+                    </Collapse>
+                </Modal.Body>
 
-CreateUserModal.propTypes = {
-    onClose: PropTypes.func.isRequired,
-    onCreate: PropTypes.func.isRequired,
-    show: PropTypes.bool.isRequired
+                <Modal.Footer className="justify-content-between">
+                    <Button variant="secondary" onClick={handleClose} disabled={state.isLoading}>
+                        Cancel
+                    </Button>
+                    <Button variant="primary" type="submit" disabled={state.isLoading}>
+                        {state.isLoading ? 'Loading...' : 'Create'}
+                    </Button>
+                </Modal.Footer>
+            </Form>
+        </Modal>
+    );
 };
 
 export default CreateUserModal;

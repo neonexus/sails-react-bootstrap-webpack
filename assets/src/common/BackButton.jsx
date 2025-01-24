@@ -1,16 +1,17 @@
-import PropTypes from 'prop-types';
 import {Button} from 'react-bootstrap';
 
-function BackButton(props) {
+function BackButton({hist = window.history}) {
+    if (!history) {
+        console.error('A `history` object is required for BackButton.');
+
+        return 'ERROR!';
+    }
+
     return (
-        <Button variant="secondary" className="mb-4" onClick={props.history.goBack}>
+        <Button variant="secondary" className="mb-4" onClick={hist.goBack}>
             <i className="fa fa-chevron-left" /> Back
         </Button>
     );
 }
-
-BackButton.propTypes = {
-    history: PropTypes.object.isRequired
-};
 
 export default BackButton;

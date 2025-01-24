@@ -1,5 +1,4 @@
 import { Component } from 'react';
-import PropTypes from 'prop-types';
 
 import {UserConsumer} from '../data/UserContext';
 import defaultAPIErrorHandler from '../data/defaultAPIErrorHandler';
@@ -9,6 +8,10 @@ import {Row, Button, Form} from 'react-bootstrap';
 class Login extends Component {
     constructor(props) {
         super(props);
+
+        if (!props.api) {
+            throw new Error('No API passed to Login.jsx.');
+        }
 
         this.state = {
             email: localStorage.getItem('email') || '',
@@ -154,9 +157,5 @@ class Login extends Component {
         );
     }
 }
-
-Login.propTypes = {
-    api: PropTypes.object.isRequired
-};
 
 export default Login;

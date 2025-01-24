@@ -1,13 +1,11 @@
 import {useState, lazy, useEffect, Suspense} from 'react';
-import PropTypes from 'prop-types';
-
 import {Nav, Spinner, TabContainer, TabContent, TabPane} from 'react-bootstrap';
 import {NavLink, Route, Routes, useLocation} from 'react-router-dom';
 
 const ProfileSection = lazy(() => import('./ProfileSection'));
 const SecuritySection = lazy(() => import('./SecuritySection'));
 
-function Settings(props) {
+function Settings({api}) {
     const {pathname} = useLocation();
 
     const [currentPath, setCurrentPath] = useState(pathname);
@@ -29,7 +27,7 @@ function Settings(props) {
             name: 'Security',
             key: 'security',
             url: '/admin/settings/security',
-            el: <SecuritySection api={props.api} />
+            el: <SecuritySection api={api} />
         }
     ];
 
@@ -68,9 +66,5 @@ function Settings(props) {
         </>
     );
 }
-
-Settings.propTypes = {
-    api: PropTypes.object.isRequired
-};
 
 export default Settings;

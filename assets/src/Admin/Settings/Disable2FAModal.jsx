@@ -1,8 +1,20 @@
 import {Button, Form, Modal} from 'react-bootstrap';
-import PropTypes from 'prop-types';
 import {useState} from 'react';
 
-function Disable2FAModal(props) {
+function Disable2FAModal({api, onCancel, onDisable, show}) {
+    if (!api || typeof api.post !== 'function') {
+        throw new Error("Invalid or missing 'api' prop. Expected an object with a 'post' method.");
+    }
+    if (!onCancel || typeof onCancel !== 'function') {
+        throw new Error("Invalid or missing 'onCancel' prop. Expected a function.");
+    }
+    if (!onDisable || typeof onDisable !== 'function') {
+        throw new Error("Invalid or missing 'onDisable' prop. Expected a function.");
+    }
+    if (typeof show !== 'boolean') {
+        throw new Error("Invalid or missing 'show' prop. Expected a boolean.");
+    }
+
     const [isLoading, setIsLoading] = useState(false);
     const [otp, setOTP] = useState('');
     const [password, setPassword] = useState('');
@@ -13,9 +25,9 @@ function Disable2FAModal(props) {
         setIsLoading(false);
     }
 
-    function onCancel() {
+    function handleCancel() {
         resetState();
-        props.onCancel();
+        onCancel();
     }
 
     function disable() {
@@ -25,7 +37,7 @@ function Disable2FAModal(props) {
 
         setIsLoading(true);
 
-        props.api.post({
+        api.post({
             url: '/2fa/disable',
             body: {
                 password,
@@ -35,7 +47,7 @@ function Disable2FAModal(props) {
             if (body.success) {
                 alert('2-factor authentication has been disabled.');
                 resetState();
-                props.onDisable();
+                onDisable();
             } else {
                 alert('Unknown error.');
                 console.error(body);
@@ -48,7 +60,7 @@ function Disable2FAModal(props) {
     }
 
     return (
-        <Modal show={props.show} backdrop="static">
+        <Modal show={show} backdrop="static">
             <Modal.Header>
                 <Modal.Title>
                     Disable 2-Factor Authentication
@@ -86,18 +98,11 @@ function Disable2FAModal(props) {
             </Modal.Body>
 
             <Modal.Footer className="justify-content-between">
-                <Button variant="secondary" onClick={onCancel} disabled={isLoading}>Cancel</Button>
+                <Button variant="secondary" onClick={handleCancel} disabled={isLoading}>Cancel</Button>
                 <Button variant="danger" onClick={disable} disabled={isLoading}>Disable</Button>
             </Modal.Footer>
         </Modal>
     );
 }
-
-Disable2FAModal.propTypes = {
-    api: PropTypes.object.isRequired,
-    onCancel: PropTypes.func.isRequired,
-    onDisable: PropTypes.func.isRequired,
-    show: PropTypes.bool.isRequired
-};
 
 export default Disable2FAModal;

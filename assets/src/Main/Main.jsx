@@ -14,7 +14,7 @@ function Main() {
             <br />
             {/*
                 This MUST be a hard HTML link, and NOT a React Router Link, because this is a completely different React app.
-                A React Router Link will just route back here.
+                A React Router Link element will just route back here; since the route doesn't exist in this context.
             */}
             <a href="/admin">
                 <Button variant="primary">

@@ -32,7 +32,7 @@ module.exports.routes = {
                     url = '/main'; // Default to "main"
                 }
 
-                const parts = url.split('/');
+                const parts = url.split('/', 3); // Set a limit, just to save a bit of processing power, and help prevent abuse.
                 const pathToCheck = path.join(__dirname, '../.tmp/public/', parts[1], '/index.html');
 
                 if (fs.existsSync(pathToCheck)) {

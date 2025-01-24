@@ -1,8 +1,20 @@
 import {useState} from 'react';
-import PropTypes from 'prop-types';
 import {Button, Collapse, Fade, Form, Modal} from 'react-bootstrap';
 
-function Enable2FAModal(props) {
+function Enable2FAModal({api, onCancel, onSuccess, show}) {
+    if (typeof api !== 'object' || api === null) {
+        throw new Error('Invalid or missing `api` object.');
+    }
+    if (typeof onCancel !== 'function') {
+        throw new Error('Invalid or missing `onCancel` function.');
+    }
+    if (typeof onSuccess !== 'function') {
+        throw new Error('Invalid or missing `onSuccess` function.');
+    }
+    if (typeof show !== 'boolean') {
+        throw new Error('Invalid or missing `show` boolean.');
+    }
+
     const [isLoading, setIsLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(0);
     const [showCode, setShowCode] = useState(false);
@@ -23,13 +35,13 @@ function Enable2FAModal(props) {
         setIsLoading(false);
     }
 
-    function onCancel() {
-        props.onCancel();
+    function handleCancel() {
+        onCancel();
         resetState();
     }
 
     function getCode() {
-        props.api.post({
+        api.post({
             url: '/2fa/enable'
         }, (body) => {
             setQR(body.image);
@@ -43,7 +55,7 @@ function Enable2FAModal(props) {
     }
 
     function validateCode() {
-        props.api.post({
+        api.post({
             url: '/2fa/finalize',
             body: {
                 password,
@@ -83,7 +95,7 @@ function Enable2FAModal(props) {
                 break;
             case 3:
                 if (confirm('Are you sure you have saved your backup codes? They won\'t be shown again.')) {
-                    props.onSuccess();
+                    onSuccess();
                     resetState();
                 }
                 break;
@@ -96,7 +108,7 @@ function Enable2FAModal(props) {
     }
 
     return (
-        <Modal show={props.show} backdrop="static">
+        <Modal show={show} backdrop="static">
             <Modal.Header>
                 <Modal.Title>
                     Enable 2-Factor Authentication
@@ -189,19 +201,12 @@ function Enable2FAModal(props) {
             </Modal.Body>
 
             <Modal.Footer className="justify-content-between">
-                <Button variant="secondary" onClick={onCancel} disabled={isLoading} className={(currentPage > 1) ? 'invisible' : ''}>Cancel</Button>
+                <Button variant="secondary" onClick={handleCancel} disabled={isLoading} className={(currentPage > 1) ? 'invisible' : ''}>Cancel</Button>
                 <Button variant="primary" onClick={next} disabled={isLoading} hidden={currentPage === 2}>Next</Button>
                 <Button variant="secondary" onClick={next} disabled={isLoading} hidden={currentPage !== 2}>Close</Button>
             </Modal.Footer>
         </Modal>
     );
 }
-
-Enable2FAModal.propTypes = {
-    api: PropTypes.object.isRequired,
-    onCancel: PropTypes.func.isRequired,
-    onSuccess: PropTypes.func.isRequired,
-    show: PropTypes.bool.isRequired
-};
 
 export default Enable2FAModal;

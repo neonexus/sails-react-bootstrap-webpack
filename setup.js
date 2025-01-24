@@ -21,7 +21,9 @@ let prompts;
 try {
     prompts = require('prompts');
 } catch {
-    return console.error('Looks like you need to `npm install`');
+    console.error('Looks like you need to `npm install`');
+
+    return process.exit(1);
 }
 
 const configPath = path.join(__dirname, 'config/local.js');
